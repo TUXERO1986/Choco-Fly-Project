@@ -1,0 +1,23 @@
+# Visual Studio archivos temporales y carpetas de salida
+.vs/
+Debug/
+Release/
+x64/
+x86/
+out/
+build/
+
+# Archivos de usuario
+*.user
+*.suo
+*.v12.suo
+*.v15.suo
+
+# Extensiones de compilación
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.log
+*.tlog
+*.lastbuildstate
