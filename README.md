@@ -4,7 +4,7 @@ Este es un proyecto desarrollado como parte de la formación académica en **Ing
 
 ## 👥 Integrantes del Equipo
 * **Ryan** - *Desarrollador de Software & Ciberseguridad*
-* [Nombre Amigo 1] - [Rol/Responsabilidad]
+* **gengis** - *Desarrollador de Software & UI*
 * [Nombre Amigo 2] - [Rol/Responsabilidad]
 
 ## 🛠️ Tecnologías y Herramientas
@@ -22,4 +22,4 @@ El proyecto sigue una arquitectura modular para facilitar el mantenimiento y evi
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio:
    ```bash
-   git clone git@github.com:TUXERO1986/VideoGameAsProject.git
+   git clone git@github.com:TUXERO1986/Area-de-trabajo-Proyecto-Parcial.git
