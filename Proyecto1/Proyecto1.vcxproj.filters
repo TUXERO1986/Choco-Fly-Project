@@ -28,7 +28,7 @@
     <ClCompile Include="Pirncipal.cpp">
       <Filter>Principal</Filter>
     </ClCompile>
-    <ClCompile Include="testing.cpp" />
+    <ClCompile Include="Color.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Nodo.h">
@@ -37,6 +37,6 @@
     <ClInclude Include="Lista.h">
       <Filter>Lista-Nodo</Filter>
     </ClInclude>
-    <ClInclude Include="testing.h" />
+    <ClInclude Include="Color.h" />
   </ItemGroup>
 </Project>

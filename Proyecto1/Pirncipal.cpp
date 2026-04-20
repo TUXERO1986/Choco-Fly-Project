@@ -1,6 +1,9 @@
 #include "Lista.h"
+#include "Color.h"
+using namespace std;
+using namespace ColorUI;
 
 int main() {
-    std::cout << "Hello World";
-    return 0;
+	PruebaColor();
+	return 0;
 }

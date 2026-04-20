@@ -21,13 +21,13 @@
   <ItemGroup>
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
-    <ClInclude Include="testing.h" />
+    <ClInclude Include="Color.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lista.cpp" />
     <ClCompile Include="Nodo.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
-    <ClCompile Include="testing.cpp" />
+    <ClCompile Include="Color.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
