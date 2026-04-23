@@ -4,6 +4,7 @@ using namespace std;
 using namespace ColorUI;
 
 int main() {
-	PruebaColor();
+	SetConsoleOutputCP(CP_UTF8);
+	Menuprincipal();
 	return 0;
 }

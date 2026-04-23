@@ -1,10 +1,25 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Color.h"
 
 using namespace std;
 using namespace ColorUI;
 
-void PruebaColor();
+void Menuprincipal() {
+
+
+    cout << UNDERLINE ;
+    ColorUI::printGradient("\t =================== ", femboy, false);
+    ColorUI::printGradient("\t | Femboys Airline |", femboy, false);
+    ColorUI::printGradient("\t =================== \n", femboy, false);
+    cout << RESET;
+    ColorUI::printGradient("[1] \u2554 Vuelos  ", gege, false, false);
+    ColorUI::printGradient(" \t[2] Paquetes ", gege, false, false);
+    ColorUI::printGradient(" \t[3] Hospedaje ", gege, false,false);
+    cout << BLINK; 
+    ColorUI::printGradient(" \t[4] Creditos ", gege, false, false);
+    cout << RESET;
+
+}
 
 void PruebaColor() {
     cout << BLINK;

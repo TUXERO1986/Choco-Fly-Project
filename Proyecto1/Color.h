@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Windows.h"
 
 /**
  * ============================================================================
@@ -21,6 +22,7 @@
 
 //definicion de funciones:
 void PruebaColor();
+void Menuprincipal();
 
 
 // Espacio de nombres para encapsular toda la funcionalidad relacionada con la UI de colores
@@ -105,6 +107,7 @@ namespace ColorUI {
         const std::vector<std::string> Alerta = { "#ff416c", "#ff4b2b" };
         const std::vector<std::string> Exito = { "#11998e", "#38ef7d" };
         const std::vector<std::string> gege = { "#00F719", "#15DE1C", "#1EC51E", "#22AD1F" };
+        const std::vector<std::string> femboy = { "#E727F5","#D028DC","#B928C4","#A327AC" };
     }
 
     namespace Estilo {
