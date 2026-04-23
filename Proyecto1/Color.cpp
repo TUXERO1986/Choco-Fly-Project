@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include "Color.h"
 
 using namespace std;
@@ -12,15 +12,77 @@ void Menuprincipal() {
     ColorUI::printGradient("\t | Femboys Airline |", femboy, false);
     ColorUI::printGradient("\t =================== \n", femboy, false);
     cout << RESET;
-    ColorUI::printGradient("[1] \u2554 Vuelos  ", gege, false, false);
+    ColorUI::printGradient("[1] Vuelos  ", gege, false, false);
     ColorUI::printGradient(" \t[2] Paquetes ", gege, false, false);
     ColorUI::printGradient(" \t[3] Hospedaje ", gege, false,false);
     cout << BLINK; 
-    ColorUI::printGradient(" \t[4] Creditos ", gege, false, false);
+    ColorUI::printGradient(" \t[4] Creditos ", Alerta, false, false);
     cout << RESET;
 
 }
+void creditos() {
+    cout << BLINK;
+    string Creditos = R"(
+        >>========================================<<
+        ||   _____              _ _ _             ||
+        ||  / ____|            | (_) |            ||
+        || | |     _ __ ___  __| |_| |_ ___  ___  ||
+        || | |    | '__/ _ \/ _` | | __/ _ \/ __| ||
+        || | |____| | |  __/ (_| | | || (_) \__ \ ||
+        ||  \_____|_|  \___|\__,_|_|\__\___/|___/ ||
+        >>========================================<<
+    )";
+    ColorUI::printGradient(Creditos, femboy, false);
+    cout << RESET;
 
+    string ryan = R"(
+      Ryan (apellido)
+    [Programador C++ Backend]
+
+            .--.
+           |o_o |
+           |:_/ |
+          //   \ \
+         (|     | )
+        /'\_   _/`\
+        \___)=(___/ 
+    )";
+
+    string gengis = R"(
+      Gengis cam pizarro
+    [Frontend Console App]
+
+           ,_     _
+           |\_,-~/
+           / _  _ |    ,--.
+          (  @  @ )   / ,-'
+           \  _T_/-._( (
+           /         `. \
+          |         _  \ |
+           \ \ ,  /      |
+            || |-_\__   /
+           ((_/`(____,-'
+    )";
+
+    string santiago = R"(
+      Santiago (Apellido)
+    [Correccion de Bugs]
+
+               __         __
+              /  \.-"""-./  \
+              \    -   -    /
+               |   o   o   |
+               \  .-'''-.  /
+                '-\__Y__/-'
+                   `---`
+    )";
+
+    ColorUI::printMultilinesSideBySide(
+        ryan, Tux,
+        gengis, gege,
+        santiago, TemaPrincipal
+    );
+}
 void PruebaColor() {
     cout << BLINK;
     ColorUI::printGradient("   === SISTEMA DE GESTION ===   ", Exito, false);

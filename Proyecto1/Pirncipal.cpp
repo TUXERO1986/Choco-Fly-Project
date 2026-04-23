@@ -4,7 +4,7 @@ using namespace std;
 using namespace ColorUI;
 
 int main() {
-	SetConsoleOutputCP(CP_UTF8);
-	Menuprincipal();
+
+	creditos();
 	return 0;
 }
