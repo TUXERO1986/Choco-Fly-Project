@@ -6,15 +6,15 @@ ControladorArchivos::ControladorArchivos(std::string nombrearchivo){
 void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta*>* rutas, Lista<CiudadesId*>* MapaCiudades) {
     std::ifstream archivo(nombrearchivo);
     if (!archivo.is_open()) {
-        std::cout << "No se puedo abrir el archivo" << std::endl;
+        cout << "No se puedo abrir el archivo" << std::endl;
         return;
     }
 
     string linea;
-    int contadorId = 0; // Se mantiene un solo contador global para todo el archivo
+    int contadorId = 0; 
 
     auto getIdCiudad = [](Lista<CiudadesId*>* mapaciudades, string nombre) {
-        for (int i = 0; i < mapaciudades->longitud(); i++) {
+        for (auto i = 0; i < mapaciudades->longitud(); i++) {
             CiudadesId* aux = mapaciudades->obtenerPos(i);
             if (aux->getNombre() == nombre) {
                 return aux->getId();
@@ -50,15 +50,15 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
 
     int totalCiudades = MapaCiudades->longitud();
 
-    for (int i = 0; i < totalCiudades; i++) {
+    for (auto i = 0; i < totalCiudades; i++) {
         Lista<int>* fila = new Lista<int>(); 
-        for (int j = 0; j < totalCiudades; j++) {
+        for (auto j = 0; j < totalCiudades; j++) {
             fila->agregaFinal(0);           
         }
         conexiones->agregaFinal(fila);       
     }
 
-    for (int i = 0; i < rutas->longitud(); i++) {
+    for (auto i = 0; i < rutas->longitud(); i++) {
         Ruta* aux = rutas->obtenerPos(i);
         int idOrigen = getIdCiudad(MapaCiudades, aux->getOrigen());
         int idDestino = getIdCiudad(MapaCiudades, aux->getDestino());

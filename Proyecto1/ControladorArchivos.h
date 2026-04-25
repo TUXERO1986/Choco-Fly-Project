@@ -1,22 +1,20 @@
 #pragma once
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
 #include "Lista.h"
 #include "Ruta.h"
 #include "CiudadesId.h"
-using namespace std;
+#include <sstream>
+#include <fstream>
+#include <string>
 class ControladorArchivos
 { 
 private:
-	std::string nombrearchivo;
+	string nombrearchivo;
 public:
 	ControladorArchivos();
-	ControladorArchivos(std::string);
+	ControladorArchivos(string);
 
 	void LeerArchivo(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadesId*>*);
-	void LeerArchivo(std::string);
-	void GuardarDatoArchivo(std::string);
+	//void LeerArchivo(std::string);
+	//void GuardarDatoArchivo(std::string);
 };
 

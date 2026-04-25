@@ -22,12 +22,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Nodo.cpp">
-      <Filter>Lista-Nodo</Filter>
-    </ClCompile>
-    <ClCompile Include="Lista.cpp">
-      <Filter>Lista-Nodo</Filter>
-    </ClCompile>
     <ClCompile Include="Pirncipal.cpp">
       <Filter>Principal</Filter>
     </ClCompile>

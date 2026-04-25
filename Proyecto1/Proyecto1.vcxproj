@@ -28,8 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControladorArchivos.cpp" />
-    <ClCompile Include="Lista.cpp" />
-    <ClCompile Include="Nodo.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Ruta.cpp" />
