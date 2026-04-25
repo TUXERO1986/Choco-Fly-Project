@@ -5,6 +5,7 @@ using namespace ColorUI;
 
 int main() {
 
-	creditos();
+
+	Menuprincipal();
 	return 0;
 }
