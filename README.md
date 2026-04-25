@@ -1,11 +1,11 @@
-# 🚀 Proyecto Universitario: VideoGameAsProject
+# 🚀 Proyecto Universitario: ChocoFly
 
 Este es un proyecto desarrollado como parte de la formación académica en **Ingeniería de Software**. Consiste en una aplicación de consola robusta escrita en **C++** utilizando **Visual Studio 2020**, enfocada en la implementación de estructuras de datos y lógica modular.
 
 ## 👥 Integrantes del Equipo
 * **Ryan** - *Desarrollador de Software & Ciberseguridad*
-* **gengis** - *Desarrollador de Software & UI*
-* [Nombre Amigo 2] - [Rol/Responsabilidad]
+* **Gengis** - *Desarrollador de Software & UI*
+* **Santiago** - *Desarrollador de Software & Code Reviewer*
 
 ## 🛠️ Tecnologías y Herramientas
 * **Lenguaje:** C++11 / C++14
@@ -17,7 +17,6 @@ Este es un proyecto desarrollado como parte de la formación académica en **Ing
 El proyecto sigue una arquitectura modular para facilitar el mantenimiento y evitar conflictos de código:
 * `/*.cpp`: Archivos de implementación de lógica.
 * `/*.h`: Cabeceras y definición de clases/plantillas (ej. `Lista`, `Nodo`).
-* `VideoGameAsProject.sln`: Archivo de solución de Visual Studio.
 
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio:

@@ -17,18 +17,26 @@
     <Filter Include="UI">
       <UniqueIdentifier>{6959cc93-4a5e-4d86-a1de-e7e2f23eaf75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{2afb65fc-6daf-4b9d-bc31-f80238833254}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Nodo.cpp">
-      <Filter>Lista-Nodo</Filter>
-    </ClCompile>
-    <ClCompile Include="Lista.cpp">
-      <Filter>Lista-Nodo</Filter>
-    </ClCompile>
     <ClCompile Include="Pirncipal.cpp">
       <Filter>Principal</Filter>
     </ClCompile>
-    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Color.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorArchivos.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
+    <ClCompile Include="Ruta.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="CiudadesId.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Nodo.h">
@@ -37,6 +45,17 @@
     <ClInclude Include="Lista.h">
       <Filter>Lista-Nodo</Filter>
     </ClInclude>
-    <ClInclude Include="Color.h" />
+    <ClInclude Include="Color.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorArchivos.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="Ruta.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CiudadesId.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
