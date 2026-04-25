@@ -61,7 +61,7 @@ void Lista<T>::agregaPos(T elem, uint pos) {
 }
 template <class T>
 void Lista<T>::agregaFinal(T elem) {
-    agregarPos(elem, lon); // ;)
+    agregaPos(elem, lon); // ;)
 }
 
 template <class T>
@@ -126,11 +126,13 @@ template <class T>
 T Lista<T>::obtenerFinal() {
     return obtenerPos(lon - 1);
 }
-
 template <class T>
-void Lista<T>::agregar(T d) //100
-{
-    Nodo<T>* nuevo = new Nodo<T>(d);
-    nuevo->set_Sgte(nodo);
-    nodo = nuevo;
+uint Lista<T>::getPos(T elem) {
+    Nodo<T>* aux = ini;
+    for (int i = 0; i<lon; i++) {
+        if (ini->getElemento() == elem)
+            return i;
+        else aux = aux->getSig();
+    }
+    return lon;
 }

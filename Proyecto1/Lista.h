@@ -29,6 +29,7 @@ public:
     void eliminaFinal();
     T obtenerInicial();
     T obtenerPos(uint pos);
+    uint getPos(T elem);
     T obtenerFinal();
     T buscar(T elem);
 
