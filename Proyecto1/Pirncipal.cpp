@@ -6,6 +6,6 @@ using namespace ColorUI;
 int main() {
 
 
-	Menuprincipal();
+	RegisterScreen();
 	return 0;
 }

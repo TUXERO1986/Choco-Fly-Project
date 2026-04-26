@@ -3,13 +3,49 @@
 
 using namespace std;
 using namespace ColorUI;
+void RegisterScreen() {
+    string usuario,password,correo;
+    
+    string registro = R"(
+                                 ____            _     _             
+                                |  _ \ ___  __ _(_)___| |_ _ __ ___  
+                                | |_) / _ \/ _` | / __| __| '__/ _ \ 
+                                |  _ <  __/ (_| | \__ \ |_| | | (_) |
+                                |_| \_\___|\__, |_|___/\__|_|  \___/ 
+                                           |___/                     )";
+    ColorUI::printGradient(registro, Register, false);
+    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
+    cout << "\t\t\t\t", cin >> usuario;
+    ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Register, false);
+    cout << "\t\t\t\t", cin >> correo;
+    ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
+    cout << "\t\t\t\t", cin >> password;
+    system("cls");
+    LoginScreen();
+}
+void LoginScreen() {
+    string usuario, password, correo;
 
+    string registro = R"(
+                                 _                _       
+                                | |    ___   __ _(_)_ __  
+                                | |   / _ \ / _` | | '_ \ 
+                                | |__| (_) | (_| | | | | |
+                                |_____\___/ \__, |_|_| |_|
+                                            |___/         )";
+    ColorUI::printGradient(registro, Register, false);
+    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
+    cout << "\t\t\t\t", cin >> usuario;
+    ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
+    cout << "\t\t\t\t", cin >> password;
+
+}
 void Menuprincipal() {
 
     int a;
     cout << UNDERLINE ;
     ColorUI::printGradient("\t =================== ", femboy, false);
-    ColorUI::printGradient("\t | Femboys Airline |", femboy, false);
+    ColorUI::printGradient("\t | ChocoFly        |", femboy, false);
     ColorUI::printGradient("\t =================== \n", femboy, false);
     cout << RESET;
     ColorUI::printGradient("[1] Vuelos  ", gege, false, false);

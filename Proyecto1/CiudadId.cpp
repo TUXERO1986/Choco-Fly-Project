@@ -1,4 +1,7 @@
-#include "CiudadesId.h"
+
+#include <string>
+#include "CiudadId.h"
+
 CiudadesId::CiudadesId(){}
 CiudadesId::CiudadesId(std::string nombre, int id) {
 	this->nombre = nombre;

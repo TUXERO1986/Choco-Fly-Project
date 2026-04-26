@@ -19,19 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CiudadId.h" />
     <ClInclude Include="ControladorArchivos.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Ruta.h" />
-    <ClInclude Include="CiudadesId.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CiudadId.cpp" />
     <ClCompile Include="ControladorArchivos.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
-    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Pantallas.cpp" />
     <ClCompile Include="Ruta.cpp" />
-    <ClCompile Include="CiudadesId.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
