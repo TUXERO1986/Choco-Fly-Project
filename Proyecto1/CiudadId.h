@@ -1,13 +1,13 @@
 #pragma once
 #include<iostream>
-class CiudadesId
+class CiudadId
 {
 private:
 	std::string nombre;
 	int id;
 public:
-	CiudadesId();
-	CiudadesId(std::string,int);
+	CiudadId();
+	CiudadId(std::string,int);
 
 	std::string getNombre();
 	int getId();

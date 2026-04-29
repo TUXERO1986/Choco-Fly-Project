@@ -34,7 +34,7 @@
     <ClCompile Include="Ruta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="CiudadesId.cpp">
+    <ClCompile Include="CiudadId.cpp">
       <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,7 +54,7 @@
     <ClInclude Include="Ruta.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="CiudadesId.h">
+    <ClInclude Include="CiudadId.h">
       <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,24 +1,24 @@
-#include "CiudadesId.h"
-CiudadesId::CiudadesId(){}
-CiudadesId::CiudadesId(std::string nombre, int id) {
+#include "CiudadId.h"
+CiudadId::CiudadId(){}
+CiudadId::CiudadId(std::string nombre, int id) {
 	this->nombre = nombre;
 	this->id = id;
 }
-std::string CiudadesId::getNombre() {
+std::string CiudadId::getNombre() {
 	return nombre;
 }
-int CiudadesId::getId() {
+int CiudadId::getId() {
 	return id;
 }
-void CiudadesId::setId(int id) {
+void CiudadId::setId(int id) {
 	this->id = id; 
 }
-void CiudadesId::setNombre(std::string nombre) { 
+void CiudadId::setNombre(std::string nombre) { 
 	this->nombre = nombre; 
 }
-int CiudadesId::getIdPorNombre(std::string nombre) {
+int CiudadId::getIdPorNombre(std::string nombre) {
 	if (this->nombre == nombre)return id;
 }
-std::string CiudadesId::getNombrePorId(int id) {
+std::string CiudadId::getNombrePorId(int id) {
 	if (this->id == id)return nombre;
 }
