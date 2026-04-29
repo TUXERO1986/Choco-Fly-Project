@@ -6,7 +6,7 @@ using namespace ColorUI;
 
 void Menuprincipal() {
 
-
+    int a;
     cout << UNDERLINE ;
     ColorUI::printGradient("\t =================== ", femboy, false);
     ColorUI::printGradient("\t | Femboys Airline |", femboy, false);
@@ -18,6 +18,11 @@ void Menuprincipal() {
     cout << BLINK; 
     ColorUI::printGradient(" \t[4] Creditos ", Alerta, false, false);
     cout << RESET;
+    cin >> a;
+    if (a == 4) {
+        system("cls");
+        creditos();
+    }
 
 }
 void creditos() {
