@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <conio.h>
+#include "ControladorRutas.h"
 #include <sstream> // <--- AGREGAR ESTA LIBRERÍA
 
 /**

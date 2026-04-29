@@ -1,5 +1,5 @@
 #include "Ruta.h"
-Ruta::Ruta() {}
+Ruta::Ruta() = default;
 Ruta::Ruta(string origen,string destino,string aerolinea, float precio,float distancia) {
 	this->origen = origen;
 	this->destino = destino;

@@ -66,6 +66,7 @@ template <class T>
 void Lista<T>::agregaInicial(T elem) {
     Nodo<T>* nuevo = new Nodo<T>(elem);
     if (nuevo != nullptr) {
+		nuevo->setSig(ini);
         ini = nuevo;
         lon++;
     }
@@ -173,10 +174,10 @@ template <class T>
 uint Lista<T>::getPos(T elem) {
     Nodo<T>* aux = ini;
     for (int i = 0; i < lon; i++) {
-        if (ini->getElemento() == elem)
+        if (aux->getElemento() == elem) // ✅ Corregido a 'aux'
             return i;
-        else aux = aux->getSig();
+        aux = aux->getSig(); // Ya no necesitas el else
     }
-    return lon;
+    return lon; // Retorna la longitud si no lo encuentra
 }
 

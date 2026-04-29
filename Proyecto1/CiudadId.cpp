@@ -1,5 +1,5 @@
 #include "CiudadId.h"
-CiudadId::CiudadId(){}
+CiudadId::CiudadId() = default;
 CiudadId::CiudadId(std::string nombre, int id) {
 	this->nombre = nombre;
 	this->id = id;

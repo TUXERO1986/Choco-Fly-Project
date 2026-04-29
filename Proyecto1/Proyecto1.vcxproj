@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cola.h" />
     <ClInclude Include="ControladorArchivos.h" />
+    <ClInclude Include="ControladorRutas.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Color.h" />
@@ -28,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControladorArchivos.cpp" />
+    <ClCompile Include="ControladorRutas.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Ruta.cpp" />

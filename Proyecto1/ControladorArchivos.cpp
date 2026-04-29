@@ -1,10 +1,10 @@
 #include "ControladorArchivos.h"
 ControladorArchivos::ControladorArchivos(){}
-ControladorArchivos::ControladorArchivos(std::string nombrearchivo){
+ControladorArchivos::ControladorArchivos(string nombrearchivo){
 	this->nombrearchivo = nombrearchivo;
 }
 void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta*>* rutas, Lista<CiudadId*>* MapaCiudades) {
-    std::ifstream archivo(nombrearchivo);
+    ifstream archivo(nombrearchivo);
     if (!archivo.is_open()) {
         cout << "No se puedo abrir el archivo" << std::endl;
         return;
@@ -30,8 +30,7 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
        
 
         if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, aerolinea, ',')
-            && getline(ss, precio, ',') && getline(ss, distancia, ',')) {
-
+            && getline(ss, precio, ',') && getline(ss, distancia)) {
             float dbprecio = stof(precio);
             float dbdistancia = stof(distancia);
             Ruta* aux = new Ruta(origen, destino, aerolinea, dbprecio, dbdistancia);
@@ -53,9 +52,9 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
     for (auto i = 0; i < totalCiudades; i++) {
         Lista<int>* fila = new Lista<int>(); 
         for (auto j = 0; j < totalCiudades; j++) {
-            fila->agregaFinal(0);           
+            fila->agregaFinal(0);
         }
-        conexiones->agregaFinal(fila);       
+        conexiones->agregaFinal(fila);
     }
 
     for (auto i = 0; i < rutas->longitud(); i++) {
@@ -68,7 +67,12 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
             Lista<int>* filaOrigen = conexiones->obtenerPos(idOrigen);
 
             filaOrigen->modificarPos(idDestino, 1);
-            conexiones->obtenerPos(idDestino)->modificarPos(idOrigen, 1);
+            conexiones->obtenerPos(idDestino)->modificarPos(1, idOrigen);
+
+            Lista<int>* filaDestino = conexiones->obtenerPos(idDestino);
+
+            filaDestino->modificarPos(1, idOrigen);
+            conexiones->obtenerPos(idOrigen)->modificarPos(1, idDestino);
         }
     }
 }

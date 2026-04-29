@@ -1,11 +1,17 @@
 #include "Lista.h"
 #include "Color.h"
+#include "ControladorRutas.h"
+#include "conio.h"
 using namespace std;
 using namespace ColorUI;
-
+void Menu() {
+	cout << "======Menu======\n";
+	cout << "1. Buscar ruta mas corta\n";
+	cout << "2. Agregar nueva ruta\n";
+	cout << "3. Salir\n";
+}
 int main() {
-
-
-	Menuprincipal();
+		system("cls");
+		Menuprincipal();
 	return 0;
 }
