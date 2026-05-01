@@ -40,6 +40,9 @@
     <ClCompile Include="ControladorRutas.cpp">
       <Filter>Controlador</Filter>
     </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Nodo.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="ControladorRutas.h">
       <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticket.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

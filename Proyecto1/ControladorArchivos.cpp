@@ -25,15 +25,13 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
 
     while (getline(archivo, linea)) {
         stringstream ss(linea); 
-        string origen, destino, aerolinea, precio, distancia;
+        string origen, destino, distancia;
 
        
 
-        if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, aerolinea, ',')
-            && getline(ss, precio, ',') && getline(ss, distancia)) {
-            float dbprecio = stof(precio);
+        if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, distancia)) {
             float dbdistancia = stof(distancia);
-            Ruta* aux = new Ruta(origen, destino, aerolinea, dbprecio, dbdistancia);
+            Ruta* aux = new Ruta(origen, destino, dbdistancia);
             rutas->agregaFinal(aux);
 
             

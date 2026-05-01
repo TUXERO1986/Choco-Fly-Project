@@ -27,6 +27,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Ruta.h" />
     <ClInclude Include="CiudadId.h" />
+    <ClInclude Include="Ticket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControladorArchivos.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Ruta.cpp" />
     <ClCompile Include="CiudadId.cpp" />
+    <ClCompile Include="Ticket.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

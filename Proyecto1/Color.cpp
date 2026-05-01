@@ -10,7 +10,7 @@ void Menuprincipal() {
 		system("cls");
         cout << UNDERLINE;
         ColorUI::printGradient("\t =================== ", femboy, false);
-        ColorUI::printGradient("\t | Femboys Airline |", femboy, false);
+        ColorUI::printGradient("\t | ChocoFly |", femboy, false);
         ColorUI::printGradient("\t =================== \n", femboy, false);
         cout << RESET;
         ColorUI::printGradient("[1] Vuelos  ", gege, false, false);
