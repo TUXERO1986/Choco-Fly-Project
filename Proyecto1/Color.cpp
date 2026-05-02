@@ -1,28 +1,55 @@
 #include <iostream>
 #include "Color.h"
-
+#include <conio.h>
 using namespace std;
 using namespace ColorUI;
-
+ControladorRutas* controlador = new ControladorRutas();
 void Menuprincipal() {
-
-    int a;
-    cout << UNDERLINE ;
-    ColorUI::printGradient("\t =================== ", femboy, false);
-    ColorUI::printGradient("\t | Femboys Airline |", femboy, false);
-    ColorUI::printGradient("\t =================== \n", femboy, false);
-    cout << RESET;
-    ColorUI::printGradient("[1] Vuelos  ", gege, false, false);
-    ColorUI::printGradient(" \t[2] Paquetes ", gege, false, false);
-    ColorUI::printGradient(" \t[3] Hospedaje ", gege, false,false);
-    cout << BLINK; 
-    ColorUI::printGradient(" \t[4] Creditos ", Alerta, false, false);
-    cout << RESET;
-    cin >> a;
-    if (a == 4) {
-        system("cls");
-        creditos();
-    }
+    char a;
+    do {
+		system("cls");
+        cout << UNDERLINE;
+        ColorUI::printGradient("\t =================== ", femboy, false);
+        ColorUI::printGradient("\t | ChocoFly |", femboy, false);
+        ColorUI::printGradient("\t =================== \n", femboy, false);
+        cout << RESET;
+        ColorUI::printGradient("[1] Vuelos  ", gege, false, false);
+        ColorUI::printGradient(" \t[2] Buscar Vuelos Disponibles ", gege, false, false);
+        ColorUI::printGradient(" \t[3] Hospedaje ", gege, false, false);
+        cout << BLINK;
+        ColorUI::printGradient(" \t[4] Salir ", Alerta, false, false);
+        cout << RESET;
+        a = _getch();
+        switch (a) {
+        case '1':
+        {
+            system("cls");
+            cout << "Vuelos disponibles:\n";
+            controlador->MostrarTodasLasRutas();
+            system("pause>0");
+            break;
+        }
+        case '2': {
+			system("cls");
+			string origen, destino;
+			cout << "Digite la ciudad de origen: ";
+            getline(cin, origen);
+			cout << "Digite la ciudad de destino: ";
+            getline(cin, destino);
+			//string resultado = controlador->BuscarRutaMasCorta(origen, destino);
+            //cout << resultado;
+            cin.ignore();
+            system("pause>0");
+			break;
+        }
+        case '4': {
+            system("cls");
+            creditos();
+            system("pause>0");
+			break;
+        }
+        }
+    } while (a != '5');
 
 }
 void creditos() {
