@@ -1,17 +1,6 @@
 #pragma once
 #include "ControladorArchivos.h"
 #include "Cola.h"
-struct EstadoRuta {
-    int idCiudadActual;
-    string recorrido; 
-    int cantidadSaltos;    
-
-    EstadoRuta(int id, std::string rec, int saltos) {
-        idCiudadActual = id;
-        recorrido = rec;
-        cantidadSaltos = saltos;
-    }
-};
 class ControladorRutas
 {
 private:
@@ -19,11 +8,40 @@ private:
 		Lista<Ruta*>* rutas;
 		Lista<Lista<int>*>* conexiones;
 		Lista<CiudadId*>* MapaCiudades;
+        function<size_t(Lista<CiudadId*>*, string)> ObtenerIdCiudad;
+ struct EstadoRuta {
+   int idCiudadActual;
+   int cantidadSaltos;
+   Lista<Ruta*>* vuelosTomados; 
+
+   EstadoRuta(int id, int saltos) {
+       idCiudadActual = id;
+       cantidadSaltos = saltos;
+       vuelosTomados = new Lista<Ruta*>();
+   }
+
+   EstadoRuta(int id, int saltos, Lista<Ruta*>* vuelosAnteriores, Ruta* nuevoVuelo) {
+       idCiudadActual = id;
+       cantidadSaltos = saltos;
+       vuelosTomados = new Lista<Ruta*>();
+
+       for (unsigned int i = 0; i < vuelosAnteriores->longitud(); i++) {
+           vuelosTomados->agregaFinal(vuelosAnteriores->obtenerPos(i));
+       }
+
+       if (nuevoVuelo != nullptr) {
+           vuelosTomados->agregaFinal(nuevoVuelo);
+       }
+   }
+    };
 
 public:
     ControladorRutas();
-	string BuscarRutaMasCorta(string origen, string destino);
-	void AgregarNuevaRuta(string origen, string destino, string aerolinea, float precio, float distancia);
+	Lista<Ruta*>* BuscarRutaMasCorta(string origen, string destino);
+	void AgregarNuevaRuta(string origen, string destino, float distancia);
 	void MostrarTodasLasRutas();
+	Lista<Ruta*>* getRutas();
+	Lista<Lista<int>*>* getConexiones();
+	Lista<CiudadId*>* getMapaCiudades();
 };
 

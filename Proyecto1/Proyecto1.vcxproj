@@ -22,21 +22,25 @@
     <ClInclude Include="Cola.h" />
     <ClInclude Include="ControladorArchivos.h" />
     <ClInclude Include="ControladorRutas.h" />
+    <ClInclude Include="ControladorVuelos.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Ruta.h" />
     <ClInclude Include="CiudadId.h" />
     <ClInclude Include="Ticket.h" />
+    <ClInclude Include="Vuelo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControladorArchivos.cpp" />
     <ClCompile Include="ControladorRutas.cpp" />
+    <ClCompile Include="ControladorVuelos.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Ruta.cpp" />
     <ClCompile Include="CiudadId.cpp" />
     <ClCompile Include="Ticket.cpp" />
+    <ClCompile Include="Vuelo.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

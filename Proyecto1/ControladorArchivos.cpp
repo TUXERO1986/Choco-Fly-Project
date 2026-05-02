@@ -2,6 +2,15 @@
 ControladorArchivos::ControladorArchivos(){}
 ControladorArchivos::ControladorArchivos(string nombrearchivo){
 	this->nombrearchivo = nombrearchivo;
+    ObtenerIdCiudad = [](Lista<CiudadId*>* mapaciudades, string nombre) {
+        for (unsigned int i = 0; i < mapaciudades->longitud(); i++) {
+            CiudadId* aux = mapaciudades->obtenerPos(i);
+            if (aux->getNombre() == nombre) {
+                return aux->getId();
+            }
+        }
+        return -1; 
+		};
 }
 void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta*>* rutas, Lista<CiudadId*>* MapaCiudades) {
     ifstream archivo(nombrearchivo);
@@ -13,15 +22,7 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
     string linea;
     int contadorId = 0; 
 
-    auto getIdCiudad = [](Lista<CiudadId*>* mapaciudades, string nombre) {
-        for (auto i = 0; i < mapaciudades->longitud(); i++) {
-            CiudadId* aux = mapaciudades->obtenerPos(i);
-            if (aux->getNombre() == nombre) {
-                return aux->getId();
-            }
-        }
-        return -1; 
-        };
+
 
     while (getline(archivo, linea)) {
         stringstream ss(linea); 
@@ -35,10 +36,10 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
             rutas->agregaFinal(aux);
 
             
-            if (getIdCiudad(MapaCiudades, origen) == -1) {
+            if (ObtenerIdCiudad(MapaCiudades, origen) == -1) {
                 MapaCiudades->agregaFinal(new CiudadId(origen, contadorId++));
             }
-            if (getIdCiudad(MapaCiudades, destino) == -1) {
+            if (ObtenerIdCiudad(MapaCiudades, destino) == -1) {
                 MapaCiudades->agregaFinal(new CiudadId(destino, contadorId++));
             }
         }
@@ -57,8 +58,8 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
 
     for (auto i = 0; i < rutas->longitud(); i++) {
         Ruta* aux = rutas->obtenerPos(i);
-        int idOrigen = getIdCiudad(MapaCiudades, aux->getOrigen());
-        int idDestino = getIdCiudad(MapaCiudades, aux->getDestino());
+        int idOrigen = ObtenerIdCiudad(MapaCiudades, aux->getOrigen());
+        int idDestino = ObtenerIdCiudad(MapaCiudades, aux->getDestino());
 
         if (idOrigen != -1 && idDestino != -1) {
 

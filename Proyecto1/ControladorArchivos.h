@@ -5,10 +5,12 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include <functional>
 class ControladorArchivos
 { 
 private:
 	string nombrearchivo;
+	function<size_t(Lista<CiudadId*>* , string)> ObtenerIdCiudad;
 public:
 	ControladorArchivos();
 	ControladorArchivos(string);

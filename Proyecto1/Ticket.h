@@ -8,12 +8,14 @@ private:
 	string origen;
 	string destino;
 	string escalas;
+	string fecha;
+	float distancia;
 	float precio;
 	int equipaje;
 	int equipajecabina;
 public:
 	Ticket();
-	Ticket(string origen,string destino,float precio,int equipaje,int equipajecabina);
+	Ticket(string origen,string destino,string fecha,float precio,int equipaje,int equipajecabina,float distancia);
 	void MostrarTicket();
 	string getOrigen();
 	string getDestino();

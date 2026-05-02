@@ -53,6 +53,17 @@ Lista<T>::Lista() {
     ini = nullptr;
     lon = 0;
 }
+template<class T>
+Lista<T>::~Lista() {
+    Nodo<T>* aux = ini;
+    while (aux != nullptr) {
+        Nodo<T>* siguiente = aux->getSig();
+        delete aux;
+        aux = siguiente;
+    }
+    ini = nullptr;
+    lon = 0;
+}
 
 template <class T>
 uint Lista<T>::longitud() {

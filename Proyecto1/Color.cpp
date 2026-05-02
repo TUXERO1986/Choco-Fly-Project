@@ -36,8 +36,8 @@ void Menuprincipal() {
             getline(cin, origen);
 			cout << "Digite la ciudad de destino: ";
             getline(cin, destino);
-			string resultado = controlador->BuscarRutaMasCorta(origen, destino);
-            cout << resultado;
+			//string resultado = controlador->BuscarRutaMasCorta(origen, destino);
+            //cout << resultado;
             cin.ignore();
             system("pause>0");
 			break;

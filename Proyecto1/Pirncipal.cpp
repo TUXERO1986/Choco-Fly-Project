@@ -1,6 +1,6 @@
 #include "Lista.h"
 #include "Color.h"
-#include "ControladorRutas.h"
+#include "ControladorVuelos.h"
 #include "conio.h"
 using namespace std;
 using namespace ColorUI;
@@ -11,7 +11,12 @@ void Menu() {
 	cout << "3. Salir\n";
 }
 int main() {
-		system("cls");
-		Menuprincipal();
+	srand(time(0));
+	ControladorVuelos* controladorVuelos = new ControladorVuelos();
+		controladorVuelos->GenerarVuelos(150);
+		controladorVuelos->MostrarVuelos();
+		controladorVuelos->GenerarVuelosConEscala("Piura","Santiago");
+
+	//Menuprincipal();
 	return 0;
 }

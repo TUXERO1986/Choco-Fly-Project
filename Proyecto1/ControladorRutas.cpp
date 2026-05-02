@@ -4,70 +4,80 @@ ControladorRutas::ControladorRutas() {
 	rutas = new Lista<Ruta*>();
 	conexiones = new Lista<Lista<int>*>();
 	MapaCiudades = new Lista<CiudadId*>();
-	controladorArchivos->LeerArchivo(conexiones, rutas, MapaCiudades);
-}
-string ControladorRutas::BuscarRutaMasCorta(string origen, string destino) {
-
-    auto getIdCiudad = [](Lista<CiudadId*>* mapaciudades, string nombre) {
-        for (auto i = 0; i < mapaciudades->longitud(); i++) {
+    ObtenerIdCiudad = [](Lista<CiudadId*>* mapaciudades, string nombre) {
+        for (unsigned int i = 0; i < mapaciudades->longitud(); i++) {
             CiudadId* aux = mapaciudades->obtenerPos(i);
             if (aux->getNombre() == nombre) {
                 return aux->getId();
             }
         }
         return -1;
-    };
-    int idOri = getIdCiudad(MapaCiudades, origen);
-    int idDes = getIdCiudad(MapaCiudades, destino);
-
-    if (idOri == -1 || idDes == -1) return "Error: Una de las ciudades no existe.\r\n";
-    if (idOri == idDes) return "El origen y destino son el mismo.\r\n";
-
-    
-    Cola<EstadoRuta*>* cola = new Cola<EstadoRuta*>();
-
-    
-    Lista<bool>* visitados = new Lista<bool>();
-    for (int i = 0; i < MapaCiudades->longitud(); i++) {
-        visitados->agregaFinal(false);
-    }
-
-    
-    cola->encolar(new EstadoRuta(idOri, origen, 0));
-    visitados->modificarPos(idOri, true); 
-
-    
-    while (!cola->estaVacia()) {
-
-        EstadoRuta* actual = cola->desencolar();
-
-        
-        if (actual->idCiudadActual == idDes) {
-            int numeroEscalas = actual->cantidadSaltos - 1; 
-            std::string resultado = "Ruta encontrada (" + std::to_string(numeroEscalas) + " escalas): " + actual->recorrido + "\r\n";
-            return resultado; 
-        }
-
-        Lista<int>* filaActual = conexiones->obtenerPos(actual->idCiudadActual);
-
-        for (int i = 0; i < MapaCiudades->longitud(); i++) {
-
-            if (filaActual->obtenerPos(i) == 1 && visitados->obtenerPos(i) == false) {
-
-                visitados->modificarPos(i, true);
-
-                std::string nombreSiguienteCiudad = MapaCiudades->obtenerPos(i)->getNombre();
-                std::string nuevaRuta = actual->recorrido + " -> " + nombreSiguienteCiudad;
-
-                cola->encolar(new EstadoRuta(i, nuevaRuta, actual->cantidadSaltos + 1));
-            }
-        }
-    }
-
-    return "No hay ninguna ruta posible entre " + origen + " y " + destino + ".\r\n";
+        };
+	controladorArchivos->LeerArchivo(conexiones, rutas, MapaCiudades);
 }
-void ControladorRutas::AgregarNuevaRuta(string origen, string destino, string aerolinea, float precio, float distancia) {
-    // Aquí iría la lógica para agregar una nueva ruta a tus estructuras
+ Lista<Ruta*>* ControladorRutas::BuscarRutaMasCorta(string origen, string destino) {
+
+     int idOri = ObtenerIdCiudad(MapaCiudades, origen);
+     int idDes = ObtenerIdCiudad(MapaCiudades, destino);
+
+     if (idOri == -1 || idDes == -1) return nullptr;
+     if (idOri == idDes) return nullptr;
+
+     Cola<EstadoRuta*>* cola = new Cola<EstadoRuta*>();
+
+     Lista<bool>* visitados = new Lista<bool>();
+     for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) 
+         visitados->agregaFinal(false);
+     
+     cola->encolar(new EstadoRuta(idOri, 0));
+     visitados->modificarPos(true, idOri); 
+
+     while (!cola->estaVacia()) {
+
+         EstadoRuta* actual = cola->desencolar();
+
+         if (actual->idCiudadActual == idDes) 
+             return actual->vuelosTomados;
+         
+         Lista<int>* filaActual = conexiones->obtenerPos(actual->idCiudadActual);
+
+         for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) {
+
+             if (filaActual->obtenerPos(i) == 1 && visitados->obtenerPos(i) == false) {
+
+                 visitados->modificarPos(true, i);
+
+                 string nombreOrigen = MapaCiudades->obtenerPos(actual->idCiudadActual)->getNombre();
+                 string nombreDestino = MapaCiudades->obtenerPos(i)->getNombre();
+
+                 Ruta* rutaEncontrada = nullptr;
+                 for (unsigned int r = 0; r < rutas->longitud(); r++) {
+                     Ruta* aux = rutas->obtenerPos(r);
+                     if (aux->getOrigen() == nombreOrigen && aux->getDestino() == nombreDestino) {
+                         rutaEncontrada = aux;
+                         break; 
+                     }
+                 }
+
+                 cola->encolar(new EstadoRuta(i, actual->cantidadSaltos + 1, actual->vuelosTomados, rutaEncontrada));
+             }
+         }
+     }
+
+     return nullptr;
+}
+void ControladorRutas::AgregarNuevaRuta(string origen, string destino, float distancia) {
+	Ruta* ruta = new Ruta(origen, destino, distancia);
+	rutas->agregaFinal(ruta);
+}
+Lista<Ruta*>* ControladorRutas::getRutas() {
+    return rutas;
+}
+Lista<Lista<int>*>* ControladorRutas::getConexiones() {
+    return conexiones;
+}
+Lista<CiudadId*>* ControladorRutas::getMapaCiudades() {
+    return MapaCiudades;
 }
 void ControladorRutas::MostrarTodasLasRutas() {
 
