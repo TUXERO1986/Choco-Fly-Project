@@ -27,7 +27,7 @@
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Ruta.h" />
-    <ClInclude Include="CiudadId.h" />
+    <ClInclude Include="CiudadID.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="Vuelo.h" />
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Ruta.cpp" />
-    <ClCompile Include="CiudadId.cpp" />
+    <ClCompile Include="CiudadID.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Vuelo.cpp" />
   </ItemGroup>

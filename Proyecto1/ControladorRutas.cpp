@@ -3,10 +3,10 @@ ControladorRutas::ControladorRutas() {
 	controladorArchivos = new ControladorArchivos("Rutas.txt");
 	rutas = new Lista<Ruta*>();
 	conexiones = new Lista<Lista<int>*>();
-	MapaCiudades = new Lista<CiudadId*>();
-    ObtenerIdCiudad = [](Lista<CiudadId*>* mapaciudades, string nombre) {
+	MapaCiudades = new Lista<CiudadID*>();
+    ObtenerIdCiudad = [](Lista<CiudadID*>* mapaciudades, string nombre) {
         for (unsigned int i = 0; i < mapaciudades->longitud(); i++) {
-            CiudadId* aux = mapaciudades->obtenerPos(i);
+            CiudadID* aux = mapaciudades->obtenerPos(i);
             if (aux->getNombre() == nombre) {
                 return aux->getId();
             }
@@ -76,7 +76,7 @@ Lista<Ruta*>* ControladorRutas::getRutas() {
 Lista<Lista<int>*>* ControladorRutas::getConexiones() {
     return conexiones;
 }
-Lista<CiudadId*>* ControladorRutas::getMapaCiudades() {
+Lista<CiudadID*>* ControladorRutas::getMapaCiudades() {
     return MapaCiudades;
 }
 void ControladorRutas::MostrarTodasLasRutas() {

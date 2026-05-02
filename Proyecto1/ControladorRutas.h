@@ -7,8 +7,8 @@ private:
 	    ControladorArchivos* controladorArchivos;
 		Lista<Ruta*>* rutas;
 		Lista<Lista<int>*>* conexiones;
-		Lista<CiudadId*>* MapaCiudades;
-        function<size_t(Lista<CiudadId*>*, string)> ObtenerIdCiudad;
+		Lista<CiudadID*>* MapaCiudades;
+        function<size_t(Lista<CiudadID*>*, string)> ObtenerIdCiudad;
  struct EstadoRuta {
    int idCiudadActual;
    int cantidadSaltos;
@@ -42,6 +42,6 @@ public:
 	void MostrarTodasLasRutas();
 	Lista<Ruta*>* getRutas();
 	Lista<Lista<int>*>* getConexiones();
-	Lista<CiudadId*>* getMapaCiudades();
+	Lista<CiudadID*>* getMapaCiudades();
 };
 

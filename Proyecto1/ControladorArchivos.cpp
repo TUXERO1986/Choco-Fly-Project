@@ -2,9 +2,9 @@
 ControladorArchivos::ControladorArchivos(){}
 ControladorArchivos::ControladorArchivos(string nombrearchivo){
 	this->nombrearchivo = nombrearchivo;
-    ObtenerIdCiudad = [](Lista<CiudadId*>* mapaciudades, string nombre) {
+    ObtenerIdCiudad = [](Lista<CiudadID*>* mapaciudades, string nombre) {
         for (unsigned int i = 0; i < mapaciudades->longitud(); i++) {
-            CiudadId* aux = mapaciudades->obtenerPos(i);
+            CiudadID* aux = mapaciudades->obtenerPos(i);
             if (aux->getNombre() == nombre) {
                 return aux->getId();
             }
@@ -12,7 +12,7 @@ ControladorArchivos::ControladorArchivos(string nombrearchivo){
         return -1; 
 		};
 }
-void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta*>* rutas, Lista<CiudadId*>* MapaCiudades) {
+void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta*>* rutas, Lista<CiudadID*>* MapaCiudades) {
     ifstream archivo(nombrearchivo);
     if (!archivo.is_open()) {
         cout << "No se puedo abrir el archivo" << std::endl;
@@ -37,10 +37,10 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
 
             
             if (ObtenerIdCiudad(MapaCiudades, origen) == -1) {
-                MapaCiudades->agregaFinal(new CiudadId(origen, contadorId++));
+                MapaCiudades->agregaFinal(new CiudadID(origen, contadorId++));
             }
             if (ObtenerIdCiudad(MapaCiudades, destino) == -1) {
-                MapaCiudades->agregaFinal(new CiudadId(destino, contadorId++));
+                MapaCiudades->agregaFinal(new CiudadID(destino, contadorId++));
             }
         }
     }

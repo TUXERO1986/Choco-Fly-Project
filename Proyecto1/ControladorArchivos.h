@@ -1,7 +1,7 @@
 #pragma once
 #include "Lista.h"
 #include "Ruta.h"
-#include "CiudadId.h"
+#include "CiudadID.h"
 #include <sstream>
 #include <fstream>
 #include <string>
@@ -10,12 +10,12 @@ class ControladorArchivos
 { 
 private:
 	string nombrearchivo;
-	function<size_t(Lista<CiudadId*>* , string)> ObtenerIdCiudad;
+	function<size_t(Lista<CiudadID*>* , string)> ObtenerIdCiudad;
 public:
 	ControladorArchivos();
 	ControladorArchivos(string);
 
-	void LeerArchivo(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadId*>*);
+	void LeerArchivo(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadID*>*);
 	//void LeerArchivo(std::string);
 	//void GuardarDatoArchivo(std::string);
 };
