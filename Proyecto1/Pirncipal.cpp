@@ -13,10 +13,10 @@ void Menu() {
 int main() {
 	srand(time(0));
 	ControladorVuelos* controladorVuelos = new ControladorVuelos();
-		controladorVuelos->GenerarVuelos(150);
+		//controladorVuelos->GenerarVuelos(150);
 		controladorVuelos->MostrarVuelos();
-		controladorVuelos->GenerarVuelosConEscala("Piura","Santiago");
+		//controladorVuelos->GenerarVuelosConEscala("Piura","Santiago");
 
-	//Menuprincipal();
+		delete controladorVuelos;
 	return 0;
 }
