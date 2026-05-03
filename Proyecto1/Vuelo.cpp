@@ -7,11 +7,13 @@ Vuelo::Vuelo(string o, string d, string e, string f, float p) {
 	this->precio = p;
 }
 void Vuelo::MostrarVuelo() {
+	cout << "---------------------------------------" << endl;
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
 	cout << "Fecha: " << fecha << endl;
 	cout << "Precio: " << precio << endl;
+	cout << "---------------------------------------" << endl;
 }
 string Vuelo::GetFechaPorDestinoYOrigen(string origen,string destino) {
 	if (this->origen == origen && this->destino == destino) {

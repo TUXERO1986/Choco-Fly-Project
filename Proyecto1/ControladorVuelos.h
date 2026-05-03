@@ -16,10 +16,12 @@ float CalcularDistancia(Lista<Ruta*>* , int );
 public:
 	ControladorVuelos();
 	~ControladorVuelos();
-	bool BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>*& rutas, Lista<Vuelo*>*& cadenaActual);
+	void BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
+		Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas);
 	void MostrarVuelos();
 	void AgregarNuevoVuelo(string origen, string destino, string escalas, string fecha, float precio);
 	void GenerarVuelos(int contador);
 	void GenerarVuelosConEscala(string origen,string destino);
+	Vuelo* ObtenerVueloPorPosicion(int pos);
 };
 

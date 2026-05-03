@@ -22,6 +22,7 @@
     <ClInclude Include="Cola.h" />
     <ClInclude Include="ControladorArchivos.h" />
     <ClInclude Include="ControladorRutas.h" />
+    <ClInclude Include="ControladorTickets.h" />
     <ClInclude Include="ControladorVuelos.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
@@ -34,6 +35,7 @@
   <ItemGroup>
     <ClCompile Include="ControladorArchivos.cpp" />
     <ClCompile Include="ControladorRutas.cpp" />
+    <ClCompile Include="ControladorTickets.cpp" />
     <ClCompile Include="ControladorVuelos.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Color.cpp" />

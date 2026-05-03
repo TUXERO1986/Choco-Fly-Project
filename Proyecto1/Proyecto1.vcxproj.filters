@@ -49,6 +49,9 @@
     <ClCompile Include="ControladorVuelos.cpp">
       <Filter>Controlador</Filter>
     </ClCompile>
+    <ClCompile Include="ControladorTickets.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Nodo.h">
@@ -82,6 +85,9 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="ControladorVuelos.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorTickets.h">
       <Filter>Controlador</Filter>
     </ClInclude>
   </ItemGroup>

@@ -64,9 +64,19 @@ void ControladorVuelos::GenerarVuelos(int contador) {
 	}
 
 }
-bool ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>*& rutas, Lista<Vuelo*>*& cadenaActual) {
+void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
+    Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas) {
+
     if (indiceRuta == rutas->longitud()) {
-        return true;
+
+        Lista<Vuelo*>* nuevaCombinacion = new Lista<Vuelo*>();
+        for (int i = 0; i < cadenaActual->longitud(); i++) {
+            nuevaCombinacion->agregaFinal(cadenaActual->obtenerPos(i));
+        }
+
+        todasLasCadenas->agregaFinal(nuevaCombinacion);
+
+        return;
     }
 
     Ruta* rutaRequerida = rutas->obtenerPos(indiceRuta);
@@ -81,11 +91,12 @@ bool ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>*& rutas,
 
             if (indiceRuta > 0) {
                 Vuelo* vueloAnterior = cadenaActual->obtenerPos(indiceRuta - 1);
-				int mesAnterior = ObtenerMes(vueloAnterior->getFecha());
-				int diaAnterior = ObtenerDia(vueloAnterior->getFecha());
-				int mesActual = ObtenerMes(vueloActual->getFecha());
-				int diaActual = ObtenerDia(vueloActual->getFecha());
-                if (mesActual != mesAnterior || (diaActual < diaAnterior||diaActual>diaAnterior+1)) {
+                int mesAnterior = ObtenerMes(vueloAnterior->getFecha());
+                int diaAnterior = ObtenerDia(vueloAnterior->getFecha());
+                int mesActual = ObtenerMes(vueloActual->getFecha());
+                int diaActual = ObtenerDia(vueloActual->getFecha());
+
+                if (mesActual != mesAnterior || (diaActual < diaAnterior || diaActual > diaAnterior + 1)) {
                     fechaValida = false;
                 }
             }
@@ -93,16 +104,12 @@ bool ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>*& rutas,
             if (fechaValida) {
                 cadenaActual->agregaFinal(vueloActual);
 
-                if (BuscarCadenaVuelos(indiceRuta + 1, rutas, cadenaActual)) {
-                    return true; 
-                }
+                BuscarCadenaVuelos(indiceRuta + 1, rutas, cadenaActual, todasLasCadenas);
 
                 cadenaActual->eliminaFinal();
             }
         }
     }
-
-    return false;
 }
 
 void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
@@ -114,57 +121,74 @@ void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
         return;
     }
 
-    Lista<Vuelo*>* vuelosEncontrados = new Lista<Vuelo*>();
+    Lista<Vuelo*>* cadenaTemporal = new Lista<Vuelo*>();
 
-    bool exito = BuscarCadenaVuelos(0, rutasNecesarias, vuelosEncontrados);
+    Lista<Lista<Vuelo*>*>* todasLasCadenas = new Lista<Lista<Vuelo*>*>();
 
-    if (!exito) {
-        cout << "Hay ruta, pero no hay vuelos disponibles en las fechas correctas para conectar." << endl;
-        delete vuelosEncontrados;
-        return;
-    }
+    BuscarCadenaVuelos(0, rutasNecesarias, cadenaTemporal, todasLasCadenas);
 
-    if (vuelosEncontrados->longitud() == 1) {
-        Vuelo* v = vuelosEncontrados->obtenerPos(0);
-
-        cout << "Vuelo Directo Encontrado: " << v->getOrigen() << " -> " << v->getDestino() << " [" << v->getFecha() << "]" << endl;
+    if (todasLasCadenas->longitud() == 0) {
+        cout << "Hay ruta espacial, pero no hay vuelos disponibles en las fechas correctas para conectar." << endl;
     }
     else {
+        cout << "Se encontraron " << todasLasCadenas->longitud() << " opciones de vuelo:" << endl;
 
-        Vuelo* primerVuelo = vuelosEncontrados->obtenerPos(0);
-        Vuelo* ultimoVuelo = vuelosEncontrados->obtenerPos(vuelosEncontrados->longitud() - 1);
+        // 3. Recorremos TODAS las combinaciones encontradas
+        for (int c = 0; c < todasLasCadenas->longitud(); c++) {
 
-        string origenFinal = primerVuelo->getOrigen();
-        string destinoFinal = ultimoVuelo->getDestino();
+            Lista<Vuelo*>* vuelosEncontrados = todasLasCadenas->obtenerPos(c);
 
-        string stringEscalas = "Escalas en: ";
-        string stringFechas = primerVuelo->getFecha(); 
+            if (vuelosEncontrados->longitud() == 1) {
+                Vuelo* v = vuelosEncontrados->obtenerPos(0);
+				cout << "Numero: " << vuelos->getPos(v) << endl;
+				v->MostrarVuelo();
+                AgregarNuevoVuelo(v->getOrigen(), v->getDestino(), "Directo", v->getFecha(), v->getPrecio());
+            }
+            else {
+                Vuelo* primerVuelo = vuelosEncontrados->obtenerPos(0);
+                Vuelo* ultimoVuelo = vuelosEncontrados->obtenerPos(vuelosEncontrados->longitud() - 1);
 
-        for (int i = 0; i < vuelosEncontrados->longitud() - 1; i++) {
-            Vuelo* vActual = vuelosEncontrados->obtenerPos(i);
+                string origenFinal = primerVuelo->getOrigen();
+                string destinoFinal = ultimoVuelo->getDestino();
 
-            stringEscalas += vActual->getDestino();
-            if (i < vuelosEncontrados->longitud() - 2) {
-                stringEscalas += ", ";
+                string stringEscalas ="";
+                string stringFechas = primerVuelo->getFecha();
+
+                for (int i = 0; i < vuelosEncontrados->longitud() - 1; i++) {
+                    Vuelo* vActual = vuelosEncontrados->obtenerPos(i);
+
+                    stringEscalas += vActual->getDestino();
+                    if (i < vuelosEncontrados->longitud() - 2) {
+                        stringEscalas += ", ";
+                    }
+                    if (i > 0) {
+                        stringFechas +=" - " + vActual->getFecha();
+                    }
+                }
+
+                stringFechas += " / " + ultimoVuelo->getFecha();
+                float precioFinal = CalcularPrecio(vuelosEncontrados, vuelosEncontrados->longitud() - 1);
+                float distanciaFinal = CalcularDistancia(rutasNecesarias, rutasNecesarias->longitud() - 1);
+
+                AgregarNuevoVuelo(origenFinal, destinoFinal, stringEscalas, stringFechas, precioFinal);
+
+				Vuelo* aux=vuelos->obtenerFinal();
+				cout<<"Numero: "<<vuelos->getPos(aux)<<endl;
+				aux->MostrarVuelo();
             }
 
-            if (i > 0) {
-                stringFechas += " - " + vActual->getFecha();
-            }
+            delete vuelosEncontrados;
         }
 
-        stringFechas += " / " + ultimoVuelo->getFecha();
-        float precioFinal= CalcularPrecio(vuelosEncontrados,rutasNecesarias->longitud()-1); 
-        float distanciaFinal = CalcularDistancia(rutasNecesarias,rutasNecesarias->longitud()-1); 
-
-        cout << "\n--- NUEVO TICKET GENERADO ---" << endl;
-        cout << "Origen: " << origenFinal << endl;
-        cout << "Destino: " << destinoFinal << endl;
-        cout << stringEscalas << endl;
-        cout << "Fechas del viaje: " << stringFechas << endl;
-		cout << "Distancia Total: " << distanciaFinal << " km" << endl;
-		cout << "Precio Total: $" << precioFinal << endl;
     }
+
+    delete cadenaTemporal;
+    delete todasLasCadenas;
     delete rutasNecesarias;
-    delete vuelosEncontrados; 
+}
+Vuelo* ControladorVuelos::ObtenerVueloPorPosicion(int pos) {
+    if (pos >= 0 && pos < vuelos->longitud()) {
+        return vuelos->obtenerPos(pos);
+    }
+    return nullptr;
 }
