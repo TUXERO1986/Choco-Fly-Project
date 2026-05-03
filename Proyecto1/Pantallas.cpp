@@ -38,28 +38,31 @@ void LoginScreen() {
     cout << "\t\t\t\t", cin >> usuario;
     ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
     cout << "\t\t\t\t", cin >> password;
+    system("cls");
 
 }
 void Menuprincipal() {
+    RegisterScreen();
+    string registro = R"(
+                                +-----------------------------------------+     
+                                |  ____ _                      __ _       |            __|__
+           __|__                | / ___| |__   ___   ___ ___  / _| |_   _ |     --------(_)--------
+    --------(_)--------         || |   | '_ \ / _ \ / __/ _ \| |_| | | | ||       O  O       O  O
+       O  O       O  O          || |___| | | | (_) | (_| (_) |  _| | |_| ||
+                                | \____|_| |_|\___/ \___\___/|_| |_|\__, ||
+                                |                                   |___/ |
+                                +-----------------------------------------+
 
-    int a;
-    cout << UNDERLINE ;
-    ColorUI::printGradient("\t =================== ", femboy, false);
-    ColorUI::printGradient("\t | ChocoFly        |", femboy, false);
-    ColorUI::printGradient("\t =================== \n", femboy, false);
+   )";
+    cout << BLINK;
+    ColorUI::printGradient(registro, TemaPrincipal, false);
     cout << RESET;
-    ColorUI::printGradient("[1] Vuelos  ", gege, false, false);
-    ColorUI::printGradient(" \t[2] Paquetes ", gege, false, false);
-    ColorUI::printGradient(" \t[3] Hospedaje ", gege, false,false);
-    cout << BLINK; 
-    ColorUI::printGradient(" \t[4] Creditos ", Alerta, false, false);
-    cout << RESET;
-    cin >> a;
-    if (a == 4) {
-        system("cls");
-        creditos();
-    }
-
+    ColorUI::printGradient("\n\n\t\t\t\t\t[1] Vuelos", Exito, false);
+    ColorUI::printGradient("\n\t\t\t\t\t[2] Funcion faltante", Exito, false);
+    ColorUI::printGradient("\n\t\t\t\t\t[3] Creditos", Exito, false);
+    ColorUI::printGradient("\n\t\t\t\t\t[4] Salir", Exito, false);
+    cin.ignore();
+    
 }
 void creditos() {
     cout << BLINK;
