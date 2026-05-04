@@ -1,0 +1,4 @@
+Piura,Lima,100
+Lima,Santiago,250
+Lima,Cusco,300
+Santiago,Buenos Aires,150

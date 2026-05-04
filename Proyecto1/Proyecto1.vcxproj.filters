@@ -8,9 +8,6 @@
     <Filter Include="Principal">
       <UniqueIdentifier>{a3154eac-97f3-4025-93f9-c0253ce39238}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lista-Nodo">
-      <UniqueIdentifier>{3bd76714-a1d4-466c-a3d6-8104c65eb802}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Controlador">
       <UniqueIdentifier>{5612cd2d-eb37-4b8b-98cd-06bd150e51a9}</UniqueIdentifier>
     </Filter>
@@ -19,6 +16,9 @@
     </Filter>
     <Filter Include="Model">
       <UniqueIdentifier>{2afb65fc-6daf-4b9d-bc31-f80238833254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{3bd76714-a1d4-466c-a3d6-8104c65eb802}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,16 +34,35 @@
     <ClCompile Include="Ruta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="CiudadId.cpp">
+=======
+    <ClCompile Include="CiudadID.cpp">
+>>>>>>> origin/main
       <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorRutas.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Vuelo.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorVuelos.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorTickets.cpp">
+      <Filter>Controlador</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Nodo.h">
-      <Filter>Lista-Nodo</Filter>
+      <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="Lista.h">
-      <Filter>Lista-Nodo</Filter>
+      <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>UI</Filter>
@@ -54,8 +73,30 @@
     <ClInclude Include="Ruta.h">
       <Filter>Model</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="CiudadId.h">
+=======
+    <ClInclude Include="CiudadID.h">
+>>>>>>> origin/main
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Cola.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorRutas.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticket.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Vuelo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorVuelos.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorTickets.h">
+      <Filter>Controlador</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

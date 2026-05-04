@@ -53,6 +53,17 @@ Lista<T>::Lista() {
     ini = nullptr;
     lon = 0;
 }
+template<class T>
+Lista<T>::~Lista() {
+    Nodo<T>* aux = ini;
+    while (aux != nullptr) {
+        Nodo<T>* siguiente = aux->getSig();
+        delete aux;
+        aux = siguiente;
+    }
+    ini = nullptr;
+    lon = 0;
+}
 
 template <class T>
 uint Lista<T>::longitud() {
@@ -66,6 +77,7 @@ template <class T>
 void Lista<T>::agregaInicial(T elem) {
     Nodo<T>* nuevo = new Nodo<T>(elem);
     if (nuevo != nullptr) {
+		nuevo->setSig(ini);
         ini = nuevo;
         lon++;
     }
@@ -122,6 +134,29 @@ void Lista<T>::eliminaPos(uint pos) {
 }
 template <class T>
 void Lista<T>::eliminaFinal() {
+    // Si la lista está vacía, no hacemos nada
+    if (lon == 0) return;
+
+    // Si solo hay un elemento, lo eliminamos y reiniciamos la lista
+    if (lon == 1) {
+        delete ini;
+        ini = nullptr;
+        lon = 0;
+        return;
+    }
+
+    // Si hay más de un elemento, recorremos hasta el PENÚLTIMO nodo
+    Nodo<T>* aux = ini;
+    for (int i = 0; i < lon - 2; i++) {
+        aux = aux->getSig();
+    }
+
+    // Guardamos el último nodo, desconectamos el penúltimo y borramos el último
+    Nodo<T>* nodoAEliminar = aux->getSig();
+    aux->setSig(nullptr);
+    delete nodoAEliminar;
+
+    lon--; // Reducimos la longitud
 }
 
 template <class T>
@@ -173,10 +208,10 @@ template <class T>
 uint Lista<T>::getPos(T elem) {
     Nodo<T>* aux = ini;
     for (int i = 0; i < lon; i++) {
-        if (ini->getElemento() == elem)
+        if (aux->getElemento() == elem) // ✅ Corregido a 'aux'
             return i;
-        else aux = aux->getSig();
+        aux = aux->getSig(); // Ya no necesitas el else
     }
-    return lon;
+    return lon; // Retorna la longitud si no lo encuentra
 }
 
