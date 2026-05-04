@@ -1,18 +1,20 @@
 #include <iostream>
 #include "Color.h"
+#include "Windows.h"
 
 using namespace std;
 using namespace ColorUI;
+string usuario, correo, password;
 void RegisterScreen() {
-    string usuario,password,correo;
+   
     
     string registro = R"(
                                  ____            _     _             
-                                |  _ \ ___  __ _(_)___| |_ _ __ ___  
+  (Simulacion de registro)      |  _ \ ___  __ _(_)___| |_ _ __ ___  
                                 | |_) / _ \/ _` | / __| __| '__/ _ \ 
                                 |  _ <  __/ (_| | \__ \ |_| | | (_) |
                                 |_| \_\___|\__, |_|___/\__|_|  \___/ 
-                                           |___/                     )";
+                                           |___/                                )";
     ColorUI::printGradient(registro, Register, false);
     ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
     cout << "\t\t\t\t", cin >> usuario;
@@ -24,11 +26,10 @@ void RegisterScreen() {
     LoginScreen();
 }
 void LoginScreen() {
-    string usuario, password, correo;
 
     string registro = R"(
                                  _                _       
-                                | |    ___   __ _(_)_ __  
+   (Simulacion de logeo)        | |    ___   __ _(_)_ __  
                                 | |   / _ \ / _` | | '_ \ 
                                 | |__| (_) | (_| | | | | |
                                 |_____\___/ \__, |_|_| |_|
@@ -42,7 +43,8 @@ void LoginScreen() {
 
 }
 void Menuprincipal() {
-    RegisterScreen();
+   // RegisterScreen();
+    int opcion;
     string registro = R"(
                                 +-----------------------------------------+     
                                 |  ____ _                      __ _       |            __|__
@@ -61,7 +63,30 @@ void Menuprincipal() {
     ColorUI::printGradient("\n\t\t\t\t\t[2] Funcion faltante", Exito, false);
     ColorUI::printGradient("\n\t\t\t\t\t[3] Creditos", Exito, false);
     ColorUI::printGradient("\n\t\t\t\t\t[4] Salir", Exito, false);
-    cin.ignore();
+    cin >> opcion;
+    switch (opcion)
+    {
+    case 1: {
+        cout << "aqui va la funcion vuelos" << endl;
+    } break;
+    case 2: {
+        cout << "aqui iria la funcion faltante" << endl;
+    } break;
+    case 3: {
+        creditos();
+    } break;
+    default: {
+        system("cls");
+        for (int i = 0; i < 4;i++) {
+
+        ColorUI:printGradient("Saliendo en ", Alerta, false, false); cout << i << endl;
+            Sleep(600);
+        }
+        cout << BLINK;
+        ColorUI::printGradient("Muchas Gracias!", gege, false);
+        system("exit");
+    }        break;
+    }
     
 }
 void creditos() {
