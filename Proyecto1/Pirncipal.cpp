@@ -11,16 +11,8 @@ void Menu() {
 	cout << "3. Salir\n";
 }
 int main() {
-	srand(time(0));
-	string origen, destino;
-	ControladorVuelos* controladorVuelos = new ControladorVuelos();
-		controladorVuelos->GenerarVuelos(50);
-		cout << "Digite el origen: "; 
-		getline(cin,origen);
-		cout << "Digite el destino: ";
-		getline(cin,destino);
-		cin.ignore();
-		controladorVuelos->GenerarVuelosConEscala(origen,destino);
-		delete controladorVuelos;
-	return 0;
+
+
+	RegisterScreen();
+
 }

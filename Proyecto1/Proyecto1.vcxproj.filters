@@ -25,7 +25,7 @@
     <ClCompile Include="Pirncipal.cpp">
       <Filter>Principal</Filter>
     </ClCompile>
-    <ClCompile Include="Color.cpp">
+    <ClCompile Include="Pantallas.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="ControladorArchivos.cpp">
@@ -34,7 +34,11 @@
     <ClCompile Include="Ruta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="CiudadId.cpp">
+=======
     <ClCompile Include="CiudadID.cpp">
+>>>>>>> origin/main
       <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="ControladorRutas.cpp">
@@ -69,7 +73,11 @@
     <ClInclude Include="Ruta.h">
       <Filter>Model</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="CiudadId.h">
+=======
     <ClInclude Include="CiudadID.h">
+>>>>>>> origin/main
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Cola.h">
