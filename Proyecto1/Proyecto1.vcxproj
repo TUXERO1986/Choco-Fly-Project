@@ -27,7 +27,7 @@
     <ClInclude Include="ControladorRutas.h" />
     <ClInclude Include="ControladorTickets.h" />
     <ClInclude Include="ControladorVuelos.h" />
-    <ClInclude Include="Hotel.h" />
+    <ClInclude Include="GestionPantallas.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Color.h" />
@@ -38,6 +38,7 @@
     <ClInclude Include="Vuelo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CiudadId.cpp" />
     <ClCompile Include="ControladorArchivos.cpp" />
     <ClCompile Include="ControladorHoteles.cpp" />
     <ClCompile Include="ControladorPaquetes.cpp" />
@@ -45,12 +46,10 @@
     <ClCompile Include="ControladorRutas.cpp" />
     <ClCompile Include="ControladorTickets.cpp" />
     <ClCompile Include="ControladorVuelos.cpp" />
-    <ClCompile Include="Hotel.cpp" />
-    <ClCompile Include="Paquete.cpp" />
+    <ClCompile Include="GestionPantallas.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
-    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Pantallas.cpp" />
     <ClCompile Include="Ruta.cpp" />
-    <ClCompile Include="CiudadID.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Vuelo.cpp" />
   </ItemGroup>

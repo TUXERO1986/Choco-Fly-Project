@@ -11,10 +11,10 @@ int CiudadID::getId() {
 	return id;
 }
 void CiudadID::setId(int id) {
-	this->id = id; 
+	this->id = id;
 }
-void CiudadID::setNombre(std::string nombre) { 
-	this->nombre = nombre; 
+void CiudadID::setNombre(std::string nombre) {
+	this->nombre = nombre;
 }
 int CiudadID::getIdPorNombre(std::string nombre) {
 	if (this->nombre == nombre)return id;
