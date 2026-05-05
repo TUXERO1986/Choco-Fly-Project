@@ -1,9 +1,10 @@
 #include "Vuelo.h"
-Vuelo::Vuelo(string o, string d, string e, string f, float p) {
+Vuelo::Vuelo(string o, string d, string e, string f, float distancia, float p) {
 	this->origen = o;
 	this->destino = d;
 	this->escalas = e;
 	this->fecha = f;
+	this->distancia = distancia;
 	this->precio = p;
 }
 void Vuelo::MostrarVuelo() {
@@ -13,6 +14,7 @@ void Vuelo::MostrarVuelo() {
 	cout << "Escalas: " << escalas << endl;
 	cout << "Fecha: " << fecha << endl;
 	cout << "Precio: " << precio << endl;
+	cout << "Distancia: " << distancia << endl;
 	cout << "---------------------------------------" << endl;
 }
 string Vuelo::GetFechaPorDestinoYOrigen(string origen,string destino) {
@@ -26,6 +28,8 @@ float Vuelo::getPrecio() { return precio; }
 string Vuelo::getOrigen() { return origen; }
 string Vuelo::getDestino() { return destino; }
 string Vuelo::getEscalas() { return escalas; }
+float Vuelo::getDistancia() { return distancia; }
+
 void Vuelo::setOrigen(string o) { this->origen = o; }
 void Vuelo::setDestino(string d) { this->destino = d; }
 void Vuelo::setEscalas(string e) { this->escalas = e; }

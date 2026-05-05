@@ -1,6 +1,6 @@
 #include "ControladorVuelos.h"
 ControladorVuelos::ControladorVuelos() {
-	controladorRutas = new ControladorRutas();
+	controladorArchivosVuelos = new ControladorArchivos("Vuelos.txt");
 	vuelos = new Lista<Vuelo*>();
 	ObtenerDia = [](string fecha) {
 		size_t pos = fecha.find("-");
@@ -20,22 +20,21 @@ ControladorVuelos::ControladorVuelos() {
 
 	//controladorArchivosVuelos->LeerArchivoVuelos(vuelos);
 }
-   float ControladorVuelos::CalcularPrecio(Lista<Vuelo*>* vuelosnecesarios, int i) {
-        if (i<0)return 0.00;
-		float precioBase = vuelosnecesarios->obtenerPos(i)->getPrecio();
-		return  precioBase+ CalcularPrecio(vuelosnecesarios, i - 1);
-   }
-   float ControladorVuelos::CalcularDistancia(Lista<Ruta*>* rutasnecesarias, int i) {
-       if (i < 0)return 0.00;
-	   float distanciaBase = rutasnecesarias->obtenerPos(i)->getDistancia();
-	   return distanciaBase + CalcularDistancia(rutasnecesarias, i - 1);
-   }
 ControladorVuelos::~ControladorVuelos() {
     for (int i = 0; i < vuelos->longitud(); i++) {
         delete vuelos->obtenerPos(i);
     }
     delete vuelos;
-    delete controladorRutas;
+}
+float ControladorVuelos::CalcularPrecio(Lista<Vuelo*>* vuelosnecesarios, int i) {
+    if (i<0)return 0.00;
+	float precioBase = vuelosnecesarios->obtenerPos(i)->getPrecio();
+    return  precioBase+ CalcularPrecio(vuelosnecesarios, i - 1);
+}
+float ControladorVuelos::CalcularDistancia(Lista<Ruta*>* rutasnecesarias, int i) {
+    if (i < 0)return 0.00;
+	float distanciaBase = rutasnecesarias->obtenerPos(i)->getDistancia();
+	return distanciaBase + CalcularDistancia(rutasnecesarias, i - 1);
 }
 void ControladorVuelos::MostrarVuelos() {
 	for (int i = 0; i < vuelos->longitud(); i++) {
@@ -44,13 +43,13 @@ void ControladorVuelos::MostrarVuelos() {
 		cout << "-----------------------------" << endl;
 	}
 }
-void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas, string fecha, float precio) {
-	Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha, precio);
+void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia, float precio) {
+	Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia, precio);
 	vuelos->agregaFinal(nuevoVuelo);
-	//controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
+	controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
 }
-void ControladorVuelos::GenerarVuelos(int contador) {
-	Lista<Ruta*>* rutas = controladorRutas->getRutas();
+void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
+	controladorArchivosVuelos->VaciarArchivo();
 	for(int i=0; i < contador; i++) {
 		int indiceRuta = rand() % rutas->longitud();
 		Ruta* aux = rutas->obtenerPos(indiceRuta);
@@ -58,9 +57,9 @@ void ControladorVuelos::GenerarVuelos(int contador) {
 		string destino = aux->getDestino();
 		float distancia = aux->getDistancia();
 		float precio = distancia * 0.07; 
-		string fecha = to_string(5+(rand() % 4))+"-"+ to_string(3+(rand() % 5))+"-2026";
+		string fecha = to_string(1+(rand() % 30))+"-"+ to_string(1+(rand() % 12))+"-2026";
 		string escalas = "Directo";
-		AgregarNuevoVuelo(origen, destino, escalas, fecha, precio);
+		AgregarNuevoVuelo(origen, destino, escalas, fecha,distancia, precio);
 	}
 
 }
@@ -112,11 +111,9 @@ void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
     }
 }
 
-void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
+void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Lista<Ruta*>* rutas) {
 
-    Lista<Ruta*>* rutasNecesarias = controladorRutas->BuscarRutaMasCorta(origen, destino);
-
-    if (rutasNecesarias == nullptr || rutasNecesarias->longitud() == 0) {
+    if (rutas == nullptr || rutas->longitud() == 0) {
         cout << "No hay conexion posible entre " << origen << " y " << destino << endl;
         return;
     }
@@ -125,7 +122,7 @@ void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
 
     Lista<Lista<Vuelo*>*>* todasLasCadenas = new Lista<Lista<Vuelo*>*>();
 
-    BuscarCadenaVuelos(0, rutasNecesarias, cadenaTemporal, todasLasCadenas);
+    BuscarCadenaVuelos(0, rutas, cadenaTemporal, todasLasCadenas);
 
     if (todasLasCadenas->longitud() == 0) {
         cout << "Hay ruta espacial, pero no hay vuelos disponibles en las fechas correctas para conectar." << endl;
@@ -142,7 +139,7 @@ void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
                 Vuelo* v = vuelosEncontrados->obtenerPos(0);
 				cout << "Numero: " << vuelos->getPos(v) << endl;
 				v->MostrarVuelo();
-                AgregarNuevoVuelo(v->getOrigen(), v->getDestino(), "Directo", v->getFecha(), v->getPrecio());
+                AgregarNuevoVuelo(v->getOrigen(), v->getDestino(), "Directo", v->getFecha(),v->getDistancia(), v->getPrecio());
             }
             else {
                 Vuelo* primerVuelo = vuelosEncontrados->obtenerPos(0);
@@ -162,15 +159,15 @@ void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
                         stringEscalas += ", ";
                     }
                     if (i > 0) {
-                        stringFechas +=" - " + vActual->getFecha();
+                        stringFechas +=" / " + vActual->getFecha();
                     }
                 }
 
                 stringFechas += " / " + ultimoVuelo->getFecha();
                 float precioFinal = CalcularPrecio(vuelosEncontrados, vuelosEncontrados->longitud() - 1);
-                float distanciaFinal = CalcularDistancia(rutasNecesarias, rutasNecesarias->longitud() - 1);
+                float distanciaFinal = CalcularDistancia(rutas, rutas->longitud() - 1);
 
-                AgregarNuevoVuelo(origenFinal, destinoFinal, stringEscalas, stringFechas, precioFinal);
+                AgregarNuevoVuelo(origenFinal, destinoFinal, stringEscalas, stringFechas, distanciaFinal, precioFinal);
 
 				Vuelo* aux=vuelos->obtenerFinal();
 				cout<<"Numero: "<<vuelos->getPos(aux)<<endl;
@@ -184,7 +181,6 @@ void ControladorVuelos::GenerarVuelosConEscala(string origen, string destino) {
 
     delete cadenaTemporal;
     delete todasLasCadenas;
-    delete rutasNecesarias;
 }
 Vuelo* ControladorVuelos::ObtenerVueloPorPosicion(int pos) {
     if (pos >= 0 && pos < vuelos->longitud()) {
@@ -192,3 +188,4 @@ Vuelo* ControladorVuelos::ObtenerVueloPorPosicion(int pos) {
     }
     return nullptr;
 }
+Lista<Vuelo*>* ControladorVuelos::getVuelos() { return vuelos; }

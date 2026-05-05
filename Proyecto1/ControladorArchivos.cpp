@@ -75,3 +75,147 @@ void ControladorArchivos::LeerArchivo(Lista<Lista<int>*>* conexiones, Lista<Ruta
         }
     }
 }
+void ControladorArchivos::LeerArchivoVuelos(Lista<Vuelo*>* vuelos) {
+    ifstream archivo("Vuelos.txt");
+    if (!archivo.is_open()) return;
+
+    string linea, origen, destino, escalas, fecha, distanciaStr, precioStr;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+        stringstream ss(linea);
+
+        if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, escalas, ',') &&
+            getline(ss, fecha, ',') && getline(ss, distanciaStr, ',') && getline(ss, precioStr)) {
+
+            // Conversión directa sin try-catch
+            float distancia = stof(distanciaStr);
+            float precio = stof(precioStr);
+            vuelos->agregaFinal(new Vuelo(origen, destino, escalas, fecha, distancia, precio));
+        }
+    }
+    archivo.close();
+}
+
+void ControladorArchivos::GuardarDatoArchivoVuelos(Vuelo* v) {
+    ofstream archivo("Vuelos.txt", ios::app);
+    if (archivo.is_open()) {
+        archivo << v->getOrigen() << "," << v->getDestino() << ","
+            << v->getEscalas() << "," << v->getFecha() << ","
+            << v->getDistancia() << "," << v->getPrecio() << "\n";
+        archivo.close();
+    }
+}
+void ControladorArchivos::LeerArchivoHoteles(Lista<Hotel*>* hoteles) {
+    ifstream archivo("Hoteles.txt");
+    if (!archivo.is_open()) return;
+
+    string linea, nombre, ciudad, puntStr, precioStr;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+        stringstream ss(linea);
+
+        if (getline(ss, nombre, ',') && getline(ss, ciudad, ',') &&
+            getline(ss, puntStr, ',') && getline(ss, precioStr)) {
+
+            // Conversión directa sin try-catch
+            float puntuacion = stof(puntStr);
+            float precio = stof(precioStr);
+            hoteles->agregaFinal(new Hotel(nombre, ciudad, puntuacion, precio));
+        }
+    }
+    archivo.close();
+}
+
+void ControladorArchivos::GuardarDatoArchivoHoteles(Hotel* h) {
+    ofstream archivo("Hoteles.txt", ios::app);
+    if (archivo.is_open()) {
+        archivo << h->getNombre() << "," << h->getCiudad() << ","
+            << h->getPuntuacion() << "," << h->getPrecioNoche() << "\n";
+        archivo.close();
+    }
+}
+void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
+    ifstream archivo("Paquetes.txt");
+    if (!archivo.is_open()) return;
+
+    string linea;
+    string vOri, vDes, vEsc, vFec, vDistStr, vPrecStr;
+    string hNom, hCiu, hPuntStr, hPrecStr;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+        stringstream ss(linea);
+
+        if (getline(ss, vOri, ',') && getline(ss, vDes, ',') && getline(ss, vEsc, ',') &&
+            getline(ss, vFec, ',') && getline(ss, vDistStr, ',') && getline(ss, vPrecStr, ',') &&
+            getline(ss, hNom, ',') && getline(ss, hCiu, ',') && getline(ss, hPuntStr, ',') &&
+            getline(ss, hPrecStr)) {
+
+            // Conversión e instanciación directa sin try-catch
+            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr), stof(vPrecStr));
+            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr));
+
+            paquetes->agregaFinal(new Paquete(vueloObj, hotelObj));
+        }
+    }
+    archivo.close();
+}
+
+void ControladorArchivos::GuardarDatoArchivoPaquetes(Paquete* p) {
+    ofstream archivo("Paquetes.txt", ios::app);
+    if (archivo.is_open()) {
+        Vuelo* v = p->getVueloIncluido();
+        Hotel* h = p->getHotelIncluido();
+
+        archivo << v->getOrigen() << "," << v->getDestino() << "," << v->getEscalas() << ","
+            << v->getFecha() << "," << v->getDistancia() << "," << v->getPrecio() << ","
+            << h->getNombre() << "," << h->getCiudad() << ","
+            << h->getPuntuacion() << "," << h->getPrecioNoche() << "\n";
+
+        archivo.close();
+    }
+}
+void ControladorArchivos::LeerArchivoTickets(Lista<Ticket*>* tickets) {
+    ifstream archivo("Tickets.txt");
+    if (!archivo.is_open()) return;
+
+    string linea, nombre, origen, destino, escalas, precioStr, distStr, eqStr, eqCabStr;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+        stringstream ss(linea);
+
+        if (getline(ss, nombre, ',') && getline(ss, origen, ',') && getline(ss, destino, ',') &&
+            getline(ss, escalas, ',') && getline(ss, precioStr, ',') && getline(ss, distStr, ',') &&
+            getline(ss, eqStr, ',') && getline(ss, eqCabStr)) {
+
+            // Conversión directa sin try-catch
+            float precio = stof(precioStr);
+            float distancia = stof(distStr);
+            int equipaje = stoi(eqStr);
+            int eqCabina = stoi(eqCabStr);
+
+            tickets->agregaFinal(new Ticket(nombre, origen, destino, escalas, precio, distancia, equipaje, eqCabina));
+        }
+    }
+    archivo.close();
+}
+
+void ControladorArchivos::GuardarDatoArchivoTickets(Ticket* t) {
+    ofstream archivo("Tickets.txt", ios::app);
+    if (archivo.is_open()) {
+        archivo << t->getNombre() << "," << t->getOrigen() << "," << t->getDestino() << ","
+            << t->getEscalas() << "," << t->getPrecio() << "," << t->getDistancia() << ","
+            << t->getEquipaje() << "," << t->getEquipajeCabina() << "\n";
+        archivo.close();
+    }
+}
+void ControladorArchivos::VaciarArchivo() {
+    // Abrir con ios::trunc elimina todo el contenido inmediatamente
+    ofstream archivo(nombrearchivo, ios::trunc);
+    if (archivo.is_open()) {
+        archivo.close();
+    }
+}

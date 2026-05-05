@@ -22,6 +22,7 @@ Nodo<T>::Nodo() {
 template<class T>
 Nodo<T>::Nodo(T elemento) {
 	this->elemento = elemento;
+	this->sig = nullptr;
 }
 template<class T>
 T Nodo<T>::getElemento() {
