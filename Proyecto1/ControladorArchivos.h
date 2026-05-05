@@ -2,6 +2,10 @@
 #include "Lista.h"
 #include "Ruta.h"
 #include "CiudadID.h"
+#include "Vuelo.h"
+#include "Paquete.h"
+#include "Hotel.h"
+#include "Ticket.h"
 #include <sstream>
 #include <fstream>
 #include <string>
@@ -16,7 +20,14 @@ public:
 	ControladorArchivos(string);
 
 	void LeerArchivo(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadID*>*);
-	//void LeerArchivo(std::string);
-	//void GuardarDatoArchivo(std::string);
+	void LeerArchivoVuelos(Lista<Vuelo*>*);
+	void GuardarDatoArchivoVuelos(Vuelo*);
+	void GuardarDatoArchivoPaquetes(Paquete*);
+	void LeerArchivoPaquetes(Lista<Paquete*>*);
+	void GuardarDatoArchivoHoteles(Hotel*);
+	void LeerArchivoHoteles(Lista<Hotel*>*);
+	void GuardarDatoArchivoTickets(Ticket*);
+	void LeerArchivoTickets(Lista<Ticket*>*);
+	void VaciarArchivo();
 };
 

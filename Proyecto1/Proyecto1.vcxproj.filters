@@ -56,6 +56,21 @@
     <ClCompile Include="ControladorTickets.cpp">
       <Filter>Controlador</Filter>
     </ClCompile>
+    <ClCompile Include="Hotel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Paquete.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorHoteles.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorPaquetes.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorPrincipal.cpp">
+      <Filter>Controlador</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Nodo.h">
@@ -96,6 +111,21 @@
       <Filter>Controlador</Filter>
     </ClInclude>
     <ClInclude Include="ControladorTickets.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="Hotel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Paquete.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorHoteles.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorPaquetes.h">
+      <Filter>Controlador</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorPrincipal.h">
       <Filter>Controlador</Filter>
     </ClInclude>
   </ItemGroup>

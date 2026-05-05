@@ -1,6 +1,6 @@
 #include "Lista.h"
 #include "Color.h"
-#include "ControladorVuelos.h"
+#include "ControladorPrincipal.h"
 #include "conio.h"
 using namespace std;
 using namespace ColorUI;
