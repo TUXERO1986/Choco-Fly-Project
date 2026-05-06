@@ -11,6 +11,9 @@ ControladorHoteles::~ControladorHoteles() {
 	delete hoteles;
 }
 void ControladorHoteles::GenerarHoteles(int contador, Lista<CiudadID*>* listaCiudades) {
+	// RYANN parece que falto poner esto jajajaj
+	controladorArchivos->VaciarArchivo();
+	// ahora si deberia quedar bien.
 	for (int i = 0; i < contador; i++) {
 		int indiceCiudad = rand() % listaCiudades->longitud();
 		string ciudadSeleccionada = listaCiudades->obtenerPos(indiceCiudad)->getNombre();

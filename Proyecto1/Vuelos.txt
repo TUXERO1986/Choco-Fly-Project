@@ -1,10 +1,5 @@
-Santiago,Buenos Aires,Directo,3-5-2026,150,10.5
-Santiago,Buenos Aires,Directo,17-10-2026,150,10.5
-Piura,Lima,Directo,14-6-2026,100,7
-Santiago,Buenos Aires,Directo,4-11-2026,150,10.5
-Santiago,Buenos Aires,Directo,23-8-2026,150,10.5
-Santiago,Buenos Aires,Directo,24-10-2026,150,10.5
-Piura,Lima,Directo,11-9-2026,100,7
-Lima,Cusco,Directo,21-3-2026,300,21
-Piura,Lima,Directo,26-8-2026,100,7
-Piura,Lima,Directo,1-9-2026,100,7
+Lima,Santiago,Directo,5-12-2026,250,17.5
+Piura,Lima,Directo,5-6-2026,100,7
+Lima,Cusco,Directo,23-7-2026,300,21
+Piura,Lima,Directo,6-6-2026,100,7
+Lima,Santiago,Directo,2-4-2026,250,17.5

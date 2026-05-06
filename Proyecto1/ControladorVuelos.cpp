@@ -1,4 +1,5 @@
 #include "ControladorVuelos.h"
+using namespace ColorUI;
 ControladorVuelos::ControladorVuelos() {
 	controladorArchivosVuelos = new ControladorArchivos("Vuelos.txt");
 	vuelos = new Lista<Vuelo*>();
@@ -39,8 +40,11 @@ float ControladorVuelos::CalcularDistancia(Lista<Ruta*>* rutasnecesarias, int i)
 void ControladorVuelos::MostrarVuelos() {
 	for (int i = 0; i < vuelos->longitud(); i++) {
 		Vuelo* aux = vuelos->obtenerPos(i);
+		ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+       // cout  << "[ID DEL VUELO: " << i << "]" << endl;
 		aux->MostrarVuelo();
-		cout << "-----------------------------" << endl;
+		ColorUI::printGradient("-----------------------------",Tux, false);
+		//cout << "-----------------------------" << endl;
 	}
 }
 void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia, float precio) {

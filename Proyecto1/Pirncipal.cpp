@@ -2,17 +2,19 @@
 #include "Color.h"
 #include "ControladorPrincipal.h"
 #include "conio.h"
+#include "GestionPantallas.h"
 using namespace std;
 using namespace ColorUI;
-void Menu() {
-	cout << "======Menu======\n";
-	cout << "1. Buscar ruta mas corta\n";
-	cout << "2. Agregar nueva ruta\n";
-	cout << "3. Salir\n";
-}
+
 int main() {
+    ControladorPrincipal* principal = new ControladorPrincipal();
+    principal->GenerarDatos(5, 5, 5);
 
+    GestionPantallas* ui = new GestionPantallas(principal);
 
-	RegisterScreen();
+    RegisterScreen(principal);
+
+    delete principal;
+    return 0;
 
 }
