@@ -1,0 +1,5 @@
+Hotel 1,Lima,1.36561,104.668
+Hotel 2,Santiago,1.66359,198.279
+Hotel 3,Buenos Aires,1.47633,50.7004
+Hotel 4,Santiago,2.51152,129.749
+Hotel 5,Lima,3.40706,141.075

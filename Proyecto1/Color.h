@@ -21,15 +21,20 @@
  * https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit
  * ============================================================================
  */
+class ControladorPrincipal; // Le avisamos que existe esta clase
 
- // Definicion de funciones:
-void PruebaColor();
-void Menuprincipal();
+// Definicion de funciones de ruteo:
 void creditos();
-void RegisterScreen();
-void LoginScreen();
-void Admin();
-void MenuAdmin();
+void RegisterScreen(ControladorPrincipal* principal);
+void LoginScreen(ControladorPrincipal* principal);  // CORREGIDO
+void Admin(ControladorPrincipal* principal);        // CORREGIDO
+
+// Variables globales de arte (Asegúrate de definirlas en Pantallas.cpp)
+extern std::string chocofly, chocoadmin, admin, registro, login;
+
+
+
+
 
 
 // Espacio de nombres para encapsular toda la funcionalidad relacionada con la UI de colores

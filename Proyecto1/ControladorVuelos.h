@@ -1,5 +1,6 @@
 #pragma once
 #include "ControladorArchivos.h"
+#include "Color.h"
 class ControladorVuelos
 {
 private:
