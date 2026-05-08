@@ -20,8 +20,8 @@ void ControladorPaquetes::GenerarPaquetes(int contador, Lista<Hotel*>* listhotel
 		AgregarNuevoPaquete(listvuelos->obtenerPos(indiceVuelo), listhoteles->obtenerPos(indiceHotel));
 	}
 }
-void ControladorPaquetes::AgregarNuevoPaquete(Vuelo* vuelo, Hotel* hotel) {
-	Paquete* nuevoPaquete = new Paquete(vuelo, hotel);
+void ControladorPaquetes::AgregarNuevoPaquete(Vuelo* vueloIda, Hotel* hotel) {
+	Paquete* nuevoPaquete = new Paquete(vueloIda, hotel);
 	paquetes->agregaFinal(nuevoPaquete);
 	controladorArchivos->GuardarDatoArchivoPaquetes(nuevoPaquete);
 }

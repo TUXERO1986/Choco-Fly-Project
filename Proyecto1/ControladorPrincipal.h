@@ -1,17 +1,20 @@
 #pragma once
 #include "ControladorPaquetes.h"
 #include "ControladorHoteles.h"
-#include "ControladorTickets.h"
+#include "ControladorReservas.h"
 #include "ControladorVuelos.h"
 #include "ControladorRutas.h"
+#include "ControladorUsuarios.h"
 class ControladorPrincipal
 {
 private:
 	ControladorVuelos* controladorVuelos;
 	ControladorHoteles* controladorHoteles;
 	ControladorPaquetes* controladorPaquetes;
-	ControladorTickets* controladorTickets;
+	ControladorReservas* controladorReservas;
 	ControladorRutas* controladorRutas;
+	ControladorUsuarios* controladorUsuarios;
+
 public:
 	ControladorPrincipal();
 	~ControladorPrincipal();
@@ -22,16 +25,22 @@ public:
 	void EliminarVuelo(int indiceVuelo);
 	void EliminarHotel(int indiceHotel);
 	void EliminarPaquete(int indicePaquete);
-	void EliminarTicket(int indiceTicket);
+	void EliminarReserva(int indiceReserva);
 	void ConsultarVuelos(string origen, string destino);
 	void MostrarVuelos();
 	void MostrarHoteles();
 	void MostrarPaquetes();
-	void MostrarTickets();
-	void ComprarTicket(int indiceVuelo, string nombre,int equipaje, int equipajecabina);
+	void MostrarReservasAdmin();
+	void MostrarReservasUsuario(Usuario* userActual);
+	void MostrarVuelosFltrados(string origen, string destino,string fecha1,string fecha2);
+	void MostrarUsuariosAdmin();
+	void ReservarHotel(int indiceHotel, string codigoUsuario, string nombreUsuario, int noches);
+	void ReservarPaquete(int indicePaquete, Usuario* userActual);
+	void ComprarTicket(int indiceVuelo, Usuario* usuariActual);
+	Usuario* VerificarInicioSesion(string nombre, string correo, string password);
 	ControladorHoteles* getControladorHoteles();
 	ControladorPaquetes* getControladorPaquetes();
-	ControladorTickets* getControladorTickets();
+	ControladorReservas* getControladorReservas	();
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 };

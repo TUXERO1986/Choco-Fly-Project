@@ -1,5 +1,5 @@
-Lima,Santiago,Directo,5-12-2026,250,17.5
-Piura,Lima,Directo,5-6-2026,100,7
-Lima,Cusco,Directo,23-7-2026,300,21
-Piura,Lima,Directo,6-6-2026,100,7
-Lima,Santiago,Directo,2-4-2026,250,17.5
+Lima,Cusco,Directo,18-7-2026,300,0
+Santiago,Buenos Aires,Directo,14-5-2026,150,0
+Lima,Santiago,Directo,10-8-2026,250,0
+Piura,Lima,Directo,14-7-2026,100,0
+Piura,Lima,Directo,12-6-2026,100,0

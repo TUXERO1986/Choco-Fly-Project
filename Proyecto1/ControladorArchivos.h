@@ -6,6 +6,9 @@
 #include "Paquete.h"
 #include "Hotel.h"
 #include "Ticket.h"
+#include "ReservaHotel.h"
+#include "ReservaPaquete.h"
+#include "Usuario.h"
 #include <sstream>
 #include <fstream>
 #include <string>
@@ -26,8 +29,10 @@ public:
 	void LeerArchivoPaquetes(Lista<Paquete*>*);
 	void GuardarDatoArchivoHoteles(Hotel*);
 	void LeerArchivoHoteles(Lista<Hotel*>*);
-	void GuardarDatoArchivoTickets(Ticket*);
-	void LeerArchivoTickets(Lista<Ticket*>*);
+	void LeerArchivoUsuarios(Lista<Usuario*>* usuarios);
+	void GuardarDatoArchivoUsuarios(Usuario* usuario);
+	void LeerArchivoReservas(Lista<Reserva*>* listaDestino);
+	void GuardarDatoArchivoReservas(Reserva* reserva);
 	void VaciarArchivo();
 };
 

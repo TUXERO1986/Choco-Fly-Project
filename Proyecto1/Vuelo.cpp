@@ -1,21 +1,25 @@
 #include "Vuelo.h"
 Vuelo::Vuelo(string o, string d, string e, string f, float distancia, float p) {
+	controladorAsientos = new ControladorAsientos();
+	controladorAsientos->GenerarAsientos();
 	this->origen = o;
 	this->destino = d;
 	this->escalas = e;
 	this->fecha = f;
 	this->distancia = distancia;
-	this->precio = p;
 }
 void Vuelo::MostrarVuelo() {
-	cout << "---------------------------------------" << endl;
+
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
 	cout << "Fecha: " << fecha << endl;
 	cout << "Precio: " << precio << endl;
 	cout << "Distancia: " << distancia << endl;
-	cout << "---------------------------------------" << endl;
+
+}
+void Vuelo::MostrarAsientos() {
+	controladorAsientos->MostrarAsientos();
 }
 string Vuelo::GetFechaPorDestinoYOrigen(string origen,string destino) {
 	if (this->origen == origen && this->destino == destino) {

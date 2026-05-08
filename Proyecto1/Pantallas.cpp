@@ -61,7 +61,7 @@ void RegisterScreen(ControladorPrincipal* principal) {
     string modo;
 
     ColorUI::printGradient(registro, Paletas::Register, false);
-    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese el modo (Admin | Usuario)", Paletas::Register, false);
+    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese el modo (Admin | Usuario)", Register, false);
     cout << "\t\t\t\t"; cin >> modo;
 
     if (modo == "Admin" || modo == "admin" || modo == "ADMIN") {

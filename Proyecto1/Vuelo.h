@@ -1,9 +1,9 @@
 #pragma once
-#include <iostream>
-using namespace std;
+#include "ControladorAsientos.h"
 class Vuelo
 {
 private:
+	ControladorAsientos* controladorAsientos;
 	string origen;
 	string destino;
 	string escalas;
@@ -14,6 +14,7 @@ public:
 	Vuelo(string o, string d, string e, string f, float distancia,float p);
 
 	void MostrarVuelo();
+	void MostrarAsientos();
 	string GetFechaPorDestinoYOrigen(string origen,string destino);
 
 	string getOrigen();
@@ -22,7 +23,6 @@ public:
 	string getFecha();
 	float getPrecio();
 	float getDistancia();
-
 	void setOrigen(string o);
 	void setDestino(string d);
 	void setEscalas(string e);
@@ -31,4 +31,3 @@ public:
 	void setDistancia(float distancia);	
 
 };
-

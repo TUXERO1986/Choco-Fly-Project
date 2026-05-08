@@ -177,43 +177,153 @@ void ControladorArchivos::GuardarDatoArchivoPaquetes(Paquete* p) {
         archivo.close();
     }
 }
-void ControladorArchivos::LeerArchivoTickets(Lista<Ticket*>* tickets) {
-    ifstream archivo("Tickets.txt");
+void ControladorArchivos::GuardarDatoArchivoReservas(Reserva* nuevaReserva) {
+    // ios::app abre el archivo y pone el cursor al final, sin borrar lo anterior
+    ofstream archivo("Reservas.txt", ios::app);
+
+    if (archivo.is_open()) {
+        archivo << nuevaReserva->aTextoArchivo() << "\n";
+        archivo.close();
+    }
+}
+
+void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
+    ifstream archivo("Reservas.txt");
     if (!archivo.is_open()) return;
 
-    string linea, nombre, origen, destino, escalas, precioStr, distStr, eqStr, eqCabStr;
+    string linea;
 
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
         stringstream ss(linea);
 
-        if (getline(ss, nombre, ',') && getline(ss, origen, ',') && getline(ss, destino, ',') &&
-            getline(ss, escalas, ',') && getline(ss, precioStr, ',') && getline(ss, distStr, ',') &&
-            getline(ss, eqStr, ',') && getline(ss, eqCabStr)) {
+        string tipo, codUser, nomUser;
 
-            // Conversión directa sin try-catch
-            float precio = stof(precioStr);
-            float distancia = stof(distStr);
-            int equipaje = stoi(eqStr);
-            int eqCabina = stoi(eqCabStr);
+        getline(ss, tipo, ',');
+        getline(ss, codUser, ',');
+        getline(ss, nomUser, ',');
 
-            tickets->agregaFinal(new Ticket(nombre, origen, destino, escalas, precio, distancia, equipaje, eqCabina));
+        if (tipo == "VUELO") {
+            string origen, destino, escalas, precioStr, distStr, eqStr, eqCabStr;
+
+            if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, escalas, ',') &&
+                getline(ss, precioStr, ',') && getline(ss, distStr, ',') &&
+                getline(ss, eqStr, ',') && getline(ss, eqCabStr)) {
+
+                float precio = stof(precioStr);
+                float distancia = stof(distStr);
+                int equipaje = stoi(eqStr);
+                int eqCab = stoi(eqCabStr);
+
+                listaDestino->agregaFinal(new Ticket(codUser, nomUser, origen, destino, escalas, precio, distancia, equipaje, eqCab));
+            }
+        }
+        else if (tipo == "HOTEL") {
+            string nombreHotel, ciudad, nochesStr, precioStr;
+
+            if (getline(ss, nombreHotel, ',') && getline(ss, ciudad, ',') &&
+                getline(ss, nochesStr, ',') && getline(ss, precioStr)) {
+
+                int noches = stoi(nochesStr);
+                float precioTotal = stof(precioStr);
+
+                listaDestino->agregaFinal(new ReservaHotel(codUser, nomUser, nombreHotel, ciudad, noches, precioTotal));
+            }
+        }
+        else if (tipo == "PAQUETE") {
+
+            string idaPart, retornoPart, hotelPart;
+
+            // 1. Leemos el nombre del usuario hasta el primer '|' 
+            // (Ya que en aTextoArchivo pusiste nombreUsuario + "|")
+            if (getline(ss, nomUser, '|') &&
+                getline(ss, idaPart, '|') &&
+                getline(ss, retornoPart, '|') &&
+                getline(ss, hotelPart)) {
+
+                // --- PARSEAR BLOQUE IDA ---
+                stringstream ssIda(idaPart);
+                string iNom, iOri, iDes, iEsc, iPre, iDist, iEq, iEqC;
+                getline(ssIda, iNom, ','); // Saltamos el nombre que guarda el Ticket internamente
+                getline(ssIda, iOri, ',');
+                getline(ssIda, iDes, ',');
+                getline(ssIda, iEsc, ',');
+                getline(ssIda, iPre, ',');
+                getline(ssIda, iDist, ',');
+                getline(ssIda, iEq, ',');
+                getline(ssIda, iEqC, ',');
+
+                // --- PARSEAR BLOQUE RETORNO ---
+                stringstream ssRet(retornoPart);
+                string rNom, rOri, rDes, rEsc, rPre, rDist, rEq, rEqC;
+                getline(ssRet, rNom, ',');
+                getline(ssRet, rOri, ',');
+                getline(ssRet, rDes, ',');
+                getline(ssRet, rEsc, ',');
+                getline(ssRet, rPre, ',');
+                getline(ssRet, rDist, ',');
+                getline(ssRet, rEq, ',');
+                getline(ssRet, rEqC, ',');
+
+                // --- PARSEAR BLOQUE HOTEL ---
+                stringstream ssHot(hotelPart);
+                string hNom, hCiu, hNoc, hPre;
+                getline(ssHot, hNom, ',');
+                getline(ssHot, hCiu, ',');
+                getline(ssHot, hNoc, ',');
+                getline(ssHot, hPre, ',');
+
+                // 2. Creamos los objetos con sus respectivos datos leídos
+                Ticket* vueloIda = new Ticket(codUser, nomUser, iOri, iDes, iEsc, stof(iPre), stof(iDist), stoi(iEq), stoi(iEqC));
+
+                // Aquí usamos las variables 'r' (de retorno) que leímos del archivo
+                Ticket* vueloRetorno = new Ticket(codUser, nomUser, rOri, rDes, rEsc, stof(rPre), stof(rDist), stoi(rEq), stoi(rEqC));
+
+                ReservaHotel* hotelInterno = new ReservaHotel(codUser, nomUser, hNom, hCiu, stoi(hNoc), stof(hPre));
+
+                // 3. Agregamos a la lista
+                listaDestino->agregaFinal(new ReservaPaquete(codUser, nomUser, vueloIda, vueloRetorno, hotelInterno));
+            }
+        }
+    }
+    archivo.close();
+}
+void ControladorArchivos::LeerArchivoUsuarios(Lista<Usuario*>* usuarios) {
+    ifstream archivo("Usuarios.txt");
+
+    if (!archivo.is_open()) return;
+
+    string linea, nombre, correo, password, codigo;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+        stringstream ss(linea);
+
+        if (getline(ss, nombre, ',') &&
+            getline(ss, correo, ',') &&
+            getline(ss, password, ',') &&
+            getline(ss, codigo)) {
+
+            usuarios->agregaFinal(new Usuario(nombre, correo, password, codigo));
         }
     }
     archivo.close();
 }
 
-void ControladorArchivos::GuardarDatoArchivoTickets(Ticket* t) {
-    ofstream archivo("Tickets.txt", ios::app);
+void ControladorArchivos::GuardarDatoArchivoUsuarios(Usuario* u) {
+
+    ofstream archivo("Usuarios.txt", ios::app);
+
     if (archivo.is_open()) {
-        archivo << t->getNombre() << "," << t->getOrigen() << "," << t->getDestino() << ","
-            << t->getEscalas() << "," << t->getPrecio() << "," << t->getDistancia() << ","
-            << t->getEquipaje() << "," << t->getEquipajeCabina() << "\n";
+        archivo << u->getNombre() << ","
+            << u->getCorreo() << ","
+            << u->getPassword() << ","
+            << u->getCodigo() << "\n";
         archivo.close();
     }
 }
 void ControladorArchivos::VaciarArchivo() {
-    // Abrir con ios::trunc elimina todo el contenido inmediatamente
+
     ofstream archivo(nombrearchivo, ios::trunc);
     if (archivo.is_open()) {
         archivo.close();

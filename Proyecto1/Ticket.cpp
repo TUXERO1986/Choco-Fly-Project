@@ -1,7 +1,8 @@
 #include "Ticket.h"
-Ticket::Ticket() = default;
-Ticket::Ticket(string nombre,string origen, string destino, string escalas, float precio, float distancia, int equipaje, int equipajecabina){
-	this->nombre = nombre;
+Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string destino, string escalas, float precio, float distancia, int equipaje, int equipajecabina)
+    : Reserva(codigoUsuario, nombreUsuario)
+{
+	this->nombre = nombreUsuario;
 	this->origen = origen;
 	this->destino = destino;
 	this->escalas = escalas;
@@ -10,8 +11,7 @@ Ticket::Ticket(string nombre,string origen, string destino, string escalas, floa
 	this->equipaje = equipaje;
 	this->equipajecabina = equipajecabina;
 }
-void Ticket::MostrarTicket() {
-	cout << "-----------------------------" << endl;
+void Ticket::MostrarReserva() {
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
@@ -19,7 +19,14 @@ void Ticket::MostrarTicket() {
 	cout << "Distancia: " << distancia << endl;
 	cout << "Equipaje: " << equipaje << endl;
 	cout << "Equipaje de cabina: " << equipajecabina << endl;
-	cout << "-----------------------------" << endl;
+}
+string Ticket::aTextoArchivo() {
+	return "VUELO," + getCodigoUsuario() + "," + getNombre() + "," + origen + "," + destino + "," + escalas + "," + to_string(precio) + "," + to_string(distancia) + "," + to_string(equipaje) + "," + to_string(equipajecabina);
+}
+float Ticket::getPrecioTotal() {
+	float costoEquipaje = equipaje * 10.0f; 
+	float costoEquipajeCabina = equipajecabina * 20.0f; 
+	return precio + costoEquipaje + costoEquipajeCabina;
 }
 string Ticket::getNombre() { return nombre; }
 string Ticket::getOrigen() { return origen; }

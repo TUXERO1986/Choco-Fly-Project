@@ -9,10 +9,10 @@ GestionPantallas::GestionPantallas(ControladorPrincipal* ptrPrincipal) {
 }
 
 void GestionPantallas::Menuprincipal(GestionPantallas* ui) {
-    int opcion;
+    
+	char opcion;
     do {
         system("cls");
-
         cout << BLINK;
         ColorUI::printGradient(chocofly, TemaPrincipal, false);
         cout << RESET;
@@ -23,38 +23,39 @@ void GestionPantallas::Menuprincipal(GestionPantallas* ui) {
         ColorUI::printGradient("\n\t\t\t\t\t[5] Creditos", Exito, false);
         ColorUI::printGradient("\n\t\t\t\t\t[6] Menu", Exito, false);
         ColorUI::printGradient("\n\t\t\t\t\t[7] Salir", Exito, false);
-        cin >> opcion;
+		opcion = _getch();
+        cin.ignore();
         switch (opcion)
         {
-        case 1: {
+        case '1': {
             system("cls");
             VuelosRyan();
         } break;
 
-        case 2: {
+        case '2': {
             system("cls");
             ReservarHospedaje(); 
         } break;
 
-        case 3: {
+        case '3': {
             system("cls");
             CatalogoPaquetes();
         } break;
-        case 4: {
+        case '4': {
             system("cls");
             GestionTickets();
         } break;
 
-        case 5: {
+        case '5': {
             system("cls");
             creditos();
         } break;
-        case 6: {
+        case '6': {
             system("cls");
             RegisterScreen(principal); 
         }break;
 
-        case 7: {
+        case '7': {
             system("cls");
             for (int i = 0; i < 4;i++) {
 
@@ -67,7 +68,7 @@ void GestionPantallas::Menuprincipal(GestionPantallas* ui) {
         }  break;
         default: cout << "Opcion no valida" << endl; break;
         }
-    } while (opcion != 6);
+    } while (opcion != '6');
 }
 
 
@@ -75,11 +76,12 @@ void GestionPantallas::Menuprincipal(GestionPantallas* ui) {
 void GestionPantallas::VuelosRyan() {
     string origen, destino;
 	ColorUI::printGradient("Origen: ", Exito, false,false );
-    cin >> origen;
+	getline(cin, origen);
 	ColorUI::printGradient("Destino: ", Alerta, false,false );
-    cin >> destino;
+    getline(cin, destino);
     principal->ConsultarVuelos(origen, destino);
     system("pause");
+	//cin.ignore();
 }
 
 void GestionPantallas::ReservarHospedaje() {
@@ -111,15 +113,17 @@ void GestionPantallas::GestionTickets() {
 	ColorUI::printGradient("Ahora ingresa el peso del equipaje que llevaras en bodega (en kilos)", Exito, false);
     cin >> equipaje;
     cout << endl;
-	ColorUI::printGradient("Finalmente, ingresa el peso del equipaje que llevaras en cabina (en kilos)", Exito, false);
+	ColorUI::printGradient("Finalmente, ingresa cuantas maletas llevara", Exito, false);
+    //ingresar condicion 
     cin >> cabina;
+    //
 
-    principal->ComprarTicket(indiceVuelo, nombre, equipaje, cabina);
+    //principal->ComprarTicket(indiceVuelo, nombre, equipaje, cabina);
     cout << endl;
     system("cls");
     ColorUI::printGradient("TICKET COMPRADO CON EXITO", gege, false);
 	ColorUI::printGradient("Detalles de tu compra:", Exito, false);
-    principal->MostrarTickets();
+    //principal->MostrarTickets();
 
     system("pause");
 }
