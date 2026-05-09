@@ -1,7 +1,2 @@
-Piura,Lima,Directo,5-6-2026,100,7,Hotel 20,Lima,3.78304,188.72
-Lima,Santiago,Directo,23-9-2026,250,17.5,Hotel 4,Santiago,2.51152,129.749
-Piura,Lima,Directo,6-3-2026,100,7,Hotel 5,Lima,3.40706,141.075
-Lima,Santiago,Directo,23-9-2026,250,17.5,Hotel 4,Santiago,2.51152,129.749
-Piura,Lima,Directo,5-6-2026,100,7,Hotel 18,Lima,3.31147,129.887
-Lima,Cusco,Directo,23-7-2026,300,21,Hotel 15,Cusco,3.74459,131.516
-Lima,Santiago,Directo,2-4-2026,250,17.5,Hotel 8,Santiago,4.21043,127.982
+Lima,Santiago,Directo,22-5-2026,250,Hotel 4,Santiago,3.80526,156.41
+Lima,Santiago,Directo,1-6-2026,250,Hotel 2,Santiago,4.96472,85.0429

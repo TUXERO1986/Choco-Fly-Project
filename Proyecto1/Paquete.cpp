@@ -1,6 +1,6 @@
 #include "Paquete.h"
-Paquete::Paquete(Vuelo* vuelo, Hotel* hotel) {
-	this->vueloIncluido = vuelo;
+Paquete::Paquete(Vuelo* vueloIda, Hotel* hotel) {
+	this->vueloIncluido = vueloIda;
 	this->hotelIncluido = hotel;
 }
 void Paquete::MostrarPaquete() {
@@ -20,7 +20,7 @@ void Paquete::MostrarPaquete() {
 	}
 	cout << "-----------------------------" << endl;
 }
-Vuelo* Paquete::getVueloIncluido() { return vueloIncluido; }
 Hotel* Paquete::getHotelIncluido() { return hotelIncluido; }
-void Paquete::setVueloIncluido(Vuelo* vuelo) { this->vueloIncluido = vuelo; }
+Vuelo* Paquete::getVueloIncluido() { return vueloIncluido; }
+void Paquete::setVueloIncluido(Vuelo* vuelo) { this->vueloIncluido	 = vuelo; }
 void Paquete::setHotelIncluido(Hotel* hotel) { this->hotelIncluido = hotel; }

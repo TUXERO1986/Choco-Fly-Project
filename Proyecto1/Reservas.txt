@@ -1,0 +1,2 @@
+PAQUETE,U-16E73C,Pepe|VUELO,Pepe,U-16E73C,Lima,Santiago,Directo,0.000000,250.000000,1,1|VUELO,Pepe,U-16E73C,Santiago,Lima,Directo,0.000000,250.000000,1,1|U-16E73C,Pepe,Hotel 4,Santiago,3.000000,389
+PAQUETE,U-RT3BWS,testinguser|VUELO,U-RT3BWS,testinguser,Lima,Santiago,Directo,1100.000000,250.000000,2,1,1,13|VUELO,U-RT3BWS,testinguser,Santiago,Lima,Directo,1100.000000,250.000000,2,1,1,13|U-RT3BWS,testinguser,Hotel 2,Santiago,3.000000,255,1,1,1,1

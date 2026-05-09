@@ -1,21 +1,23 @@
 #include "Vuelo.h"
-Vuelo::Vuelo(string o, string d, string e, string f, float distancia, float p) {
+Vuelo::Vuelo(string o, string d, string e, string f, float distancia, ControladorAsientos* controladorAsientos) {
+	this->controladorAsientos = controladorAsientos;
 	this->origen = o;
 	this->destino = d;
 	this->escalas = e;
 	this->fecha = f;
 	this->distancia = distancia;
-	this->precio = p;
 }
 void Vuelo::MostrarVuelo() {
-	cout << "---------------------------------------" << endl;
+
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
 	cout << "Fecha: " << fecha << endl;
-	cout << "Precio: " << precio << endl;
 	cout << "Distancia: " << distancia << endl;
-	cout << "---------------------------------------" << endl;
+
+}
+void Vuelo::MostrarAsientos() {
+	controladorAsientos->MostrarAsientos();
 }
 string Vuelo::GetFechaPorDestinoYOrigen(string origen,string destino) {
 	if (this->origen == origen && this->destino == destino) {
@@ -24,14 +26,12 @@ string Vuelo::GetFechaPorDestinoYOrigen(string origen,string destino) {
 	return "";
 }
 string Vuelo::getFecha() { return fecha; }
-float Vuelo::getPrecio() { return precio; }
 string Vuelo::getOrigen() { return origen; }
 string Vuelo::getDestino() { return destino; }
 string Vuelo::getEscalas() { return escalas; }
 float Vuelo::getDistancia() { return distancia; }
-
+ControladorAsientos* Vuelo::getControladorAsientos() {return controladorAsientos;}
 void Vuelo::setOrigen(string o) { this->origen = o; }
 void Vuelo::setDestino(string d) { this->destino = d; }
 void Vuelo::setEscalas(string e) { this->escalas = e; }
 void Vuelo::setFecha(string f) { this->fecha = f; }
-void Vuelo::setPrecio(float p) { this->precio = p; }

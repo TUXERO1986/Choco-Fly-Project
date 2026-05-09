@@ -20,49 +20,68 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdminPantallas.h" />
+    <ClInclude Include="Asiento.h" />
     <ClInclude Include="Cola.h" />
     <ClInclude Include="ControladorArchivos.h" />
+    <ClInclude Include="ControladorAsientos.h" />
+    <ClInclude Include="ControladorHabitaciones.h" />
     <ClInclude Include="ControladorHoteles.h" />
     <ClInclude Include="ControladorPaquetes.h" />
     <ClInclude Include="ControladorPrincipal.h" />
+    <ClInclude Include="ControladorReservas.h" />
     <ClInclude Include="ControladorRutas.h" />
-    <ClInclude Include="ControladorTickets.h" />
+    <ClInclude Include="ControladorUsuarios.h" />
     <ClInclude Include="ControladorVuelos.h" />
     <ClInclude Include="GestionPantallas.h" />
+    <ClInclude Include="Habitacion.h" />
     <ClInclude Include="Hotel.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Paquete.h" />
+    <ClInclude Include="Reserva.h" />
+    <ClInclude Include="ReservaHotel.h" />
+    <ClInclude Include="ReservaPaquete.h" />
     <ClInclude Include="Ruta.h" />
     <ClInclude Include="CiudadID.h" />
     <ClInclude Include="Ticket.h" />
+    <ClInclude Include="Usuario.h" />
     <ClInclude Include="Vuelo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdminPantallas.cpp" />
+    <ClCompile Include="Asiento.cpp" />
     <ClCompile Include="CiudadId.cpp" />
     <ClCompile Include="ControladorArchivos.cpp" />
+    <ClCompile Include="ControladorAsientos.cpp" />
+    <ClCompile Include="ControladorHabitaciones.cpp" />
     <ClCompile Include="ControladorHoteles.cpp" />
     <ClCompile Include="ControladorPaquetes.cpp" />
     <ClCompile Include="ControladorPrincipal.cpp" />
+    <ClCompile Include="ControladorReservas.cpp" />
     <ClCompile Include="ControladorRutas.cpp" />
-    <ClCompile Include="ControladorTickets.cpp" />
+    <ClCompile Include="ControladorUsuarios.cpp" />
     <ClCompile Include="ControladorVuelos.cpp" />
     <ClCompile Include="GestionPantallas.cpp" />
+    <ClCompile Include="Habitacion.cpp" />
     <ClCompile Include="Hotel.cpp" />
     <ClCompile Include="Paquete.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Pantallas.cpp" />
+    <ClCompile Include="Reserva.cpp" />
+    <ClCompile Include="ReservaHotel.cpp" />
+    <ClCompile Include="ReservaPaquete.cpp" />
     <ClCompile Include="Ruta.cpp" />
     <ClCompile Include="Ticket.cpp" />
+    <ClCompile Include="Usuario.cpp" />
     <ClCompile Include="Vuelo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Hoteles.txt" />
     <Text Include="Paquetes.txt" />
+    <Text Include="Reservas.txt" />
     <Text Include="Rutas.txt" />
-    <Text Include="Tickets.txt" />
+    <Text Include="Usuarios.txt" />
     <Text Include="Vuelos.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

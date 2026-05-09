@@ -1,0 +1,12 @@
+#include "Reserva.h"
+Reserva::Reserva(string codigoUsuario, string nombreUsuario) {
+	this->codigoUsuario = codigoUsuario;
+	this->nombreUsuario = nombreUsuario;
+}
+void Reserva::MostrarReserva() {}
+string Reserva::getCodigoUsuario() { return codigoUsuario; }
+string Reserva::getNombreUsuario() { return nombreUsuario; }
+string Reserva::getTipoReserva() { return tipoReserva; }
+void Reserva::setCodigoUsuario(string codigoUsuario) { this->codigoUsuario = codigoUsuario; }
+void Reserva::setNombreUsuario(string nombreUsuario) { this->nombreUsuario = nombreUsuario; }
+void Reserva::setTipoReserva(string tipoReserva) { this->tipoReserva = tipoReserva; }

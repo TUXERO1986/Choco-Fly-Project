@@ -1,50 +1,192 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CiudadId.cpp" />
-    <ClCompile Include="ControladorArchivos.cpp" />
-    <ClCompile Include="ControladorHoteles.cpp" />
-    <ClCompile Include="ControladorPaquetes.cpp" />
-    <ClCompile Include="ControladorPrincipal.cpp" />
-    <ClCompile Include="ControladorRutas.cpp" />
-    <ClCompile Include="ControladorTickets.cpp" />
-    <ClCompile Include="ControladorVuelos.cpp" />
-    <ClCompile Include="GestionPantallas.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
-    <ClCompile Include="Pantallas.cpp" />
-    <ClCompile Include="Ruta.cpp" />
-    <ClCompile Include="Ticket.cpp" />
-    <ClCompile Include="Vuelo.cpp" />
-    <ClCompile Include="Hotel.cpp" />
-    <ClCompile Include="Paquete.cpp" />
-    <ClCompile Include="AdminPantallas.cpp" />
+    <ClCompile Include="CiudadId.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Paquete.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Ruta.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Vuelo.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorArchivos.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorHoteles.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorPaquetes.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorPrincipal.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorRutas.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorVuelos.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="GestionPantallas.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AdminPantallas.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Pantallas.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Asiento.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorAsientos.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="Usuario.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorUsuarios.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="Reserva.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ReservaPaquete.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ReservaHotel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ControladorReservas.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cola.h" />
-    <ClInclude Include="ControladorArchivos.h" />
-    <ClInclude Include="ControladorHoteles.h" />
-    <ClInclude Include="ControladorPaquetes.h" />
-    <ClInclude Include="ControladorPrincipal.h" />
-    <ClInclude Include="ControladorRutas.h" />
-    <ClInclude Include="ControladorTickets.h" />
-    <ClInclude Include="ControladorVuelos.h" />
-    <ClInclude Include="GestionPantallas.h" />
-    <ClInclude Include="Lista.h" />
-    <ClInclude Include="Nodo.h" />
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="Paquete.h" />
-    <ClInclude Include="Ruta.h" />
-    <ClInclude Include="CiudadID.h" />
-    <ClInclude Include="Ticket.h" />
-    <ClInclude Include="Vuelo.h" />
-    <ClInclude Include="Hotel.h" />
-    <ClInclude Include="AdminPantallas.h" />
+    <ClInclude Include="CiudadID.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Paquete.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Ruta.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticket.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Vuelo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Hotel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorArchivos.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorHoteles.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorPaquetes.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorPrincipal.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorRutas.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorVuelos.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="GestionPantallas.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AdminPantallas.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Nodo.h">
+      <Filter>DataM</Filter>
+    </ClInclude>
+    <ClInclude Include="Lista.h">
+      <Filter>DataM</Filter>
+    </ClInclude>
+    <ClInclude Include="Cola.h">
+      <Filter>DataM</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Asiento.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorAsientos.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="Usuario.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorUsuarios.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="Reserva.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ReservaPaquete.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ReservaHotel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorReservas.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Hoteles.txt" />
-    <Text Include="Paquetes.txt" />
-    <Text Include="Rutas.txt" />
-    <Text Include="Tickets.txt" />
-    <Text Include="Vuelos.txt" />
+    <Text Include="Vuelos.txt">
+      <Filter>Recursos</Filter>
+    </Text>
+    <Text Include="Rutas.txt">
+      <Filter>Recursos</Filter>
+    </Text>
+    <Text Include="Hoteles.txt">
+      <Filter>Recursos</Filter>
+    </Text>
+    <Text Include="Paquetes.txt">
+      <Filter>Recursos</Filter>
+    </Text>
+    <Text Include="Usuarios.txt">
+      <Filter>Recursos</Filter>
+    </Text>
+    <Text Include="Reservas.txt">
+      <Filter>Recursos</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Model">
+      <UniqueIdentifier>{9e64dc63-4382-4cd6-81b9-dffe0f0f61db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controladores">
+      <UniqueIdentifier>{ffe84ca1-24b7-412d-b352-03ded0243ce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{937e30b6-9ff5-4b69-9fe6-a0af0425c607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Recursos">
+      <UniqueIdentifier>{7d1b1d08-e69d-4844-9edd-3062299d2089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataM">
+      <UniqueIdentifier>{46be23f5-0c5d-478e-baa2-2779dbfa02f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

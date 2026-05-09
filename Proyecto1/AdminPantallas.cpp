@@ -9,7 +9,7 @@ AdminPantallas::AdminPantallas(ControladorPrincipal* ptrPrincipal) {
 
 
 void AdminPantallas::MenuAdmin() {
-    int opcion;
+    char opcion;
 
     do {
         system("cls");
@@ -26,29 +26,29 @@ void AdminPantallas::MenuAdmin() {
         ColorUI::printGradient("\n\t\t\t\t\t[7] Salir", rosa, false);
 
         cout << "\n\t\t\t\t\tOpcion: ";
-        cin >> opcion;
-
+        opcion = _getch();
+        system("cls");
         switch (opcion)
         {
-        case 1: {
+        case '1': {
             AgregarVuelos();
         }    break;
-        case 2: {
+        case '2': {
             AgregarPaquetes();
         } break;
-        case 3: {
+        case '3': {
             AgregarHoteles();
         } break;
-        case 4: {
+        case '4': {
             EliminarVuelos();
         } break;
-        case 5: {
+        case '5': {
             EliminarPaquetes();
         } break;
-        case 6: {
+        case '6': {
             EliminarHoteles();
         } break;
-        case 7: {
+        case '7': {
             system("cls");
             RegisterScreen(principal);
             
@@ -59,7 +59,7 @@ void AdminPantallas::MenuAdmin() {
             break;
         }
 
-    } while (opcion != 7);
+    } while (opcion != '7');
 }
 
 // ==========================================

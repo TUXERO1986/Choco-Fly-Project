@@ -13,7 +13,7 @@ ControladorRutas::ControladorRutas() {
         }
         return -1;
         };
-	controladorArchivos->LeerArchivo(conexiones, rutas, MapaCiudades);
+	controladorArchivos->LeerArchivoRutas(conexiones, rutas, MapaCiudades);
 }
  Lista<Ruta*>* ControladorRutas::BuscarRutaMasCorta(string origen, string destino) {
 
@@ -69,6 +69,7 @@ ControladorRutas::ControladorRutas() {
 void ControladorRutas::AgregarNuevaRuta(string origen, string destino, float distancia) {
 	Ruta* ruta = new Ruta(origen, destino, distancia);
 	rutas->agregaFinal(ruta);
+    controladorArchivos->GardarDatoArchivoRutas(ruta);
 }
 Lista<Ruta*>* ControladorRutas::getRutas() {
     return rutas;
@@ -79,7 +80,7 @@ Lista<Lista<int>*>* ControladorRutas::getConexiones() {
 Lista<CiudadID*>* ControladorRutas::getMapaCiudades() {
     return MapaCiudades;
 }
-void ControladorRutas::MostrarTodasLasRutas() {
+void ControladorRutas::MostrarRutas() {
 
     for (int i = 0; i < rutas->longitud(); i++) {
         Ruta* ruta = rutas->obtenerPos(i);

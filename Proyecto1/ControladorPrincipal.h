@@ -1,17 +1,20 @@
 #pragma once
 #include "ControladorPaquetes.h"
 #include "ControladorHoteles.h"
-#include "ControladorTickets.h"
+#include "ControladorReservas.h"
 #include "ControladorVuelos.h"
 #include "ControladorRutas.h"
+#include "ControladorUsuarios.h"
 class ControladorPrincipal
 {
 private:
 	ControladorVuelos* controladorVuelos;
 	ControladorHoteles* controladorHoteles;
 	ControladorPaquetes* controladorPaquetes;
-	ControladorTickets* controladorTickets;
+	ControladorReservas* controladorReservas;
 	ControladorRutas* controladorRutas;
+	ControladorUsuarios* controladorUsuarios;
+
 public:
 	ControladorPrincipal();
 	~ControladorPrincipal();
@@ -19,20 +22,52 @@ public:
 	void GenerarVuelos(int cantidadVuelos);
 	void GenerarHoteles(int cantidadHoteles);
 	void GenerarPaquetes(int cantidadPaquetes);
+	void AgregarVuelo(string origen, string destino, string escalas, string fecha, float distancia);
+	void AgregarHotel(string nombre, string ciudad, float puntuacion, float precioNoche);
+	void AgregarPaquete(Vuelo* vueloIda, Hotel* hotel);
+	void AgregarReserva(Reserva* nuevaReserva);
+	void AgregarUsuario(string nombre, string correo, string password);
+	void AgregarRuta(string origen, string destino, float distancia);
 	void EliminarVuelo(int indiceVuelo);
 	void EliminarHotel(int indiceHotel);
 	void EliminarPaquete(int indicePaquete);
-	void EliminarTicket(int indiceTicket);
-	void ConsultarVuelos(string origen, string destino);
+	void EliminarReserva(int indiceReserva);
+	void EliminarUsuario(int indiceUsuario);
+	void MostrarRutas();
 	void MostrarVuelos();
 	void MostrarHoteles();
 	void MostrarPaquetes();
-	void MostrarTickets();
-	void ComprarTicket(int indiceVuelo, string nombre,int equipaje, int equipajecabina);
+	void MostrarReservas();
+	void MostrarUsuarios();
+	void FilrarVuelosPorOrigenDestino(string origen, string destino);
+	void FiltrarUsuariosPorNombre(string nombreBusqueda);
+	void FiltrarRutasPorOrigen(string ciudadBusqueda);
+	void FiltrarRutasPorDestino(string ciudadBusqueda);
+	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
+	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
+	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);
+	void FiltrarVuelosPorFecha(string fechaBusqueda);
+	void FitrarVuelosPorOrigen(string origenBusqueda);
+	void FiltrarVuelosPorDestino(string destinoBusqueda);
+	void FiltrarReservasPorTipo(string tipoBusqueda);
+	void FiltrarReservasPorUsuario(string codigoUsuario);
+	void ObtenerIngresosTotales();
+	void ConsultarVuelos(string origen, string destino);
+	void MostrarReservasUsuario(Usuario* userActual);
+	void ReservarHotel(int indiceHotel, Usuario* userActual, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);
+	void ReservarPaquete(int indicePaquete, Usuario* userActual, int noches,
+		int maletasBodegaIda, int maletasBodegaRetorno, int clase, int asiento);
+	bool VerificarAsiento(int numeroAsiento,int indiceVuelo);
+	bool VerificarHabitacion(int numeroHabitacion,int indiceHotel);
+	void MostrarAsientos(int indiiceVuelo);
+	void MostrarHabitaciones(int indiiceHabitacion);
+	void ComprarTicket(int indiceVuelo, Usuario* usuariActual,int equipajeBoveda,int equipajeCabina,int asiento,int clase);
+	Usuario* VerificarInicioSesion(string nombre, string correo, string password);
 	ControladorHoteles* getControladorHoteles();
 	ControladorPaquetes* getControladorPaquetes();
-	ControladorTickets* getControladorTickets();
+	ControladorReservas* getControladorReservas	();
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
+	ControladorUsuarios* getControladorUsuarios();
 };
 

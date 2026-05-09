@@ -39,7 +39,7 @@ public:
     ControladorRutas();
 	Lista<Ruta*>* BuscarRutaMasCorta(string origen, string destino);
 	void AgregarNuevaRuta(string origen, string destino, float distancia);
-	void MostrarTodasLasRutas();
+	void MostrarRutas();
 	Lista<Ruta*>* getRutas();
 	Lista<Lista<int>*>* getConexiones();
 	Lista<CiudadID*>* getMapaCiudades();
