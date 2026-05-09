@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdminPantallas.h" />
+    <ClInclude Include="AsciiArt.h" />
     <ClInclude Include="Asiento.h" />
     <ClInclude Include="Cola.h" />
     <ClInclude Include="ControladorArchivos.h" />
@@ -50,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdminPantallas.cpp" />
+    <ClCompile Include="AsciiArt.cpp" />
     <ClCompile Include="Asiento.cpp" />
     <ClCompile Include="CiudadId.cpp" />
     <ClCompile Include="ControladorArchivos.cpp" />

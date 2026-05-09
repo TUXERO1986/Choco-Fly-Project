@@ -1,4 +1,6 @@
 #include "ControladorPrincipal.h"
+#include "Color.h"
+#include <fstream>
 ControladorPrincipal::ControladorPrincipal() {
 	controladorRutas = new ControladorRutas();
 	controladorHoteles = new ControladorHoteles();
@@ -208,21 +210,54 @@ void ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
         
     }
 }
+/*
+
+Nota para nicolas: 
+le pedi a gemini que me mejorar la funcion para que se pueda visualizar cuando un ticket y una habitacion
+es reservada para marcala en rojo 
+
+
+*/
 void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual, int equipajeBoveda, int equipajeCabina, int asiento, int clase) {
-	Vuelo* vueloSeleccionado = controladorVuelos->ObtenerVueloPorPosicion(indiceVuelo);
-	if (vueloSeleccionado != nullptr) {
-		controladorReservas->AgregarReserva(new Ticket(usuariActual->getCodigo(), usuariActual->getNombre(), 
-			vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(), 
-            vueloSeleccionado->getDistancia(), equipajeBoveda, 1+equipajeCabina,clase,asiento));
-		
-	}
+    Vuelo* vueloSeleccionado = controladorVuelos->ObtenerVueloPorPosicion(indiceVuelo);
+    if (vueloSeleccionado != nullptr) {
+        // 1. Generar la reserva
+        controladorReservas->AgregarReserva(new Ticket(usuariActual->getCodigo(), usuariActual->getNombre(),
+            vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(),
+            vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
+
+        // 2. Apagar el asiento (Buscar el número y ponerlo en false)
+        Lista<Asiento*>* listaAsientos = vueloSeleccionado->getControladorAsientos()->getAsientos();
+        for (int i = 0; i < listaAsientos->longitud(); i++) {
+            if (listaAsientos->obtenerPos(i)->getNumero() == asiento) {
+                listaAsientos->obtenerPos(i)->setDisponible(false); 
+                break;
+            }
+        }
+
+        // 3. Guardar persistencia
+        GuardarDatosEnArchivos();
+    }
 }
-void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual,int noches,int habitacion,int tipoO,int tipoC,int tipoS) {
-	Hotel* hotelSeleccionado = controladorHoteles->getHoteles()->obtenerPos(indiceHotel);
-	if (hotelSeleccionado != nullptr) {
-		controladorReservas->AgregarReserva(new ReservaHotel(userActual->getNombre(), userActual->getCodigo(), hotelSeleccionado->getNombre(),
-			hotelSeleccionado->getCiudad(), hotelSeleccionado->getPrecioNoche(),noches,habitacion,tipoO,tipoC,tipoS));
-	}
+void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, int noches, int habitacion, int tipoO, int tipoC, int tipoS) {
+    Hotel* hotelSeleccionado = controladorHoteles->getHoteles()->obtenerPos(indiceHotel);
+    if (hotelSeleccionado != nullptr) {
+        // 1. Generar la reserva
+        controladorReservas->AgregarReserva(new ReservaHotel(userActual->getNombre(), userActual->getCodigo(), hotelSeleccionado->getNombre(),
+            hotelSeleccionado->getCiudad(), hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
+
+        // 2. Apagar la habitación 
+        auto listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
+        for (int i = 0; i < listaHabitaciones->longitud(); i++) {
+            if (listaHabitaciones->obtenerPos(i)->getNumero() == habitacion) {
+                listaHabitaciones->obtenerPos(i)->setDisponible(false);
+                break;
+            }
+        }
+
+        // 3. Guardar persistencia
+        GuardarDatosEnArchivos();
+    }
 }
 void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActual,int noches,
     int maletasBodegaIda,int maletasBodegaRetorno,int clase,int asiento) {
@@ -307,23 +342,69 @@ bool ControladorPrincipal::VerificarAsiento(int numeroAsiento,int indiceVuelo) {
 bool ControladorPrincipal::VerificarHabitacion(int numeroHabitacion,int indiceHotel) {
     return controladorHoteles->getHoteles()->obtenerPos(indiceHotel)->getControladorHabitaciones()->verificarHabitacion(numeroHabitacion);
 }
+
+/*
+Nota para ryan, modifique lo visual para que al usuario no le aparezca lo de verificando, se muestra por un milisegundo
+*/
+
 Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string correo, string password) {
 	bool existeCuenta = controladorUsuarios->VerificarCuentaExistente(nombre, correo);
     Usuario* usuarioEncontrado = controladorUsuarios->VerificarCredenciales(nombre, correo, password);
     if (usuarioEncontrado != nullptr&&existeCuenta) {
-        cout << "¡Inicio de sesión exitoso! Bienvenido, " << usuarioEncontrado->getNombre() << "!" << endl;
+        system("cls");
+		ColorUI::printGradient("\n\n\n\t\t\tInicio de sesion exitoso! Bienvenido," + usuarioEncontrado->getNombre() + "!\n", Exito, false);
+
         return usuarioEncontrado;
     } else {
         if (existeCuenta) {
-            cout << "Error: Contraseña incorrecta. Por favor, intenta nuevamente." << endl;
-            return nullptr;
+			system("cls");
+			ColorUI::printGradient("\n\n\n\t\t\tError: Contrasena incorrecta. Por favor, intenta nuevamente.\n", Alerta, false);
+            system("cls");
+            RegisterScreen(this);
+    
         } else {
 			controladorUsuarios->AgregarUsuario(nombre, correo, password);
-			cout << "¡Cuenta creada exitosamente! Bienvenido, " << nombre << "!" << endl;
+			system("cls");
+			ColorUI::printGradient("\n\n\n\t\t\tCuenta Creada Exitosamente Bienvenido  " + nombre + "!\n", Exito, false); 
 			return controladorUsuarios->getUsuarios()->obtenerFinal();
         }   
     }
 }
+
+/*
+Funcion dada por gemini a ver si sirve 
+*/
+
+void ControladorPrincipal::GuardarDatosEnArchivos() {
+    ControladorArchivos arc;
+
+    ofstream f1("Vuelos.txt", ios::trunc); f1.close();
+    for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+        arc.GuardarDatoArchivoVuelos(controladorVuelos->getVuelos()->obtenerPos(i));
+    }
+    ofstream f2("Hoteles.txt", ios::trunc); f2.close();
+    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+        arc.GuardarDatoArchivoHoteles(controladorHoteles->getHoteles()->obtenerPos(i));
+    }
+    ofstream f3("Paquetes.txt", ios::trunc); f3.close();
+    for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
+        arc.GuardarDatoArchivoPaquetes(controladorPaquetes->getPaquetes()->obtenerPos(i));
+    }
+
+    ofstream f4("Usuarios.txt", ios::trunc); f4.close();
+    for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
+        arc.GuardarDatoArchivoUsuarios(controladorUsuarios->getUsuarios()->obtenerPos(i));
+    }
+
+
+    ofstream f5("Reservas.txt", ios::trunc); f5.close();
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        arc.GuardarDatoArchivoReservas(controladorReservas->getReservasTotales()->obtenerPos(i));
+    }
+}
+//
+// TERMINA LA FUNCION DADA DE GEMINI
+//
 ControladorHoteles* ControladorPrincipal::getControladorHoteles() { return controladorHoteles; }
 ControladorPaquetes* ControladorPrincipal::getControladorPaquetes() { return controladorPaquetes; }
 ControladorReservas* ControladorPrincipal::getControladorReservas() { return controladorReservas; }

@@ -8,61 +8,14 @@
 using namespace std;
 using namespace ColorUI;
 string usuario, correo, password;
-string registro = R"(
-                                 ____            _     _             
-  (Simulacion de registro)      |  _ \ ___  __ _(_)___| |_ _ __ ___  
-                                | |_) / _ \/ _` | / __| __| '__/ _ \ 
-                                |  _ <  __/ (_| | \__ \ |_| | | (_) |
-                                |_| \_\___|\__, |_|___/\__|_|  \___/ 
-                                           |___/                                )";
 
-string login = R"(
-                                 _                _       
-   (Simulacion de logeo)        | |    ___   __ _(_)_ __  
-                                | |   / _ \ / _` | | '_ \ 
-                                | |__| (_) | (_| | | | | |
-                                |_____\___/ \__, |_|_| |_|
-                                            |___/         )";
-
-string chocofly = R"(
-                                +-----------------------------------------+     
-                                |  ____ _                      __ _       |            __|__
-           __|__                | / ___| |__   ___   ___ ___  / _| |_   _ |     --------(_)--------
-    --------(_)--------         || |   | '_ \ / _ \ / __/ _ \| |_| | | | ||       O  O       O  O
-       O  O       O  O          || |___| | | | (_) | (_| (_) |  _| | |_| ||
-                                | \____|_| |_|\___/ \___\___/|_| |_|\__, ||
-                                |                                   |___/ |
-                                +-----------------------------------------+
-
-   )";
-
-string admin = R"(
-                            _       _           _       
-                           / \   __| |_ __ ___ (_)_ __  
-                          / _ \ / _` | '_ ` _ \| | '_ \ 
-                         / ___ \ (_| | | | | | | | | | |
-                        /_/   \_\__,_|_| |_| |_|_|_| |_|
-)";
-string chocoadmin = R"(
-                                    +-------------------------------------------+
-                                    |  ____ _                     _____ _       |
-            __|__                   | / ___| |__   ___   ___ ___ |  ___| |_   _ |              __|__      
-     --------(_)--------            || |   | '_ \ / _ \ / __/ _ \| |_  | | | | ||       --------(_)-------- 
-       O  O       O  O              || |___| | | | (_) | (_| (_) |  _| | | |_| ||         O  O       O  O  
-                                    | \____|_| |_|\___/ \___\___/|_|   |_|\__, ||
-                                    |       / \  |  _ \|  \/  |_ _| \ | | |___/ |
-                                    |      / _ \ | | | | |\/| || ||  \| |       |
-                                    |     / ___ \| |_| | |  | || || |\  |       |
-                                    |    /_/   \_\____/|_|  |_|___|_| \_|       |
-                                    +-------------------------------------------+
-   )";
 
 void RegisterScreen(ControladorPrincipal* principal) {
     string modo;
-
-    ColorUI::printGradient(registro, Paletas::Register, false);
-    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese el modo (Admin | Usuario)", Register, false);
-    cout << "\t\t\t\t"; cin >> modo;
+	ImprimirBordes(registro);
+    gotoxy(0, 6);
+    ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo (Admin | Usuario)", Register, false);
+    cout << "\t\t\t\t\t"; cin >> modo;
 
     if (modo == "Admin" || modo == "admin" || modo == "ADMIN") {
         Admin(principal);
@@ -78,30 +31,48 @@ void RegisterScreen(ControladorPrincipal* principal) {
 
 void LoginScreen(ControladorPrincipal* principal) {
     system("cls");
+    string u_nombre, u_correo, u_password;
 
-    ColorUI::printGradient(login, Paletas::Register, false);
+    ColorUI::printGradient(login, Register, false);
+	gotoxy(0, 6);
     ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Paletas::Register, false);
-    cout << "\t\t\t\t"; cin >> usuario;
+    cout << "\t\t\t\t\t"; cin >> u_nombre;
+
+    ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Paletas::Register, false);
+    cout << "\t\t\t\t\t"; cin >> u_correo;
+
     ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Paletas::Register, false);
-    cout << "\t\t\t\t"; cin >> password;
+    cout << "\t\t\t\t\t"; cin >> u_password;
+
+    cin.ignore(1000, '\n');
     system("cls");
 
-    GestionPantallas* userUI = new GestionPantallas(principal);
-    userUI->Menuprincipal(userUI);
-    delete userUI; 
-}
+    Usuario* userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
 
+    if (userLogeado != nullptr) {
+        system("pause");
+        GestionPantallas* userUI = new GestionPantallas(principal, userLogeado);
+        userUI->Menuprincipal();
+        delete userUI;
+        RegisterScreen(principal); 
+    }
+    else {
+        system("pause");
+        RegisterScreen(principal);
+    }
+}
 void Admin(ControladorPrincipal* principal) {
     system("cls");
 
     ColorUI::printGradient(admin, Paletas::Tux, false);
-    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese Datos ADMIN", Paletas::Tux, false);
-    cout << "\t\t\t\t"; cin >> usuario;
-    ColorUI::printGradient("\n\t\t\t\tIngrese contrasena ADMIN", Paletas::Tux, false);
-    cout << "\t\t\t\t"; cin >> password;
+	gotoxy(0, 6);
+    ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese Datos ADMIN", Paletas::Tux, false);
+    cout << "\t\t\t\t\t"; cin >> usuario;
+    ColorUI::printGradient("\n\t\t\t\t\tIngrese contrasena ADMIN", Paletas::Tux, false);
+    cout << "\t\t\t\t\t"; cin >> password;
     system("cls");
     AdminPantallas* adminUI = new AdminPantallas(principal);
-    adminUI->MenuAdmin();
+    adminUI->MenuPrincipalAdmin();
     delete adminUI; 
 }
 

@@ -77,6 +77,9 @@
     <ClCompile Include="Habitacion.cpp">
       <Filter>Controladores</Filter>
     </ClCompile>
+    <ClCompile Include="AsciiArt.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CiudadID.h">
@@ -162,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="Habitacion.h">
       <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="AsciiArt.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

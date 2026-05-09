@@ -5,6 +5,11 @@
 #include "ControladorVuelos.h"
 #include "ControladorRutas.h"
 #include "ControladorUsuarios.h"
+
+#include "GestionPantallas.h"
+
+#include <conio.h>
+using namespace ColorUI;
 class ControladorPrincipal
 {
 private:
@@ -70,5 +75,8 @@ public:
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 	ControladorUsuarios* getControladorUsuarios();
+	// agregue esta funcion para el ui para que se pueda guardar la persistencia cada vez que se compra un ticket o se reserva una habitacion, asi no se pierde la informacion aunque el programa se cierre
+	void GuardarDatosEnArchivos();
+
 };
 

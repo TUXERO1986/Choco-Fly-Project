@@ -4,7 +4,8 @@
 #include <vector>
 #include <conio.h>
 #include "ControladorRutas.h"
-#include <sstream> // <--- AGREGAR ESTA LIBRERÍA
+#include "AsciiArt.h"
+#include <sstream> 
 
 /**
  * ============================================================================
@@ -56,7 +57,6 @@ namespace ColorUI {
         };
     }
 
-    // Función principal para imprimir degradados (VERSIÓN OPTIMIZADA CON BUFFER)
     inline void printGradient(const std::string& text, const std::vector<std::string>& hexColors, bool isBackground = false, bool newLine = true) {
         using namespace std;
 
@@ -69,8 +69,6 @@ namespace ColorUI {
         int numSections = hexColors.size() - 1;
         float charsPerSection = (float)n / (numSections > 0 ? numSections : 1);
         string mode = isBackground ? "48" : "38";
-
-        // 🔥 OPTIMIZACIÓN: Creamos un buffer para guardar toda la línea antes de imprimir
         string bufferFinal = "";
 
         for (int i = 0; i < n; ++i) {
@@ -86,19 +84,15 @@ namespace ColorUI {
             int g = static_cast<int>(start.g + (end.g - start.g) * localFactor);
             int b = static_cast<int>(start.b + (end.b - start.b) * localFactor);
 
-            // Armamos el código de color y la letra, y lo sumamos al buffer
             bufferFinal += "\033[" + mode + ";2;" + to_string(r) + ";" + to_string(g) + ";" + to_string(b) + "m" + text[i];
         }
 
-        // Reseteo suave y salto de línea al final del buffer
         string resetMode = isBackground ? "49" : "39";
         bufferFinal += "\033[" + resetMode + "m" + (newLine ? "\n" : "");
 
-        // 🔥 OPTIMIZACIÓN: Un solo llamado a la consola en lugar de decenas
         cout << bufferFinal;
     }
-    // Función para imprimir 3 bloques de texto multilínea (Raw Strings) uno al lado del otro pura estetica
-// Función para imprimir 3 bloques de texto multilínea (VERSIÓN CON AUTO-ALINEACIÓN)
+
     inline void printMultilinesSideBySide(
         const std::string& s1, const std::vector<std::string>& pal1,
         const std::string& s2, const std::vector<std::string>& pal2,
@@ -110,10 +104,8 @@ namespace ColorUI {
         string line1, line2, line3;
         bool has1, has2, has3;
 
-        // Ancho fijo para cada bloque (garantiza que no choquen entre sí)
         const int ANCHO_COL = 33;
 
-        // Mini-función interna para rellenar espacios y limpiar tabs
         auto alinear = [ANCHO_COL](string s) {
             size_t pos;
             while ((pos = s.find("\t")) != string::npos) s.replace(pos, 1, "    ");
@@ -129,9 +121,8 @@ namespace ColorUI {
             has3 = (bool)getline(stream3, line3);
 
             if (has1 || has2 || has3) {
-                // Imprimimos cada línea alineada perfectamente a 33 caracteres
                 if (has1) printGradient(alinear(line1), pal1, false, false);
-                else printGradient(string(ANCHO_COL, ' '), pal1, false, false); // Relleno vacío si el dibujo es más corto
+                else printGradient(string(ANCHO_COL, ' '), pal1, false, false); 
 
                 if (has2) printGradient(alinear(line2), pal2, false, false);
                 else printGradient(string(ANCHO_COL, ' '), pal2, false, false);
@@ -143,7 +134,6 @@ namespace ColorUI {
             }
         } while (has1 || has2 || has3);
     }
-    // Función para pintar toda la pantalla de un color
     inline void setBackgroundColor(const std::string& hex) {
         using namespace std;
         RGB color = hexToRGB(hex);
@@ -170,6 +160,9 @@ namespace ColorUI {
         const std::vector<std::string> rosa = { "#E727F5","#D028DC","#B928C4","#A327AC" };
         const std::vector<std::string> Tux = { "#FF0D0D","#CD1B0F","#9C1E0F","#6F1C0F" };
         const std::vector<std::string> Register = { "#00F2FF","#1EC1CB","#24939A" };
+		const std::vector<std::string> MoradoD = { "#4E0AF5", "#4411C4", "#3F13AC", "#33137E"};
+        const std::vector<std::string> dato = { "#F5A70A","#DC9610","#C48614"};
+		const std::vector<std::string> azul = { "#0E71C9", "#1666B5", "#1A5CA1", "#1C518E" };
     }
 
     namespace Estilo {

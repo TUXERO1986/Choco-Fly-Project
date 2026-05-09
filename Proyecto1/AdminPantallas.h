@@ -1,21 +1,19 @@
 #pragma once
 #include "ControladorPrincipal.h"
 #include "Color.h"
-#include <iostream>
+
+#include <conio.h>
 
 class AdminPantallas {
 private:
     ControladorPrincipal* principal;
-
-    void AgregarVuelos();
-    void AgregarPaquetes();
-    void AgregarHoteles();
-    void EliminarVuelos();
-    void EliminarPaquetes();
-    void EliminarHoteles();
+    int LeerOpcion(); 
 
 public:
     AdminPantallas(ControladorPrincipal* ptrPrincipal);
 
-    void MenuAdmin();
+    void MenuPrincipalAdmin();
+    void MenuReportes();
+    void MenuMantenimiento();
+    void GenerarDatosAleatorios();
 };
