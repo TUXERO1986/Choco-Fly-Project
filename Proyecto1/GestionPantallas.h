@@ -2,23 +2,22 @@
 #include "Lista.h"
 #include "Color.h"
 #include "ControladorPrincipal.h"
-#include "conio.h"
-#include "ControladorPrincipal.h"
+#include "Usuario.h"
+#include <conio.h>
 
 class GestionPantallas {
 private:
-    // El "jefe" se guarda aquí, a nivel de clase
     ControladorPrincipal* principal;
+    Usuario* userActual; // Guardamos la sesion del usuario
 
 public:
-    // Constructor: aquí lo recibes UNA sola vez
-    GestionPantallas(ControladorPrincipal* ptrPrincipal);
+    GestionPantallas(ControladorPrincipal* ptrPrincipal, Usuario* ptrUsuario);
 
-    // Tus pantallas ya NO necesitan recibir nada por parámetro
-    void Menuprincipal(GestionPantallas* ui);
+    int LeerOpcion(); // Funcion anti-crasheos
+    void Menuprincipal();
     void VuelosRyan();
     void ReservarHospedaje();
     void GestionTickets();
     void CatalogoPaquetes();
-    // ... y todas las demas ...
+    void HistorialReservas();
 };

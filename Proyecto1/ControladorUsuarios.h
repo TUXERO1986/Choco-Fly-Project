@@ -2,11 +2,15 @@
 #include "Usuario.h"
 #include "Lista.h"
 #include "ControladorArchivos.h"
+#include "Color.h"
+using namespace ColorUI;
 class ControladorUsuarios
 {
 private:
 	Lista<Usuario*>* usuarios;
 	ControladorArchivos* controladorArchivos;
+
+
 public:
 	ControladorUsuarios();
 	~ControladorUsuarios();
@@ -16,5 +20,6 @@ public:
 	void MostrarUsuarios();
 	Lista<Usuario*>* getUsuarios();
 	void setUsuarios(Lista<Usuario*>* usuarios);
+
 };
 

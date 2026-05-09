@@ -35,7 +35,9 @@ void ControladorUsuarios::AgregarUsuario(string nombre, string correo, string pa
 Usuario* ControladorUsuarios::VerificarCredenciales(string nombre,string correo,string password) {
 	for (int i = 0; i < usuarios->longitud(); i++) {
 		Usuario* aux = usuarios->obtenerPos(i);
-		cout << "verificarcredenciales" << aux->getNombre() << " " << nombre << endl;
+		ColorUI::printGradient("verificar credenciales |" + aux->getNombre() + " ~ ", dato, false,false); 
+		ColorUI::printGradient(nombre, MoradoD, false);
+		//cout << "verificarcredenciales |" << aux->getNombre() << " " << nombre << endl;
 		if (aux->getNombre() != nombre)continue;
 		if (aux->getCorreo() == correo && aux->getPassword() == password) {
 			return aux;

@@ -19,7 +19,7 @@ ControladorVuelos::ControladorVuelos() {
 		return -1; 
 		};
 
-	//controladorArchivosVuelos->LeerArchivoVuelos(vuelos);
+	controladorArchivosVuelos->LeerArchivoVuelos(vuelos);
 }
 ControladorVuelos::~ControladorVuelos() {
     for (int i = 0; i < vuelos->longitud(); i++) {
@@ -114,6 +114,7 @@ void ControladorVuelos::FiltrarVuelosPorOrigenDestino(string origen, string dest
     for (int i = 0; i < vuelos->longitud(); i++) {
         Vuelo* aux = vuelos->obtenerPos(i);
         if (aux->getOrigen() == origen && aux->getDestino() == destino) {
+            ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
             aux->MostrarVuelo();
             cout << endl;
         }

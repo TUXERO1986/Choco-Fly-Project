@@ -1,3 +1,0 @@
-Santiago,Buenos Aires,Directo,2-8-2026,150,Hotel 1,Buenos Aires,4.12741,146.554
-Santiago,Buenos Aires,Directo,24-6-2026,150,Hotel 2,Buenos Aires,4.55712,155.902
-Lima,Santiago,Directo,6-10-2026,250,Hotel 1,Santiago,1.24305,89.4971
