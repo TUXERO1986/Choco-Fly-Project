@@ -71,6 +71,12 @@
     <ClCompile Include="ControladorReservas.cpp">
       <Filter>Controladores</Filter>
     </ClCompile>
+    <ClCompile Include="ControladorHabitaciones.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
+    <ClCompile Include="Habitacion.cpp">
+      <Filter>Controladores</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CiudadID.h">
@@ -149,6 +155,12 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="ControladorReservas.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="ControladorHabitaciones.h">
+      <Filter>Controladores</Filter>
+    </ClInclude>
+    <ClInclude Include="Habitacion.h">
       <Filter>Controladores</Filter>
     </ClInclude>
   </ItemGroup>

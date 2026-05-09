@@ -36,7 +36,7 @@ string Ticket::aTextoArchivo() {
 }
 float Ticket::getPrecioTotal() {
 	float costoEquipaje = (equipaje-1) * 10.0f; 
-	float costoEquipajeCabina = equipajecabina * 20.0f; 
+	float costoEquipajeCabina = (equipajecabina-1) * 20.0f; 
 	return (distancia*0.8)*clase + costoEquipaje*10 + costoEquipajeCabina*40;
 }
 string Ticket::getNombre() { return nombre; }
