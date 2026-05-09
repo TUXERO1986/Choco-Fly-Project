@@ -181,6 +181,16 @@ void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
         }
     }
 }
+void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario) {
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
+        if (aux->getCodigoUsuario() == codigousuario&&aux->getTipoReserva()==tipoBusqueda) {
+            cout << "Reserva #" << i << ":" << endl;
+            aux->MostrarReserva();
+            cout << endl;
+        }
+    }
+}
 void ControladorPrincipal::ObtenerIngresosTotales() {
 	float ingresosTotales = controladorReservas->CalcularIngresosTotales();
     cout << "Los ingresos totales generados por las reservas son: $" << ingresosTotales << endl;
@@ -203,7 +213,7 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual,
 	if (vueloSeleccionado != nullptr) {
 		controladorReservas->AgregarReserva(new Ticket(usuariActual->getCodigo(), usuariActual->getNombre(), 
 			vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(), 
-            vueloSeleccionado->getDistancia(), equipajeBoveda, equipajeCabina,clase,asiento));
+            vueloSeleccionado->getDistancia(), equipajeBoveda, 1+equipajeCabina,clase,asiento));
 		
 	}
 }
@@ -245,10 +255,6 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
         }
         return to_string(dia) + "-" + to_string(mes) + "-" + to_string(anio);
         };
-
-    vueloOferta->MostrarAsientos();
-    cout << "Digite el numero de asiento para Ida y para Retorno: ";
-    cin >> asiento;
 
     Ticket* ticketIda = new Ticket(
         userActual->getCodigo(), userActual->getNombre(),
@@ -310,6 +316,7 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
     } else {
         if (existeCuenta) {
             cout << "Error: Contraseña incorrecta. Por favor, intenta nuevamente." << endl;
+            return nullptr;
         } else {
 			controladorUsuarios->AgregarUsuario(nombre, correo, password);
 			cout << "¡Cuenta creada exitosamente! Bienvenido, " << nombre << "!" << endl;

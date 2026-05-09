@@ -5,18 +5,15 @@ class Habitacion
 {
 private:
 	int numero;
-	int tipo;
 	int disponible;
 public:
-	Habitacion(int, int);
+	Habitacion(int);
 
 	void MostrarHabitacion();
 	int getNumero();
-	int getTipo();
 	bool getDisponible();
 
 	void setDisponible(bool);
 	void setNumero(int);
-	void setTipo(int);
 };
 

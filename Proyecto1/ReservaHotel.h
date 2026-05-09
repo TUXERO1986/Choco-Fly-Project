@@ -1,5 +1,6 @@
 #pragma once
 #include "Reserva.h"
+#include <functional>
 class ReservaHotel : public Reserva
 {
 private:
@@ -11,6 +12,10 @@ private:
 	int tipoO;
 	int tipoC;
 	int tipoS;
+	function <string(int)> ObtenerTipoO;
+	function <string(int)> ObtenerTipoC;
+	function <string(int)> ObtenerTipoS;
+
 public:
 	ReservaHotel(string codigoUsuario, string nombreUsuario, string nombreHotel, string ciudad, 
 		float precioNoche, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);

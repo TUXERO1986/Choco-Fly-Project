@@ -50,6 +50,7 @@ public:
 	void FitrarVuelosPorOrigen(string origenBusqueda);
 	void FiltrarVuelosPorDestino(string destinoBusqueda);
 	void FiltrarReservasPorTipo(string tipoBusqueda);
+	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
 	void FiltrarReservasPorUsuario(string codigoUsuario);
 	void ObtenerIngresosTotales();
 	void ConsultarVuelos(string origen, string destino);

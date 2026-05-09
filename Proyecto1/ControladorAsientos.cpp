@@ -14,12 +14,7 @@ void ControladorAsientos::MostrarAsientos() {
 }
 void ControladorAsientos::GenerarAsientos() {
 	for (int i = 1; i <= 30; i++) {
-		int clase;
-		if (i>=1&&i < 16)clase = 1;
-		else if (i >= 16 && i < 21)clase = 2;
-		else if (i >= 21 && i < 26)clase = 3;
-		else if (i >= 26 && i < 31)clase = 4;
-		Asiento* asiento = new Asiento(i,clase);
+		Asiento* asiento = new Asiento(i);
 		asientos->agregaFinal(asiento);
 	}
 }
