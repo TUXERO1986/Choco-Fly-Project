@@ -22,7 +22,8 @@ public:
 	ControladorArchivos();
 	ControladorArchivos(string);
 
-	void LeerArchivo(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadID*>*);
+	void LeerArchivoRutas(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadID*>*);
+	void GardarDatoArchivoRutas(Ruta*);
 	void LeerArchivoVuelos(Lista<Vuelo*>*);
 	void GuardarDatoArchivoVuelos(Vuelo*);
 	void GuardarDatoArchivoPaquetes(Paquete*);

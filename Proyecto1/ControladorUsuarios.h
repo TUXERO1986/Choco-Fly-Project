@@ -13,8 +13,7 @@ public:
 	void AgregarUsuario(string nombre, string correo, string password);
 	Usuario* VerificarCredenciales(string nombre,string correo,string password);
 	bool VerificarCuentaExistente(string nombre,string correo);
-	void MostrarUsuariosUsuarios();
-	void MostrarUsuariosAdmin();
+	void MostrarUsuarios();
 	Lista<Usuario*>* getUsuarios();
 	void setUsuarios(Lista<Usuario*>* usuarios);
 };

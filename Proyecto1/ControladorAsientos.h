@@ -9,6 +9,9 @@ public:
 	ControladorAsientos();
 	void MostrarAsientos();
 	void GenerarAsientos();
+	bool VerificarAsiento(int numeroAsiento);
+	string ObtenerEstadoAsientosString();
+	void CargarEstadoAsientosString(string estado);
 	Lista<Asiento*>* getAsientos();
 	void setAsientos(Lista<Asiento*>* asientos);
 };

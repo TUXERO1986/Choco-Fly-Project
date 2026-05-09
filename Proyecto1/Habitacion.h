@@ -1,21 +1,22 @@
 #pragma once
 #include <iostream>
 using namespace std;
-class Asiento
+class Habitacion
 {
 private:
 	int numero;
-	int clase;
-	bool disponible;
+	int tipo;
+	int disponible;
 public:
-	Asiento(int,int);
-	void MostraAsiento();
+	Habitacion(int, int);
+
+	void MostrarHabitacion();
 	int getNumero();
-	int getClase();
+	int getTipo();
 	bool getDisponible();
 
 	void setDisponible(bool);
 	void setNumero(int);
-	void setClase(int);
+	void setTipo(int);
 };
 

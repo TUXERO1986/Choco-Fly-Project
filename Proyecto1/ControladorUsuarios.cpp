@@ -52,13 +52,7 @@ bool ControladorUsuarios::VerificarCuentaExistente(string nombre, string correo)
 	}
 	return false;
 }
-void ControladorUsuarios::MostrarUsuariosUsuarios() {
-	for (int i = 0; i < usuarios->longitud(); i++) {
-		Usuario* aux = usuarios->obtenerPos(i);
-		aux->MostrarDatosUsuarios();
-	}
-}
-void ControladorUsuarios::MostrarUsuariosAdmin() {
+void ControladorUsuarios::MostrarUsuarios() {
 	for (int i = 0; i < usuarios->longitud(); i++) {
 		Usuario* aux = usuarios->obtenerPos(i);
 		aux->MostrarDatosAdmin();

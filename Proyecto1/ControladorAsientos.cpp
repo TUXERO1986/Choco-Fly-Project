@@ -1,20 +1,55 @@
 #include "ControladorAsientos.h"
 ControladorAsientos::ControladorAsientos() {
 	this->asientos = new Lista<Asiento*>();
+	GenerarAsientos();
 }
 void ControladorAsientos::MostrarAsientos() {
-	for (int i = 1; i <= asientos->longitud(); i++) {
+	for (int i = 0; i < asientos->longitud(); i++) {
 		Asiento* aux = asientos->obtenerPos(i);
 		aux->MostraAsiento();
 		cout << " ";
-		if (i % 6 == 0) cout << endl;
-		else if (i % 3 == 0) cout << "\t";
+		if ((i+1) % 6 == 0) cout << endl;
+		else if ((i+1) % 3 == 0) cout << "\t";
 	}
 }
 void ControladorAsientos::GenerarAsientos() {
 	for (int i = 1; i <= 30; i++) {
-		Asiento* asiento = new Asiento(i);
+		int clase;
+		if (i>=1&&i < 16)clase = 1;
+		else if (i >= 16 && i < 21)clase = 2;
+		else if (i >= 21 && i < 26)clase = 3;
+		else if (i >= 26 && i < 31)clase = 4;
+		Asiento* asiento = new Asiento(i,clase);
 		asientos->agregaFinal(asiento);
+	}
+}
+string ControladorAsientos::ObtenerEstadoAsientosString() {
+	string estado = "";
+	for (int i = 0; i < asientos->longitud(); i++) {
+		// Si esta disponible agrega '1', si no, agrega '0'
+		if (asientos->obtenerPos(i)->getDisponible()) {
+			estado += "1";
+		}
+		else {
+			estado += "0";
+		}
+	}
+	return estado;
+}
+bool ControladorAsientos::VerificarAsiento(int numeroAsiento) {
+	for (int i = 0; i < asientos->longitud(); i++) {
+		Asiento* aux = asientos->obtenerPos(i);
+		if (aux->getNumero() == numeroAsiento) {
+			if (aux->getDisponible())return true;
+			else return false;
+		}
+	}
+}
+void ControladorAsientos::CargarEstadoAsientosString(string estado) {
+	// Leemos el string y actualizamos los asientos que ya fueron generados
+	for (int i = 0; i < estado.length() && i < asientos->longitud(); i++) {
+		bool estaDisponible = (estado[i] == '1');
+		asientos->obtenerPos(i)->setDisponible(estaDisponible);
 	}
 }
 Lista<Asiento*>* ControladorAsientos::getAsientos() {

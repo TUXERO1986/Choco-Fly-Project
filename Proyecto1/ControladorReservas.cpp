@@ -46,7 +46,7 @@ void ControladorReservas::MostrarReservasUsuario(string codigoUsuario) {
     }
     cout << "===================================================" << endl;
 }
-void ControladorReservas::MostrarReservasAdmin() {
+void ControladorReservas::MostrarReservas() {
     cout << "\n=== REGISTRO GLOBAL DE VENTAS (ADMINISTRADOR) ===" << endl;
 
     if (reservasTotales->longitud() == 0) {

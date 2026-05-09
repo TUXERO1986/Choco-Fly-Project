@@ -22,7 +22,7 @@ public:
 
     void MostrarReservasUsuario(string codigoUsuario);
 
-    void MostrarReservasAdmin();
+    void MostrarReservas();
 
     void FiltrarReservasPorTipo(string tipoBusqueda);
 

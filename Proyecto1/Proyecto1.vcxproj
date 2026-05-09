@@ -24,6 +24,7 @@
     <ClInclude Include="Cola.h" />
     <ClInclude Include="ControladorArchivos.h" />
     <ClInclude Include="ControladorAsientos.h" />
+    <ClInclude Include="ControladorHabitaciones.h" />
     <ClInclude Include="ControladorHoteles.h" />
     <ClInclude Include="ControladorPaquetes.h" />
     <ClInclude Include="ControladorPrincipal.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="ControladorUsuarios.h" />
     <ClInclude Include="ControladorVuelos.h" />
     <ClInclude Include="GestionPantallas.h" />
+    <ClInclude Include="Habitacion.h" />
     <ClInclude Include="Hotel.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Nodo.h" />
@@ -52,6 +54,7 @@
     <ClCompile Include="CiudadId.cpp" />
     <ClCompile Include="ControladorArchivos.cpp" />
     <ClCompile Include="ControladorAsientos.cpp" />
+    <ClCompile Include="ControladorHabitaciones.cpp" />
     <ClCompile Include="ControladorHoteles.cpp" />
     <ClCompile Include="ControladorPaquetes.cpp" />
     <ClCompile Include="ControladorPrincipal.cpp" />
@@ -60,6 +63,7 @@
     <ClCompile Include="ControladorUsuarios.cpp" />
     <ClCompile Include="ControladorVuelos.cpp" />
     <ClCompile Include="GestionPantallas.cpp" />
+    <ClCompile Include="Habitacion.cpp" />
     <ClCompile Include="Hotel.cpp" />
     <ClCompile Include="Paquete.cpp" />
     <ClCompile Include="Pirncipal.cpp" />

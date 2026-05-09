@@ -23,7 +23,7 @@ void ReservaPaquete::MostrarReserva() {
     cout << "--------------------------------------" << endl;
     if (hotelReservado != nullptr) hotelReservado->MostrarReserva();
 
-    float total = vueloReservado->getPrecio() + hotelReservado->getPrecioTotal();
+    float total = vueloReservado->getPrecioTotal() + hotelReservado->getPrecioTotal();
     cout << "======================================" << endl;
     cout << "PRECIO TOTAL DEL PAQUETE: $" << total << endl;
     cout << "======================================" << endl;
@@ -38,5 +38,5 @@ void ReservaPaquete::setVueloReservado(Ticket* vuelo) { this->vueloReservado = v
 void ReservaPaquete::setHotelReservado(ReservaHotel* hotel) { this->hotelReservado = hotel; }
 void ReservaPaquete::setVueloRetorno(Ticket* vuelo) { this->vueloRetorno = vuelo; }
 float ReservaPaquete::getPrecioTotal() {
-    return vueloReservado->getPrecio() + hotelReservado->getPrecioTotal();
+    return vueloReservado->getPrecioTotal() + hotelReservado->getPrecioTotal();
 }

@@ -9,9 +9,8 @@ private:
 	string escalas;
 	string fecha;
 	float distancia;
-	float precio;
 public:
-	Vuelo(string o, string d, string e, string f, float distancia,float p);
+	Vuelo(string o, string d, string e, string f, float distancia,ControladorAsientos* controladorAsientos);
 
 	void MostrarVuelo();
 	void MostrarAsientos();
@@ -21,13 +20,13 @@ public:
 	string getDestino();
 	string getEscalas();
 	string getFecha();
-	float getPrecio();
 	float getDistancia();
+	ControladorAsientos* getControladorAsientos();
+
 	void setOrigen(string o);
 	void setDestino(string d);
 	void setEscalas(string e);
 	void setFecha(string f);
-	void setPrecio(float p);
 	void setDistancia(float distancia);	
 
 };

@@ -7,6 +7,7 @@ private:
 public:
 	ControladorPaquetes();
 	~ControladorPaquetes();
+	void MostrarPaquetesCiudades(string ciudadOrigen, string ciudadDestino);
 	void GenerarPaquetes(int contador, Lista<Hotel*>* listhoteles, Lista<Vuelo*>* listvuelos);
 	void AgregarNuevoPaquete(Vuelo* vueloIda, Hotel* hotel);
 	void MostrarPaquetes();

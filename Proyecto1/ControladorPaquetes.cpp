@@ -10,7 +10,18 @@ ControladorPaquetes::~ControladorPaquetes() {
 	}
 	delete paquetes;
 }
+void ControladorPaquetes::MostrarPaquetesCiudades(string ciudadOrigen, string ciudadDestino) {
+	for (int i = 0; i < paquetes->longitud(); i++) {
+		Paquete* aux = paquetes->obtenerPos(i);
+		if (aux->getVueloIncluido()->getOrigen() == ciudadOrigen && aux->getVueloIncluido()->getDestino() == ciudadDestino) {
+			cout << "Pauquete #" << i << ":" << endl;
+			aux->MostrarPaquete();
+			cout << endl;
+		}
+	}
+}
 void ControladorPaquetes::GenerarPaquetes(int contador, Lista<Hotel*>* listhoteles, Lista<Vuelo*>* listvuelos) {
+	controladorArchivos->VaciarArchivo();
 	for (int i = 0; i < contador; i++) {
 		int indiceHotel = rand() % listhoteles->longitud();
 		int indiceVuelo = rand() % listvuelos->longitud();
