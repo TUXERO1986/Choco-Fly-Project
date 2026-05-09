@@ -10,16 +10,37 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 	this->tipoC = tipoC;
 	this->tipoS = tipoS;
 	this->habitacion = habitacion;
+	ObtenerTipoO = [](int tipoO){
+		switch (tipoO) {
+		case 1:return "INDIVIDUAL"; break;
+		case 2:return "SUITE"; break;
+		case 3:return "PRESIDENCIAL"; break;
+		}
+	};
+	ObtenerTipoC = [](int tipoC){
+		switch (tipoC) {
+		case 1:return "INDIVIDUAL"; break;
+		case 2:return "MATRIMONIAL"; break;
+		case 3:return "QUEEN"; break;
+		}
+	};
+	ObtenerTipoS = [](int tipoS){
+		switch (tipoS) {
+		case 1:return "BASICOS"; break;
+		case 2:return "PREMIUM"; break;
+		case 3:return "VIP"; break;
+		}
+	};
 }
 void ReservaHotel::MostrarReserva() {
-	MostrarReserva();
+	
 	cout << "Hotel: " << nombreHotel << endl;
 	cout << "Ciudad: " << ciudad << endl;
 	cout << "Noches: " << noches << endl;
 	cout << "Habitacion: " << habitacion << endl;
-	cout << "Tipo de habitacion: " << tipoO << endl;
-	cout << "Tipo de cama/s: " << tipoC << endl;
-	cout << "Tipo de servicio: " << tipoS << endl;
+	cout << "Tipo de habitacion: " << ObtenerTipoO(tipoO) << endl;
+	cout << "Tipo de cama/s: " << ObtenerTipoC(tipoC) << endl;
+	cout << "Tipo de servicio: " << ObtenerTipoS(tipoS) << endl;
 	cout << "Precio Total " << getPrecioTotal() << endl;
 }
 string ReservaHotel::aTextoArchivo() {

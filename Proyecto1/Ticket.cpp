@@ -11,15 +11,16 @@ Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string
 	this->equipajecabina = equipajecabina;
 	this->clase = clase;
 	this->asiento = asiento;
+	obtenerClase = [](int clase) {
+		switch (clase) {
+		case 1:return "ECONOMICA"; break;
+		case 2:return "PREMIUM"; break;
+		case 3:return "EJECUTIVA"; break;
+		case 4:return "PRIMERA CLASE"; break;
+		}
+	};
 }
 void Ticket::MostrarReserva() {
-	string clasestring;
-	switch (clase) {
-	case 1:clasestring = "ECONOMICA"; break;
-	case 2:clasestring = "ECONOMICA PREMIUM"; break;
-	case 3:clasestring = "EJECUTIVA"; break;
-	case 4:clasestring = "PRIMERA CLASE"; break;
-	}
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
@@ -27,7 +28,7 @@ void Ticket::MostrarReserva() {
 	cout << "Equipaje: " << equipaje << endl;
 	cout << "Equipaje de cabina: " << equipajecabina << endl;
 	cout << "Asiento: " << asiento << endl;
-	cout << "Clase: " << clasestring;
+	cout << "Clase: " << obtenerClase(clase);
 	cout << "Precio Total: " << getPrecioTotal() << endl;
 }
 string Ticket::aTextoArchivo() {
