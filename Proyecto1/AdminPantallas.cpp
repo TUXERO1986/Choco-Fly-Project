@@ -19,7 +19,6 @@ int AdminPantallas::LeerOpcion() {
     cin.ignore(1000, '\n');
     return x;
 }
-
 void AdminPantallas::MenuPrincipalAdmin() {
     char opcion;
     do {
@@ -47,7 +46,6 @@ void AdminPantallas::MenuPrincipalAdmin() {
         }
     } while (opcion != '4');
 }
-
 void AdminPantallas::MenuReportes() {
     char opcion;
     do {
