@@ -33,6 +33,7 @@ public:
 	void AgregarReserva(Reserva* nuevaReserva);
 	void AgregarUsuario(string nombre, string correo, string password);
 	void AgregarRuta(string origen, string destino, float distancia);
+	void EliminarRuta(int indiceRuta);
 	void EliminarVuelo(int indiceVuelo);
 	void EliminarHotel(int indiceHotel);
 	void EliminarPaquete(int indicePaquete);
@@ -58,6 +59,13 @@ public:
 	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
 	void FiltrarReservasPorUsuario(string codigoUsuario);
 	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);//noesta
+	void FiltrarHotelesPorPresupuesto(float presupuestoMaximo);//noesta
+	void FiltrarPaquetesPorPresupuesto(float presupuestoMaximo);//noesta
+	void FiltrarHotelesPorMayorCalificacion();
+	void FiltrarVuelosDeMayorAMenorPrecio();
+	void FiltrarHotelesDeMayorAMenorPrecio();
+	void FiltrarPaquetesDeMayorAMenorPrecio();
+	void FiltrarUsuarioPorCodigo(string codigo);
 	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
 	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);//noesta
 	void ObtenerIngresosTotales();

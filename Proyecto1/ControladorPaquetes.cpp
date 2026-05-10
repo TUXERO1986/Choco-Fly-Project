@@ -21,7 +21,6 @@ void ControladorPaquetes::MostrarPaquetesCiudades(string ciudadOrigen, string ci
 	}
 }
 void ControladorPaquetes::GenerarPaquetes(int contador, Lista<Hotel*>* listhoteles, Lista<Vuelo*>* listvuelos) {
-	controladorArchivos->VaciarArchivo();
 	for (int i = 0; i < contador; i++) {
 		int indiceHotel = rand() % listhoteles->longitud();
 		int indiceVuelo = rand() % listvuelos->longitud();

@@ -23,8 +23,10 @@ void ReservaPaquete::MostrarReserva() {
     if (vueloReservado != nullptr) vueloReservado->MostrarReserva();
     cout << "--------------------------------------" << endl;
     if (hotelReservado != nullptr) hotelReservado->MostrarReserva();
+    cout << "--------------------------------------" << endl;
+    if (vueloRetorno != nullptr) vueloRetorno->MostrarReserva();
 
-    float total = vueloReservado->getPrecioTotal() + hotelReservado->getPrecioTotal();
+    float total = vueloReservado->getPrecioTotal() + hotelReservado->getPrecioTotal()+vueloRetorno->getPrecioTotal();
     cout << "======================================" << endl;
     cout << "PRECIO TOTAL DEL PAQUETE: $" << total << endl;
     cout << "======================================" << endl;

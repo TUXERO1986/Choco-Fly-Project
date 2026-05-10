@@ -1,4 +1,8 @@
 Piura,Lima,100
 Lima,Santiago,250
 Lima,Cusco,300
-Santiago,Buenos Aires,150,,0
+Santiago,Buenos Aires,150
+Lima,Arequipa,150
+Cusco,Arequipa,80
+Lima,Bogota,350
+Buenos Aires,Sao Paulo,200

@@ -11,22 +11,19 @@ string usuario, correo, password;
 
 
 void RegisterScreen(ControladorPrincipal* principal) {
-    string modo;
-	ImprimirBordes(registro);
-    gotoxy(0, 6);
-    ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo (Admin | Usuario)", Register, false);
-    cout << "\t\t\t\t\t"; cin >> modo;
-
-    if (modo == "Admin" || modo == "admin" || modo == "ADMIN") {
-        Admin(principal);
-    }
-    else if (modo == "Usuario" || modo == "USUARIO" || modo == "usuario" || modo == "user" || modo == "User") {
-        LoginScreen(principal);
-    }
-    else {
+    char modo;
+    do {
         system("cls");
-        RegisterScreen(principal);
-    }
+        ImprimirBordes(registro);
+        gotoxy(0, 6);
+        ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo 1-Admin 2-Usuario 0- Salir", Register, false);
+        modo = _getch();
+        switch (modo) {
+        case '1':Admin(principal); break;
+        case '2':LoginScreen(principal); break;
+        case '0': system("cls"); return; break;
+        }
+    } while (true);
 }
 
 void LoginScreen(ControladorPrincipal* principal) {
@@ -36,13 +33,13 @@ void LoginScreen(ControladorPrincipal* principal) {
     ColorUI::printGradient(login, Register, false);
 	gotoxy(0, 6);
     ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Paletas::Register, false);
-    cout << "\t\t\t\t\t"; cin >> u_nombre;
+    cout << "\t\t\t\t"; cin >> u_nombre;
 
     ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Paletas::Register, false);
-    cout << "\t\t\t\t\t"; cin >> u_correo;
+    cout << "\t\t\t\t"; cin >> u_correo;
 
     ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Paletas::Register, false);
-    cout << "\t\t\t\t\t"; cin >> u_password;
+    cout << "\t\t\t\t"; cin >> u_password;
 
     cin.ignore(1000, '\n');
     system("cls");
@@ -50,15 +47,15 @@ void LoginScreen(ControladorPrincipal* principal) {
     Usuario* userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
 
     if (userLogeado != nullptr) {
-        system("pause");
+        system("pause>0");
         GestionPantallas* userUI = new GestionPantallas(principal, userLogeado);
         userUI->Menuprincipal();
         delete userUI;
-        RegisterScreen(principal); 
+        //RegisterScreen(principal); 
     }
     else {
-        system("pause");
-        RegisterScreen(principal);
+        system("pause>0");
+        //RegisterScreen(principal);
     }
 }
 void Admin(ControladorPrincipal* principal) {
@@ -139,6 +136,6 @@ void creditos() {
         gengis, gege,
         santiago, TemaPrincipal
     );
-    system("pause");
+    system("pause>0");
 }
 

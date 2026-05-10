@@ -72,7 +72,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 	};
 	ObtenerTipoS = [](int tipoS){
 		switch (tipoS) {
-		case 1:return "BASICOS"; break;
+		case 1:return "BASICO"; break;
 		case 2:return "PREMIUM"; break;
 		case 3:return "VIP"; break;
 		}
