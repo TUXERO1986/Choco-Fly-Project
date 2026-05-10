@@ -82,6 +82,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 	this->fechaIngreso = fechaIngreso;
 	this->precioNoche = precioNoche;
 	this->noches = noches;
+	this->tipoReserva = "HOTEL";
 	this->tipoO = tipoO;
 	this->tipoC = tipoC;
 	this->tipoS = tipoS;

@@ -14,6 +14,11 @@ public:
 
     void MenuPrincipalAdmin();
     void MenuReportes();
+    void MenuFiltrosReservas();
+    void MenuFiltrosVuelos();
+    void MenuFiltrosPaquetes();
+    void MenuFiltrosHoteles();
+    void MenuFiltrosUsuarios();
     void MenuMantenimiento();
     void GenerarDatosAleatorios();
 };

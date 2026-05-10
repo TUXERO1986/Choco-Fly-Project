@@ -5,6 +5,7 @@ ReservaPaquete::ReservaPaquete(string codUser, string nomUser, Ticket* vueloida,
     this->vueloReservado = vueloida;
     this->vueloRetorno = vueloretorno;
     this->hotelReservado = hotel;
+    this->tipoReserva = "PAQUETE";
 }
 
 ReservaPaquete::~ReservaPaquete() {

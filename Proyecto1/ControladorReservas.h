@@ -20,11 +20,7 @@ public:
     void AgregarReserva(Reserva* nuevaReserva);
     Lista<Reserva*>* getReservasTotales();
 
-    void MostrarReservasUsuario(string codigoUsuario);
-
     void MostrarReservas();
-
-    void FiltrarReservasPorTipo(string tipoBusqueda);
 
     float CalcularIngresosTotales();
 };
