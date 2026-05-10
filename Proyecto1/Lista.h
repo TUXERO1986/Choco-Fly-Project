@@ -134,10 +134,9 @@ void Lista<T>::eliminaPos(uint pos) {
 }
 template <class T>
 void Lista<T>::eliminaFinal() {
-    // Si la lista está vacía, no hacemos nada
     if (lon == 0) return;
 
-    // Si solo hay un elemento, lo eliminamos y reiniciamos la lista
+
     if (lon == 1) {
         delete ini;
         ini = nullptr;
@@ -145,18 +144,16 @@ void Lista<T>::eliminaFinal() {
         return;
     }
 
-    // Si hay más de un elemento, recorremos hasta el PENÚLTIMO nodo
     Nodo<T>* aux = ini;
     for (int i = 0; i < lon - 2; i++) {
         aux = aux->getSig();
     }
 
-    // Guardamos el último nodo, desconectamos el penúltimo y borramos el último
     Nodo<T>* nodoAEliminar = aux->getSig();
     aux->setSig(nullptr);
     delete nodoAEliminar;
 
-    lon--; // Reducimos la longitud
+    lon--; 
 }
 
 template <class T>
