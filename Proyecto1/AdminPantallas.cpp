@@ -387,12 +387,12 @@ void AdminPantallas::MenuReportes() {
         system("cls");
 
         switch (opcion) {
-        case '1': MenuFiltrosVuelos(); system("pause>0"); break;
-        case '2': MenuFiltrosHoteles(); system("pause>0"); break;
-        case '3': MenuFiltrosPaquetes(); system("pause>0"); break;
-        case '4': FiltroRutas(); system("pause>0"); break;
-        case '5': MenuFiltrosReservas(); system("pause>0"); break;
-        case '6': MenuFiltrosUsuarios(); system("pause>0"); break;
+        case '1': MenuFiltrosVuelos();break;
+        case '2': MenuFiltrosHoteles(); break;
+        case '3': MenuFiltrosPaquetes(); break;
+        case '4': FiltroRutas(); break;
+        case '5': MenuFiltrosReservas(); break;
+        case '6': MenuFiltrosUsuarios(); break;
         case '7':
             principal->ObtenerIngresosTotales();
             cout << "\n";
@@ -576,7 +576,7 @@ void AdminPantallas::MenuFiltrosPaquetes() {
             system("pause>0");
             break;
         }
-        case 3: {
+        case '3': {
             principal->MostrarPaquetes();
             system("pause>0");
             break;

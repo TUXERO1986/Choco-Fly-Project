@@ -66,10 +66,13 @@ public:
 	void FiltrarHotelesDeMayorAMenorPrecio();
 	void FiltrarPaquetesDeMayorAMenorPrecio();
 	void FiltrarUsuarioPorCodigo(string codigo);
-	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
+	bool CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
 	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);//noesta
 	void ObtenerIngresosTotales();
-	void ConsultarVuelos(string origen, string destino);
+	bool ConsultarVuelos(string origen, string destino);
+	bool VerificarHoteles(string ciudad);
+	bool VerificarPaquetes(string destino);
+	bool VerificarReservas(string codigo);
 	void MostrarReservasUsuario(Usuario* userActual);
 	void ReservarHotel(int indiceHotel, Usuario* userActual,string fecha, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);
 	void ReservarPaquete(int indicePaquete, Usuario* userActual, int noches,

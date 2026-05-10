@@ -17,7 +17,7 @@ void RegisterScreen(ControladorPrincipal* principal) {
         ImprimirBordes(registro);
         gotoxy(0, 6);
         ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo: \n", Register, false);
-        ColorUI::printGradient("t\t\t\t\t\t\t[1] Admin ", Register, false);
+        ColorUI::printGradient("\t\t\t\t\t\t[1] Admin ", Register, false);
         ColorUI::printGradient("\t\t\t\t\t\t[2] Usuario", Register, false);
         ColorUI::printGradient("\t\t\t\t\t\t[0] Salir", Register, false);
         modo = _getch();
@@ -30,24 +30,26 @@ void RegisterScreen(ControladorPrincipal* principal) {
 }
 
 void LoginScreen(ControladorPrincipal* principal) {
-    system("cls");
     string u_nombre, u_correo, u_password;
+    Usuario* userLogeado;
+    do {
+        system("cls");
+        ColorUI::printGradient(login, Register, false);
+        gotoxy(0, 6);
+        ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
+        cout << "\t\t\t\t"; cin >> u_nombre;
 
-    ColorUI::printGradient(login, Register, false);
-	gotoxy(0, 6);
-    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
-    cout << "\t\t\t\t"; cin >> u_nombre;
+        ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Register, false);
+        cout << "\t\t\t\t"; cin >> u_correo;
 
-    ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Register, false);
-    cout << "\t\t\t\t"; cin >> u_correo;
+        ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
+        cout << "\t\t\t\t"; cin >> u_password;
 
-    ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
-    cout << "\t\t\t\t"; cin >> u_password;
+        cin.ignore(1000, '\n');
+        system("cls");
 
-    cin.ignore(1000, '\n');
-    system("cls");
-
-    Usuario* userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
+        userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
+    } while (userLogeado==nullptr);
 
     if (userLogeado != nullptr) {
         system("pause>0");

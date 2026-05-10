@@ -266,7 +266,6 @@ void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
            
         }
     }
-    cout << "pene";
 }
 void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario) {
     for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
@@ -481,18 +480,36 @@ void ControladorPrincipal::ObtenerIngresosTotales() {
 	float ingresosTotales = controladorReservas->CalcularIngresosTotales();
     cout << "Los ingresos totales generados por las reservas son: $" << ingresosTotales << endl;
 }
-void ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
+bool ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
     if(controladorVuelos->VerificarVueloDirecto(origen, destino)) {
         cout << endl<<"¡Hay un vuelos directo disponible!" << endl;
         controladorVuelos->FiltrarVuelosPorOrigenDestino(origen, destino);
-        return;
+        return true ;
     }
     else {
         Lista<Ruta*>* rutasEncontradas = controladorRutas->BuscarRutaMasCorta(origen, destino);
         if(controladorVuelos->GenerarVuelosConEscala(origen, destino, rutasEncontradas)) 
             controladorVuelos->FiltrarVuelosPorOrigenDestino(origen, destino);
-        
+        return false;
     }
+}
+bool ControladorPrincipal::VerificarHoteles(string ciudad) {
+    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+        Hotel* aux = controladorHoteles->getHoteles()->obtenerPos(i);
+        if (aux->getCiudad() == ciudad) {
+            return true;
+        }
+    }
+    return false;
+}
+bool ControladorPrincipal::VerificarPaquetes(string destino) {
+    for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
+        Paquete* aux = controladorPaquetes->getPaquetes()->obtenerPos(i);
+        if (aux->getVueloIncluido()->getDestino() == destino) {
+            return true;
+        }
+    }
+    return false;
 }
 void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual, int equipajeBoveda, int equipajeCabina, int asiento, int clase) {
     Vuelo* vueloSeleccionado = controladorVuelos->ObtenerVueloPorPosicion(indiceVuelo);
@@ -532,7 +549,16 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
         GuardarDatosEnArchivos();
     }
 }
-void ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal) {
+bool ControladorPrincipal::VerificarReservas(string codigo) {
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
+        if (aux->getCodigoUsuario()== codigo) {
+            return true;
+        }
+    }
+    return false;
+}
+bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal) {
 
     int contadorUsuario = 0;
     int indiceGlobal = -1;
@@ -551,7 +577,7 @@ void ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
 
     if (indiceGlobal == -1) {
         cout << "Error: Indice de reserva no valido." << endl;
-        return;
+        return false;
     }
 
     if (reservaACancelar->getTipoReserva() == "VUELO") {
@@ -614,7 +640,7 @@ void ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
     controladorReservas->getReservasTotales()->eliminaPos(indiceGlobal);
 
     GuardarDatosEnArchivos();
-
+    return true;
     cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
 }
 void ControladorPrincipal::CalificarHotel(string nombreHotel, float nuevaPuntuacion) {
@@ -750,10 +776,18 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
         if (existeCuenta) {
 			system("cls");
 			ColorUI::printGradient("\n\n\n\t\t\tError: Contrasena incorrecta. Por favor, intenta nuevamente.\n", Alerta, false);
-            system("cls");
-            RegisterScreen(this);
+            system("pause>0");
+            return nullptr;
     
         } else {
+            for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
+                Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
+                if (aux->getCorreo() == correo) {
+                    cout << "ESTE CORREO YA ESTA REGISTRADO PRUEBE OTRO"<<endl;
+                    system("pause>0");
+                    return nullptr;
+                }
+            }
 			controladorUsuarios->AgregarUsuario(nombre, correo, password);
 			system("cls");
 			ColorUI::printGradient("\n\n\n\t\t\tCuenta Creada Exitosamente Bienvenido  " + nombre + "!\n", Exito, false); 

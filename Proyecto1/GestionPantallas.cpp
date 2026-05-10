@@ -68,7 +68,10 @@ void GestionPantallas::MenuReservaHotel() {
 
     cout << "\n";
     principal->FiltrarHotelesPorCiudad(ciudad);
-
+    if (!principal->VerificarHoteles(ciudad)) {
+        cout << "No hay hoteles disponibles" << endl;
+        return;
+    }
     ColorUI::printGradient("\n================================", Tux, false);
     ColorUI::printGradient("\nIngresa el ID del hotel que deseas reservar (o -1 para salir): ", Exito, false, false);
     idHotel = LeerOpcion();
@@ -153,7 +156,10 @@ void GestionPantallas::MenuReservaPaquete() {
 
     cout << "\n";
     principal->FiltrarPaquetesPorDestino(ciudad);
-
+    if (!principal->VerificarPaquetes(ciudad)) {
+        cout << "No hay paquetes disponibles" << endl;
+        return;
+    }
     ColorUI::printGradient("\n================================", Tux, false);
     ColorUI::printGradient("\nIngresa el ID del paquete que deseas comprar (o -1 para salir): ", Exito, false, false);
     idPaquete = LeerOpcion();
@@ -236,7 +242,10 @@ void GestionPantallas::MenuReservaVuelo() {
      getline(cin, destino);
 
     cout << "\n";
-    principal->ConsultarVuelos(origen, destino);
+    if (!principal->ConsultarVuelos(origen, destino)) {
+        system("pause>0");
+        return;
+    }
 
     ColorUI::printGradient("================================", Tux, false);
     ColorUI::printGradient("\nIngresa el ID del vuelo que deseas reservar (o -1 para salir): ", Exito, false, false);
@@ -555,10 +564,16 @@ void GestionPantallas::MenuCatalogos(){
 void GestionPantallas::MenuCancelarReserva() {
     int id;
     principal->FiltrarReservasPorUsuario(userActual->getCodigo());
-    ColorUI::printGradient("\nDIGITE EL ID DE LA RESERVA A ELIMINAR\n", Exito, false);
-    cin >> id;
-    cin.ignore();
-    principal->CancelarReservaUsuario(userActual->getCodigo(),id);
+    if (!principal->VerificarReservas(userActual->getCodigo())) {
+        cout << "No hay reservas registrar a su nombre" << endl;
+        system("pause>0");
+        return;
+    }
+    do {
+        ColorUI::printGradient("\nDIGITE EL ID DE LA RESERVA A ELIMINAR\n", Exito, false);
+        cin >> id;
+        cin.ignore();
+    } while (!principal->CancelarReservaUsuario(userActual->getCodigo(), id));
     ColorUI::printGradient("\nEL MONTO SE REMBOLSARA EN SU CUENTA MAXIMO 10 DIAS HABILES", Exito, false);
     system("pause>0");
 }

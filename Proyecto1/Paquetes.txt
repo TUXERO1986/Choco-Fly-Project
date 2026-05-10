@@ -1,16 +1,8 @@
-Lima,Cusco,Directo,17-4-2026,300,Hotel 15,Cusco,2.07999,90.5545
-Lima,Santiago,Directo,26-12-2026,250,Hotel 20,Santiago,1.87442,142.018
-Lima,Santiago,Directo,29-2-2026,250,Hotel 14,Santiago,3.66915,175.362
-Sao Paulo,Buenos Aires,Directo,24-4-2026,200,Hotel 23,Buenos Aires,3.11933,51.7075
-Sao Paulo,Buenos Aires,Directo,24-4-2026,200,Hotel 23,Buenos Aires,3.11933,51.7075
-Lima,Cusco,Directo,29-5-2026,300,Hotel 44,Cusco,2.51091,117.605
-Lima,Cusco,Directo,29-5-2026,300,Hotel 44,Cusco,2.51091,117.605
-Cusco,Arequipa,Directo,26-7-2026,80,Hotel 12,Arequipa,3.57405,74.3675
-Lima,Piura,Directo,24-3-2026,100,Hotel 5,Piura,2.91852,96.4873
-Lima,Piura,Directo,24-3-2026,100,Hotel 5,Piura,2.91852,96.4873
-Cusco,Arequipa,Directo,2-1-2026,80,Hotel 12,Arequipa,3.57405,74.3675
-Cusco,Arequipa,Directo,2-1-2026,80,Hotel 12,Arequipa,3.57405,74.3675
-Lima,Cusco,Directo,29-5-2026,300,Hotel 11,Cusco,3.96457,150.977
-Lima,Cusco,Directo,29-5-2026,300,Hotel 11,Cusco,3.96457,150.977
-Lima,Piura,Directo,23-3-2026,100,Hotel 17,Piura,1.00525,91.3968
-Lima,Piura,Directo,23-3-2026,100,Hotel 17,Piura,1.00525,91.3968
+Cusco,Lima,Directo,4-2-2026,300,Majestic Heights Lima,Lima,1.68593,140.754
+Cusco,Lima,Directo,4-2-2026,300,Majestic Heights Lima,Lima,1.68593,140.754
+Buenos Aires,Santiago,Directo,10-4-2026,150,Harmony Suites Santiago,Santiago,1.89419,77.8191
+Buenos Aires,Santiago,Directo,10-4-2026,150,Harmony Suites Santiago,Santiago,1.89419,77.8191
+Cusco,Lima,Directo,4-2-2026,300,Blue Lagoon Resort Lima,Lima,1.09949,97.9476
+Cusco,Lima,Directo,4-2-2026,300,Blue Lagoon Resort Lima,Lima,1.09949,97.9476
+Buenos Aires,Sao Paulo,Directo,10-8-2026,200,Majestic Heights Sao Paulo,Sao Paulo,3.66414,71.0578
+Buenos Aires,Sao Paulo,Directo,10-8-2026,200,Majestic Heights Sao Paulo,Sao Paulo,3.66414,71.0578
