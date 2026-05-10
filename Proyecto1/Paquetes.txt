@@ -1,0 +1,3 @@
+Lima,Cusco,Directo,17-4-2026,300,Hotel 15,Cusco,2.07999,90.5545
+Lima,Santiago,Directo,26-12-2026,250,Hotel 20,Santiago,1.87442,142.018
+Lima,Santiago,Directo,29-2-2026,250,Hotel 14,Santiago,3.66915,175.362
