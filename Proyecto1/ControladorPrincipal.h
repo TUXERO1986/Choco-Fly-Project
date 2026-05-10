@@ -78,7 +78,9 @@ public:
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 	ControladorUsuarios* getControladorUsuarios();
-	// agregue esta funcion para el ui para que se pueda guardar la persistencia cada vez que se compra un ticket o se reserva una habitacion, asi no se pierde la informacion aunque el programa se cierre
+	// agregue esta funcion para el ui para que se pueda guardar la persistencia cada vez que se compra un t
+	// icket o se reserva una habitacion, asi no se pierde la informacion aunque el programa se cierre
+	//Guardar datos
 	void GuardarDatosEnArchivos();
 
 };
