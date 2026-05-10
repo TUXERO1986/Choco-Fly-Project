@@ -38,6 +38,10 @@ void ControladorPaquetes::AgregarNuevoPaquete(Vuelo* vueloIda, Hotel* hotel) {
 	controladorArchivos->GuardarDatoArchivoPaquetes(nuevoPaquete);
 }
 void ControladorPaquetes::MostrarPaquetes() {
+	if (paquetes->longitud() == 0) {
+		cout << "No hay paquetes disponibles." << endl;
+		return;
+	}
 	for (int i = 0; i < paquetes->longitud(); i++) {
 		Paquete* aux = paquetes->obtenerPos(i);
 		aux->MostrarPaquete();

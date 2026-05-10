@@ -93,7 +93,7 @@ void creditos() {
     cout << RESET;
 
     string ryan = R"(
-      Ryan (apellido)
+      Ryan Nima Muro
     [Programador C++ Backend]
 
             .--.
@@ -122,8 +122,8 @@ void creditos() {
     )";
 
     string santiago = R"(
-      Santiago (Apellido)
-    [Correccion de Bugs]
+      Santiago Ceron Diaz
+    [Code Reviewer]
 
                __         __
               /  \.-"""-./  \

@@ -44,7 +44,7 @@ public:
 	void MostrarPaquetes();
 	void MostrarReservas();
 	void MostrarUsuarios();
-	void FilrarVuelosPorOrigenDestino(string origen, string destino);
+	void FilrarVuelosPorOrigenDestino(string origen, string destino);// no esta 
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
 	void FiltrarRutasPorOrigen(string ciudadBusqueda);
 	void FiltrarRutasPorDestino(string ciudadBusqueda);

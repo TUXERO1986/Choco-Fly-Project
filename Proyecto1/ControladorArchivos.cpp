@@ -159,21 +159,22 @@ void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
     if (!archivo.is_open()) return;
 
     string linea;
-    string vOri, vDes, vEsc, vFec, vDistStr, vPrecStr;
+    string vOri, vDes, vEsc, vFec, vDistStr;
     string hNom, hCiu, hPuntStr, hPrecStr;
 
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
         stringstream ss(linea);
 
+        // Leer los 9 campos que realmente se guardan: 
+        // vOri, vDes, vEsc, vFec, vDist, hNom, hCiu, hPunt, hPrec
         if (getline(ss, vOri, ',') && getline(ss, vDes, ',') && getline(ss, vEsc, ',') &&
-            getline(ss, vFec, ',') && getline(ss, vDistStr, ',') && getline(ss, vPrecStr, ',') &&
+            getline(ss, vFec, ',') && getline(ss, vDistStr, ',') &&
             getline(ss, hNom, ',') && getline(ss, hCiu, ',') && getline(ss, hPuntStr, ',') &&
             getline(ss, hPrecStr)) {
 
-            // Conversión e instanciación directa sin try-catch
-            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr),new ControladorAsientos());
-            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr),new ControladorHabitaciones());
+            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr), new ControladorAsientos());
+            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr), new ControladorHabitaciones());
 
             paquetes->agregaFinal(new Paquete(vueloObj, hotelObj));
         }
