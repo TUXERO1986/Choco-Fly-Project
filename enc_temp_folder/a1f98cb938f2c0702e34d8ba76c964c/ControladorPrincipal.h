@@ -48,7 +48,7 @@ public:
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
 	void FiltrarRutasPorOrigen(string ciudadBusqueda);
 	void FiltrarRutasPorDestino(string ciudadBusqueda);
-	void FiltrarHotelesPorCiudad(string ciudadBusqueda);//ryanmaricon
+	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
 	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
 	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);//noesta
 	void FiltrarVuelosPorFecha(string fechaBusqueda);//noesta
