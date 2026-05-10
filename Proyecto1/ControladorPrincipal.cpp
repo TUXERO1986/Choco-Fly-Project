@@ -49,14 +49,18 @@ void ControladorPrincipal::AgregarRuta(string origen, string destino, float dist
 }
 void ControladorPrincipal::EliminarVuelo(int indiceVuelo) {
 	controladorVuelos->getVuelos()->eliminaPos(indiceVuelo);
+    GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarHotel(int indiceHotel) {
 	controladorHoteles->getHoteles()->eliminaPos(indiceHotel);
+    GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarPaquete(int indicePaquete) {
 	controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
+    GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarReserva(int indiceReserva) {
+
     Reserva* reservaACancelar = controladorReservas->
         getReservasTotales()->obtenerPos(indiceReserva);
 
