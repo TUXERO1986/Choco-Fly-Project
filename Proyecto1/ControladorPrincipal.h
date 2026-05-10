@@ -46,17 +46,17 @@ public:
 	void MostrarUsuarios();
 	void FilrarVuelosPorOrigenDestino(string origen, string destino);
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
-	void FiltrarRutasPorOrigen(string ciudadBusqueda);//noesta
-	void FiltrarRutasPorDestino(string ciudadBusqueda);//noesta
+	void FiltrarRutasPorOrigen(string ciudadBusqueda);
+	void FiltrarRutasPorDestino(string ciudadBusqueda);
 	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
 	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
 	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);//noesta
 	void FiltrarVuelosPorFecha(string fechaBusqueda);//noesta
 	void FitrarVuelosPorOrigen(string origenBusqueda);//noesta
 	void FiltrarVuelosPorDestino(string destinoBusqueda);//noesta
-	void FiltrarReservasPorTipo(string tipoBusqueda);//noesta
-	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);//noesta
-	void FiltrarReservasPorUsuario(string codigoUsuario);//noesta
+	void FiltrarReservasPorTipo(string tipoBusqueda);
+	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
+	void FiltrarReservasPorUsuario(string codigoUsuario);
 	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);//noesta
 	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
 	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);//noesta

@@ -57,7 +57,72 @@ void ControladorPrincipal::EliminarPaquete(int indicePaquete) {
 	controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
 }
 void ControladorPrincipal::EliminarReserva(int indiceReserva) {
-	controladorReservas->getReservasTotales()->eliminaPos(indiceReserva);
+    int contadorUsuario = 0;
+    Reserva* reservaACancelar = controladorReservas->
+        getReservasTotales()->obtenerPos(indiceReserva);
+
+    if (reservaACancelar->getTipoReserva() == "VUELO") {
+        Ticket* ticket = dynamic_cast<Ticket*>(reservaACancelar);
+
+        for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+            Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+            if (v->getOrigen() == ticket->getOrigen() && v->getDestino() ==
+                ticket->getDestino() && v->getFecha() == ticket->getFecha()) {
+
+                v->getControladorAsientos()->getAsientos()->obtenerPos(ticket->getAsiento() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "HOTEL") {
+        ReservaHotel* resHotel = dynamic_cast<ReservaHotel*>(reservaACancelar);
+
+        for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+            Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+            if (h->getNombre() == resHotel->getNombreHotel()) {
+                h->getControladorHabitaciones()->getHabitaciones()->
+                    obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "PAQUETE") {
+        ReservaPaquete* resPaq = dynamic_cast<ReservaPaquete*>(reservaACancelar);
+
+        Ticket* ticketIda = resPaq->getVueloReservado();
+        if (ticketIda != nullptr) {
+            for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+                Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+
+                if (v->getOrigen() == ticketIda->getOrigen() &&
+                    v->getDestino() == ticketIda->getDestino() &&
+                    v->getFecha() == ticketIda->getFecha()) {
+
+                    v->getControladorAsientos()->getAsientos()->obtenerPos(ticketIda->getAsiento() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+        ReservaHotel* resHotel = resPaq->getHotelReservado();
+        if (resHotel != nullptr) {
+            for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+                Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+                if (h->getNombre() == resHotel->getNombreHotel()) {
+                    // Liberamos la habitación en el controlador de ese hotel
+                    h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    controladorReservas->getReservasTotales()->eliminaPos(indiceReserva);
+
+    GuardarDatosEnArchivos();
+
+    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
 }
 void ControladorPrincipal::EliminarUsuario(int indiceUsuario) {
     controladorUsuarios->getUsuarios()->eliminaPos(indiceUsuario);

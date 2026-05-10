@@ -14,6 +14,9 @@ public:
 
     void MenuPrincipalAdmin();
     void MenuReportes();
+	void FiltroRutas();
     void MenuMantenimiento();
     void GenerarDatosAleatorios();
+    void MenuAgregar();
+	void MenuEliminar();
 };

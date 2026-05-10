@@ -61,7 +61,7 @@ void AdminPantallas::MenuReportes() {
         ColorUI::printGradient("\n\t\t[1] Ver todos los Vuelos", Exito, false);
         ColorUI::printGradient("\n\t\t[2] Ver todos los Hoteles", Exito, false);
         ColorUI::printGradient("\n\t\t[3] Ver todos los Paquetes", Exito, false);
-        ColorUI::printGradient("\n\t\t[4] Ver todas las Rutas", Exito, false);
+        ColorUI::printGradient("\n\t\t[4] Filtro de rutas", Exito, false);
         ColorUI::printGradient("\n\t\t[5] Ver TODAS las Reservas", Exito, false);
         ColorUI::printGradient("\n\t\t[6] Ver Usuarios Registrados", Exito, false);
         ColorUI::printGradient("\n\t\t[7] Ver Ingresos Totales", Exito, false);
@@ -75,7 +75,9 @@ void AdminPantallas::MenuReportes() {
         case '1': principal->MostrarVuelos(); system("pause"); break;
         case '2': principal->MostrarHoteles(); system("pause"); break;
         case '3': principal->MostrarPaquetes(); system("pause"); break;
-        case '4': principal->MostrarRutas(); system("pause"); break;
+        case '4': {
+			AdminPantallas::FiltroRutas();
+        } break;
         case '5': principal->MostrarReservas(); system("pause"); break;
         case '6': principal->MostrarUsuarios(); system("pause"); break;
         case '7':
@@ -94,8 +96,26 @@ void AdminPantallas::MenuReportes() {
         }
     } while (true);
 }
-
 void AdminPantallas::MenuMantenimiento() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient(mantenimiento, MoradoD, false);
+        gotoxy(0, 8);
+        ColorUI::printGradient("\n\t\t\t[1] Agregar Datos", Exito, false);
+        ColorUI::printGradient("\n\t\t\t[2] Eliminar Datos", Alerta, false);
+        ColorUI::printGradient("\n\t\t\t[0] Volver al Menu Principal", Alerta, false);
+        opcion = _getch();
+        system("cls");
+        switch (opcion) {
+        case '1': MenuAgregar(); break;
+        case '2': MenuEliminar(); break;
+        case '0': return;
+        default: break;
+		}
+    } while (true);
+}
+void AdminPantallas::MenuAgregar() {
     char opcion;
     do {
         system("cls");
@@ -107,7 +127,6 @@ void AdminPantallas::MenuMantenimiento() {
         ColorUI::printGradient("\n\t\t\t[4] Agregar Paquete Nuevo", Exito, false);
         ColorUI::printGradient("\n\t\t\t[5] Agregar Reserva Nueva", Exito, false);
         ColorUI::printGradient("\n\t\t\t[6] Agregar Usuario Nuevo", Exito, false);
-        ColorUI::printGradient("\n\t\t\t[7] Eliminar un Registro (Vuelo/Hotel/etc)", Alerta, false);
         ColorUI::printGradient("\n\t\t\t[0] Volver al Menu Principal", Alerta, false);
 
         opcion = _getch();
@@ -409,10 +428,26 @@ void AdminPantallas::MenuMantenimiento() {
             ColorUI::printGradient("\nUsuario agregado correctamente.\n", gege, false);
             system("pause");
         }break;
-        case '7': {
+        case '0': return;
+        }
+        }while (true);
+}
+void AdminPantallas::MenuEliminar() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient(mantenimiento, MoradoD, false);
+        gotoxy(0, 8);
+        ColorUI::printGradient("\n\t\t\t[1] Eliminar un Registro (Vuelo/Hotel/etc)", Alerta, false);
+        ColorUI::printGradient("\n\t\t\t[0] Volver al Menu Principal", Alerta, false);
+
+        opcion = _getch();
+        system("cls");
+        switch (opcion) {
+        case '1': {
             ColorUI::printGradient(eliminacion, Alerta, false);
-            gotoxy(0, 8);
-            ColorUI::printGradient("\n\t\t\tQue deseas eliminar?\n\t\t\t[1] Vuelo | [2] Hotel | [3] Usuario | [0] Cancelar\n\t\t\tOpcion: ", Exito, false, false);
+            gotoxy(0,8);
+            ColorUI::printGradient("\n\t\t\tQue deseas eliminar?\n\t\t\t[1] Vuelo | [2] Hotel | [3] Usuario | [4] Reserva | [0] Cancelar\n\t\t\tOpcion: ", Exito, false, false);
             char delOpt = _getch();
 
             if (delOpt == '0') break;
@@ -423,6 +458,7 @@ void AdminPantallas::MenuMantenimiento() {
             if (delOpt == '1') principal->EliminarVuelo(idTarget);
             else if (delOpt == '2') principal->EliminarHotel(idTarget);
             else if (delOpt == '3') principal->EliminarUsuario(idTarget);
+            else if (delOpt == '4') principal->EliminarReserva(idTarget);
 
             ColorUI::printGradient("\n\t\t\tRegistro eliminado (si el ID era valido).\n", gege, false);
             system("pause");
@@ -449,4 +485,50 @@ void AdminPantallas::GenerarDatosAleatorios() {
         ColorUI::printGradient("\n\tOperacion cancelada.\n", Alerta, false);
     }
     system("pause");
+}
+void AdminPantallas::FiltroRutas() {
+    system("cls");
+    ColorUI::printGradient("=== FILTRAR RUTAS ===", Paletas::TemaPrincipal, false);
+    ColorUI::printGradient("\n[1]Filtrar rutas por Origen: ", Paletas::Exito, false, false);
+    ColorUI::printGradient("\n[2]Filtrar rutas por Destino: ", Paletas::Exito, false, false);
+    ColorUI::printGradient("\n[3]Mostrar todas las rutas: ", Paletas::Exito, false, false);
+    ColorUI::printGradient("\n[0]Salir", Paletas::Exito, false, false);
+    cout << "\n";
+
+    char opcion = _getch();
+    switch (opcion) {
+    case '1': {
+        string ciudadBusqueda;
+        ColorUI::printGradient("\nDigite el origen a filtrar (ej. Lima): ", Exito, false, false);
+        getline(cin, ciudadBusqueda);
+        if (ciudadBusqueda.empty()) {
+            ColorUI::printGradient("\nNo ingresaste un origen. Se mostraron todas las rutas.\n", Alerta, false);
+            principal->MostrarRutas();
+        }
+        else {
+            principal->FiltrarRutasPorOrigen(ciudadBusqueda);
+        }
+        system("pause");
+    } break;
+    case '2': {
+        string ciudadBusqueda;
+        ColorUI::printGradient("\nDigite el destino a filtrar (ej. Lima): ", Exito, false, false);
+        getline(cin, ciudadBusqueda);
+        if (ciudadBusqueda.empty()) {
+            ColorUI::printGradient("\nNo ingresaste un destino. Se mostraron todas las rutas.\n", Alerta, false);
+            principal->MostrarRutas();
+        }
+        else {
+            principal->FiltrarRutasPorDestino(ciudadBusqueda);
+        }
+        system("pause");
+    } break;
+    case '3':
+        principal->MostrarRutas();
+        system("pause");
+        break;
+    case '4':
+        return;
+        break;
+    }
 }
