@@ -16,7 +16,7 @@ ReservaPaquete::~ReservaPaquete() {
 void ReservaPaquete::MostrarReserva() {
     cout << "======================================" << endl;
     cout << "        PAQUETE TURISTICO             " << endl;
-    cout << "Pasajero: " << nombreUsuario << " (" << codigoUsuario << ")" << endl;
+    cout << "Pasajero: " << nombreUsuario << endl;
     cout << "======================================" << endl;
 
     if (vueloReservado != nullptr) vueloReservado->MostrarReserva();

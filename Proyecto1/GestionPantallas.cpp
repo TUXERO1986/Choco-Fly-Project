@@ -92,7 +92,7 @@ void GestionPantallas::VuelosRyan() {
 }
 
 void GestionPantallas::ReservarHospedaje() {
-    string ciudad;
+    string ciudad,fechaIngreso;
     int idHotel, noches, habitacion, tipoO, tipoC, tipoS;
 
     ColorUI::printGradient("=== RESERVA DE HOTELES ===", Paletas::TemaPrincipal, false);
@@ -136,13 +136,13 @@ void GestionPantallas::ReservarHospedaje() {
 
     ColorUI::printGradient("\n\nNumero de habitacion deseada: ", Paletas::Exito, false, false);
     habitacion = LeerOpcion();
-
     ColorUI::printGradient("Cantidad de noches: ", Paletas::Exito, false, false);
     noches = LeerOpcion();
-
+    ColorUI::printGradient("Fecha de Ingreso (DD-MM-AAAA): ", Paletas::Exito, false, false);
+    cin >> fechaIngreso;
     tipoO = 1; tipoC = 1; tipoS = 1;
 
-    principal->ReservarHotel(idHotel, userActual, noches, habitacion, tipoO, tipoC, tipoS);
+    principal->ReservarHotel(idHotel, userActual, fechaIngreso,noches, habitacion, tipoO, tipoC, tipoS);
 
     system("cls");
     ColorUI::printGradient("RESERVA DE HOTEL COMPLETADA", Paletas::gege, false);
@@ -273,7 +273,9 @@ void GestionPantallas::GestionTickets() {
     ColorUI::printGradient("Ingresa cuantas maletas de cabina llevaras: ", Exito, false, false);
     cabina = LeerOpcion();
 
-    clase = 1;
+    cout << endl;
+    ColorUI::printGradient("Ingresa que clase deseas adquirir (1-ECONOMICA, 2-ECONOMICA PREMIUM, 3-EJECUTIVA, 4-PRIMERA CLASE):", Exito, false, false);
+    clase = LeerOpcion();
 
     principal->ComprarTicket(indiceVuelo, userActual, equipaje, cabina, asiento, clase);
 

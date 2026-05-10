@@ -23,6 +23,7 @@ public:
 	float getDistancia();
 	ControladorAsientos* getControladorAsientos();
 
+	float getPrecioBase();
 	void setOrigen(string o);
 	void setDestino(string d);
 	void setEscalas(string e);

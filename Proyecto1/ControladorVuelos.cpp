@@ -10,7 +10,7 @@ ControladorVuelos::ControladorVuelos() {
 		}
 		return -1; 
 		};
-	ObtenerMes = [](string fecha) {
+	ObtenerMes = [](string fecha) { 
 		size_t pos1 = fecha.find("-");
 		size_t pos2 = fecha.find("-", pos1 + 1);
 		if (pos1 != string::npos && pos2 != string::npos) {
@@ -36,10 +36,10 @@ void ControladorVuelos::MostrarVuelos() {
 	for (int i = 0; i < vuelos->longitud(); i++) {
 		Vuelo* aux = vuelos->obtenerPos(i);
 		ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-       // cout  << "[ID DEL VUELO: " << i << "]" << endl;
+        cout  << "[ID DEL VUELO: " << i << "]" << endl;
 		aux->MostrarVuelo();
 		ColorUI::printGradient("-----------------------------",Tux, false);
-		//cout << "-----------------------------" << endl;
+		cout << "-----------------------------" << endl;
 	}
 }
 void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia,ControladorAsientos* controladorAsientos) {

@@ -18,3 +18,6 @@ o,o,o,U-MRQ7SK
 adaw,dawd,awd,U-7WMLGJ
 7,7,7,U-1BXRSL
 2,2,2,U-83EFOY
+Pedro,pedro123@gmail.com,Pedro123,U-NU9DXY
+pablo,picapiedra123@gmail.com,pablo123455665,U-THYXPQ
+0000,0000,0000,U-NIVCZE

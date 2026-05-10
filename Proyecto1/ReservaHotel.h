@@ -6,18 +6,24 @@ class ReservaHotel : public Reserva
 private:
 	string nombreHotel;
 	string ciudad;
+	string fechaIngreso;
+	string fechaSalida;
 	int noches;
 	float precioNoche;
 	int habitacion;
 	int tipoO;
 	int tipoC;
 	int tipoS;
+	function<int(string)> ObtenerMes;
+	function<int(string)> ObtenerDia;
+	function<int(string)> ObtenerAno;
+	function< string(int, int, int,int)> ObtenerFechaSalida;
 	function <string(int)> ObtenerTipoO;
 	function <string(int)> ObtenerTipoC;
 	function <string(int)> ObtenerTipoS;
 
 public:
-	ReservaHotel(string codigoUsuario, string nombreUsuario, string nombreHotel, string ciudad, 
+	ReservaHotel(string codigoUsuario, string nombreUsuario, string nombreHotel, string ciudad, string fechaIngreso,
 		float precioNoche, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);
 	void MostrarReserva() override;
 	string aTextoArchivo() override;

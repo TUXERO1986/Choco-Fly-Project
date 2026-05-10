@@ -222,9 +222,9 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
         getline(ss, nomUser, ',');
 
         if (tipo == "VUELO") {
-            string origen, destino, escalas, precioStr, distStr, eqStr, eqCabStr,eqClase, eqAsiento;
+            string origen, destino, escalas, fecha,precioStr, distStr, eqStr, eqCabStr,eqClase, eqAsiento;
 
-            if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, escalas, ',') &&
+            if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, escalas, ',') &&getline(ss, fecha, ',') &&
                 getline(ss, precioStr, ',') && getline(ss, distStr, ',') &&
                 getline(ss, eqStr, ',') && getline(ss, eqCabStr,',')&&getline(ss,eqClase,',') && getline(ss, eqAsiento)) {
 
@@ -233,13 +233,13 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 int eqCab = stoi(eqCabStr);
                 int clase = stoi(eqClase);
                 int asiento = stoi(eqAsiento);
-                listaDestino->agregaFinal(new Ticket(codUser, nomUser, origen, destino, escalas, distancia, equipaje, eqCab,clase,asiento));
+                listaDestino->agregaFinal(new Ticket(codUser, nomUser, origen, destino, escalas,fecha, distancia, equipaje, eqCab,clase,asiento));
             }
         }
         else if (tipo == "HOTEL") {
-            string nombreHotel, ciudad, nochesStr, precioStr,habitacionStr,tipoOStr, tipoCStr, tipoSStr;
+            string nombreHotel, ciudad,fechaIngreso, nochesStr, precioStr,habitacionStr,tipoOStr, tipoCStr, tipoSStr;
 
-            if (getline(ss, nombreHotel, ',') && getline(ss, ciudad, ',') &&
+            if (getline(ss, nombreHotel, ',') && getline(ss, ciudad, ',') &&getline(ss, fechaIngreso, ',')&&
                 getline(ss, nochesStr, ',') &&getline(ss, precioStr, ',')&&
                 getline(ss, habitacionStr, ',')&&getline(ss, tipoOStr, ',')&&getline(ss, tipoCStr, ',') && getline(ss, tipoSStr)) {
 
@@ -250,7 +250,7 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 int tipoS = stoi(tipoSStr);
                 float precioTotal = stof(precioStr);
 
-                listaDestino->agregaFinal(new ReservaHotel(codUser, nomUser, nombreHotel, ciudad, noches, 
+                listaDestino->agregaFinal(new ReservaHotel(codUser, nomUser, nombreHotel, ciudad,fechaIngreso, noches, 
                     precioTotal,habitacion,tipoO,tipoC,tipoS));
             }
         }
@@ -258,20 +258,18 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
 
             string idaPart, retornoPart, hotelPart;
 
-            // 1. Leemos el nombre del usuario hasta el primer '|' 
-            // (Ya que en aTextoArchivo pusiste nombreUsuario + "|")
             if (getline(ss, nomUser, '|') &&
                 getline(ss, idaPart, '|') &&
                 getline(ss, retornoPart, '|') &&
                 getline(ss, hotelPart)) {
 
-                // --- PARSEAR BLOQUE IDA ---
                 stringstream ssIda(idaPart);
-                string iNom, iOri, iDes, iEsc, iPre, iDist, iEq, iEqC,iEqCl,iEqA;
-                getline(ssIda, iNom, ','); // Saltamos el nombre que guarda el Ticket internamente
+                string iNom, iOri, iDes, iEsc, iFec,iPre, iDist, iEq, iEqC,iEqCl,iEqA;
+                getline(ssIda, iNom, ','); 
                 getline(ssIda, iOri, ',');
                 getline(ssIda, iDes, ',');
                 getline(ssIda, iEsc, ',');
+                getline(ssIda, iFec, ',');
                 getline(ssIda, iPre, ',');
                 getline(ssIda, iDist, ',');
                 getline(ssIda, iEq, ',');
@@ -279,13 +277,13 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 getline(ssIda, iEqCl, ',');
                 getline(ssIda, iEqA, ',');
 
-                // --- PARSEAR BLOQUE RETORNO ---
                 stringstream ssRet(retornoPart);
-                string rNom, rOri, rDes, rEsc, rPre, rDist, rEq, rEqC,rEqCl,rEqA;
+                string rNom, rOri, rDes, rEsc,rFec, rPre, rDist, rEq, rEqC,rEqCl,rEqA;
                 getline(ssRet, rNom, ',');
                 getline(ssRet, rOri, ',');
                 getline(ssRet, rDes, ',');
                 getline(ssRet, rEsc, ',');
+                getline(ssRet, rFec, ',');
                 getline(ssRet, rPre, ',');
                 getline(ssRet, rDist, ',');
                 getline(ssRet, rEq, ',');
@@ -293,11 +291,11 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 getline(ssRet, rEqCl, ',');
                 getline(ssRet, rEqA, ',');
 
-                // --- PARSEAR BLOQUE HOTEL ---
                 stringstream ssHot(hotelPart);
-                string hNom, hCiu, hNoc, hPre,hHb,hTo,hTc,hTs;
+                string hNom, hCiu,hFi, hNoc, hPre,hHb,hTo,hTc,hTs;
                 getline(ssHot, hNom, ',');
                 getline(ssHot, hCiu, ',');
+                getline(ssHot, hFi, ',');
                 getline(ssHot, hNoc, ',');
                 getline(ssHot, hPre, ',');
                 getline(ssHot, hHb, ',');
@@ -305,15 +303,12 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 getline(ssHot, hTc, ',');
                 getline(ssHot, hTs, ',');
 
-                // 2. Creamos los objetos con sus respectivos datos leídos
-                Ticket* vueloIda = new Ticket(codUser, nomUser, iOri, iDes, iEsc, stof(iDist), stoi(iEq), stoi(iEqC),stoi(iEqCl),stoi(iEqA));
+                Ticket* vueloIda = new Ticket(codUser, nomUser, iOri, iDes, iEsc,iFec, stof(iDist), stoi(iEq), stoi(iEqC),stoi(iEqCl),stoi(iEqA));
 
-                // Aquí usamos las variables 'r' (de retorno) que leímos del archivo
-                Ticket* vueloRetorno = new Ticket(codUser, nomUser, rOri, rDes, rEsc, stof(rDist), stoi(rEq), stoi(rEqC),stoi(rEqC),stoi(rEqA));
+                Ticket* vueloRetorno = new Ticket(codUser, nomUser, rOri, rDes, rEsc,rFec, stof(rDist), stoi(rEq), stoi(rEqC),stoi(rEqC),stoi(rEqA));
 
-                ReservaHotel* hotelInterno = new ReservaHotel(codUser, nomUser, hNom, hCiu, stoi(hNoc), stof(hPre),stoi(hHb),stoi(hTo),stoi(hTc),stoi(hTs));
+                ReservaHotel* hotelInterno = new ReservaHotel(codUser, nomUser, hNom, hCiu,hFi, stoi(hNoc), stof(hPre),stoi(hHb),stoi(hTo),stoi(hTc),stoi(hTs));
 
-                // 3. Agregamos a la lista
                 listaDestino->agregaFinal(new ReservaPaquete(codUser, nomUser, vueloIda, vueloRetorno, hotelInterno));
             }
         }

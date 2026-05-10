@@ -210,21 +210,13 @@ void ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
         
     }
 }
-/*
-
-Nota para nicolas: 
-le pedi a gemini que me mejorar la funcion para que se pueda visualizar cuando un ticket y una habitacion
-es reservada para marcala en rojo 
-
-
-*/
 void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual, int equipajeBoveda, int equipajeCabina, int asiento, int clase) {
     Vuelo* vueloSeleccionado = controladorVuelos->ObtenerVueloPorPosicion(indiceVuelo);
     if (vueloSeleccionado != nullptr) {
         // 1. Generar la reserva
         controladorReservas->AgregarReserva(new Ticket(usuariActual->getCodigo(), usuariActual->getNombre(),
             vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(),
-            vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
+            vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
 
         // 2. Apagar el asiento (Buscar el número y ponerlo en false)
         Lista<Asiento*>* listaAsientos = vueloSeleccionado->getControladorAsientos()->getAsientos();
@@ -235,19 +227,17 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual,
             }
         }
 
-        // 3. Guardar persistencia
         GuardarDatosEnArchivos();
     }
 }
-void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, int noches, int habitacion, int tipoO, int tipoC, int tipoS) {
+void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, string fecha,int noches, int habitacion, int tipoO, int tipoC, int tipoS) {
     Hotel* hotelSeleccionado = controladorHoteles->getHoteles()->obtenerPos(indiceHotel);
     if (hotelSeleccionado != nullptr) {
-        // 1. Generar la reserva
-        controladorReservas->AgregarReserva(new ReservaHotel(userActual->getNombre(), userActual->getCodigo(), hotelSeleccionado->getNombre(),
-            hotelSeleccionado->getCiudad(), hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
 
-        // 2. Apagar la habitación 
-        auto listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
+        controladorReservas->AgregarReserva(new ReservaHotel(userActual->getCodigo(), userActual->getNombre(), hotelSeleccionado->getNombre(),
+            hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
+
+        Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
         for (int i = 0; i < listaHabitaciones->longitud(); i++) {
             if (listaHabitaciones->obtenerPos(i)->getNumero() == habitacion) {
                 listaHabitaciones->obtenerPos(i)->setDisponible(false);
@@ -255,9 +245,140 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, i
             }
         }
 
-        // 3. Guardar persistencia
         GuardarDatosEnArchivos();
     }
+}
+void ControladorPrincipal::FiltrarVuelosPorPresupuesto(float presupuestoMaximo) {
+    bool encontrados = false;
+    cout << "\n=== VUELOS POR DEBAJO DE $" << presupuestoMaximo << " (Precio Base) ===" << endl;
+
+    for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+        Vuelo* vuelo = controladorVuelos->getVuelos()->obtenerPos(i);
+
+        float precioBaseEstimado = vuelo->getPrecioBase();
+
+        if (precioBaseEstimado <= presupuestoMaximo) {
+            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
+            vuelo->MostrarVuelo();
+            cout << "-----------------------------------" << endl;
+            encontrados = true;
+        }
+    }
+
+    if (!encontrados) {
+        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
+    }
+}
+void ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal) {
+
+    int contadorUsuario = 0;
+    int indiceGlobal = -1;
+    Reserva* reservaACancelar = nullptr;
+
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        if (controladorReservas->getReservasTotales()->obtenerPos(i)->getCodigoUsuario() == codigoUsuario) {
+            if (contadorUsuario == indiceReservaLocal) {
+                indiceGlobal = i;
+                reservaACancelar = controladorReservas->getReservasTotales()->obtenerPos(i);
+                break;
+            }
+            contadorUsuario++;
+        }
+    }
+
+    if (indiceGlobal == -1) {
+        cout << "Error: Indice de reserva no valido." << endl;
+        return;
+    }
+
+    if (reservaACancelar->getTipoReserva() == "VUELO") {
+        Ticket* ticket = dynamic_cast<Ticket*>(reservaACancelar);
+
+        for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+            Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+            if (v->getOrigen() == ticket->getOrigen() && v->getDestino() == 
+                ticket->getDestino() && v->getFecha() == ticket->getFecha()) {
+
+                v->getControladorAsientos()->getAsientos()->obtenerPos(ticket->getAsiento() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "HOTEL") {
+        ReservaHotel* resHotel = dynamic_cast<ReservaHotel*>(reservaACancelar);
+
+        for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+            Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+            if (h->getNombre() == resHotel->getNombreHotel()) {
+                h->getControladorHabitaciones()->getHabitaciones()->
+                    obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "PAQUETE") {
+        ReservaPaquete* resPaq = dynamic_cast<ReservaPaquete*>(reservaACancelar);
+
+        Ticket* ticketIda = resPaq->getVueloReservado();
+        if (ticketIda != nullptr) {
+            for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+                Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+
+                if (v->getOrigen() == ticketIda->getOrigen() &&
+                    v->getDestino() == ticketIda->getDestino() &&
+                    v->getFecha() == ticketIda->getFecha()) {
+
+                    v->getControladorAsientos()->getAsientos()->obtenerPos(ticketIda->getAsiento() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+        ReservaHotel* resHotel = resPaq->getHotelReservado();
+        if (resHotel != nullptr) {
+            for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+                Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+                if (h->getNombre() == resHotel->getNombreHotel()) {
+                    // Liberamos la habitación en el controlador de ese hotel
+                    h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    controladorReservas->getReservasTotales()->eliminaPos(indiceGlobal);
+
+    GuardarDatosEnArchivos();
+
+    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
+}
+void ControladorPrincipal::CalificarHotel(string nombreHotel, float nuevaPuntuacion) {
+    if (nuevaPuntuacion < 1.0f || nuevaPuntuacion > 5.0f) {
+        cout << "Por favor, ingresa una puntuacion valida (1.0 a 5.0)." << endl;
+        return;
+    }
+
+    bool encontrado = false;
+    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+        Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+
+        if (h->getNombre() == nombreHotel) {
+            float puntuacionAntigua = h->getPuntuacion();
+
+            float puntuacionActualizada = (puntuacionAntigua + nuevaPuntuacion) / 2.0f;
+            h->setPuntuacion(puntuacionActualizada);
+
+            GuardarDatosEnArchivos(); 
+
+            cout << "¡Gracias por tu reseña! La calificacion de " << nombreHotel << " ha subido a " << puntuacionActualizada << " estrellas." << endl;
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) cout << "No pudimos encontrar el hotel mencionado." << endl;
 }
 void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActual,int noches,
     int maletasBodegaIda,int maletasBodegaRetorno,int clase,int asiento) {
@@ -294,14 +415,14 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     Ticket* ticketIda = new Ticket(
         userActual->getCodigo(), userActual->getNombre(),
         vueloOferta->getOrigen(), vueloOferta->getDestino(),
-        vueloOferta->getEscalas(),
+        vueloOferta->getEscalas(), vueloOferta->getFecha(),
         vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento 
     );
 
     float precioTotalHotel = hotelOferta->getPrecioNoche() * noches;
     ReservaHotel* reservaHotel = new ReservaHotel(
         userActual->getCodigo(), userActual->getNombre(),
-        hotelOferta->getNombre(), hotelOferta->getCiudad(),
+        hotelOferta->getNombre(), hotelOferta->getCiudad(),vueloOferta->getFecha(),
         noches, precioTotalHotel,1,1,1,1
     );
 
@@ -310,7 +431,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     Ticket* ticketRetorno = new Ticket(
         userActual->getCodigo(), userActual->getNombre(),
         vueloOferta->getDestino(), vueloOferta->getOrigen(), 
-        "Directo", 
+        "Directo",SumarDiasAFecha(vueloOferta->getFecha(), noches),
         vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento
     );
 
@@ -371,9 +492,6 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
     }
 }
 
-/*
-Funcion dada por gemini a ver si sirve 
-*/
 
 void ControladorPrincipal::GuardarDatosEnArchivos() {
     ControladorArchivos arc;
@@ -402,9 +520,7 @@ void ControladorPrincipal::GuardarDatosEnArchivos() {
         arc.GuardarDatoArchivoReservas(controladorReservas->getReservasTotales()->obtenerPos(i));
     }
 }
-//
-// TERMINA LA FUNCION DADA DE GEMINI
-//
+
 ControladorHoteles* ControladorPrincipal::getControladorHoteles() { return controladorHoteles; }
 ControladorPaquetes* ControladorPrincipal::getControladorPaquetes() { return controladorPaquetes; }
 ControladorReservas* ControladorPrincipal::getControladorReservas() { return controladorReservas; }

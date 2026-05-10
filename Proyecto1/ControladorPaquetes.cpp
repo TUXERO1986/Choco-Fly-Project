@@ -29,6 +29,7 @@ void ControladorPaquetes::GenerarPaquetes(int contador, Lista<Hotel*>* listhotel
 		Vuelo* vueloSeleccionado = listvuelos->obtenerPos(indiceVuelo);
 		if (hotelSeleccionado->getCiudad() != vueloSeleccionado->getDestino())continue;
 		AgregarNuevoPaquete(listvuelos->obtenerPos(indiceVuelo), listhoteles->obtenerPos(indiceHotel));
+		controladorArchivos->GuardarDatoArchivoPaquetes(new Paquete(listvuelos->obtenerPos(indiceVuelo), listhoteles->obtenerPos(indiceHotel)));
 	}
 }
 void ControladorPaquetes::AgregarNuevoPaquete(Vuelo* vueloIda, Hotel* hotel) {

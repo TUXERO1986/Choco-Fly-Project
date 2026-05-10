@@ -36,7 +36,9 @@ void ControladorReservas::MostrarReservasUsuario(string codigoUsuario) {
         Reserva* r = reservasTotales->obtenerPos(i);
 
         if (r->getCodigoUsuario() == codigoUsuario) {
+            cout << endl;
             r->MostrarReserva(); 
+            cout << endl;
             contador++;
         }
     }
@@ -56,7 +58,9 @@ void ControladorReservas::MostrarReservas() {
 
     for (int i = 0; i < reservasTotales->longitud(); i++) {
         cout << "\nReserva #" << (i + 1) << ":" << endl;
+        cout << endl;
         reservasTotales->obtenerPos(i)->MostrarReserva();
+        cout << endl;
     }
     cout << "===================================================" << endl;
 }
