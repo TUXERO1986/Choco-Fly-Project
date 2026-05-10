@@ -107,8 +107,8 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\n\tRuta conectada exitosamente.\n", gege, false);
             system("pause>0");
         } break;
-        case '4': {//agregar paquete
-            // Mostrar vuelos disponibles
+        case '4': {
+     
             ColorUI::printGradient("\t=== AGREGAR PAQUETE ===", TemaPrincipal, false);
             cout << "\n\nVuelos disponibles:\n";
             Lista<Vuelo*>* listaVuelos = principal->getControladorVuelos()->getVuelos();
@@ -131,7 +131,7 @@ void AdminPantallas::MenuAgregar() {
                 break;
             }
 
-            // Mostrar hoteles disponibles
+
             cout << "\nHoteles disponibles:\n";
             Lista<Hotel*>* listaHoteles = principal->getControladorHoteles()->getHoteles();
             if (listaHoteles->longitud() == 0) {
@@ -153,7 +153,6 @@ void AdminPantallas::MenuAgregar() {
                 break;
             }
 
-            // Validación básica: opcional exigir que la ciudad del hotel coincida con destino del vuelo
             Vuelo* vueloSel = listaVuelos->obtenerPos(idxVuelo);
             Hotel* hotelSel = listaHoteles->obtenerPos(idxHotel);
             if (hotelSel->getCiudad() != vueloSel->getDestino()) {
@@ -171,9 +170,9 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\nPaquete agregado correctamente.\n", gege, false);
             system("pause>0");
         }break;
-        case '5': {//agregar reserva
+        case '5': {
             ColorUI::printGradient("\t=== AGREGAR RESERVA ===", TemaPrincipal, false);
-            // Seleccionar usuario
+         
             Lista<Usuario*>* listaUsuarios = principal->getControladorUsuarios()->getUsuarios();
             if (listaUsuarios->longitud() == 0) {
                 ColorUI::printGradient("\nNo hay usuarios registrados. Crea un usuario primero.\n", Alerta, false);
@@ -194,12 +193,12 @@ void AdminPantallas::MenuAgregar() {
             }
             Usuario* usuarioSel = listaUsuarios->obtenerPos(idxUser);
 
-            // Tipo de reserva
+           
             ColorUI::printGradient("\nTipo de reserva: [1] VUELO | [2] HOTEL | [3] PAQUETE\nElige: ", Exito, false, false);
             int tipo = LeerOpcion();
 
             if (tipo == 1) {
-                // VUELO -> usar ComprarTicket para coherencia con logica existente
+             
                 Lista<Vuelo*>* listaVuelos = principal->getControladorVuelos()->getVuelos();
                 if (listaVuelos->longitud() == 0) {
                     ColorUI::printGradient("\nNo hay vuelos disponibles.\n", Alerta, false);
@@ -233,7 +232,7 @@ void AdminPantallas::MenuAgregar() {
                 system("pause>0");
             }
             else if (tipo == 2) {
-                // HOTEL -> usar ReservarHotel
+                
                 Lista<Hotel*>* listaHoteles = principal->getControladorHoteles()->getHoteles();
                 if (listaHoteles->longitud() == 0) {
                     ColorUI::printGradient("\nNo hay hoteles disponibles.\n", Alerta, false);
@@ -272,7 +271,7 @@ void AdminPantallas::MenuAgregar() {
                 system("pause>0");
             }
             else if (tipo == 3) {
-                // PAQUETE -> usar ReservarPaquete
+             
                 Lista<Paquete*>* listaPaquetes = principal->getControladorPaquetes()->getPaquetes();
                 if (listaPaquetes->longitud() == 0) {
                     ColorUI::printGradient("\nNo hay paquetes disponibles.\n", Alerta, false);
@@ -387,12 +386,12 @@ void AdminPantallas::MenuReportes() {
         system("cls");
 
         switch (opcion) {
-        case '1': MenuFiltrosVuelos(); system("pause>0"); break;
-        case '2': MenuFiltrosHoteles(); system("pause>0"); break;
-        case '3': MenuFiltrosPaquetes(); system("pause>0"); break;
-        case '4': FiltroRutas(); system("pause>0"); break;
-        case '5': MenuFiltrosReservas(); system("pause>0"); break;
-        case '6': MenuFiltrosUsuarios(); system("pause>0"); break;
+        case '1': MenuFiltrosVuelos();break;
+        case '2': MenuFiltrosHoteles(); break;
+        case '3': MenuFiltrosPaquetes(); break;
+        case '4': FiltroRutas(); break;
+        case '5': MenuFiltrosReservas(); break;
+        case '6': MenuFiltrosUsuarios(); break;
         case '7':
             principal->ObtenerIngresosTotales();
             cout << "\n";
@@ -576,7 +575,7 @@ void AdminPantallas::MenuFiltrosPaquetes() {
             system("pause>0");
             break;
         }
-        case 3: {
+        case '3': {
             principal->MostrarPaquetes();
             system("pause>0");
             break;

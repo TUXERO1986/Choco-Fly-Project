@@ -4,24 +4,21 @@
 template <class T>
 class Cola {
 private:
-    Nodo<T>* frente; // Puntero al primer elemento (el que sale primero)
-    Nodo<T>* final;  // Puntero al último elemento (el que acaba de entrar)
+    Nodo<T>* frente; 
+    Nodo<T>* final;  
     int tamano;
 
 public:
     Cola();
     ~Cola();
 
-    void encolar(T dato);     // Ingresa un elemento al final (Push/Enqueue)
-    T desencolar();           // Saca y devuelve el elemento del frente (Pop/Dequeue)
-    bool estaVacia();         // Verifica si la cola no tiene elementos
-    T verFrente();            // Solo mira el primer elemento sin sacarlo
-    int obtenerTamano();      // Retorna la cantidad de elementos
+    void encolar(T dato);     
+    T desencolar();          
+    bool estaVacia();        
+    T verFrente();           
+    int obtenerTamano();     
 };
 
-// ==========================================
-// 3. IMPLEMENTACIÓN DE LOS MÉTODOS
-// ==========================================
 
 template <class T>
 Cola<T>::Cola() {

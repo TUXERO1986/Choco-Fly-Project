@@ -21,7 +21,7 @@ void ControladorHabitaciones::GenerarHabitaciones() {
 string ControladorHabitaciones::ObtenerEstadoHabitacionesString() {
 	string estado = "";
 	for (int i = 0; i < habitaciones->longitud(); i++) {
-		// Si esta disponible agrega '1', si no, agrega '0'
+	
 		if (habitaciones->obtenerPos(i)->getDisponible()) {
 			estado += "1";
 		}
@@ -41,7 +41,7 @@ bool ControladorHabitaciones::verificarHabitacion(int numeroHabitacion) {
 	}
 }
 void ControladorHabitaciones::CargarEstadoHabitacionesString(string estado) {
-	// Leemos el string y actualizamos los asientos que ya fueron generados
+	
 	for (int i = 0; i < estado.length() && i < habitaciones->longitud(); i++) {
 		bool estaDisponible = (estado[i] == '1');
 		habitaciones->obtenerPos(i)->setDisponible(estaDisponible);

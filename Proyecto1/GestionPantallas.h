@@ -8,12 +8,12 @@
 class GestionPantallas {
 private:
     ControladorPrincipal* principal;
-    Usuario* userActual; // Guardamos la sesion del usuario
+    Usuario* userActual; 
 
 public:
     GestionPantallas(ControladorPrincipal* ptrPrincipal, Usuario* ptrUsuario);
 
-    int LeerOpcion(); // Funcion anti-crasheos
+    int LeerOpcion(); 
     void Menuprincipal();
     void MenuFiltrosReservas();
     void MenuFiltrosVuelos();

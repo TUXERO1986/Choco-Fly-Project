@@ -27,8 +27,8 @@ class ControladorPrincipal; // Le avisamos que existe esta clase
 // Definicion de funciones de ruteo:
 void creditos();
 void RegisterScreen(ControladorPrincipal* principal);
-void LoginScreen(ControladorPrincipal* principal);  // CORREGIDO
-void Admin(ControladorPrincipal* principal);        // CORREGIDO
+void LoginScreen(ControladorPrincipal* principal);  
+void Admin(ControladorPrincipal* principal);       
 
 // Variables globales de arte (Asegúrate de definirlas en Pantallas.cpp)
 extern std::string chocofly, chocoadmin, admin, registro, login;
@@ -110,7 +110,6 @@ namespace ColorUI {
             size_t pos;
             while ((pos = s.find("\t")) != string::npos) s.replace(pos, 1, "    ");
             if (s.length() < ANCHO_COL) s.append(ANCHO_COL - s.length(), ' ');
-            // Si la línea es muy larga, la cortamos para que no rompa el diseño
             if (s.length() > ANCHO_COL) s = s.substr(0, ANCHO_COL);
             return s;
             };
@@ -176,4 +175,4 @@ namespace ColorUI {
 
     using namespace Estilo;
     using namespace Paletas;
-} // Cierre correcto del namespace ColorUI (La llave extra fue eliminada)
+} 

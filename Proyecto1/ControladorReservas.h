@@ -1,7 +1,7 @@
 #pragma once
 #include "Lista.h"
 #include "Reserva.h"
-// Incluye aquí tu ControladorArchivos cuando lo vayas a conectar
+
 #include "ControladorArchivos.h" 
 #include <iostream>
 #include <string>

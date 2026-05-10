@@ -21,7 +21,7 @@ void ControladorAsientos::GenerarAsientos() {
 string ControladorAsientos::ObtenerEstadoAsientosString() {
 	string estado = "";
 	for (int i = 0; i < asientos->longitud(); i++) {
-		// Si esta disponible agrega '1', si no, agrega '0'
+	
 		if (asientos->obtenerPos(i)->getDisponible()) {
 			estado += "1";
 		}
@@ -41,7 +41,7 @@ bool ControladorAsientos::VerificarAsiento(int numeroAsiento) {
 	}
 }
 void ControladorAsientos::CargarEstadoAsientosString(string estado) {
-	// Leemos el string y actualizamos los asientos que ya fueron generados
+	
 	for (int i = 0; i < estado.length() && i < asientos->longitud(); i++) {
 		bool estaDisponible = (estado[i] == '1');
 		asientos->obtenerPos(i)->setDisponible(estaDisponible);

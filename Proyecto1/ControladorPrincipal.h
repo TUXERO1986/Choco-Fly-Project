@@ -49,27 +49,30 @@ public:
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
 	void FiltrarRutasPorOrigen(string ciudadBusqueda);
 	void FiltrarRutasPorDestino(string ciudadBusqueda);
-	void FiltrarHotelesPorCiudad(string ciudadBusqueda);//ryanmaricon
+	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
 	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
-	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);//noesta
-	void FiltrarVuelosPorFecha(string fechaBusqueda);//noesta
-	void FitrarVuelosPorOrigen(string origenBusqueda);//noesta
-	void FiltrarVuelosPorDestino(string destinoBusqueda);//noesta
+	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);
+	void FiltrarVuelosPorFecha(string fechaBusqueda);
+	void FitrarVuelosPorOrigen(string origenBusqueda);
+	void FiltrarVuelosPorDestino(string destinoBusqueda);
 	void FiltrarReservasPorTipo(string tipoBusqueda);
 	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
 	void FiltrarReservasPorUsuario(string codigoUsuario);
-	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);//noesta
-	void FiltrarHotelesPorPresupuesto(float presupuestoMaximo);//noesta
-	void FiltrarPaquetesPorPresupuesto(float presupuestoMaximo);//noesta
+	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);
+	void FiltrarHotelesPorPresupuesto(float presupuestoMaximo);
+	void FiltrarPaquetesPorPresupuesto(float presupuestoMaximo);
 	void FiltrarHotelesPorMayorCalificacion();
 	void FiltrarVuelosDeMayorAMenorPrecio();
 	void FiltrarHotelesDeMayorAMenorPrecio();
 	void FiltrarPaquetesDeMayorAMenorPrecio();
 	void FiltrarUsuarioPorCodigo(string codigo);
-	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
-	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);//noesta
+	bool CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);
+	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);
 	void ObtenerIngresosTotales();
-	void ConsultarVuelos(string origen, string destino);
+	bool ConsultarVuelos(string origen, string destino);
+	bool VerificarHoteles(string ciudad);
+	bool VerificarPaquetes(string destino);
+	bool VerificarReservas(string codigo);
 	void MostrarReservasUsuario(Usuario* userActual);
 	void ReservarHotel(int indiceHotel, Usuario* userActual,string fecha, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);
 	void ReservarPaquete(int indicePaquete, Usuario* userActual, int noches,
@@ -86,9 +89,7 @@ public:
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 	ControladorUsuarios* getControladorUsuarios();
-	// agregue esta funcion para el ui para que se pueda guardar la persistencia cada vez que se compra un t
-	// icket o se reserva una habitacion, asi no se pierde la informacion aunque el programa se cierre
-	//Guardar datos
+
 	void GuardarDatosEnArchivos();
 
 };
