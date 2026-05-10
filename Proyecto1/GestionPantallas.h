@@ -15,9 +15,17 @@ public:
 
     int LeerOpcion(); // Funcion anti-crasheos
     void Menuprincipal();
-    void VuelosRyan();
-    void ReservarHospedaje();
-    void GestionTickets();
-    void CatalogoPaquetes();
+    void MenuFiltrosReservas();
+    void MenuFiltrosVuelos();
+    void MenuFiltrosPaquetes();
+    void MenuFiltrosHoteles();
+    void MenuCatalogos();
+    void MenuReservas();
+    void MenuDatosUsuario();
+    void MenuCancelarReserva();
+    void MenuCalificacionHotel();
+    void MenuReservaHotel();
+    void MenuReservaVuelo();
+    void MenuReservaPaquete();
     void HistorialReservas();
 };

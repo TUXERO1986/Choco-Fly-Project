@@ -72,7 +72,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 	};
 	ObtenerTipoS = [](int tipoS){
 		switch (tipoS) {
-		case 1:return "BASICOS"; break;
+		case 1:return "BASICO"; break;
 		case 2:return "PREMIUM"; break;
 		case 3:return "VIP"; break;
 		}
@@ -82,6 +82,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 	this->fechaIngreso = fechaIngreso;
 	this->precioNoche = precioNoche;
 	this->noches = noches;
+	this->tipoReserva = "HOTEL";
 	this->tipoO = tipoO;
 	this->tipoC = tipoC;
 	this->tipoS = tipoS;

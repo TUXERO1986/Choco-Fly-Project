@@ -48,19 +48,30 @@ void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string 
 	controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
 }
 void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
-	controladorArchivosVuelos->VaciarArchivo();
-	for(int i=0; i < contador; i++) {
-		int indiceRuta = rand() % rutas->longitud();
-		Ruta* aux = rutas->obtenerPos(indiceRuta);
-		string origen = aux->getOrigen();
-		string destino = aux->getDestino();
-		float distancia = aux->getDistancia();
-		string fecha = to_string(1+(rand() % 30))+"-"+ to_string(1+(rand() % 12))+"-2026";
-		string escalas = "Directo";
-        ControladorAsientos* controladorAsientos = new ControladorAsientos();
-        
-		AgregarNuevoVuelo(origen, destino, escalas, fecha,distancia,controladorAsientos);
-	}
+
+    for (int i = 0; i < contador; i += 2) {
+
+        int indiceRuta = rand() % rutas->longitud();
+        Ruta* aux = rutas->obtenerPos(indiceRuta);
+
+        string origen = aux->getOrigen();
+        string destino = aux->getDestino();
+        float distancia = aux->getDistancia();
+        string escalas = "Directo";
+
+        string fechaIda = to_string(1 + (rand() % 30)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
+        ControladorAsientos* asientosIda = new ControladorAsientos();
+
+        AgregarNuevoVuelo(origen, destino, escalas, fechaIda, distancia, asientosIda);
+
+        if (i + 1 < contador) {
+            string fechaRetorno = to_string(1 + (rand() % 30)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
+
+            ControladorAsientos* asientosRetorno = new ControladorAsientos();
+
+            AgregarNuevoVuelo(destino, origen, escalas, fechaRetorno, distancia, asientosRetorno);
+        }
+    }
 
 }
 void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,

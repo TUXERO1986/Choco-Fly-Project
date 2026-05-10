@@ -131,6 +131,23 @@ void Lista<T>::eliminaInicial() {
 
 template <class T>
 void Lista<T>::eliminaPos(uint pos) {
+    if (pos >= lon) return;
+
+    if (pos == 0) {
+        eliminaInicial();
+        return;
+    }
+
+    Nodo<T>* aux = ini;
+    for (uint i = 0; i < pos - 1; i++) {
+        aux = aux->getSig();
+    }
+
+    Nodo<T>* nodoAEliminar = aux->getSig();
+
+    aux->setSig(nodoAEliminar->getSig());
+    delete nodoAEliminar;
+    lon--;
 }
 template <class T>
 void Lista<T>::eliminaFinal() {

@@ -1,10 +1,10 @@
-# 🚀 Proyecto Universitario: ChocoFly
+# 🚀 Proyecto: ChocoFly
 
 Este es un proyecto desarrollado como parte de la formación académica en **Ingeniería de Software**. Consiste en una aplicación de consola robusta escrita en **C++** utilizando **Visual Studio 2020**, enfocada en la implementación de estructuras de datos y lógica modular.
 
 ## 👥 Integrantes del Equipo
-* **Ryan** - *Desarrollador de Software & Ciberseguridad*
-* **Gengis** - *Desarrollador de Software & UI*
+* **Ryan** - *Desarrollador de Software & Backend*
+* **Gengis** - *Desarrollador de Software & Frontend*
 * **Santiago** - *Desarrollador de Software & Code Reviewer*
 
 ## 🛠️ Tecnologías y Herramientas
@@ -21,4 +21,4 @@ El proyecto sigue una arquitectura modular para facilitar el mantenimiento y evi
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio:
    ```bash
-   git clone git@github.com:TUXERO1986/Area-de-trabajo-Proyecto-Parcial.git
+   git clone git@github.com:TUXERO1986/Choco-Fly-Project.git
