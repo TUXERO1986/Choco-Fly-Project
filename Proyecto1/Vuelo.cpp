@@ -12,6 +12,7 @@ void Vuelo::MostrarVuelo() {
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
+	cout << "Precio base: $" << distancia * 0.7 << endl;
 	cout << "Fecha: " << fecha << endl;
 	cout << "Distancia: " << distancia << endl;
 
@@ -30,6 +31,7 @@ string Vuelo::getOrigen() { return origen; }
 string Vuelo::getDestino() { return destino; }
 string Vuelo::getEscalas() { return escalas; }
 float Vuelo::getDistancia() { return distancia; }
+float Vuelo::getPrecioBase() { return distancia*0.7; }
 ControladorAsientos* Vuelo::getControladorAsientos() {return controladorAsientos;}
 void Vuelo::setOrigen(string o) { this->origen = o; }
 void Vuelo::setDestino(string d) { this->destino = d; }

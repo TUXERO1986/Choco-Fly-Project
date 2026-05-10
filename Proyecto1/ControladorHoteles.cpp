@@ -31,7 +31,9 @@ void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float p
 void ControladorHoteles::MostrarHoteles() {
 	for (int i = 0; i < hoteles->longitud(); i++) {
 		Hotel* aux = hoteles->obtenerPos(i);
+		cout << "[ID DEL HOTEL: " << i << "]" << endl;
 		aux->MostrarHotel();
+		cout << "---------------------------------" << endl;
 	}
 }
 Lista<Hotel*>* ControladorHoteles::getHoteles() { return hoteles; }

@@ -8,6 +8,7 @@ private:
 	string origen;
 	string destino;
 	string escalas;
+	string fecha;
 	float distancia;
 	int equipaje;
 	int equipajecabina;
@@ -16,7 +17,7 @@ private:
 	function<string(int)> obtenerClase;
 public:
 	Ticket(string codigoUsuario,string nombreUsuario,string origen, string destino, 
-		string escalas, float distancia, int equipaje, int equipajecabina,int clase,
+		string escalas, string fecha,float distancia, int equipaje, int equipajecabina,int clase,
 		int asiento);
 	void MostrarReserva() override;
 	string aTextoArchivo() override;
@@ -26,6 +27,9 @@ public:
 	string getEscalas();
 	float getPrecioTotal() override;
 	float getDistancia();
+	string getFecha();
+	int getClase();
+	int getAsiento();
 	int getEquipaje();
 	int getEquipajeCabina();
 	void setOrigen(string origen);
