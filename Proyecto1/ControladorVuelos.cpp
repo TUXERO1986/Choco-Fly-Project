@@ -10,7 +10,7 @@ ControladorVuelos::ControladorVuelos() {
 		}
 		return -1; 
 		};
-	ObtenerMes = [](string fecha) {
+	ObtenerMes = [](string fecha) { 
 		size_t pos1 = fecha.find("-");
 		size_t pos2 = fecha.find("-", pos1 + 1);
 		if (pos1 != string::npos && pos2 != string::npos) {
@@ -36,10 +36,10 @@ void ControladorVuelos::MostrarVuelos() {
 	for (int i = 0; i < vuelos->longitud(); i++) {
 		Vuelo* aux = vuelos->obtenerPos(i);
 		ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-       // cout  << "[ID DEL VUELO: " << i << "]" << endl;
+        cout  << "[ID DEL VUELO: " << i << "]" << endl;
 		aux->MostrarVuelo();
 		ColorUI::printGradient("-----------------------------",Tux, false);
-		//cout << "-----------------------------" << endl;
+		cout << "-----------------------------" << endl;
 	}
 }
 void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia,ControladorAsientos* controladorAsientos) {
@@ -48,19 +48,30 @@ void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string 
 	controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
 }
 void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
-	controladorArchivosVuelos->VaciarArchivo();
-	for(int i=0; i < contador; i++) {
-		int indiceRuta = rand() % rutas->longitud();
-		Ruta* aux = rutas->obtenerPos(indiceRuta);
-		string origen = aux->getOrigen();
-		string destino = aux->getDestino();
-		float distancia = aux->getDistancia();
-		string fecha = to_string(1+(rand() % 30))+"-"+ to_string(1+(rand() % 12))+"-2026";
-		string escalas = "Directo";
-        ControladorAsientos* controladorAsientos = new ControladorAsientos();
-        
-		AgregarNuevoVuelo(origen, destino, escalas, fecha,distancia,controladorAsientos);
-	}
+
+    for (int i = 0; i < contador; i += 2) {
+
+        int indiceRuta = rand() % rutas->longitud();
+        Ruta* aux = rutas->obtenerPos(indiceRuta);
+
+        string origen = aux->getOrigen();
+        string destino = aux->getDestino();
+        float distancia = aux->getDistancia();
+        string escalas = "Directo";
+
+        string fechaIda = to_string(1 + (rand() % 30)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
+        ControladorAsientos* asientosIda = new ControladorAsientos();
+
+        AgregarNuevoVuelo(origen, destino, escalas, fechaIda, distancia, asientosIda);
+
+        if (i + 1 < contador) {
+            string fechaRetorno = to_string(1 + (rand() % 30)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
+
+            ControladorAsientos* asientosRetorno = new ControladorAsientos();
+
+            AgregarNuevoVuelo(destino, origen, escalas, fechaRetorno, distancia, asientosRetorno);
+        }
+    }
 
 }
 void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,

@@ -11,9 +11,6 @@ ControladorHoteles::~ControladorHoteles() {
 	delete hoteles;
 }
 void ControladorHoteles::GenerarHoteles(int contador, Lista<CiudadID*>* listaCiudades) {
-	// RYANN parece que falto poner esto jajajaj
-	controladorArchivos->VaciarArchivo();
-	// ahora si deberia quedar bien.
 	for (int i = 0; i < contador; i++) {
 		int indiceCiudad = rand() % listaCiudades->longitud();
 		string ciudadSeleccionada = listaCiudades->obtenerPos(indiceCiudad)->getNombre();
@@ -31,7 +28,9 @@ void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float p
 void ControladorHoteles::MostrarHoteles() {
 	for (int i = 0; i < hoteles->longitud(); i++) {
 		Hotel* aux = hoteles->obtenerPos(i);
+		cout << "[ID DEL HOTEL: " << i << "]" << endl;
 		aux->MostrarHotel();
+		cout << "---------------------------------" << endl;
 	}
 }
 Lista<Hotel*>* ControladorHoteles::getHoteles() { return hoteles; }

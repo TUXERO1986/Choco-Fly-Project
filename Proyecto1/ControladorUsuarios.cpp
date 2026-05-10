@@ -57,7 +57,9 @@ bool ControladorUsuarios::VerificarCuentaExistente(string nombre, string correo)
 void ControladorUsuarios::MostrarUsuarios() {
 	for (int i = 0; i < usuarios->longitud(); i++) {
 		Usuario* aux = usuarios->obtenerPos(i);
+		cout << endl;
 		aux->MostrarDatosAdmin();
+		cout << endl;
 	}
 }
 Lista<Usuario*>* ControladorUsuarios::getUsuarios() { return usuarios; }

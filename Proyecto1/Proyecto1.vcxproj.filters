@@ -74,11 +74,11 @@
     <ClCompile Include="ControladorHabitaciones.cpp">
       <Filter>Controladores</Filter>
     </ClCompile>
-    <ClCompile Include="Habitacion.cpp">
-      <Filter>Controladores</Filter>
-    </ClCompile>
     <ClCompile Include="AsciiArt.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Habitacion.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,11 +163,11 @@
     <ClInclude Include="ControladorHabitaciones.h">
       <Filter>Controladores</Filter>
     </ClInclude>
-    <ClInclude Include="Habitacion.h">
-      <Filter>Controladores</Filter>
-    </ClInclude>
     <ClInclude Include="AsciiArt.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Habitacion.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@ void ControladorPrincipal::GenerarDatos(int cantidadVuelos, int cantidadHoteles,
 	GenerarVuelos(cantidadVuelos);
 	GenerarHoteles(cantidadHoteles);
 	GenerarPaquetes(cantidadPaquetes);
+    //GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::GenerarVuelos(int cantidadVuelos) {
 	controladorVuelos->GenerarVuelos(cantidadVuelos, controladorRutas->getRutas());
@@ -47,17 +48,89 @@ void ControladorPrincipal::AgregarUsuario(string nombre, string correo, string p
 void ControladorPrincipal::AgregarRuta(string origen, string destino, float distancia) {
     controladorRutas->AgregarNuevaRuta(origen, destino, distancia);
 }
+void ControladorPrincipal::EliminarRuta(int indiceRuta) {
+	controladorRutas->getRutas()->eliminaPos(indiceRuta);
+    GuardarDatosEnArchivos();
+}
 void ControladorPrincipal::EliminarVuelo(int indiceVuelo) {
 	controladorVuelos->getVuelos()->eliminaPos(indiceVuelo);
+    GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarHotel(int indiceHotel) {
 	controladorHoteles->getHoteles()->eliminaPos(indiceHotel);
+    GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarPaquete(int indicePaquete) {
 	controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
+    GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarReserva(int indiceReserva) {
-	controladorReservas->getReservasTotales()->eliminaPos(indiceReserva);
+
+    Reserva* reservaACancelar = controladorReservas->
+        getReservasTotales()->obtenerPos(indiceReserva);
+
+    if (reservaACancelar->getTipoReserva() == "VUELO") {
+        Ticket* ticket = dynamic_cast<Ticket*>(reservaACancelar);
+
+        for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+            Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+            if (v->getOrigen() == ticket->getOrigen() && v->getDestino() ==
+                ticket->getDestino() && v->getFecha() == ticket->getFecha()) {
+
+                v->getControladorAsientos()->getAsientos()->obtenerPos(ticket->getAsiento() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "HOTEL") {
+        ReservaHotel* resHotel = dynamic_cast<ReservaHotel*>(reservaACancelar);
+
+        for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+            Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+            if (h->getNombre() == resHotel->getNombreHotel()) {
+                h->getControladorHabitaciones()->getHabitaciones()->
+                    obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "PAQUETE") {
+        ReservaPaquete* resPaq = dynamic_cast<ReservaPaquete*>(reservaACancelar);
+
+        Ticket* ticketIda = resPaq->getVueloReservado();
+        if (ticketIda != nullptr) {
+            for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+                Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+
+                if (v->getOrigen() == ticketIda->getOrigen() &&
+                    v->getDestino() == ticketIda->getDestino() &&
+                    v->getFecha() == ticketIda->getFecha()) {
+
+                    v->getControladorAsientos()->getAsientos()->obtenerPos(ticketIda->getAsiento() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+        ReservaHotel* resHotel = resPaq->getHotelReservado();
+        if (resHotel != nullptr) {
+            for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+                Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+                if (h->getNombre() == resHotel->getNombreHotel()) {
+                    // Liberamos la habitación en el controlador de ese hotel
+                    h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    controladorReservas->getReservasTotales()->eliminaPos(indiceReserva);
+
+    GuardarDatosEnArchivos();
+
+    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
 }
 void ControladorPrincipal::EliminarUsuario(int indiceUsuario) {
     controladorUsuarios->getUsuarios()->eliminaPos(indiceUsuario);
@@ -173,6 +246,16 @@ void ControladorPrincipal::FiltrarVuelosPorDestino(string destinoBusqueda) {
         }
     }
 }
+void ControladorPrincipal::FiltrarReservasPorTipo(string tipo) {
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
+        if (aux->getTipoReserva() == tipo) {
+            cout << "Reserva #" << i << ":" << endl;
+            aux->MostrarReserva();
+            cout << endl;
+        }
+    }
+}
 void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
     for(int i=0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
         Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
@@ -180,8 +263,10 @@ void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
             cout << "Reserva #" << i << ":" << endl;
             aux->MostrarReserva();
             cout << endl;
+           
         }
     }
+    cout << "pene";
 }
 void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario) {
     for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
@@ -190,6 +275,205 @@ void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, st
             cout << "Reserva #" << i << ":" << endl;
             aux->MostrarReserva();
             cout << endl;
+        }
+    }
+}
+void ControladorPrincipal::FiltrarVuelosPorPresupuesto(float presupuestoMaximo) {
+    bool encontrados = false;
+    cout << "\n=== HOTELES CON PRECIO POR NOCHES POR DEBAJO DE $" << presupuestoMaximo << " (PRECIO POR NOCHE) ===" << endl;
+
+    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+        Hotel* hotel = controladorHoteles->getHoteles()->obtenerPos(i);
+
+        float precioBaseEstimado = hotel->getPrecioNoche();
+
+        if (precioBaseEstimado <= presupuestoMaximo) {
+            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
+            hotel->MostrarHotel();
+            cout << "-----------------------------------" << endl;
+            encontrados = true;
+        }
+    }
+
+    if (!encontrados) {
+        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
+    }
+}
+void ControladorPrincipal::FiltrarHotelesPorPresupuesto(float presupuestoMaximo) {
+    bool encontrados = false;
+    cout << "\n=== VUELOS POR DEBAJO DE $" << presupuestoMaximo << " (Precio Base) ===" << endl;
+
+    for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+        Vuelo* vuelo = controladorVuelos->getVuelos()->obtenerPos(i);
+
+        float precioBaseEstimado = vuelo->getPrecioBase();
+
+        if (precioBaseEstimado <= presupuestoMaximo) {
+            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
+            vuelo->MostrarVuelo();
+            cout << "-----------------------------------" << endl;
+            encontrados = true;
+        }
+    }
+
+    if (!encontrados) {
+        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
+    }
+}
+void ControladorPrincipal::FiltrarPaquetesPorPresupuesto(float presupuestoMaximo) {
+    bool encontrados = false;
+    cout << "\n=== PAQUETES POR DEBAJO DE $" << presupuestoMaximo << " (Precio Base) ===" << endl;
+
+    for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
+        Paquete* paquete = controladorPaquetes->getPaquetes()->obtenerPos(i);
+
+        float precioBaseEstimado = paquete->getPrecioBase();
+
+        if (precioBaseEstimado <= presupuestoMaximo) {
+            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
+            paquete->MostrarPaquete();
+            cout << "-----------------------------------" << endl;
+            encontrados = true;
+        }
+    }
+
+    if (!encontrados) {
+        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
+    }
+}
+void ControladorPrincipal::FiltrarHotelesPorMayorCalificacion() {
+    Lista<Hotel*>* originales = controladorHoteles->getHoteles();
+    int n = originales->longitud();
+    if (n == 0) return;
+
+    Lista<Hotel*>* temp = new Lista<Hotel*>();
+    for (int i = 0; i < n; i++) temp->agregaFinal(originales->obtenerPos(i));
+
+    // 2. Bubble Sort 
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (temp->obtenerPos(j)->getPuntuacion() < temp->obtenerPos(j + 1)->getPuntuacion()) {
+                // Swap (Intercambio)
+                Hotel* aux = temp->obtenerPos(j);
+                temp->modificarPos(temp->obtenerPos(j + 1), j);
+                temp->modificarPos(aux, j + 1);
+            }
+        }
+    }
+
+    cout << "\n=== HOTELES: DE MAYOR A MENOR CALIFICACION ===" << endl;
+    for (int i = 0; i < n; i++) {
+        Hotel* h = temp->obtenerPos(i);
+        cout << "[ID PARA COMPRA: " << originales->getPos(h) << "]" << endl;
+        h->MostrarHotel();
+        cout << "-----------------------------------" << endl;
+    }
+    delete temp; 
+}
+
+void ControladorPrincipal::FiltrarVuelosDeMayorAMenorPrecio() {
+    Lista<Vuelo*>* originales = controladorVuelos->getVuelos();
+    int n = originales->longitud();
+    if (n == 0) return;
+
+    Lista<Vuelo*>* temp = new Lista<Vuelo*>();
+    for (int i = 0; i < n; i++) temp->agregaFinal(originales->obtenerPos(i));
+
+    // Bubble Sort 
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            float precio1 = temp->obtenerPos(j)->getDistancia() * 0.07f;
+            float precio2 = temp->obtenerPos(j + 1)->getDistancia() * 0.07f;
+
+            if (precio1 < precio2) {
+                Vuelo* aux = temp->obtenerPos(j);
+                temp->modificarPos(temp->obtenerPos(j + 1), j);
+                temp->modificarPos(aux, j + 1);
+            }
+        }
+    }
+
+    cout << "\n=== VUELOS: DE MAYOR A MENOR PRECIO BASE ===" << endl;
+    for (int i = 0; i < n; i++) {
+        Vuelo* v = temp->obtenerPos(i);
+        float precioBase = v->getDistancia() * 0.07f;
+        cout << "[ID PARA COMPRA: " << originales->getPos(v) << "] | Precio Base: $" << precioBase << endl;
+        v->MostrarVuelo();
+        cout << "-----------------------------------" << endl;
+    }
+    delete temp;
+}
+
+void ControladorPrincipal::FiltrarHotelesDeMayorAMenorPrecio() {
+    Lista<Hotel*>* originales = controladorHoteles->getHoteles();
+    int n = originales->longitud();
+    if (n == 0) return;
+
+    Lista<Hotel*>* temp = new Lista<Hotel*>();
+    for (int i = 0; i < n; i++) temp->agregaFinal(originales->obtenerPos(i));
+
+    // Bubble Sort
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (temp->obtenerPos(j)->getPrecioNoche() < temp->obtenerPos(j + 1)->getPrecioNoche()) {
+                Hotel* aux = temp->obtenerPos(j);
+                temp->modificarPos(temp->obtenerPos(j + 1), j);
+                temp->modificarPos(aux, j + 1);
+            }
+        }
+    }
+
+    cout << "\n=== HOTELES: DE MAYOR A MENOR PRECIO POR NOCHE ===" << endl;
+    for (int i = 0; i < n; i++) {
+        Hotel* h = temp->obtenerPos(i);
+        cout << "[ID PARA COMPRA: " << originales->getPos(h) << "]" << endl;
+        h->MostrarHotel();
+        cout << "-----------------------------------" << endl;
+    }
+    delete temp;
+}
+
+void ControladorPrincipal::FiltrarPaquetesDeMayorAMenorPrecio() {
+    Lista<Paquete*>* originales = controladorPaquetes->getPaquetes();
+    int n = originales->longitud();
+    if (n == 0) return;
+
+    Lista<Paquete*>* temp = new Lista<Paquete*>();
+    for (int i = 0; i < n; i++) temp->agregaFinal(originales->obtenerPos(i));
+
+    // Bubble Sort sumando precio base del vuelo + precio de 1 noche de hotel
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            Paquete* p1 = temp->obtenerPos(j);
+            Paquete* p2 = temp->obtenerPos(j + 1);
+
+            float precioEstimado1 = (p1->getVueloIncluido()->getDistancia() * 0.07f) + p1->getHotelIncluido()->getPrecioNoche();
+            float precioEstimado2 = (p2->getVueloIncluido()->getDistancia() * 0.07f) + p2->getHotelIncluido()->getPrecioNoche();
+
+            if (precioEstimado1 < precioEstimado2) {
+                Paquete* aux = temp->obtenerPos(j);
+                temp->modificarPos(temp->obtenerPos(j + 1), j);
+                temp->modificarPos(aux, j + 1);
+            }
+        }
+    }
+
+    cout << "\n=== PAQUETES: DE MAYOR A MENOR PRECIO ESTIMADO ===" << endl;
+    for (int i = 0; i < n; i++) {
+        Paquete* p = temp->obtenerPos(i);
+        float precioEstimado = (p->getVueloIncluido()->getDistancia() * 0.07f) + p->getHotelIncluido()->getPrecioNoche();
+        cout << "[ID PARA COMPRA: " << originales->getPos(p) << "] | Estimado base: $" << precioEstimado << endl;
+        p->MostrarPaquete();
+        cout << "-----------------------------------" << endl;
+    }
+    delete temp;
+}
+void ControladorPrincipal::FiltrarUsuarioPorCodigo(string codigo) {
+    for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
+        Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
+        if (aux->getCodigo() == codigo) {
+            aux->MostrarDatosUsuarios();
+            break;
         }
     }
 }
@@ -210,21 +494,13 @@ void ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
         
     }
 }
-/*
-
-Nota para nicolas: 
-le pedi a gemini que me mejorar la funcion para que se pueda visualizar cuando un ticket y una habitacion
-es reservada para marcala en rojo 
-
-
-*/
 void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual, int equipajeBoveda, int equipajeCabina, int asiento, int clase) {
     Vuelo* vueloSeleccionado = controladorVuelos->ObtenerVueloPorPosicion(indiceVuelo);
     if (vueloSeleccionado != nullptr) {
         // 1. Generar la reserva
         controladorReservas->AgregarReserva(new Ticket(usuariActual->getCodigo(), usuariActual->getNombre(),
             vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(),
-            vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
+            vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
 
         // 2. Apagar el asiento (Buscar el número y ponerlo en false)
         Lista<Asiento*>* listaAsientos = vueloSeleccionado->getControladorAsientos()->getAsientos();
@@ -235,19 +511,17 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* usuariActual,
             }
         }
 
-        // 3. Guardar persistencia
         GuardarDatosEnArchivos();
     }
 }
-void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, int noches, int habitacion, int tipoO, int tipoC, int tipoS) {
+void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, string fecha,int noches, int habitacion, int tipoO, int tipoC, int tipoS) {
     Hotel* hotelSeleccionado = controladorHoteles->getHoteles()->obtenerPos(indiceHotel);
     if (hotelSeleccionado != nullptr) {
-        // 1. Generar la reserva
-        controladorReservas->AgregarReserva(new ReservaHotel(userActual->getNombre(), userActual->getCodigo(), hotelSeleccionado->getNombre(),
-            hotelSeleccionado->getCiudad(), hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
 
-        // 2. Apagar la habitación 
-        auto listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
+        controladorReservas->AgregarReserva(new ReservaHotel(userActual->getCodigo(), userActual->getNombre(), hotelSeleccionado->getNombre(),
+            hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
+
+        Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
         for (int i = 0; i < listaHabitaciones->longitud(); i++) {
             if (listaHabitaciones->obtenerPos(i)->getNumero() == habitacion) {
                 listaHabitaciones->obtenerPos(i)->setDisponible(false);
@@ -255,9 +529,119 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, i
             }
         }
 
-        // 3. Guardar persistencia
         GuardarDatosEnArchivos();
     }
+}
+void ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal) {
+
+    int contadorUsuario = 0;
+    int indiceGlobal = -1;
+    Reserva* reservaACancelar = nullptr;
+
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        if (controladorReservas->getReservasTotales()->obtenerPos(i)->getCodigoUsuario() == codigoUsuario) {
+            if (contadorUsuario == indiceReservaLocal) {
+                indiceGlobal = i;
+                reservaACancelar = controladorReservas->getReservasTotales()->obtenerPos(i);
+                break;
+            }
+            contadorUsuario++;
+        }
+    }
+
+    if (indiceGlobal == -1) {
+        cout << "Error: Indice de reserva no valido." << endl;
+        return;
+    }
+
+    if (reservaACancelar->getTipoReserva() == "VUELO") {
+        Ticket* ticket = dynamic_cast<Ticket*>(reservaACancelar);
+
+        for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+            Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+            if (v->getOrigen() == ticket->getOrigen() && v->getDestino() == 
+                ticket->getDestino() && v->getFecha() == ticket->getFecha()) {
+
+                v->getControladorAsientos()->getAsientos()->obtenerPos(ticket->getAsiento() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "HOTEL") {
+        ReservaHotel* resHotel = dynamic_cast<ReservaHotel*>(reservaACancelar);
+
+        for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+            Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+            if (h->getNombre() == resHotel->getNombreHotel()) {
+                h->getControladorHabitaciones()->getHabitaciones()->
+                    obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                break;
+            }
+        }
+    }
+    else if (reservaACancelar->getTipoReserva() == "PAQUETE") {
+        ReservaPaquete* resPaq = dynamic_cast<ReservaPaquete*>(reservaACancelar);
+
+        Ticket* ticketIda = resPaq->getVueloReservado();
+        if (ticketIda != nullptr) {
+            for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+                Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
+
+                if (v->getOrigen() == ticketIda->getOrigen() &&
+                    v->getDestino() == ticketIda->getDestino() &&
+                    v->getFecha() == ticketIda->getFecha()) {
+
+                    v->getControladorAsientos()->getAsientos()->obtenerPos(ticketIda->getAsiento() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+        ReservaHotel* resHotel = resPaq->getHotelReservado();
+        if (resHotel != nullptr) {
+            for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+                Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+                if (h->getNombre() == resHotel->getNombreHotel()) {
+                    // Liberamos la habitación en el controlador de ese hotel
+                    h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    controladorReservas->getReservasTotales()->eliminaPos(indiceGlobal);
+
+    GuardarDatosEnArchivos();
+
+    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
+}
+void ControladorPrincipal::CalificarHotel(string nombreHotel, float nuevaPuntuacion) {
+    if (nuevaPuntuacion < 1.0f || nuevaPuntuacion > 5.0f) {
+        cout << "Por favor, ingresa una puntuacion valida (1.0 a 5.0)." << endl;
+        return;
+    }
+
+    bool encontrado = false;
+    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+        Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
+
+        if (h->getNombre() == nombreHotel) {
+            float puntuacionAntigua = h->getPuntuacion();
+
+            float puntuacionActualizada = (puntuacionAntigua + nuevaPuntuacion) / 2.0f;
+            h->setPuntuacion(puntuacionActualizada);
+
+            GuardarDatosEnArchivos(); 
+
+            cout << "¡Gracias por tu reseña! La calificacion de " << nombreHotel << " ha subido a " << puntuacionActualizada << " estrellas." << endl;
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) cout << "No pudimos encontrar el hotel mencionado." << endl;
 }
 void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActual,int noches,
     int maletasBodegaIda,int maletasBodegaRetorno,int clase,int asiento) {
@@ -294,14 +678,14 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     Ticket* ticketIda = new Ticket(
         userActual->getCodigo(), userActual->getNombre(),
         vueloOferta->getOrigen(), vueloOferta->getDestino(),
-        vueloOferta->getEscalas(),
+        vueloOferta->getEscalas(), vueloOferta->getFecha(),
         vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento 
     );
 
     float precioTotalHotel = hotelOferta->getPrecioNoche() * noches;
     ReservaHotel* reservaHotel = new ReservaHotel(
         userActual->getCodigo(), userActual->getNombre(),
-        hotelOferta->getNombre(), hotelOferta->getCiudad(),
+        hotelOferta->getNombre(), hotelOferta->getCiudad(),vueloOferta->getFecha(),
         noches, precioTotalHotel,1,1,1,1
     );
 
@@ -310,7 +694,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     Ticket* ticketRetorno = new Ticket(
         userActual->getCodigo(), userActual->getNombre(),
         vueloOferta->getDestino(), vueloOferta->getOrigen(), 
-        "Directo", 
+        "Directo",SumarDiasAFecha(vueloOferta->getFecha(), noches),
         vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento
     );
 
@@ -328,7 +712,14 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     cout << "Tu vuelo de retorno ha sido programado automaticamente para el: " << fechaRetorno << endl;
 }
 void ControladorPrincipal::MostrarReservasUsuario(Usuario* userActual) {
-    controladorReservas->MostrarReservasUsuario(userActual->getCodigo());
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
+        if (aux->getCodigoUsuario() == userActual->getCodigo()) {
+            cout << "Reserva #" << i << ":" << endl;
+            aux->MostrarReserva();
+            cout << endl;
+        }
+    }
 }
 void ControladorPrincipal::MostrarAsientos(int indiceVuelo) {
     controladorVuelos->getVuelos()->obtenerPos(indiceVuelo)->MostrarAsientos();
@@ -371,9 +762,6 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
     }
 }
 
-/*
-Funcion dada por gemini a ver si sirve 
-*/
 
 void ControladorPrincipal::GuardarDatosEnArchivos() {
     ControladorArchivos arc;
@@ -395,16 +783,16 @@ void ControladorPrincipal::GuardarDatosEnArchivos() {
     for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
         arc.GuardarDatoArchivoUsuarios(controladorUsuarios->getUsuarios()->obtenerPos(i));
     }
-
-
     ofstream f5("Reservas.txt", ios::trunc); f5.close();
     for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
         arc.GuardarDatoArchivoReservas(controladorReservas->getReservasTotales()->obtenerPos(i));
     }
+    ofstream f6("Rutas.txt", ios::trunc); f6.close();
+    for (int i = 0; i < controladorRutas->getRutas()->longitud(); i++) {
+        arc.GardarDatoArchivoRutas(controladorRutas->getRutas()->obtenerPos(i));
+    }
 }
-//
-// TERMINA LA FUNCION DADA DE GEMINI
-//
+
 ControladorHoteles* ControladorPrincipal::getControladorHoteles() { return controladorHoteles; }
 ControladorPaquetes* ControladorPrincipal::getControladorPaquetes() { return controladorPaquetes; }
 ControladorReservas* ControladorPrincipal::getControladorReservas() { return controladorReservas; }

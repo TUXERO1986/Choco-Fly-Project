@@ -10,7 +10,7 @@ void Hotel::MostrarHotel() {
 	cout << "Nombre: " << nombre << endl;
 	cout << "Ciudad: " << ciudad << endl;
 	cout << "Puntuacion: " << puntuacion << endl;
-	cout << "Precio por noche: " << precioNoche << endl;
+	cout << "Precio por noche: $" << precioNoche << endl;
 }
 void Hotel::MostrarHabitaciones() {
 	controladorHabitaciones->MostrarHabitaciones();

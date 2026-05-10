@@ -1,3 +1,4 @@
+
 #include "Habitacion.h"
 Habitacion::Habitacion(int numero) {
 	this->numero = numero;
@@ -9,4 +10,4 @@ void Habitacion::MostrarHabitacion() {
 int Habitacion::getNumero() { return numero; }
 bool Habitacion::getDisponible() { return disponible; }
 void Habitacion::setNumero(int numero) { this->numero = numero; }
-void Habitacion::setDisponible(bool numero) { this->disponible = disponible; }
+void Habitacion::setDisponible(bool disponible) { this->disponible = disponible; }

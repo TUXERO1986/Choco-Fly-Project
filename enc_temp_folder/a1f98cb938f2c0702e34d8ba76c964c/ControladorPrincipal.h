@@ -33,7 +33,6 @@ public:
 	void AgregarReserva(Reserva* nuevaReserva);
 	void AgregarUsuario(string nombre, string correo, string password);
 	void AgregarRuta(string origen, string destino, float distancia);
-	void EliminarRuta(int indiceRuta);
 	void EliminarVuelo(int indiceVuelo);
 	void EliminarHotel(int indiceHotel);
 	void EliminarPaquete(int indicePaquete);
@@ -49,7 +48,7 @@ public:
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
 	void FiltrarRutasPorOrigen(string ciudadBusqueda);
 	void FiltrarRutasPorDestino(string ciudadBusqueda);
-	void FiltrarHotelesPorCiudad(string ciudadBusqueda);//ryanmaricon
+	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
 	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
 	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);//noesta
 	void FiltrarVuelosPorFecha(string fechaBusqueda);//noesta
@@ -59,13 +58,6 @@ public:
 	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
 	void FiltrarReservasPorUsuario(string codigoUsuario);
 	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);//noesta
-	void FiltrarHotelesPorPresupuesto(float presupuestoMaximo);//noesta
-	void FiltrarPaquetesPorPresupuesto(float presupuestoMaximo);//noesta
-	void FiltrarHotelesPorMayorCalificacion();
-	void FiltrarVuelosDeMayorAMenorPrecio();
-	void FiltrarHotelesDeMayorAMenorPrecio();
-	void FiltrarPaquetesDeMayorAMenorPrecio();
-	void FiltrarUsuarioPorCodigo(string codigo);
 	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
 	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);//noesta
 	void ObtenerIngresosTotales();
@@ -86,9 +78,7 @@ public:
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 	ControladorUsuarios* getControladorUsuarios();
-	// agregue esta funcion para el ui para que se pueda guardar la persistencia cada vez que se compra un t
-	// icket o se reserva una habitacion, asi no se pierde la informacion aunque el programa se cierre
-	//Guardar datos
+	// agregue esta funcion para el ui para que se pueda guardar la persistencia cada vez que se compra un ticket o se reserva una habitacion, asi no se pierde la informacion aunque el programa se cierre
 	void GuardarDatosEnArchivos();
 
 };

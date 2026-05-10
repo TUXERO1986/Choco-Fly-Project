@@ -21,7 +21,6 @@ void ControladorPaquetes::MostrarPaquetesCiudades(string ciudadOrigen, string ci
 	}
 }
 void ControladorPaquetes::GenerarPaquetes(int contador, Lista<Hotel*>* listhoteles, Lista<Vuelo*>* listvuelos) {
-	controladorArchivos->VaciarArchivo();
 	for (int i = 0; i < contador; i++) {
 		int indiceHotel = rand() % listhoteles->longitud();
 		int indiceVuelo = rand() % listvuelos->longitud();
@@ -29,6 +28,7 @@ void ControladorPaquetes::GenerarPaquetes(int contador, Lista<Hotel*>* listhotel
 		Vuelo* vueloSeleccionado = listvuelos->obtenerPos(indiceVuelo);
 		if (hotelSeleccionado->getCiudad() != vueloSeleccionado->getDestino())continue;
 		AgregarNuevoPaquete(listvuelos->obtenerPos(indiceVuelo), listhoteles->obtenerPos(indiceHotel));
+		controladorArchivos->GuardarDatoArchivoPaquetes(new Paquete(listvuelos->obtenerPos(indiceVuelo), listhoteles->obtenerPos(indiceHotel)));
 	}
 }
 void ControladorPaquetes::AgregarNuevoPaquete(Vuelo* vueloIda, Hotel* hotel) {
@@ -37,6 +37,10 @@ void ControladorPaquetes::AgregarNuevoPaquete(Vuelo* vueloIda, Hotel* hotel) {
 	controladorArchivos->GuardarDatoArchivoPaquetes(nuevoPaquete);
 }
 void ControladorPaquetes::MostrarPaquetes() {
+	if (paquetes->longitud() == 0) {
+		cout << "No hay paquetes disponibles." << endl;
+		return;
+	}
 	for (int i = 0; i < paquetes->longitud(); i++) {
 		Paquete* aux = paquetes->obtenerPos(i);
 		aux->MostrarPaquete();

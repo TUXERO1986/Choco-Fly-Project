@@ -1,5 +1,5 @@
 #include "Ticket.h"
-Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string destino, string escalas, float distancia, int equipaje, int equipajecabina,int clase,int asiento)
+Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string destino, string escalas,string fecha, float distancia, int equipaje, int equipajecabina,int clase,int asiento)
     : Reserva(codigoUsuario, nombreUsuario)
 {
 	this->nombre = nombreUsuario;
@@ -9,8 +9,10 @@ Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string
 	this->distancia = distancia	;
 	this->equipaje = equipaje;
 	this->equipajecabina = equipajecabina;
+	this->tipoReserva = "VUELO";
 	this->clase = clase;
 	this->asiento = asiento;
+	this->fecha = fecha;
 	obtenerClase = [](int clase) {
 		switch (clase) {
 		case 1:return "ECONOMICA"; break;
@@ -24,15 +26,16 @@ void Ticket::MostrarReserva() {
 	cout << "Origen: " << origen << endl;
 	cout << "Destino: " << destino << endl;
 	cout << "Escalas: " << escalas << endl;
+	cout << "Fecha: " << fecha << endl;
 	cout << "Distancia: " << distancia << endl;
-	cout << "Equipaje: " << equipaje << endl;
-	cout << "Equipaje de cabina: " << equipajecabina << endl;
+	cout << "Equipaje en bodega: " << equipaje << endl;
+	cout << "Equipaje de cabina: " << equipajecabina << " [1 MALETA INCLUIDA SIN COSTO]"<<endl;
 	cout << "Asiento: " << asiento << endl;
-	cout << "Clase: " << obtenerClase(clase);
-	cout << "Precio Total: " << getPrecioTotal() << endl;
+	cout << "Clase: " << obtenerClase(clase)<<endl;
+	cout << "Precio Total: $" << getPrecioTotal() << endl;
 }
 string Ticket::aTextoArchivo() {
-	return "VUELO," + getCodigoUsuario() + "," + getNombre() + "," + origen + "," + destino + "," + escalas + "," + to_string(getPrecioTotal()) 
+	return "VUELO," + getCodigoUsuario() + "," + getNombre() + "," + origen + "," + destino + "," + escalas + "," + fecha+"," + to_string(getPrecioTotal())
 		+ "," + to_string(distancia) + "," + to_string(equipaje) + "," + to_string(equipajecabina)+","+to_string(clase)+","+to_string(asiento);
 }
 float Ticket::getPrecioTotal() {
@@ -44,6 +47,9 @@ string Ticket::getNombre() { return nombre; }
 string Ticket::getOrigen() { return origen; }
 string Ticket::getDestino() { return destino; }
 string Ticket::getEscalas() { return escalas; }
+string Ticket::getFecha() { return fecha; }
+int Ticket::getAsiento() { return asiento; }
+int Ticket::getClase() { return clase; }
 float Ticket::getDistancia() { return distancia; }
 int Ticket::getEquipaje() { return equipaje; }
 int Ticket::getEquipajeCabina() { return equipajecabina; }
