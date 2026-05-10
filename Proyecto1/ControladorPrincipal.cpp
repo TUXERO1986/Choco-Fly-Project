@@ -57,7 +57,6 @@ void ControladorPrincipal::EliminarPaquete(int indicePaquete) {
 	controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
 }
 void ControladorPrincipal::EliminarReserva(int indiceReserva) {
-    int contadorUsuario = 0;
     Reserva* reservaACancelar = controladorReservas->
         getReservasTotales()->obtenerPos(indiceReserva);
 
@@ -234,6 +233,16 @@ void ControladorPrincipal::FiltrarVuelosPorDestino(string destinoBusqueda) {
         if (aux->getDestino() == destinoBusqueda) {
             cout << "Vuelo #" << i << ":" << endl;
             aux->MostrarVuelo();
+            cout << endl;
+        }
+    }
+}
+void ControladorPrincipal::FiltrarReservasPorTipo(string tipo) {
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
+        if (aux->getTipoReserva() == tipo) {
+            cout << "Reserva #" << i << ":" << endl;
+            aux->MostrarReserva();
             cout << endl;
         }
     }
@@ -514,7 +523,14 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     cout << "Tu vuelo de retorno ha sido programado automaticamente para el: " << fechaRetorno << endl;
 }
 void ControladorPrincipal::MostrarReservasUsuario(Usuario* userActual) {
-    controladorReservas->MostrarReservasUsuario(userActual->getCodigo());
+    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
+        if (aux->getCodigoUsuario() == userActual->getCodigo()) {
+            cout << "Reserva #" << i << ":" << endl;
+            aux->MostrarReserva();
+            cout << endl;
+        }
+    }
 }
 void ControladorPrincipal::MostrarAsientos(int indiceVuelo) {
     controladorVuelos->getVuelos()->obtenerPos(indiceVuelo)->MostrarAsientos();

@@ -28,26 +28,7 @@ Lista<Reserva*>* ControladorReservas::getReservasTotales() {
     return reservasTotales;
 }
 
-void ControladorReservas::MostrarReservasUsuario(string codigoUsuario) {
-    cout << "\n=== HISTORIAL DE RESERVAS DEL USUARIO: " << codigoUsuario << " ===" << endl;
-    int contador = 0;
 
-    for (int i = 0; i < reservasTotales->longitud(); i++) {
-        Reserva* r = reservasTotales->obtenerPos(i);
-
-        if (r->getCodigoUsuario() == codigoUsuario) {
-            cout << endl;
-            r->MostrarReserva(); 
-            cout << endl;
-            contador++;
-        }
-    }
-
-    if (contador == 0) {
-        cout << "No tienes ninguna reserva registrada." << endl;
-    }
-    cout << "===================================================" << endl;
-}
 void ControladorReservas::MostrarReservas() {
     cout << "\n=== REGISTRO GLOBAL DE VENTAS (ADMINISTRADOR) ===" << endl;
 
@@ -65,23 +46,7 @@ void ControladorReservas::MostrarReservas() {
     cout << "===================================================" << endl;
 }
 
-void ControladorReservas::FiltrarReservasPorTipo(string tipoBusqueda) {
-    cout << "\n=== FILTRANDO VENTAS POR TIPO: " << tipoBusqueda << " ===" << endl;
-    int contador = 0;
 
-    for (int i = 0; i < reservasTotales->longitud(); i++) {
-        Reserva* r = reservasTotales->obtenerPos(i);
-
-        if (r->getTipoReserva() == tipoBusqueda) {
-            r->MostrarReserva();
-            contador++;
-        }
-    }
-
-    if (contador == 0) {
-        cout << "No se encontraron ventas de la categoria " << tipoBusqueda << "." << endl;
-    }
-}
 
 float ControladorReservas::CalcularIngresosTotales() {
     float total = 0;

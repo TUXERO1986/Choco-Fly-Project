@@ -72,14 +72,12 @@ void AdminPantallas::MenuReportes() {
         system("cls");
 
         switch (opcion) {
-        case '1': principal->MostrarVuelos(); system("pause"); break;
-        case '2': principal->MostrarHoteles(); system("pause"); break;
-        case '3': principal->MostrarPaquetes(); system("pause"); break;
-        case '4': {
-			AdminPantallas::FiltroRutas();
-        } break;
-        case '5': principal->MostrarReservas(); system("pause"); break;
-        case '6': principal->MostrarUsuarios(); system("pause"); break;
+        case '1': MenuFiltrosVuelos(); system("pause>0"); break;
+        case '2': MenuFiltrosHoteles(); system("pause>0"); break;
+        case '3': MenuFiltrosPaquetes(); system("pause>0"); break;
+        case '4': FiltroRutas(); system("pause>0"); break;
+        case '5': MenuFiltrosReservas(); system("pause>0"); break;
+        case '6': MenuFiltrosUsuarios(); system("pause>0"); break;
         case '7':
             principal->ObtenerIngresosTotales();
             cout << "\n";
@@ -93,6 +91,208 @@ void AdminPantallas::MenuReportes() {
             system("pause");
         } break;
         case '0': return;
+        }
+    } while (true);
+}
+void AdminPantallas::MenuFiltrosReservas() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient("\n================FILTROS RESERVAS==============", Exito, false);
+        ColorUI::printGradient("\n[1] RESERVAS POR TIPO", Exito, false);
+        ColorUI::printGradient("\n[2] RESERVAS POR TIPO USUARIO", Exito, false);
+        ColorUI::printGradient("\n[3] RESERVAS POR USUARIO", Exito, false);
+        ColorUI::printGradient("\n[4] MOSTRAR TODAS LAS RESERVAS", Exito, false);
+        ColorUI::printGradient("\n[0] SALIR", Exito, false);
+        opcion = _getch();
+        switch (opcion) {
+        case '1': {
+            string reserva;
+            cout << "Diigite el tipo de reservas a buscar(VUELO-HOTEL-PAQUETE: " << endl; cin >> reserva;
+            principal->FiltrarReservasPorTipo(reserva);
+            system("pause>0");
+            break;
+        }
+        case '2': {
+            string reserva,codigousuario;
+            cout << "Diigite el tipo de reservas a buscar (VUELO-HOTEL-PAQUETE): " << endl; cin >> reserva;
+            principal->MostrarUsuarios();
+            cout << "Diigite el codigo de usuario: " << endl; cin >> codigousuario;
+            principal->FiltrarReservasPorTipoUsuario(reserva,codigousuario);
+            system("pause>0");
+            break;
+        }
+        case '3': {
+            string codigousuario;
+            principal->MostrarUsuarios();
+            cout << "Diigite el codigo de usuario: " << endl; cin >> codigousuario;
+            principal->FiltrarReservasPorUsuario(codigousuario);
+            system("pause>0");
+            break;
+        }
+        case '4': {
+            principal->MostrarReservas();
+            system("pause>0");
+            break;
+        }
+        case '0': {
+            return;
+            break;
+        }
+        }
+    } while (true);
+}
+void AdminPantallas::MenuFiltrosVuelos() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient("\n================FILTROS VUELOS==============", Exito, false);
+        ColorUI::printGradient("\n[1] VUELOS POR ORIGEN", Exito, false);
+        ColorUI::printGradient("\n[2] VUELOS POR DESTINO", Exito, false);
+        ColorUI::printGradient("\n[3] VUELOS POR FECHA", Exito, false);
+        ColorUI::printGradient("\n[4] VUELOS POR PRESUPUESTO", Exito, false);
+        ColorUI::printGradient("\n[5] MOSTRAR TODOS LOS VUELOS", Exito, false);
+        ColorUI::printGradient("\n[0] SALIR", Exito, false);
+        opcion = _getch();
+        switch (opcion) {
+        case '1': {
+            string origen;
+            cout << "Diigite el origen: " << endl; cin >> origen;
+            principal->FitrarVuelosPorOrigen(origen);
+            system("pause>0");
+            break;
+        }
+        case '2': {
+            string destino;
+            cout << "Diigite el destino: " << endl; cin >> destino;
+            principal->FiltrarVuelosPorDestino(destino);
+            system("pause>0");
+            break;
+        }
+        case '3': {
+            string fecha;
+            principal->MostrarUsuarios();
+            cout << "Diigite la fecha (DD-MM-AAAA): " << endl; cin >> fecha;
+            principal->FiltrarVuelosPorFecha(fecha);
+            system("pause>0");
+            break;
+        }
+        case '4': {
+            float presupuesto;
+            cout << "Diigite el presupuesto: " << endl; cin >> presupuesto;
+            principal->FiltrarVuelosPorPresupuesto(presupuesto);
+            system("pause>0");
+            break;
+        }
+        case '5': {
+            principal->MostrarVuelos();
+            system("pause>0");
+            break;
+        }
+        case '0': {
+            return;
+            break;
+        }
+        }
+    } while (true);
+}
+void AdminPantallas::MenuFiltrosPaquetes() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient("\n================FILTROS VUELOS==============", Exito, false);
+        ColorUI::printGradient("\n[1] PAQUETES POR ORIGEN", Exito, false);
+        ColorUI::printGradient("\n[2] PAQUETES POR DESTINO", Exito, false);
+        ColorUI::printGradient("\n[3] MOSTRAR TODOS LOS PAQUETES", Exito, false);
+        ColorUI::printGradient("\n[0] SALIR", Exito, false);
+        opcion = _getch();
+        switch (opcion) {
+        case '1': {
+            string origen;
+            cout << "Diigite el origen: " << endl; cin >> origen;
+            principal->FiltrarPaquetesPorOrigen(origen);
+            system("pause>0");
+            break;
+        }
+        case '2': {
+            string ;
+            string destino;
+            cout << "Diigite el origen: " << endl; cin >> destino;
+            principal->FiltrarPaquetesPorDestino(destino);
+            system("pause>0");
+            system("pause>0");
+            break;
+        }
+        case '0': {
+            return;
+            break;
+        }
+        }
+    } while (true);
+}
+void AdminPantallas::MenuFiltrosHoteles() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient("\n================FILTROS VUELOS==============", Exito, false);
+        ColorUI::printGradient("\n[1] PAQUETES POR ORIGEN", Exito, false);
+        ColorUI::printGradient("\n[2] PAQUETES POR DESTINO", Exito, false);
+        ColorUI::printGradient("\n[3] MOSTRAR TODOS LOS PAQUETES", Exito, false);
+        ColorUI::printGradient("\n[0] SALIR", Exito, false);
+        opcion = _getch();
+        switch (opcion) {
+        case '1': {
+            string origen;
+            cout << "Diigite el origen: " << endl; cin >> origen;
+            principal->FiltrarPaquetesPorOrigen(origen);
+            system("pause>0");
+            break;
+        }
+        case '2': {
+            string destino;
+            cout << "Diigite el destino: " << endl; cin >> destino;
+            principal->FiltrarPaquetesPorDestino(destino);
+            system("pause>0");
+            break;
+        }
+        case '3': {
+            principal->MostrarPaquetes();
+            system("pause>0");
+            break;
+        }
+        case '0': {
+            return;
+            break;
+        }
+        }
+    } while (true);
+}
+void AdminPantallas::MenuFiltrosUsuarios() {
+    char opcion;
+    do {
+        system("cls");
+        ColorUI::printGradient("\n================FILTROS VUELOS==============", Exito, false);
+        ColorUI::printGradient("\n[1] FILTRAR USUARIOS POR NOMBRE", Exito, false);
+        ColorUI::printGradient("\n[2] MOSTRAR TODOS LOS USUARIOS", Exito, false);
+        ColorUI::printGradient("\n[0] SALIR", Exito, false);
+        opcion = _getch();
+        switch (opcion) {
+        case '1': {
+            string nombre;
+            cout << "Diigite el nombre: " << endl; cin >> nombre;
+            principal->FiltrarUsuariosPorNombre(nombre);
+            system("pause>0");
+            break;
+        }
+        case '2': {
+            principal->MostrarUsuarios();
+            system("pause>0");
+            break;
+        }
+        case '0': {
+            return;
+            break;
+        }
         }
     } while (true);
 }
@@ -468,7 +668,6 @@ void AdminPantallas::MenuEliminar() {
         }
     } while (true);
 }
-
 void AdminPantallas::GenerarDatosAleatorios() {
     system("cls");
     ColorUI::printGradient(datos, dato, false);

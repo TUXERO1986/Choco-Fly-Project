@@ -7,7 +7,7 @@
 class AdminPantallas {
 private:
     ControladorPrincipal* principal;
-    int LeerOpcion(); 
+    int LeerOpcion();
 
 public:
     AdminPantallas(ControladorPrincipal* ptrPrincipal);
@@ -15,6 +15,11 @@ public:
     void MenuPrincipalAdmin();
     void MenuReportes();
 	void FiltroRutas();
+    void MenuFiltrosReservas();
+    void MenuFiltrosVuelos();
+    void MenuFiltrosPaquetes();
+    void MenuFiltrosHoteles();
+    void MenuFiltrosUsuarios();
     void MenuMantenimiento();
     void GenerarDatosAleatorios();
     void MenuAgregar();

@@ -9,6 +9,7 @@ Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string
 	this->distancia = distancia	;
 	this->equipaje = equipaje;
 	this->equipajecabina = equipajecabina;
+	this->tipoReserva = "VUELO";
 	this->clase = clase;
 	this->asiento = asiento;
 	this->fecha = fecha;
