@@ -65,6 +65,7 @@ void AdminPantallas::MenuReportes() {
         ColorUI::printGradient("\n\t\t[5] Ver TODAS las Reservas", Exito, false);
         ColorUI::printGradient("\n\t\t[6] Ver Usuarios Registrados", Exito, false);
         ColorUI::printGradient("\n\t\t[7] Ver Ingresos Totales", Exito, false);
+        ColorUI::printGradient("\n\t\t[8] Filtrar Usuarios por Nombre", Exito, false);
         ColorUI::printGradient("\n\t\t[0] Volver", Alerta, false);
 
         opcion = _getch();
@@ -82,6 +83,13 @@ void AdminPantallas::MenuReportes() {
             cout << "\n";
             system("pause");
             break;
+        case '8': {
+            string nombre;
+            ColorUI::printGradient("\n\t\tFiltrar Usuarios por Nombre: ", Exito, false, false);
+            getline(cin, nombre);
+            principal->FiltrarUsuariosPorNombre(nombre);
+            system("pause");
+        } break;
         case '0': return;
         }
     } while (true);

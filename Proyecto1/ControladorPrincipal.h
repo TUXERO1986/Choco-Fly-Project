@@ -44,22 +44,22 @@ public:
 	void MostrarPaquetes();
 	void MostrarReservas();
 	void MostrarUsuarios();
-	void FilrarVuelosPorOrigenDestino(string origen, string destino);// no esta 
+	void FilrarVuelosPorOrigenDestino(string origen, string destino);
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
-	void FiltrarRutasPorOrigen(string ciudadBusqueda);
-	void FiltrarRutasPorDestino(string ciudadBusqueda);
+	void FiltrarRutasPorOrigen(string ciudadBusqueda);//noesta
+	void FiltrarRutasPorDestino(string ciudadBusqueda);//noesta
 	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
 	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
-	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);
-	void FiltrarVuelosPorFecha(string fechaBusqueda);
-	void FitrarVuelosPorOrigen(string origenBusqueda);
-	void FiltrarVuelosPorDestino(string destinoBusqueda);
-	void FiltrarReservasPorTipo(string tipoBusqueda);
-	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
-	void FiltrarReservasPorUsuario(string codigoUsuario);
-	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);
-	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);
-	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);
+	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);//noesta
+	void FiltrarVuelosPorFecha(string fechaBusqueda);//noesta
+	void FitrarVuelosPorOrigen(string origenBusqueda);//noesta
+	void FiltrarVuelosPorDestino(string destinoBusqueda);//noesta
+	void FiltrarReservasPorTipo(string tipoBusqueda);//noesta
+	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);//noesta
+	void FiltrarReservasPorUsuario(string codigoUsuario);//noesta
+	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);//noesta
+	void CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);//noesta
+	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);//noesta
 	void ObtenerIngresosTotales();
 	void ConsultarVuelos(string origen, string destino);
 	void MostrarReservasUsuario(Usuario* userActual);
