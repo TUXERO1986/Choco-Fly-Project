@@ -16,7 +16,10 @@ void RegisterScreen(ControladorPrincipal* principal) {
         system("cls");
         ImprimirBordes(registro);
         gotoxy(0, 6);
-        ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo 1-Admin 2-Usuario 0- Salir", Register, false);
+        ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo: \n", Register, false);
+        ColorUI::printGradient("\t\t\t\t\t\t[1] Admin ", Register, false);
+        ColorUI::printGradient("\t\t\t\t\t\t[2] Usuario", Register, false);
+        ColorUI::printGradient("\t\t\t\t\t\t[0] Salir", Register, false);
         modo = _getch();
         switch (modo) {
         case '1':Admin(principal); break;
@@ -27,24 +30,26 @@ void RegisterScreen(ControladorPrincipal* principal) {
 }
 
 void LoginScreen(ControladorPrincipal* principal) {
-    system("cls");
     string u_nombre, u_correo, u_password;
+    Usuario* userLogeado;
+    do {
+        system("cls");
+        ColorUI::printGradient(login, Register, false);
+        gotoxy(0, 6);
+        ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
+        cout << "\t\t\t\t"; cin >> u_nombre;
 
-    ColorUI::printGradient(login, Register, false);
-	gotoxy(0, 6);
-    ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Paletas::Register, false);
-    cout << "\t\t\t\t"; cin >> u_nombre;
+        ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Register, false);
+        cout << "\t\t\t\t"; cin >> u_correo;
 
-    ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Paletas::Register, false);
-    cout << "\t\t\t\t"; cin >> u_correo;
+        ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
+        cout << "\t\t\t\t"; cin >> u_password;
 
-    ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Paletas::Register, false);
-    cout << "\t\t\t\t"; cin >> u_password;
+        cin.ignore(1000, '\n');
+        system("cls");
 
-    cin.ignore(1000, '\n');
-    system("cls");
-
-    Usuario* userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
+        userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
+    } while (userLogeado==nullptr);
 
     if (userLogeado != nullptr) {
         system("pause>0");
@@ -61,11 +66,12 @@ void LoginScreen(ControladorPrincipal* principal) {
 void Admin(ControladorPrincipal* principal) {
     system("cls");
 
-    ColorUI::printGradient(admin, Paletas::Tux, false);
+    ColorUI::printGradient(admin, 
+        Tux, false);
 	gotoxy(0, 6);
-    ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese Datos ADMIN", Paletas::Tux, false);
+    ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese Datos ADMIN", Tux, false);
     cout << "\t\t\t\t\t"; cin >> usuario;
-    ColorUI::printGradient("\n\t\t\t\t\tIngrese contrasena ADMIN", Paletas::Tux, false);
+    ColorUI::printGradient("\n\t\t\t\t\tIngrese contrasena ADMIN", Tux, false);
     cout << "\t\t\t\t\t"; cin >> password;
     system("cls");
     AdminPantallas* adminUI = new AdminPantallas(principal);

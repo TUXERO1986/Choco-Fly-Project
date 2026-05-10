@@ -13,18 +13,18 @@ void ImprimirBordes(const string& arteAscii) {
     for (int i = 0; i < arteAscii.length(); i++) {
         char letra = arteAscii[i];
 
-        // Si encuentra un # o un =
+    
         if (letra == '#' ) {
 			ColorUI::printGradient(string(1, letra),MoradoD, false, false);
         }
-        // Puedes agregar más reglas. Por ejemplo, si encuentra un corchete:
+  
         else if (letra == '[' || letra == ']') {
-            // Lo pintamos de Cyan
+           
             cout << "\033[96m" << letra << "\033[0m";
         }
-        // El resto del texto normal (saltos de línea, espacios, letras)
+        
         else {
-            // Color blanco o gris claro
+            
 			ColorUI::printGradient(string(1, letra), Register, false, false);
         }
     }

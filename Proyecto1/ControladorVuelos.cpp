@@ -160,16 +160,13 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
     else {
         cout << "Se encontraron " << todasLasCadenas->longitud() << " opciones de vuelo:" << endl;
 
-        // 3. Recorremos TODAS las combinaciones encontradas
+
         for (int c = 0; c < todasLasCadenas->longitud(); c++) {
 
             Lista<Vuelo*>* vuelosEncontrados = todasLasCadenas->obtenerPos(c);
 
             if (vuelosEncontrados->longitud() == 1) {
-                //Vuelo* v = vuelosEncontrados->obtenerPos(0);
-				//cout << "Numero: " << vuelos->getPos(v) << endl;
-				//v->MostrarVuelo();
-     //            AgregarNuevoVuelo(v->getOrigen(), v->getDestino(), "Directo", v->getFecha(),v->getDistancia());
+
             }
             else {
                 Vuelo* primerVuelo = vuelosEncontrados->obtenerPos(0);

@@ -87,25 +87,25 @@ void ControladorArchivos::LeerArchivoVuelos(Lista<Vuelo*>* vuelos) {
     ifstream archivo("Vuelos.txt");
     if (!archivo.is_open()) return;
 
-    string linea, origen, destino, escalas, fecha, distanciaStr, estadoAsientos; // Nueva variable
+    string linea, origen, destino, escalas, fecha, distanciaStr, estadoAsientos; 
 
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
         stringstream ss(linea);
 
-        // Agregamos getline para estadoAsientos
+
         if (getline(ss, origen, ',') && getline(ss, destino, ',') && getline(ss, escalas, ',') &&
             getline(ss, fecha, ',') && getline(ss, distanciaStr, ',') && getline(ss, estadoAsientos)) {
 
             float distancia = stof(distanciaStr);
 
-            // 1. Instanciamos el controlador (Esto autogenera los 30 asientos disponibles)
+            
             ControladorAsientos* ctrlAsientos = new ControladorAsientos();
 
-            // 2. Le inyectamos los ocupados según el archivo
+       
             ctrlAsientos->CargarEstadoAsientosString(estadoAsientos);
 
-            // 3. Creamos el vuelo y lo agregamos
+            
             vuelos->agregaFinal(new Vuelo(origen, destino, escalas, fecha, distancia, ctrlAsientos));
         }
     }
@@ -118,7 +118,7 @@ void ControladorArchivos::GuardarDatoArchivoVuelos(Vuelo* v) {
         archivo << v->getOrigen() << "," << v->getDestino() << ","
             << v->getEscalas() << "," << v->getFecha() << ","
             << v->getDistancia() << ","
-            << v->getControladorAsientos()->ObtenerEstadoAsientosString() << "\n"; // ¡AQUI!
+            << v->getControladorAsientos()->ObtenerEstadoAsientosString() << "\n"; 
         archivo.close();
     }
 }
@@ -135,7 +135,7 @@ void ControladorArchivos::LeerArchivoHoteles(Lista<Hotel*>* hoteles) {
         if (getline(ss, nombre, ',') && getline(ss, ciudad, ',') &&
             getline(ss, puntStr, ',') && getline(ss, precioStr, ',') && getline(ss, estadoHabitaciones)) {
 
-            // Conversión directa sin try-catch
+           
             float puntuacion = stof(puntStr);
             float precio = stof(precioStr);
             ControladorHabitaciones* ctrlHabtiaciones = new ControladorHabitaciones();
@@ -167,8 +167,7 @@ void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
         if (linea.empty()) continue;
         stringstream ss(linea);
 
-        // Leer los 9 campos que realmente se guardan: 
-        // vOri, vDes, vEsc, vFec, vDist, hNom, hCiu, hPunt, hPrec
+
         if (getline(ss, vOri, ',') && getline(ss, vDes, ',') && getline(ss, vEsc, ',') &&
             getline(ss, vFec, ',') && getline(ss, vDistStr, ',') &&
             getline(ss, hNom, ',') && getline(ss, hCiu, ',') && getline(ss, hPuntStr, ',') &&
@@ -198,7 +197,7 @@ void ControladorArchivos::GuardarDatoArchivoPaquetes(Paquete* p) {
     }
 }
 void ControladorArchivos::GuardarDatoArchivoReservas(Reserva* nuevaReserva) {
-    // ios::app abre el archivo y pone el cursor al final, sin borrar lo anterior
+
     ofstream archivo("Reservas.txt", ios::app);
 
     if (archivo.is_open()) {

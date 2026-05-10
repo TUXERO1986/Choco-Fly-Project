@@ -33,13 +33,18 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\t=== NUEVO VUELO ===", TemaPrincipal, false);
 
             ColorUI::printGradient("\n\tOrigen: ", Exito, false, false);
-            cin.ignore(); getline(cin, origen);
+            
+            
+            
+            
+            
+            getline(cin, origen);
             ColorUI::printGradient("\tDestino: ", Exito, false, false);
-           cin.ignore(); getline(cin, destino);
+            getline(cin, destino);
             ColorUI::printGradient("\tEscalas (Ej. 'Directo' o 'Lima-Bogota'): ", Exito, false, false);
-           cin.ignore(); getline(cin, escalas);
+            getline(cin, escalas);
             ColorUI::printGradient("\tFecha (Ej. 15-05-2026): ", Exito, false, false);
-           cin.ignore(); getline(cin, fecha);
+            getline(cin, fecha);
             ColorUI::printGradient("\tDistancia en KM: ", Exito, false, false);
 
             while (!(cin >> distancia)) {
@@ -63,9 +68,9 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\t=== NUEVO HOTEL ===", TemaPrincipal, false);
 
             ColorUI::printGradient("\n\tNombre del Hotel: ", Exito, false, false);
-           cin.ignore(); getline(cin, nombre);
+            getline(cin, nombre);
             ColorUI::printGradient("\tCiudad: ", Exito, false, false);
-           cin.ignore(); getline(cin, ciudad);
+            getline(cin, ciudad);
 
             ColorUI::printGradient("\tPuntuacion (Ej. 4.5): ", Exito, false, false);
             while (!(cin >> puntuacion)) {
@@ -92,9 +97,9 @@ void AdminPantallas::MenuAgregar() {
             float distancia;
             ColorUI::printGradient("\t=== NUEVA RUTA CONEXION ===", TemaPrincipal, false);
             ColorUI::printGradient("\n\tCiudad Origen: ", Exito, false, false);
-           cin.ignore(); getline(cin, origen);
+            getline(cin, origen);
             ColorUI::printGradient("\tCiudad Destino: ", Exito, false, false);
-           cin.ignore(); getline(cin, destino);
+            getline(cin, destino);
             ColorUI::printGradient("\tDistancia (Km): ", Exito, false, false);
             distancia = LeerOpcion();
 
@@ -102,8 +107,8 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\n\tRuta conectada exitosamente.\n", gege, false);
             system("pause>0");
         } break;
-        case '4': {//agregar paquete
-            // Mostrar vuelos disponibles
+        case '4': {
+     
             ColorUI::printGradient("\t=== AGREGAR PAQUETE ===", TemaPrincipal, false);
             cout << "\n\nVuelos disponibles:\n";
             Lista<Vuelo*>* listaVuelos = principal->getControladorVuelos()->getVuelos();
@@ -126,7 +131,7 @@ void AdminPantallas::MenuAgregar() {
                 break;
             }
 
-            // Mostrar hoteles disponibles
+
             cout << "\nHoteles disponibles:\n";
             Lista<Hotel*>* listaHoteles = principal->getControladorHoteles()->getHoteles();
             if (listaHoteles->longitud() == 0) {
@@ -148,7 +153,6 @@ void AdminPantallas::MenuAgregar() {
                 break;
             }
 
-            // Validación básica: opcional exigir que la ciudad del hotel coincida con destino del vuelo
             Vuelo* vueloSel = listaVuelos->obtenerPos(idxVuelo);
             Hotel* hotelSel = listaHoteles->obtenerPos(idxHotel);
             if (hotelSel->getCiudad() != vueloSel->getDestino()) {
@@ -166,9 +170,9 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\nPaquete agregado correctamente.\n", gege, false);
             system("pause>0");
         }break;
-        case '5': {//agregar reserva
+        case '5': {
             ColorUI::printGradient("\t=== AGREGAR RESERVA ===", TemaPrincipal, false);
-            // Seleccionar usuario
+         
             Lista<Usuario*>* listaUsuarios = principal->getControladorUsuarios()->getUsuarios();
             if (listaUsuarios->longitud() == 0) {
                 ColorUI::printGradient("\nNo hay usuarios registrados. Crea un usuario primero.\n", Alerta, false);
@@ -189,12 +193,12 @@ void AdminPantallas::MenuAgregar() {
             }
             Usuario* usuarioSel = listaUsuarios->obtenerPos(idxUser);
 
-            // Tipo de reserva
+           
             ColorUI::printGradient("\nTipo de reserva: [1] VUELO | [2] HOTEL | [3] PAQUETE\nElige: ", Exito, false, false);
             int tipo = LeerOpcion();
 
             if (tipo == 1) {
-                // VUELO -> usar ComprarTicket para coherencia con logica existente
+             
                 Lista<Vuelo*>* listaVuelos = principal->getControladorVuelos()->getVuelos();
                 if (listaVuelos->longitud() == 0) {
                     ColorUI::printGradient("\nNo hay vuelos disponibles.\n", Alerta, false);
@@ -228,7 +232,7 @@ void AdminPantallas::MenuAgregar() {
                 system("pause>0");
             }
             else if (tipo == 2) {
-                // HOTEL -> usar ReservarHotel
+                
                 Lista<Hotel*>* listaHoteles = principal->getControladorHoteles()->getHoteles();
                 if (listaHoteles->longitud() == 0) {
                     ColorUI::printGradient("\nNo hay hoteles disponibles.\n", Alerta, false);
@@ -250,7 +254,7 @@ void AdminPantallas::MenuAgregar() {
                 }
                 string fecha;
                 ColorUI::printGradient("\nFecha ingreso (Ej. 15-05-2026): ", Exito, false, false);
-               cin.ignore(); getline(cin, fecha);
+                getline(cin, fecha);
                 ColorUI::printGradient("\nNoches: ", Exito, false, false);
                 int noches = LeerOpcion();
                 ColorUI::printGradient("\nNumero de habitacion: ", Exito, false, false);
@@ -267,7 +271,7 @@ void AdminPantallas::MenuAgregar() {
                 system("pause>0");
             }
             else if (tipo == 3) {
-                // PAQUETE -> usar ReservarPaquete
+             
                 Lista<Paquete*>* listaPaquetes = principal->getControladorPaquetes()->getPaquetes();
                 if (listaPaquetes->longitud() == 0) {
                     ColorUI::printGradient("\nNo hay paquetes disponibles.\n", Alerta, false);
@@ -311,11 +315,11 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\t=== AGREGAR USUARIO ===", TemaPrincipal, false);
             string nombre, correo, password;
             ColorUI::printGradient("\nNombre: ", Exito, false, false);
-           cin.ignore(); getline(cin, nombre);
+            getline(cin, nombre);
             ColorUI::printGradient("\nCorreo: ", Exito, false, false);
-           cin.ignore(); getline(cin, correo);
+            getline(cin, correo);
             ColorUI::printGradient("\nPassword: ", Exito, false, false);
-           cin.ignore(); getline(cin, password);
+            getline(cin, password);
 
             principal->AgregarUsuario(nombre, correo, password);
             ColorUI::printGradient("\nUsuario agregado correctamente.\n", gege, false);
@@ -382,12 +386,12 @@ void AdminPantallas::MenuReportes() {
         system("cls");
 
         switch (opcion) {
-        case '1': MenuFiltrosVuelos(); system("pause>0"); break;
-        case '2': MenuFiltrosHoteles(); system("pause>0"); break;
-        case '3': MenuFiltrosPaquetes(); system("pause>0"); break;
-        case '4': FiltroRutas(); system("pause>0"); break;
-        case '5': MenuFiltrosReservas(); system("pause>0"); break;
-        case '6': MenuFiltrosUsuarios(); system("pause>0"); break;
+        case '1': MenuFiltrosVuelos();break;
+        case '2': MenuFiltrosHoteles(); break;
+        case '3': MenuFiltrosPaquetes(); break;
+        case '4': FiltroRutas(); break;
+        case '5': MenuFiltrosReservas(); break;
+        case '6': MenuFiltrosUsuarios(); break;
         case '7':
             principal->ObtenerIngresosTotales();
             cout << "\n";
@@ -399,11 +403,11 @@ void AdminPantallas::MenuReportes() {
 }
 void AdminPantallas::FiltroRutas() {
     system("cls");
-    ColorUI::printGradient("=== FILTRAR RUTAS ===", Paletas::TemaPrincipal, false);
-    ColorUI::printGradient("\n[1]Filtrar rutas por Origen: ", Paletas::Exito, false, false);
-    ColorUI::printGradient("\n[2]Filtrar rutas por Destino: ", Paletas::Exito, false, false);
-    ColorUI::printGradient("\n[3]Mostrar todas las rutas: ", Paletas::Exito, false, false);
-    ColorUI::printGradient("\n[0]Salir", Paletas::Exito, false, false);
+    ColorUI::printGradient("=== FILTRAR RUTAS ===", TemaPrincipal, false);
+    ColorUI::printGradient("\n[1]Filtrar rutas por Origen: ", Exito, false, false);
+    ColorUI::printGradient("\n[2]Filtrar rutas por Destino: ", Exito, false, false);
+    ColorUI::printGradient("\n[3]Mostrar todas las rutas: ", Exito, false, false);
+    ColorUI::printGradient("\n[0]Salir", Exito, false, false);
     cout << "\n";
 
     char opcion = _getch();
@@ -411,7 +415,7 @@ void AdminPantallas::FiltroRutas() {
     case '1': {
         string ciudadBusqueda;
         ColorUI::printGradient("\nDigite el origen a filtrar (ej. Lima): ", Exito, false, false);
-       cin.ignore(); getline(cin, ciudadBusqueda);
+        getline(cin, ciudadBusqueda);
         if (ciudadBusqueda.empty()) {
             ColorUI::printGradient("\nNo ingresaste un origen. Se mostraron todas las rutas.\n", Alerta, false);
             principal->MostrarRutas();
@@ -424,7 +428,7 @@ void AdminPantallas::FiltroRutas() {
     case '2': {
         string ciudadBusqueda;
         ColorUI::printGradient("\nDigite el destino a filtrar (ej. Lima): ", Exito, false, false);
-       cin.ignore(); getline(cin, ciudadBusqueda);
+        getline(cin, ciudadBusqueda);
         if (ciudadBusqueda.empty()) {
             ColorUI::printGradient("\nNo ingresaste un destino. Se mostraron todas las rutas.\n", Alerta, false);
             principal->MostrarRutas();
@@ -457,16 +461,16 @@ void AdminPantallas::MenuFiltrosReservas() {
         switch (opcion) {
         case '1': {
             string reserva;
-            cout << "Diigite el tipo de reservas a buscar(VUELO-HOTEL-PAQUETE: " << endl; cin >> reserva;
+            cout << "Diigite el tipo de reservas a buscar(VUELO-HOTEL-PAQUETE: " << endl; cin >> reserva; cin.ignore();
             principal->FiltrarReservasPorTipo(reserva);
             system("pause>0");
             break;
         }
         case '2': {
             string reserva,codigousuario;
-            cout << "Diigite el tipo de reservas a buscar (VUELO-HOTEL-PAQUETE): " << endl; cin >> reserva;
+            cout << "Diigite el tipo de reservas a buscar (VUELO-HOTEL-PAQUETE): " << endl; cin >> reserva; cin.ignore();
             principal->MostrarUsuarios();
-            cout << "Diigite el codigo de usuario: " << endl; cin >> codigousuario;
+            cout << "Diigite el codigo de usuario: " << endl; cin >> codigousuario; cin.ignore();
             principal->FiltrarReservasPorTipoUsuario(reserva,codigousuario);
             system("pause>0");
             break;
@@ -474,7 +478,7 @@ void AdminPantallas::MenuFiltrosReservas() {
         case '3': {
             string codigousuario;
             principal->MostrarUsuarios();
-            cout << "Diigite el codigo de usuario: " << endl; cin >> codigousuario;
+            cout << "Diigite el codigo de usuario: " << endl; cin >> codigousuario; cin.ignore();
             principal->FiltrarReservasPorUsuario(codigousuario);
             system("pause>0");
             break;
@@ -506,14 +510,14 @@ void AdminPantallas::MenuFiltrosVuelos() {
         switch (opcion) {
         case '1': {
             string origen;
-            cout << "Diigite el origen: " << endl;cin.ignore(); getline(cin,origen);
+            cout << "Diigite el origen: " << endl; getline(cin,origen);
             principal->FitrarVuelosPorOrigen(origen);
             system("pause>0");
             break;
         }
         case '2': {
             string destino;
-            cout << "Diigite el destino: " << endl;cin.ignore(); getline(cin,destino);
+            cout << "Diigite el destino: " << endl; getline(cin,destino);
             principal->FiltrarVuelosPorDestino(destino);
             system("pause>0");
             break;
@@ -521,14 +525,14 @@ void AdminPantallas::MenuFiltrosVuelos() {
         case '3': {
             string fecha;
             principal->MostrarUsuarios();
-            cout << "Diigite la fecha (DD-MM-AAAA): " << endl; cin >> fecha;
+            cout << "Diigite la fecha (DD-MM-AAAA): " << endl; cin >> fecha; cin.ignore();
             principal->FiltrarVuelosPorFecha(fecha);
             system("pause>0");
             break;
         }
         case '4': {
             float presupuesto;
-            cout << "Diigite el presupuesto: " << endl; cin >> presupuesto;
+            cout << "Diigite el presupuesto: " << endl; cin >> presupuesto; cin.ignore();
             principal->FiltrarVuelosPorPresupuesto(presupuesto);
             system("pause>0");
             break;
@@ -558,7 +562,7 @@ void AdminPantallas::MenuFiltrosPaquetes() {
         switch (opcion) {
         case '1': {
             string origen;
-            cout << "Diigite el origen: " << endl;cin.ignore(); getline(cin,origen);
+            cout << "Diigite el origen: " << endl; getline(cin,origen);
             principal->FiltrarPaquetesPorOrigen(origen);
             system("pause>0");
             break;
@@ -566,12 +570,12 @@ void AdminPantallas::MenuFiltrosPaquetes() {
         case '2': {
             string ;
             string destino;
-            cout << "Diigite el origen: " << endl;cin.ignore(); getline(cin,destino);
+            cout << "Diigite el origen: " << endl; getline(cin,destino);
             principal->FiltrarPaquetesPorDestino(destino);
             system("pause>0");
             break;
         }
-        case 3: {
+        case '3': {
             principal->MostrarPaquetes();
             system("pause>0");
             break;
@@ -595,7 +599,7 @@ void AdminPantallas::MenuFiltrosHoteles() {
         switch (opcion) {
         case '1': {
             string ciudad;
-            cout << "Diigite la ciudad: " << endl;cin.ignore(); getline(cin,ciudad);
+            cout << "Diigite la ciudad: " << endl; getline(cin,ciudad);
             principal->FiltrarHotelesPorCiudad(ciudad);
             system("pause>0");
             break;
@@ -624,7 +628,7 @@ void AdminPantallas::MenuFiltrosUsuarios() {
         switch (opcion) {
         case '1': {
             string nombre;
-            cout << "Diigite el nombre: " << endl; cin >> nombre;
+            cout << "Diigite el nombre: " << endl; cin >> nombre; cin.ignore();
             principal->FiltrarUsuariosPorNombre(nombre);
             system("pause>0");
             break;
@@ -670,7 +674,7 @@ void AdminPantallas::GenerarDatosAleatorios() {
     char confirmacion = _getch();
     if (confirmacion == '1') {
         int cantidad;
-        cout << "\tDigite la cantidad de datos a generar: "; cin >> cantidad;
+        cout << "\tDigite la cantidad de datos a generar: "; cin >> cantidad; cin.ignore();
         principal->GenerarDatos(cantidad, cantidad, cantidad);
         ColorUI::printGradient("\n\tDatos generados con exito!\n", gege, false);
     }

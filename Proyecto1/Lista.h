@@ -31,22 +31,6 @@ public:
     T obtenerFinal();
     T buscar(T elem);
 
-    void agregar(T pNodo); //sumar nodos a la lista
-    bool esvacia(void);
-    T cabeza(void); //retorna el dato del primer nodo
-    Lista* resto(void); //retorna el puntero al "resto" de la lista
-    //resto= lo que queda de la lista sin la cabeza
-    std::string toPrint(std::string p);
-    T suma(T i);
-    int size();
-    void borrar(void); //borra la cabeza
-    void borrar_last();//borra el ultimo
-    void concat(Lista<T>* l1);// le transfiere los datos de l1 a this
-    Lista<T>* copy(void);// hace una copia de la lista
-    void tomar(int n);//deja "vivos" los n primeros nodos y borra el resto
-    void addOrdenado(T d);// suma nodos ordenados de menor a mayor
-    bool esta(T d); //retorna true cuando d est� en la lista
-    void borrarDato(T d);// borra el nodo que contiene a d
 };
 template<class T>
 Lista<T>::Lista() {
@@ -116,7 +100,7 @@ void Lista<T>::agregaPos(T elem, uint pos) {
 }
 template <class T>
 void Lista<T>::agregaFinal(T elem) {
-    agregaPos(elem, lon); // ;)
+    agregaPos(elem, lon);  
 }
 
 template <class T>
@@ -151,10 +135,9 @@ void Lista<T>::eliminaPos(uint pos) {
 }
 template <class T>
 void Lista<T>::eliminaFinal() {
-    // Si la lista está vacía, no hacemos nada
     if (lon == 0) return;
 
-    // Si solo hay un elemento, lo eliminamos y reiniciamos la lista
+
     if (lon == 1) {
         delete ini;
         ini = nullptr;
@@ -162,18 +145,16 @@ void Lista<T>::eliminaFinal() {
         return;
     }
 
-    // Si hay más de un elemento, recorremos hasta el PENÚLTIMO nodo
     Nodo<T>* aux = ini;
     for (int i = 0; i < lon - 2; i++) {
         aux = aux->getSig();
     }
 
-    // Guardamos el último nodo, desconectamos el penúltimo y borramos el último
     Nodo<T>* nodoAEliminar = aux->getSig();
     aux->setSig(nullptr);
     delete nodoAEliminar;
 
-    lon--; // Reducimos la longitud
+    lon--; 
 }
 
 template <class T>
@@ -225,10 +206,9 @@ template <class T>
 uint Lista<T>::getPos(T elem) {
     Nodo<T>* aux = ini;
     for (int i = 0; i < lon; i++) {
-        if (aux->getElemento() == elem) // ✅ Corregido a 'aux'
+        if (aux->getElemento() == elem)
             return i;
-        aux = aux->getSig(); // Ya no necesitas el else
+        aux = aux->getSig();
     }
-    return lon; // Retorna la longitud si no lo encuentra
+    return lon;
 }
-

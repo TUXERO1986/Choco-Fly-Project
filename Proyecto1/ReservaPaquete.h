@@ -1,5 +1,5 @@
 #include "Reserva.h"
-#include "Ticket.h" // O como le hayas puesto a tu clase hija de vuelo
+#include "Ticket.h" 
 #include "ReservaHotel.h"
 
 class ReservaPaquete : public Reserva
