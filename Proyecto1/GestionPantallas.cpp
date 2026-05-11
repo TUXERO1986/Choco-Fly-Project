@@ -57,7 +57,6 @@ void GestionPantallas::Menuprincipal() {
         }
     } while (true);
 }
-
 void GestionPantallas::MenuReservaHotel() {
     string ciudad,fechaIngreso;
     int idHotel, noches, habitacion, tipoO, tipoC, tipoS;
@@ -145,7 +144,6 @@ void GestionPantallas::MenuReservaHotel() {
     cout << "\n";
     system("pause>0");
 }
-
 void GestionPantallas::MenuReservaPaquete() {
     string ciudad;
     int idPaquete, noches, equipajeIda, equipajeRetorno, asiento, clase;
@@ -180,10 +178,10 @@ void GestionPantallas::MenuReservaPaquete() {
 
     ColorUI::printGradient("Cantidad de equipaje para el RETORNO: ", Exito, false, false);
     equipajeRetorno = LeerOpcion();
-
+    
     ColorUI::printGradient("Numero de asiento preferido en vuelo IDA y RETORNO: ", Exito, false, false);
     asiento = LeerOpcion();
-    ColorUI::printGradient("DIGITE LA CLASE: ", Exito, false, false);
+    ColorUI::printGradient("DIGITE LA CLASE (1-ECONOMICA,2-ECONOMICA PREMIUM,3-EJECUTIVA,4-PRIMERA CLASE): ", Exito, false, false);
     clase = LeerOpcion();
     char opcion;
 
@@ -397,7 +395,6 @@ void GestionPantallas::MenuFiltrosVuelos() {
         }
         case '3': {
             string fecha;
-            principal->MostrarUsuarios();
             ColorUI::printGradient("\nDIGITE LA FECHA (DD-MM-AAAA)\n", Exito, false); cin >> fecha; cin.ignore();
             principal->FiltrarVuelosPorFecha(fecha);
             system("pause>0");

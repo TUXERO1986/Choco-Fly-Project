@@ -558,34 +558,23 @@ bool ControladorPrincipal::VerificarReservas(string codigo) {
 }
 bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal) {
 
-    int contadorUsuario = 0;
-    int indiceGlobal = -1;
-    Reserva* reservaACancelar = nullptr;
-
-    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
-        if (controladorReservas->getReservasTotales()->obtenerPos(i)->getCodigoUsuario() == codigoUsuario) {
-            if (contadorUsuario == indiceReservaLocal) {
-                indiceGlobal = i;
-                reservaACancelar = controladorReservas->getReservasTotales()->obtenerPos(i);
-                break;
-            }
-            contadorUsuario++;
-        }
+    if (indiceReservaLocal < 0 || indiceReservaLocal >= controladorReservas->getReservasTotales()->longitud()) {
+        cout << "Error: Indice de reserva no valido." << endl;
+        return false;
     }
 
-    if (indiceGlobal == -1) {
-        cout << "Error: Indice de reserva no valido." << endl;
+    Reserva* reservaACancelar = controladorReservas->getReservasTotales()->obtenerPos(indiceReservaLocal);
+
+    if (reservaACancelar->getCodigoUsuario() != codigoUsuario) {
+        cout << "Error: Indice incorrecto o la reserva no le pertenece." << endl;
         return false;
     }
 
     if (reservaACancelar->getTipoReserva() == "VUELO") {
         Ticket* ticket = dynamic_cast<Ticket*>(reservaACancelar);
-
         for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
             Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
-            if (v->getOrigen() == ticket->getOrigen() && v->getDestino() == 
-                ticket->getDestino() && v->getFecha() == ticket->getFecha()) {
-
+            if (v->getOrigen() == ticket->getOrigen() && v->getDestino() == ticket->getDestino() && v->getFecha() == ticket->getFecha()) {
                 v->getControladorAsientos()->getAsientos()->obtenerPos(ticket->getAsiento() - 1)->setDisponible(true);
                 break;
             }
@@ -593,12 +582,10 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
     }
     else if (reservaACancelar->getTipoReserva() == "HOTEL") {
         ReservaHotel* resHotel = dynamic_cast<ReservaHotel*>(reservaACancelar);
-
         for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
             Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
             if (h->getNombre() == resHotel->getNombreHotel()) {
-                h->getControladorHabitaciones()->getHabitaciones()->
-                    obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
                 break;
             }
         }
@@ -610,11 +597,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
         if (ticketIda != nullptr) {
             for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
                 Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
-
-                if (v->getOrigen() == ticketIda->getOrigen() &&
-                    v->getDestino() == ticketIda->getDestino() &&
-                    v->getFecha() == ticketIda->getFecha()) {
-
+                if (v->getOrigen() == ticketIda->getOrigen() && v->getDestino() == ticketIda->getDestino() && v->getFecha() == ticketIda->getFecha()) {
                     v->getControladorAsientos()->getAsientos()->obtenerPos(ticketIda->getAsiento() - 1)->setDisponible(true);
                     break;
                 }
@@ -631,14 +614,13 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
                 }
             }
         }
-
     }
 
-    controladorReservas->getReservasTotales()->eliminaPos(indiceGlobal);
+    controladorReservas->getReservasTotales()->eliminaPos(indiceReservaLocal);
 
+    // 5. Guardamos cambios
     GuardarDatosEnArchivos();
     return true;
-    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
 }
 void ControladorPrincipal::CalificarHotel(string nombreHotel, float nuevaPuntuacion) {
     if (nuevaPuntuacion < 1.0f || nuevaPuntuacion > 5.0f) {
@@ -756,10 +738,6 @@ bool ControladorPrincipal::VerificarAsiento(int numeroAsiento,int indiceVuelo) {
 bool ControladorPrincipal::VerificarHabitacion(int numeroHabitacion,int indiceHotel) {
     return controladorHoteles->getHoteles()->obtenerPos(indiceHotel)->getControladorHabitaciones()->verificarHabitacion(numeroHabitacion);
 }
-
-/*
-Nota para ryan, modifique lo visual para que al usuario no le aparezca lo de verificando, se muestra por un milisegundo
-*/
 
 Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string correo, string password) {
 	bool existeCuenta = controladorUsuarios->VerificarCuentaExistente(nombre, correo);

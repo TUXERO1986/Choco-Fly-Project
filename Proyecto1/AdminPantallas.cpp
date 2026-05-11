@@ -524,7 +524,6 @@ void AdminPantallas::MenuFiltrosVuelos() {
         }
         case '3': {
             string fecha;
-            principal->MostrarUsuarios();
             cout << "Diigite la fecha (DD-MM-AAAA): " << endl; cin >> fecha; cin.ignore();
             principal->FiltrarVuelosPorFecha(fecha);
             system("pause>0");
