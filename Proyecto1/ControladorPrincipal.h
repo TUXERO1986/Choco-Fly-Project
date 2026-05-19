@@ -5,10 +5,55 @@
 #include "ControladorVuelos.h"
 #include "ControladorRutas.h"
 #include "ControladorUsuarios.h"
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+#else
+    #include <termios.h>
+    #include <unistd.h>
+    #include <stdio.h>
+    #include <iostream> 
+    #include <cstdlib>
 
-#include "GestionPantallas.h"
+    // Implementación de _getch() exclusiva para Linux
+    inline int _getch() {
+        struct termios oldt, newt;
+        int ch;
+        // Guarda la configuración actual de la terminal
+        tcgetattr(STDIN_FILENO, &oldt);
+        newt = oldt;
+        // Desactiva el modo canónico y el eco
+        newt.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+        
+        // Lee el carácter introducido
+        ch = getchar();
+        
+        // Restaura la terminal a su comportamiento normal
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+        return ch;
+    }
+#endif // <--- El #endif cierra aquí, protegiendo todo el bloque de Linux
 
-#include <conio.h>
+// --- FUNCIONES UNIVERSALES ---
+// Como no están dentro de un #ifdef, ambos sistemas operativos las pueden usar
+
+inline void pausarConsola() {
+#ifdef _WIN32
+    system("pause>0"); // Pausa silenciosa en Windows
+#else
+    std::cin.clear();
+    std::cin.ignore(10000, '\n'); // Pausa en Linux
+#endif
+}
+
+inline void LimpiarConsola() {
+#ifdef _WIN32
+    LimpiarConsola();   // Limpiar en Windows
+#else
+    system("clear"); // Limpiar en Linux
+#endif
+}
 using namespace ColorUI;
 class ControladorPrincipal
 {

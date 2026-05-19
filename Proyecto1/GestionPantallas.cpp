@@ -1,9 +1,4 @@
 #include "GestionPantallas.h"
-#include <iostream>
-#include "Windows.h"
-
-using namespace ColorUI;
-
 
 GestionPantallas::GestionPantallas(ControladorPrincipal* ptrPrincipal, Usuario* ptrUsuario) {
     principal = ptrPrincipal;
@@ -24,7 +19,7 @@ int GestionPantallas::LeerOpcion() {
 void GestionPantallas::Menuprincipal() {
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         cout << BLINK;
         ColorUI::printGradient(chocofly, TemaPrincipal, false);
         cout << RESET;
@@ -40,17 +35,17 @@ void GestionPantallas::Menuprincipal() {
         opcion = _getch();
 
         switch (opcion) {
-        case '1': system("cls"); MenuCatalogos();system("cls"); break;
-        case '2': system("cls"); MenuReservas(); system("cls"); break;
-        case '3': system("cls"); MenuDatosUsuario();system("cls");break;
-        case '4': system("cls"); HistorialReservas();system("cls"); break;
-        case '5': system("cls"); MenuCancelarReserva(); system("cls"); break;
-        case '6': system("cls"); MenuCalificacionHotel();system("cls"); break;
-        case '7': system("cls"); creditos(); system("cls"); break;
+        case '1': LimpiarConsola(); MenuCatalogos();LimpiarConsola(); break;
+        case '2': LimpiarConsola(); MenuReservas(); LimpiarConsola(); break;
+        case '3': LimpiarConsola(); MenuDatosUsuario();LimpiarConsola();break;
+        case '4': LimpiarConsola(); HistorialReservas();LimpiarConsola(); break;
+        case '5': LimpiarConsola(); MenuCancelarReserva(); LimpiarConsola(); break;
+        case '6': LimpiarConsola(); MenuCalificacionHotel();LimpiarConsola(); break;
+        case '7': LimpiarConsola(); creditos(); LimpiarConsola(); break;
         case '0':
-            system("cls");
+            LimpiarConsola();
             ColorUI::printGradient("Cerrando sesion...", Alerta, false);
-            system("cls");
+            LimpiarConsola();
             return;
             break;
         default: cout << "Opcion no valida" << endl; break;
@@ -79,11 +74,11 @@ void GestionPantallas::MenuReservaHotel() {
 
     if (idHotel < 0 || idHotel >= principal->getControladorHoteles()->getHoteles()->longitud()) {
         ColorUI::printGradient("ID de hotel invalido.", Alerta, false);
-        system("pause>0");
+        pausarConsola();
         return;
     }
 
-    system("cls");
+    LimpiarConsola();
     cout << "\n\tMAPA DE HABITACIONES DEL HOTEL\n\n";
 
     for (int i = 1; i <= 30; i++) {
@@ -130,7 +125,7 @@ void GestionPantallas::MenuReservaHotel() {
         if (opcion == '2') {
             cout << "\n";
             ColorUI::printGradient("OPERACION CANCELADA", Exito, false);
-            system("pause>0");
+            pausarConsola();
             return;
         }
         else if (opcion != '1') {
@@ -140,10 +135,10 @@ void GestionPantallas::MenuReservaHotel() {
     } while (opcion != '1');
     principal->ReservarHotel(idHotel, userActual, fechaIngreso,noches, habitacion, tipoO, tipoC, tipoS);
 
-    system("cls");
+    LimpiarConsola();
     ColorUI::printGradient("RESERVA DE HOTEL COMPLETADA", gege, false);
     cout << "\n";
-    system("pause>0");
+    pausarConsola();
 }
 
 void GestionPantallas::MenuReservaPaquete() {
@@ -168,7 +163,7 @@ void GestionPantallas::MenuReservaPaquete() {
   
     if (idPaquete < 0 || idPaquete >= principal->getControladorPaquetes()->getPaquetes()->longitud()) {
         ColorUI::printGradient("ID de paquete invalido. Abortando compra...", Alerta, false);
-        system("pause>0");
+        pausarConsola();
         return;
     }
 
@@ -195,7 +190,7 @@ void GestionPantallas::MenuReservaPaquete() {
         if (opcion == '2') {
             cout << "\n";
             ColorUI::printGradient("OPERACION CANCELADA", Exito, false);
-            system("pause>0");
+            pausarConsola();
             return;
         }
         else if (opcion != '1') {
@@ -205,10 +200,10 @@ void GestionPantallas::MenuReservaPaquete() {
     } while (opcion != '1');
     principal->ReservarPaquete(idPaquete, userActual, noches, equipajeIda, equipajeRetorno, clase, asiento);
 
-    system("cls");
+    LimpiarConsola();
     ColorUI::printGradient("PAQUETE COMPRADO CON EXITO", gege, false);
     cout << "\n";
-    system("pause>0");
+    pausarConsola();
 }
 void GestionPantallas::MenuCalificacionHotel() {
     string ciudad,nombre;
@@ -226,7 +221,7 @@ void GestionPantallas::MenuCalificacionHotel() {
     cin >> calificaion; cin.ignore();
   
     principal->CalificarHotel(nombre, calificaion);
-    system("pause>0");
+    pausarConsola();
 
 }
 void GestionPantallas::MenuReservaVuelo() {
@@ -243,7 +238,7 @@ void GestionPantallas::MenuReservaVuelo() {
 
     cout << "\n";
     if (!principal->ConsultarVuelos(origen, destino)) {
-        system("pause>0");
+        pausarConsola();
         return;
     }
 
@@ -255,11 +250,11 @@ void GestionPantallas::MenuReservaVuelo() {
 
     if (indiceVuelo < 0 || indiceVuelo >= principal->getControladorVuelos()->getVuelos()->longitud()) {
         ColorUI::printGradient("ID de vuelo invalido. Abortando compra...", Alerta, false);
-        system("pause>0");
+        pausarConsola();
         return;
     }
 
-    system("cls");
+    LimpiarConsola();
     ColorUI::printGradient("=== SELECCION DE ASIENTO ===", TemaPrincipal, false);
     cout << "\n\tMAPA DE ASIENTOS DEL VUELO\n\n";
     for (int i = 1; i <= 30; i++) {
@@ -298,7 +293,7 @@ void GestionPantallas::MenuReservaVuelo() {
         }
     }
 
-    system("cls");
+    LimpiarConsola();
 
     cout << endl;
     ColorUI::printGradient("Ingresa la cantidad de equipaje en bodega: ", Exito, false, false);
@@ -320,7 +315,7 @@ void GestionPantallas::MenuReservaVuelo() {
         if (opcion == '2') {
             cout << "\n";
             ColorUI::printGradient("OPERACION CANCELADA", Exito, false);
-            system("pause>0");
+            pausarConsola();
             return; 
         }
         else if (opcion != '1') {
@@ -330,17 +325,17 @@ void GestionPantallas::MenuReservaVuelo() {
     } while (opcion != '1');
     principal->ComprarTicket(indiceVuelo, userActual, equipaje, cabina, asiento, clase);
 
-    system("cls");
+    LimpiarConsola();
     ColorUI::printGradient("TICKET COMPRADO CON EXITO", gege, false);
-    system("pause>0");
+    pausarConsola();
     ColorUI::printGradient("El asiento [" + to_string(asiento) + "] ha sido reservado para " + userActual->getNombre(), Exito, false);
     cout << "\n";
-    system("pause>0");
+    pausarConsola();
 }
 void GestionPantallas::MenuFiltrosReservas() {
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         ColorUI::printGradient("\n================FILTROS RESERVAS==============", Exito, false);
         ColorUI::printGradient("\n[1] RESERVAS POR TIPO USUARIO", Exito, false);
         ColorUI::printGradient("\n[2] MOSTRAR TODAS MIS RESERVAS", Exito, false);
@@ -348,17 +343,17 @@ void GestionPantallas::MenuFiltrosReservas() {
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            system("cls");
+            LimpiarConsola();
             string reserva;
             ColorUI::printGradient("\nDIGITE EL TIPO DE RESERVA A BUSCAR (VUELO-HOTEL-PAQUETE)\n", Exito, false); cin >> reserva;
             principal->FiltrarReservasPorTipoUsuario(reserva, userActual->getCodigo());
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '2': {
-            system("cls");
+            LimpiarConsola();
             principal->FiltrarReservasPorUsuario(userActual->getCodigo());
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '0': {
@@ -371,7 +366,7 @@ void GestionPantallas::MenuFiltrosReservas() {
 void GestionPantallas::MenuFiltrosVuelos() {
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         ColorUI::printGradient("\n================FILTROS VUELOS==============", Exito, false);
         ColorUI::printGradient("\n[1] VUELOS POR ORIGEN", Exito, false);
         ColorUI::printGradient("\n[2] VUELOS POR DESTINO", Exito, false);
@@ -385,14 +380,14 @@ void GestionPantallas::MenuFiltrosVuelos() {
             string origen;
             ColorUI::printGradient("\nDIGITE EL ORIGEN\n", Exito, false);  getline(cin,origen);
             principal->FitrarVuelosPorOrigen(origen);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '2': {
             string destino;
             ColorUI::printGradient("\nDIGITE EL DESTINO\n", Exito, false);  getline(cin,destino);
             principal->FiltrarVuelosPorDestino(destino);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '3': {
@@ -400,19 +395,19 @@ void GestionPantallas::MenuFiltrosVuelos() {
             principal->MostrarUsuarios();
             ColorUI::printGradient("\nDIGITE LA FECHA (DD-MM-AAAA)\n", Exito, false); cin >> fecha; cin.ignore();
             principal->FiltrarVuelosPorFecha(fecha);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '4': {
             float presupuesto;
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO\n", Exito, false); cin >> presupuesto; cin.ignore();
             principal->FiltrarVuelosPorPresupuesto(presupuesto);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '5': {
             principal->FiltrarVuelosDeMayorAMenorPrecio();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '0': {
@@ -425,7 +420,7 @@ void GestionPantallas::MenuFiltrosVuelos() {
 void GestionPantallas::MenuFiltrosPaquetes() {
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         ColorUI::printGradient("\n================FILTROS PAQUETES==============", Exito, false);
         ColorUI::printGradient("\n[1] PAQUETES POR ORIGEN", Exito, false);
         ColorUI::printGradient("\n[2] PAQUETES POR DESTINO", Exito, false);
@@ -435,33 +430,33 @@ void GestionPantallas::MenuFiltrosPaquetes() {
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            system("cls");
+            LimpiarConsola();
             string origen;
             cout << "Diigite el origen: " << endl;  getline(cin,origen);
             principal->FiltrarPaquetesPorOrigen(origen);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '2': {
-            system("cls");
+            LimpiarConsola();
             string destino;
             cout << "Diigite el origen: " << endl;  getline(cin,destino);
             principal->FiltrarPaquetesPorDestino(destino);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '3': {
-            system("cls");
+            LimpiarConsola();
             principal->FiltrarPaquetesDeMayorAMenorPrecio();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '4': {
-            system("cls");
+            LimpiarConsola();
             float presupuesto;
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO", Exito, false); cin >> presupuesto; cin.ignore();
             principal->FiltrarPaquetesPorPresupuesto(presupuesto);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '0': {
@@ -474,7 +469,7 @@ void GestionPantallas::MenuFiltrosPaquetes() {
 void GestionPantallas::MenuFiltrosHoteles() {
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         ColorUI::printGradient("\n================FILTROS HOTELES==============", Exito, false);
         ColorUI::printGradient("\n[1] HOTELES POR CIUDAD", Exito, false);
         ColorUI::printGradient("\n[2] HOTELES POR CALIFICACION (MAYOR A MENOR)", Exito, false);
@@ -485,32 +480,32 @@ void GestionPantallas::MenuFiltrosHoteles() {
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            system("cls");
+            LimpiarConsola();
             string ciudad;
             cout << "Diigite la ciudad: " << endl;  getline(cin,ciudad);
             principal->FiltrarHotelesPorCiudad(ciudad);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '2': {
 
-            system("cls");
+            LimpiarConsola();
             principal->FiltrarHotelesPorMayorCalificacion();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '3': {
-            system("cls");
+            LimpiarConsola();
             principal->FiltrarHotelesDeMayorAMenorPrecio();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '4': {
-            system("cls");
+            LimpiarConsola();
             float presupuesto;
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO", Exito, false); cin >> presupuesto; cin.ignore();
             principal->FiltrarHotelesPorPresupuesto(presupuesto);
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '0': {
@@ -523,12 +518,12 @@ void GestionPantallas::MenuFiltrosHoteles() {
 void GestionPantallas::MenuDatosUsuario(){
     ColorUI::printGradient("\n\t\t\t\t\tDATOS DEL USUARIO ACTUAL\n", Exito, false);
     principal->FiltrarUsuarioPorCodigo(userActual->getCodigo()); 
-    system("pause>0");
+    pausarConsola();
 }
 void GestionPantallas::MenuCatalogos(){
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         ColorUI::printGradient("\n================CATALOGO DE SERVICIOS==============", Exito, false);
         ColorUI::printGradient("\n[1] CATALOGO VUELOS DISPONIBLES", Exito, false);
         ColorUI::printGradient("\n[2] CATALOGO DE HOTELES DISPONIBLES", Exito, false);
@@ -537,21 +532,21 @@ void GestionPantallas::MenuCatalogos(){
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            system("cls");
+            LimpiarConsola();
             MenuFiltrosVuelos();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '2': {
-            system("cls");
+            LimpiarConsola();
             MenuFiltrosHoteles();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '3': {
-            system("cls");
+            LimpiarConsola();
             MenuFiltrosPaquetes();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '0': {
@@ -566,7 +561,7 @@ void GestionPantallas::MenuCancelarReserva() {
     principal->FiltrarReservasPorUsuario(userActual->getCodigo());
     if (!principal->VerificarReservas(userActual->getCodigo())) {
         cout << "No hay reservas registrar a su nombre" << endl;
-        system("pause>0");
+        pausarConsola();
         return;
     }
     do {
@@ -575,12 +570,12 @@ void GestionPantallas::MenuCancelarReserva() {
         cin.ignore();
     } while (!principal->CancelarReservaUsuario(userActual->getCodigo(), id));
     ColorUI::printGradient("\nEL MONTO SE REMBOLSARA EN SU CUENTA MAXIMO 10 DIAS HABILES", Exito, false);
-    system("pause>0");
+    pausarConsola();
 }
 void GestionPantallas::MenuReservas() {
     char opcion;
     do {
-        system("cls");
+        LimpiarConsola();
         ColorUI::printGradient("\n================FILTROS HOTELES==============", Exito, false);
         ColorUI::printGradient("\n[1] RESERVAR TICKET DE VUELO", Exito, false);
         ColorUI::printGradient("\n[2] RESERVAR TICKET DE HOTEL", Exito, false);
@@ -589,21 +584,21 @@ void GestionPantallas::MenuReservas() {
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            system("cls");
+            LimpiarConsola();
             MenuReservaVuelo();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '2': {
-            system("cls");
+            LimpiarConsola();
             MenuReservaHotel();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '3': {
-            system("cls");
+            LimpiarConsola();
             MenuReservaPaquete();
-            system("pause>0");
+            pausarConsola();
             break;
         }
         case '0': {
@@ -617,5 +612,5 @@ void GestionPantallas::HistorialReservas() {
     ColorUI::printGradient("=== MI HISTORIAL DE RESERVAS ===", TemaPrincipal, false);
     MenuFiltrosReservas();
     cout << "\n";
-    system("pause>0");
+    pausarConsola();
 }

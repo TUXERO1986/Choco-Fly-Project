@@ -1,10 +1,6 @@
 #pragma once
-#include "Lista.h"
 #include "Color.h"
 #include "ControladorPrincipal.h"
-#include "Usuario.h"
-#include <conio.h>
-
 class GestionPantallas {
 private:
     ControladorPrincipal* principal;
