@@ -17,8 +17,10 @@ void CiudadID::setNombre(std::string nombre) {
 	this->nombre = nombre;
 }
 int CiudadID::getIdPorNombre(std::string nombre) {
-	if (this->nombre == nombre)return id;
+	if (this->nombre == nombre) return id;
+	return -1;
 }
 std::string CiudadID::getNombrePorId(int id) {
-	if (this->id == id)return nombre;
+	if (this->id == id) return nombre;
+	return "";
 }

@@ -42,14 +42,14 @@ inline void pausarConsola() {
 #ifdef _WIN32
     system("pause>0"); // Pausa silenciosa en Windows
 #else
-    std::cin.clear();
-    std::cin.ignore(10000, '\n'); // Pausa en Linux
+    std::cout << "\033[33mPresione cualquier tecla para continuar...\033[0m\n";
+    _getch(); // Pausa en Linux/Mac
 #endif
 }
 
 inline void LimpiarConsola() {
 #ifdef _WIN32
-    LimpiarConsola();   // Limpiar en Windows
+    system("cls");   // Limpiar en Windows
 #else
     system("clear"); // Limpiar en Linux
 #endif
