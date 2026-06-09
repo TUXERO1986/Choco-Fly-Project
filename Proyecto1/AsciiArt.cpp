@@ -1,15 +1,25 @@
 #include "AsciiArt.h"
 using namespace std;
 using namespace ColorUI;
-void gotoxy(int x, int y) {
-    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD dwPos;
-    dwPos.X = x;
-    dwPos.Y = y;
-    SetConsoleCursorPosition(hcon, dwPos);
-}
+#ifdef _WIN32
+    #include <windows.h>
+    void gotoxy(int x, int y) {
+        HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+        COORD dwPos;
+        dwPos.X = x;
+        dwPos.Y = y;
+        SetConsoleCursorPosition(hcon, dwPos);
+    }
+#else
+    #include <iostream>
+    void gotoxy(int x, int y) {
+        // En ANSI, y (fila) va primero, luego x (columna). 
+        // Se suma 1 porque ANSI empieza a contar en 1, no en 0.
+        std::cout << "\033[" << y + 1 << ";" << x + 1 << "H";
+    }
+#endif
 
-void ImprimirBordes(const string& arteAscii) {
+void ImprimirBordes(const std::string& arteAscii) {
     for (int i = 0; i < arteAscii.length(); i++) {
         char letra = arteAscii[i];
 

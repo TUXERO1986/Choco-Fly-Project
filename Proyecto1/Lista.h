@@ -195,7 +195,7 @@ T Lista<T>::obtenerPos(uint pos) {
         return aux->getElemento();
     }
     else {
-        return NULL;
+        return T{};
     }
 }
 template <class T>

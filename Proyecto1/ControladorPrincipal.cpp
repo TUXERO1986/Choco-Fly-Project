@@ -1,6 +1,4 @@
 #include "ControladorPrincipal.h"
-#include "Color.h"
-#include <fstream>
 ControladorPrincipal::ControladorPrincipal() {
 	controladorRutas = new ControladorRutas();
 	controladorHoteles = new ControladorHoteles();
@@ -765,29 +763,29 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
 	bool existeCuenta = controladorUsuarios->VerificarCuentaExistente(nombre, correo);
     Usuario* usuarioEncontrado = controladorUsuarios->VerificarCredenciales(nombre, correo, password);
     if (usuarioEncontrado != nullptr&&existeCuenta) {
-        system("cls");
+        LimpiarConsola();
 		ColorUI::printGradient("\n\n\n\t\t\tInicio de sesion exitoso! Bienvenido," + usuarioEncontrado->getNombre() + "!\n", Exito, false);
 
         return usuarioEncontrado;
     } else {
         if (existeCuenta) {
-			system("cls");
+			LimpiarConsola();
 			ColorUI::printGradient("\n\n\n\t\t\tError: Contrasena incorrecta. Por favor, intenta nuevamente.\n", Alerta, false);
-            system("pause>0");
+            pausarConsola();
             return nullptr;
     
         } else {
             for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
                 Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
                 if (aux->getCorreo() == correo) {
-                    system("cls");
+                    LimpiarConsola();
 					ColorUI::printGradient("\n\n\n\t\t\tESTE CORREO YA ESTA REGISTRADO PRUEBE OTRO\n", Alerta, false);
-                    system("pause>0");
+                    pausarConsola();
                     return nullptr;
                 }
             }
 			controladorUsuarios->AgregarUsuario(nombre, correo, password);
-			system("cls");
+			LimpiarConsola();
 			ColorUI::printGradient("\n\n\n\t\t\tCuenta Creada Exitosamente Bienvenido  " + nombre + "!\n", Exito, false); 
 			return controladorUsuarios->getUsuarios()->obtenerFinal();
         }   

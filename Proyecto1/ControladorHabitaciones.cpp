@@ -35,10 +35,11 @@ bool ControladorHabitaciones::verificarHabitacion(int numeroHabitacion) {
 	for (int i = 0; i < habitaciones->longitud(); i++) {
 		Habitacion* aux = habitaciones->obtenerPos(i);
 		if (aux->getNumero() == numeroHabitacion) {
-			if (aux->getDisponible())return true;
+			if (aux->getDisponible()) return true;
 			else return false;
 		}
 	}
+	return false;
 }
 void ControladorHabitaciones::CargarEstadoHabitacionesString(string estado) {
 	

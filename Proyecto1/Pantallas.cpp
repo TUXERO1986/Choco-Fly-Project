@@ -1,7 +1,12 @@
-#include <iostream>
-#include "Color.h"
-#include "Windows.h"
-#include "GestionPantallas.h"
+#ifdef _WIN32
+    // Todo lo que esté aquí SOLO se compilará en las PCs de tus amigos (Windows)
+    #include <windows.h>
+    #include <conio.h>
+#else
+    // Todo lo que esté aquí SOLO se compilará en tu PC (Linux/Mac)
+    #include <iostream>
+    #include <unistd.h> 
+#endif
 #include "AdminPantallas.h"
 
 
@@ -13,58 +18,72 @@ string usuario, correo, password;
 void RegisterScreen(ControladorPrincipal* principal) {
     char modo;
     do {
-        system("cls");
-        ImprimirBordes(registro);
+        LimpiarConsola();
+        
+        #ifndef _WIN32
+        std::cout << "\e[8;40;120t";
+        #endif
+        
+        ColorUI::printGradient(registro, Register, false);
         gotoxy(0, 6);
         ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese el modo: \n", Register, false);
         ColorUI::printGradient("\t\t\t\t\t\t[1] Admin ", Register, false);
         ColorUI::printGradient("\t\t\t\t\t\t[2] Usuario", Register, false);
-        ColorUI::printGradient("\t\t\t\t\t\t[0] Salir", Register, false);
+        ColorUI::printGradient("\t\t\t\t\t\t[0] Salir", Register, false); 
+
+        // FORZAMOS A QUE SE DIBUJE TODO EN LA PANTALLA AHORA MISMO
+        //std::cout << std::flush;
+
         modo = _getch();
         switch (modo) {
-        case '1':Admin(principal); break;
-        case '2':LoginScreen(principal); break;
-        case '0': system("cls"); return; break;
+        case '1': Admin(principal); break;
+        case '2': LoginScreen(principal); break; // Llama al login
+        case '0': LimpiarConsola();; exit(0); // Cierra la consola y el programa
         }
-    } while (true);
+    } while (true); // Siempre vuelve a pintar el menú inicial si Admin o Login terminan
 }
 
 void LoginScreen(ControladorPrincipal* principal) {
-    string u_nombre, u_correo, u_password;
-    Usuario* userLogeado;
+string u_nombre, u_correo, u_password;
+    Usuario* userLogeado = nullptr; // Inicializa el puntero
+    
+    // Bucle para intentar loguearse (o salir)
     do {
-        system("cls");
-        ColorUI::printGradient(login, Register, false);
+        LimpiarConsola();
+        ColorUI::printGradient(login, Register, false); // Imprime el ASCII
         gotoxy(0, 6);
+        
+        // NO poner LimpiarConsola() aquí, o borrarás el ASCII de arriba
+
         ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
-        cout << "\t\t\t\t"; cin >> u_nombre;
+        cout << "\t\t\t\t"; getline(cin,u_nombre);
 
         ColorUI::printGradient("\n\t\t\t\tIngrese su Correo", Register, false);
         cout << "\t\t\t\t"; cin >> u_correo;
 
         ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
-        cout << "\t\t\t\t"; cin >> u_password;
-
-        cin.ignore(1000, '\n');
-        system("cls");
-
+        cout << "\t\t\t\t"; cin >> u_password; // <-- AQUÍ DEBE IR EL CIN
+        
+        // AHORA SÍ verificamos con los tres datos ya ingresados
         userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
-    } while (userLogeado==nullptr);
+        
+        if (userLogeado == nullptr) {
+             ColorUI::printGradient("\nCredenciales incorrectas. Presione Enter para intentar de nuevo.", Alerta, false);
+             cin.ignore(1000, '\n'); // Limpia basurita del buffer por si acaso
+             cin.get(); // Espera el Enter
+        }
+    } while (userLogeado == nullptr);
 
-    if (userLogeado != nullptr) {
-        system("pause>0");
-        GestionPantallas* userUI = new GestionPantallas(principal, userLogeado);
-        userUI->Menuprincipal();
-        delete userUI;
-        //RegisterScreen(principal); 
-    }
-    else {
-        system("pause>0");
-        //RegisterScreen(principal);
-    }
+    // Si sale del bucle, el login fue exitoso
+    pausarConsola();
+    GestionPantallas* userUI = new GestionPantallas(principal, userLogeado);
+    userUI->Menuprincipal(); // Se queda atrapado aquí hasta que cierre sesión
+    
+    // Instrucción 2: Uso correcto de delete tras salir del ciclo de vida del objeto
+    delete userUI;
 }
 void Admin(ControladorPrincipal* principal) {
-    system("cls");
+    LimpiarConsola();
 
     ColorUI::printGradient(admin, 
         Tux, false);
@@ -73,7 +92,7 @@ void Admin(ControladorPrincipal* principal) {
     cout << "\t\t\t\t\t"; cin >> usuario;
     ColorUI::printGradient("\n\t\t\t\t\tIngrese contrasena ADMIN", Tux, false);
     cout << "\t\t\t\t\t"; cin >> password;
-    system("cls");
+    LimpiarConsola();
     AdminPantallas* adminUI = new AdminPantallas(principal);
     adminUI->MenuPrincipalAdmin();
     delete adminUI; 
@@ -142,6 +161,6 @@ void creditos() {
         gengis, gege,
         santiago, TemaPrincipal
     );
-    system("pause>0");
+    pausarConsola();
 }
 

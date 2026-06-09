@@ -39,6 +39,7 @@ bool ControladorAsientos::VerificarAsiento(int numeroAsiento) {
 			else return false;
 		}
 	}
+	return false;
 }
 void ControladorAsientos::CargarEstadoAsientosString(string estado) {
 	

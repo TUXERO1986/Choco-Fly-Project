@@ -21,3 +21,9 @@ build/
 *.log
 *.tlog
 *.lastbuildstate
+
+# Ejecutables de Linux
+app_vuelos
+
+# Configuraciones locales de VS Code
+.vscode/
