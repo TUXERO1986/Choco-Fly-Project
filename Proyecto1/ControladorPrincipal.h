@@ -15,43 +15,36 @@
     #include <iostream> 
     #include <cstdlib>
 
-    // Implementación de _getch() exclusiva para Linux
-    inline int _getch() {
+inline int _getch() {
         struct termios oldt, newt;
         int ch;
-        // Guarda la configuración actual de la terminal
+
         tcgetattr(STDIN_FILENO, &oldt);
         newt = oldt;
-        // Desactiva el modo canónico y el eco
+
         newt.c_lflag &= ~(ICANON | ECHO);
         tcsetattr(STDIN_FILENO, TCSANOW, &newt);
         
-        // Lee el carácter introducido
         ch = getchar();
         
-        // Restaura la terminal a su comportamiento normal
         tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
         return ch;
     }
-#endif // <--- El #endif cierra aquí, protegiendo todo el bloque de Linux
-
-// --- FUNCIONES UNIVERSALES ---
-// Como no están dentro de un #ifdef, ambos sistemas operativos las pueden usar
+#endif 
 
 inline void pausarConsola() {
 #ifdef _WIN32
-    system("pause>0"); // Pausa silenciosa en Windows
+    system("pause>0"); 
 #else
-    std::cout << "\033[33mPresione cualquier tecla para continuar...\033[0m\n";
-    _getch(); // Pausa en Linux/Mac
+    _getch(); 
 #endif
 }
 
 inline void LimpiarConsola() {
 #ifdef _WIN32
-    system("cls");   // Limpiar en Windows
+    system("cls");   
 #else
-    system("clear"); // Limpiar en Linux
+    system("clear"); 
 #endif
 }
 using namespace ColorUI;

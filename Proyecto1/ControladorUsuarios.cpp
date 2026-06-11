@@ -1,14 +1,38 @@
 #include "ControladorUsuarios.h"
 ControladorUsuarios::ControladorUsuarios() {
-	controladorArchivos = new ControladorArchivos("Usuarios.txt");
-	usuarios = new Lista<Usuario*>();
-	controladorArchivos->LeerArchivoUsuarios(usuarios);
+    controladorArchivos = new ControladorArchivos(); 
+    usuarios = new Lista<Usuario*>();
+
+    for (int i = 0; i < TAMANO_TABLA; i++) {
+        tablaHash[i] = new Lista<Usuario*>();
+    }
+
+    controladorArchivos->LeerArchivoUsuarios(usuarios); 
 }
+
 ControladorUsuarios::~ControladorUsuarios() {
-	for (int i = 0; i < usuarios->longitud(); i++) {
-		delete usuarios->obtenerPos(i);
-	}
-	delete usuarios;
+
+    for (int i = 0; i < TAMANO_TABLA; i++) {
+        delete tablaHash[i];
+    }
+
+    for (int i = 0; i < usuarios->longitud(); i++) {
+        delete usuarios->obtenerPos(i);
+    }
+    delete usuarios;
+}
+int ControladorUsuarios::FuncionHashPropia(string clave) {
+    long long sumaHash = 0;
+
+    for (int i = 0; i < clave.length(); i++) {
+        sumaHash = (sumaHash * 31) + clave[i]; 
+    }
+    
+    int indice = sumaHash % TAMANO_TABLA;
+    if (indice < 0) {
+        indice += TAMANO_TABLA; 
+    }
+    return indice;
 }
 void ControladorUsuarios::AgregarUsuario(string nombre, string correo, string password) {
 
@@ -26,33 +50,40 @@ void ControladorUsuarios::AgregarUsuario(string nombre, string correo, string pa
 
     string codigoGenerado = "U-" + caracteres.substr(0, 6);
 
-    Usuario* nuevoUsuario = new Usuario(nombre, correo, password, codigoGenerado);
+	Usuario* nuevoUsuario = new Usuario(nombre, correo, password, codigoGenerado);
 
     usuarios->agregaFinal(nuevoUsuario);
-    controladorArchivos->GuardarDatoArchivoUsuarios(nuevoUsuario);
+
+    int indice = FuncionHashPropia(correo);
+    tablaHash[indice]->agregaFinal(nuevoUsuario);
 
 }
-Usuario* ControladorUsuarios::VerificarCredenciales(string nombre,string correo,string password) {
-	for (int i = 0; i < usuarios->longitud(); i++) {
-		Usuario* aux = usuarios->obtenerPos(i);
-		ColorUI::printGradient("verificar credenciales |" + aux->getNombre() + " ~ ", dato, false,false); 
-		ColorUI::printGradient(nombre, MoradoD, false);
-		//cout << "verificarcredenciales |" << aux->getNombre() << " " << nombre << endl;
-		if (aux->getNombre() != nombre)continue;
-		if (aux->getCorreo() == correo && aux->getPassword() == password) {
-			return aux;
-	}
-		}
-	return nullptr;
+Usuario* ControladorUsuarios::VerificarCredenciales(string nombre, string correo, string password) {
+
+    int indice = FuncionHashPropia(correo);
+    
+    Lista<Usuario*>* listaEnIndice = tablaHash[indice];
+
+    for (int i = 0; i < listaEnIndice->longitud(); i++) {
+        Usuario* userAux = listaEnIndice->obtenerPos(i);
+        if (userAux->getCorreo() == correo && userAux->getPassword() == password) {
+            return userAux;
+        }
+    }
+    
+    return nullptr;
 }
+
 bool ControladorUsuarios::VerificarCuentaExistente(string nombre, string correo) {
-	for (int i = 0; i < usuarios->longitud(); i++) {
-		cout << "verificarcuentaexistente" << usuarios->obtenerPos(i)->getNombre() << " " << nombre << endl;
-		Usuario* aux = usuarios->obtenerPos(i);
-		if (aux->getNombre() == nombre && aux->getCorreo() == correo)
-			return true;
-	}
-	return false;
+    int indice = FuncionHashPropia(correo);
+    Lista<Usuario*>* listaEnIndice = tablaHash[indice];
+
+    for (int i = 0; i < listaEnIndice->longitud(); i++) {
+        if (listaEnIndice->obtenerPos(i)->getCorreo() == correo) {
+            return true; 
+        }
+    }
+    return false;
 }
 void ControladorUsuarios::MostrarUsuarios() {
 	for (int i = 0; i < usuarios->longitud(); i++) {
