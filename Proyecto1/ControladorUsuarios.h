@@ -1,6 +1,6 @@
 #pragma once
 #include "Usuario.h"
-#include "Lista.h"
+#include "TablaHash.h"
 #include "ControladorArchivos.h"
 #include "Color.h"
 
@@ -8,9 +8,9 @@ using namespace ColorUI;
 
 class ControladorUsuarios {
 private:
-
-    static const int TAMANO_TABLA = 100; 
-    Lista<Usuario*>* tablaHash[TAMANO_TABLA]; 
+    static const int TAMANO_TABLA = 1009;
+    function<unsigned int(string)> miFuncionHashCorreo;
+    HashTable<Usuario*,string>* tablaUsuarios; 
     Lista<Usuario*>* usuarios; 
     ControladorArchivos* controladorArchivos;
 
@@ -27,4 +27,4 @@ public:
     void MostrarUsuarios();
     Lista<Usuario*>* getUsuarios();
     void setUsuarios(Lista<Usuario*>* usuarios);
-};
+}; 
