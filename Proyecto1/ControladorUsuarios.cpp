@@ -12,14 +12,18 @@ ControladorUsuarios::ControladorUsuarios() {
         return sumaHash;
     };
 
-    tablaUsuarios = new HashTable<Usuario*,string>(miFuncionHashCorreo, TAMANO_TABLA);
+    tablaUsuarios = new HashTable<string, Usuario*>(miFuncionHashCorreo, TAMANO_TABLA);
     
     controladorArchivos->LeerArchivoUsuarios(usuarios); 
+    for (unsigned int i = 0; i < usuarios->longitud(); i++) {
+        Usuario* aux = usuarios->obtenerPos(i);
+        tablaUsuarios->Insertar(aux->getCorreo(), aux);
+    }
 }
 
 ControladorUsuarios::~ControladorUsuarios() {
 
-    for (int i = 0; i < usuarios->longitud(); i++) {
+    for (unsigned int i = 0; i < usuarios->longitud(); i++) {
         delete usuarios->obtenerPos(i);
     }
     delete usuarios;

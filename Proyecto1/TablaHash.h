@@ -5,24 +5,26 @@
 #include <functional>
 using namespace std;
 
-template<class T,class K>
+// 1. Usamos struct para tener acceso público a los nodos, y el orden estándar <K, T>
+template<class K, typename T>
 struct HashNode {
-    string clave;
+    K clave;
     T valor;
     
-    HashNode(string c, T v) {
+    HashNode(K c, T v) {
         clave = c;
         valor = v;
     }
 };
 
-template<class T,class K>
+template<class K, typename T>
 class HashTable {
 private:
     int TABLE_SIZE;
     int numElementos;
 
-    Lista<HashNode<T>*>** tabla; 
+    // 2. Ahora sí le pasamos AMBOS parámetros al nodo: <K, T>
+    Lista<HashNode<K, T>*>** tabla; 
     function<unsigned int(K)> funcionHash;
 
 public:
@@ -32,63 +34,60 @@ public:
         this->TABLE_SIZE = size;
         this->numElementos = 0;
         
-        tabla = new Lista<HashNode<T>*>*[TABLE_SIZE];
+        tabla = new Lista<HashNode<K, T>*>*[TABLE_SIZE];
         
         for (int i = 0; i < TABLE_SIZE; i++) {
-            tabla[i] = new Lista<HashNode<T>*>();
+            tabla[i] = new Lista<HashNode<K, T>*>();
         }
     }
 
     ~HashTable() {
         for (int i = 0; i < TABLE_SIZE; i++) {
-
             for (int j = 0; j < tabla[i]->longitud(); j++) {
                 delete tabla[i]->obtenerPos(j); 
             }
-
             delete tabla[i];
         }
         delete[] tabla;
     }
 
     void Insertar(K clave, T valor) {
-        int indice = funcionHash(clave);
+        // 3. OBLIGATORIO: Aplicar el módulo para no salirnos del arreglo
+        int indice = funcionHash(clave) % TABLE_SIZE;
         
-        Lista<HashNode<T>*>* listaEnCasilla = tabla[indice];
+        Lista<HashNode<K, T>*>* listaEnCasilla = tabla[indice];
         for (int i = 0; i < listaEnCasilla->longitud(); i++) {
             if (listaEnCasilla->obtenerPos(i)->clave == clave) {
-
                 listaEnCasilla->obtenerPos(i)->valor = valor;
                 return;
             }
         }
 
-        listaEnCasilla->agregaFinal(new HashNode<T>(clave, valor));
+        listaEnCasilla->agregaFinal(new HashNode<K, T>(clave, valor));
         numElementos++;
     }
 
     T Buscar(K clave) {
-        int indice = funcionHash(clave);
-        Lista<HashNode<T>*>* listaEnCasilla = tabla[indice];
+        int indice = funcionHash(clave) % TABLE_SIZE;
+        Lista<HashNode<K, T>*>* listaEnCasilla = tabla[indice];
 
         for (int i = 0; i < listaEnCasilla->longitud(); i++) {
-            HashNode<T>* nodoActual = listaEnCasilla->obtenerPos(i);
+            HashNode<K, T>* nodoActual = listaEnCasilla->obtenerPos(i);
             if (nodoActual->clave == clave) {
-                return nodoActual->valor;
+                return nodoActual->valor; // 4. Era flecha (->), no punto (.)
             }
         }
         return nullptr;
     }
 
     bool Eliminar(K clave) {
-        int indice = funcionHash(clave);
+        int indice = funcionHash(clave) % TABLE_SIZE;
 
-        Lista<HashNode<T>*>* listaEnCasilla = tabla[indice];
+        Lista<HashNode<K, T>*>* listaEnCasilla = tabla[indice];
 
         for (int i = 0; i < listaEnCasilla->longitud(); i++) {
-            HashNode<T>* nodoActual = listaEnCasilla->obtenerPos(i);
+            HashNode<K, T>* nodoActual = listaEnCasilla->obtenerPos(i);
             if (nodoActual->clave == clave) {
-
                 listaEnCasilla->eliminaPos(i);
                 delete nodoActual; 
                 numElementos--;
