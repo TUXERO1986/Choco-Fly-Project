@@ -31,9 +31,6 @@ void RegisterScreen(ControladorPrincipal* principal) {
         ColorUI::printGradient("\t\t\t\t\t\t[2] Usuario", Register, false);
         ColorUI::printGradient("\t\t\t\t\t\t[0] Salir", Register, false); 
 
-        // FORZAMOS A QUE SE DIBUJE TODO EN LA PANTALLA AHORA MISMO
-        //std::cout << std::flush;
-
         modo = _getch();
         switch (modo) {
         case '1': Admin(principal); break;
