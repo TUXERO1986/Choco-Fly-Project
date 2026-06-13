@@ -4,7 +4,7 @@ ControladorUsuarios::ControladorUsuarios() {
     controladorArchivos = new ControladorArchivos(); 
     usuarios = new Lista<Usuario*>();
 
-    auto miFuncionHashCorreo = [](string clave) -> unsigned int {
+    miFuncionHashCorreo = [](string clave) -> unsigned int {
         unsigned int sumaHash = 0;
         for (int i = 0; i < clave.length(); i++) {
             sumaHash = (sumaHash * 31) + clave[i];

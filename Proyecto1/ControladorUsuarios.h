@@ -8,7 +8,7 @@ using namespace ColorUI;
 
 class ControladorUsuarios {
 private:
-    static const int TAMANO_TABLA = 1009;
+    static const int TAMANO_TABLA = 126;
     function<unsigned int(string)> miFuncionHashCorreo;
     HashTable<Usuario*,string>* tablaUsuarios; 
     Lista<Usuario*>* usuarios; 
