@@ -1,4 +1,6 @@
 #include "ControladorHoteles.h"
+#include "Color.h"
+using namespace ColorUI;
 ControladorHoteles::ControladorHoteles() {
 	controladorArchivos = new ControladorArchivos("Hoteles.txt");
 	hoteles = new Lista<Hotel*>();
@@ -44,11 +46,39 @@ void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float p
 	controladorArchivos->GuardarDatoArchivoHoteles(nuevoHotel);
 }
 void ControladorHoteles::MostrarHoteles() {
-	for (int i = 0; i < hoteles->longitud(); i++) {
-		Hotel* aux = hoteles->obtenerPos(i);
-		cout << "[ID DEL HOTEL: " << i << "]" << endl;
-		aux->MostrarHotel();
-		cout << "---------------------------------" << endl;
+	int total = hoteles->longitud();
+	if (total == 0) {
+		ColorUI::Alertas::MostrarInfo("No hay hoteles disponibles en el sistema.");
+		return;
 	}
+
+	int itemsPorPagina = 3;
+	int paginasTotales = (total + itemsPorPagina - 1) / itemsPorPagina;
+	int paginaActual = 1;
+
+	char opcion = ' ';
+	do {
+		system("cls");
+		ColorUI::printGradient("\t=== CATALOGO DE HOTELES (Pag " + to_string(paginaActual) + "/" + to_string(paginasTotales) + ") ===", Paletas::TemaPrincipal, false);
+		cout << "\n";
+
+		int inicio = (paginaActual - 1) * itemsPorPagina;
+		int fin = (inicio + itemsPorPagina < total) ? inicio + itemsPorPagina : total;
+
+		for (int i = inicio; i < fin; i++) {
+			Hotel* aux = hoteles->obtenerPos(i);
+			ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+			aux->MostrarHotel();
+			cout << "\n";
+		}
+
+		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", Paletas::azul, false);
+		cout << "\n\tElige una opcion: ";
+		cin >> opcion;
+		
+		if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
+		else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
+
+	} while (opcion != 'q' && opcion != 'Q');
 }
 Lista<Hotel*>* ControladorHoteles::getHoteles() { return hoteles; }

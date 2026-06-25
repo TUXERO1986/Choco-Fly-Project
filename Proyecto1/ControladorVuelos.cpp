@@ -33,14 +33,40 @@ float ControladorVuelos::CalcularDistancia(Lista<Ruta*>* rutasnecesarias, int i)
 	return distanciaBase + CalcularDistancia(rutasnecesarias, i - 1);
 }
 void ControladorVuelos::MostrarVuelos() {
-	for (int i = 0; i < vuelos->longitud(); i++) {
-		Vuelo* aux = vuelos->obtenerPos(i);
-		ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-        cout  << "[ID DEL VUELO: " << i << "]" << endl;
-		aux->MostrarVuelo();
-		ColorUI::printGradient("-----------------------------",Tux, false);
-		cout << "-----------------------------" << endl;
+	int total = vuelos->longitud();
+	if (total == 0) {
+		ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles en el sistema.");
+		return;
 	}
+
+	int itemsPorPagina = 3;
+	int paginasTotales = (total + itemsPorPagina - 1) / itemsPorPagina;
+	int paginaActual = 1;
+
+	char opcion = ' ';
+	do {
+		system("cls");
+		ColorUI::printGradient("\t=== CATALOGO DE VUELOS (Pag " + to_string(paginaActual) + "/" + to_string(paginasTotales) + ") ===", Paletas::TemaPrincipal, false);
+		cout << "\n";
+
+		int inicio = (paginaActual - 1) * itemsPorPagina;
+		int fin = (inicio + itemsPorPagina < total) ? inicio + itemsPorPagina : total;
+
+		for (int i = inicio; i < fin; i++) {
+			Vuelo* aux = vuelos->obtenerPos(i);
+			ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+			aux->MostrarVuelo();
+			cout << "\n";
+		}
+
+		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", Paletas::azul, false);
+		cout << "\n\tElige una opcion: ";
+		cin >> opcion;
+		
+		if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
+		else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
+
+	} while (opcion != 'q' && opcion != 'Q');
 }
 void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia,ControladorAsientos* controladorAsientos) {
 	Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia,controladorAsientos);

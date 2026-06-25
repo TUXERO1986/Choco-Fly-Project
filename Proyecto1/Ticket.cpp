@@ -22,17 +22,20 @@ Ticket::Ticket(string codigoUsuario, string nombreUsuario, string origen, string
 		}
 	};
 }
+#include "Color.h"
+
 void Ticket::MostrarReserva() {
-	cout << "Origen: " << origen << endl;
-	cout << "Destino: " << destino << endl;
-	cout << "Escalas: " << escalas << endl;
-	cout << "Fecha: " << fecha << endl;
-	cout << "Distancia: " << distancia << endl;
-	cout << "Equipaje en bodega: " << equipaje << endl;
-	cout << "Equipaje de cabina: " << equipajecabina << " [1 MALETA INCLUIDA SIN COSTO]"<<endl;
-	cout << "Asiento: " << asiento << endl;
-	cout << "Clase: " << obtenerClase(clase)<<endl;
-	cout << "Precio Total: $" << getPrecioTotal() << endl;
+    ColorUI::printGradient("================ VOUCHER DE VUELO ================", ColorUI::Paletas::TemaPrincipal, false);
+    ColorUI::printGradient(" Origen: " + origen + "   -->   Destino: " + destino, ColorUI::Paletas::Exito, false);
+    ColorUI::printGradient(" Fecha: " + fecha + "   | Escalas: " + escalas, ColorUI::Paletas::azul, false);
+    ColorUI::printGradient(" Equipaje Bodega: " + to_string(equipaje) + " | Cabina: " + to_string(equipajecabina), ColorUI::Paletas::Register, false);
+    ColorUI::printGradient(" Asiento: [" + to_string(asiento) + "] | Clase: " + obtenerClase(clase), ColorUI::Paletas::MoradoD, false);
+    ColorUI::printGradient("--------------------------------------------------", ColorUI::Paletas::TemaPrincipal, false);
+    
+    char buffer[20];
+    snprintf(buffer, sizeof(buffer), "%.2f", getPrecioTotal());
+    ColorUI::printGradient(" Precio Total: $" + string(buffer), ColorUI::Paletas::gege, false);
+    ColorUI::printGradient("==================================================\n", ColorUI::Paletas::TemaPrincipal, false);
 }
 string Ticket::aTextoArchivo() {
 	return "VUELO," + getCodigoUsuario() + "," + getNombre() + "," + origen + "," + destino + "," + escalas + "," + fecha+"," + to_string(getPrecioTotal())

@@ -24,4 +24,5 @@ public:
     void MenuReservaVuelo();
     void MenuReservaPaquete();
     void HistorialReservas();
+    void DibujarHeader(string ruta);
 };

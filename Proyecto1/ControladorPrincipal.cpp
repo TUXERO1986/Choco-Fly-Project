@@ -128,7 +128,8 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
 
     GuardarDatosEnArchivos();
 
-    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
+    ColorUI::Animaciones::mostrarSpinner("Deshaciendo transaccion y devolviendo recursos", 1200, "");
+    ColorUI::Alertas::MostrarExito("Reserva cancelada con exito.");
 }
 void ControladorPrincipal::EliminarUsuario(int indiceUsuario) {
     controladorUsuarios->getUsuarios()->eliminaPos(indiceUsuario);
@@ -248,9 +249,8 @@ void ControladorPrincipal::FiltrarReservasPorTipo(string tipo) {
     for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
         Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
         if (aux->getTipoReserva() == tipo) {
-            cout << "Reserva #" << i << ":" << endl;
+            ColorUI::printGradient("\n[ID RESERVA #" + to_string(i) + "]\n", ColorUI::Paletas::MoradoD, false);
             aux->MostrarReserva();
-            cout << endl;
         }
     }
 }
@@ -258,20 +258,17 @@ void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
     for(int i=0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
         Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
         if (aux->getCodigoUsuario() == codigoUsuario) {
-            cout << "Reserva #" << i << ":" << endl;
+            ColorUI::printGradient("\n[ID RESERVA #" + to_string(i) + "]\n", ColorUI::Paletas::MoradoD, false);
             aux->MostrarReserva();
-            cout << endl;
-           
         }
     }
 }
 void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario) {
     for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
         Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
-        if (aux->getCodigoUsuario() == codigousuario&&aux->getTipoReserva()==tipoBusqueda) {
-            cout << "Reserva #" << i << ":" << endl;
+        if (aux->getCodigoUsuario() == codigousuario && aux->getTipoReserva() == tipoBusqueda) {
+            ColorUI::printGradient("\n[ID RESERVA #" + to_string(i) + "]\n", ColorUI::Paletas::MoradoD, false);
             aux->MostrarReserva();
-            cout << endl;
         }
     }
 }
@@ -572,7 +569,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
     }
 
     if (indiceGlobal == -1) {
-        cout << "Error: Indice de reserva no valido." << endl;
+        ColorUI::Alertas::MostrarError("Indice de reserva no valido.");
         return false;
     }
 
@@ -635,8 +632,9 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
     controladorReservas->getReservasTotales()->eliminaPos(indiceGlobal);
 
     GuardarDatosEnArchivos();
+    ColorUI::Animaciones::mostrarSpinner("Deshaciendo transaccion y devolviendo recursos", 1200, "");
     return true;
-    cout << "Reserva cancelada con exito. Los recursos han sido devueltos al sistema." << endl;
+    ColorUI::Alertas::MostrarExito("Reserva cancelada con exito.");
 }
 void ControladorPrincipal::CalificarHotel(string nombreHotel, float nuevaPuntuacion) {
     if (nuevaPuntuacion < 1.0f || nuevaPuntuacion > 5.0f) {
@@ -729,7 +727,8 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
 
     controladorReservas->AgregarReserva(nuevaReserva);
 
-    cout << "\nReserva de paquete completada exitosamente!" << endl;
+    ColorUI::Animaciones::mostrarSpinner("Procesando transaccion con el sistema central", 2000, "");
+    cout << "\n"; ColorUI::Alertas::MostrarExito("Reserva de paquete completada exitosamente!");
     cout << "Tu vuelo de retorno ha sido programado automaticamente para el: " << fechaRetorno << endl;
 }
 void ControladorPrincipal::MostrarReservasUsuario(Usuario* userActual) {
@@ -764,13 +763,14 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
     Usuario* usuarioEncontrado = controladorUsuarios->VerificarCredenciales(nombre, correo, password);
     if (usuarioEncontrado != nullptr&&existeCuenta) {
         LimpiarConsola();
-		ColorUI::printGradient("\n\n\n\t\t\tInicio de sesion exitoso! Bienvenido," + usuarioEncontrado->getNombre() + "!\n", Exito, false);
+        ColorUI::Animaciones::mostrarSpinner("Verificando credenciales seguras", 1200, "\t\t\t");
+		cout << "\n\n\n"; ColorUI::Alertas::MostrarExito("Inicio de sesion exitoso! Bienvenido, " + usuarioEncontrado->getNombre() + "!", "\t\t\t");
 
         return usuarioEncontrado;
     } else {
         if (existeCuenta) {
 			LimpiarConsola();
-			ColorUI::printGradient("\n\n\n\t\t\tError: Contrasena incorrecta. Por favor, intenta nuevamente.\n", Alerta, false);
+			cout << "\n\n\n"; ColorUI::Alertas::MostrarError("Contrasena incorrecta. Por favor, intenta nuevamente.", "\t\t\t");
             pausarConsola();
             return nullptr;
     
@@ -779,17 +779,19 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
                 Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
                 if (aux->getCorreo() == correo) {
                     LimpiarConsola();
-					ColorUI::printGradient("\n\n\n\t\t\tESTE CORREO YA ESTA REGISTRADO PRUEBE OTRO\n", Alerta, false);
+					cout << "\n\n\n"; ColorUI::Alertas::MostrarError("ESTE CORREO YA ESTA REGISTRADO PRUEBE OTRO", "\t\t\t");
                     pausarConsola();
                     return nullptr;
                 }
             }
-			controladorUsuarios->AgregarUsuario(nombre, correo, password);
-			LimpiarConsola();
-			ColorUI::printGradient("\n\n\n\t\t\tCuenta Creada Exitosamente Bienvenido  " + nombre + "!\n", Exito, false); 
-			return controladorUsuarios->getUsuarios()->obtenerFinal();
+            controladorUsuarios->AgregarUsuario(nombre, correo, password);
+            LimpiarConsola();
+            ColorUI::Animaciones::mostrarSpinner("Creando cuenta y asignando espacio en el servidor", 1500, "\t\t\t");
+            cout << "\n\n\n"; ColorUI::Alertas::MostrarExito("Cuenta Creada Exitosamente Bienvenido " + nombre + "!", "\t\t\t");
+            return controladorUsuarios->getUsuarios()->obtenerFinal();
         }   
     }
+    return nullptr;
 }
 
 
