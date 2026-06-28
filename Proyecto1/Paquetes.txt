@@ -6,3 +6,5 @@ Cusco,Lima,Directo,4-2-2026,300,Blue Lagoon Resort Lima,Lima,1.09949,97.9476
 Cusco,Lima,Directo,4-2-2026,300,Blue Lagoon Resort Lima,Lima,1.09949,97.9476
 Buenos Aires,Sao Paulo,Directo,10-8-2026,200,Majestic Heights Sao Paulo,Sao Paulo,3.66414,71.0578
 Buenos Aires,Sao Paulo,Directo,10-8-2026,200,Majestic Heights Sao Paulo,Sao Paulo,3.66414,71.0578
+Lima,Cusco,Directo,9-10-2026,300,Hotel 1,Cusco,2.47002,193.344
+Lima,Cusco,Directo,9-10-2026,300,Hotel 1,Cusco,2.47002,193.344

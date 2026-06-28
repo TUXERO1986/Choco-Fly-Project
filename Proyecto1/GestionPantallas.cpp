@@ -1,4 +1,5 @@
 #include "GestionPantallas.h"
+#include <iomanip>
 
 GestionPantallas::GestionPantallas(ControladorPrincipal* ptrPrincipal, Usuario* ptrUsuario) {
     principal = ptrPrincipal;
@@ -16,10 +17,22 @@ int GestionPantallas::LeerOpcion() {
     return x;
 }
 
+void GestionPantallas::DibujarHeader(string ruta) {
+    LimpiarConsola();
+    ColorUI::printGradient("================================================================================", Paletas::TemaPrincipal, false);
+    if (userActual != nullptr) {
+        ColorUI::printGradient("  [USER] Usuario: " + userActual->getNombre() + "  |  [MAIL] " + userActual->getCorreo(), Paletas::Exito, false);
+    } else {
+        ColorUI::printGradient("  [USER] Usuario: Invitado (No Logueado)", Paletas::Alerta, false);
+    }
+    ColorUI::printGradient("  [PATH] Ruta: " + ruta, Paletas::azul, false);
+    ColorUI::printGradient("================================================================================\n", Paletas::TemaPrincipal, false);
+}
+
 void GestionPantallas::Menuprincipal() {
     char opcion;
     do {
-        LimpiarConsola();
+        DibujarHeader("Inicio");
         cout << BLINK;
         ColorUI::printGradient(chocofly, TemaPrincipal, false);
         cout << RESET;
@@ -57,11 +70,31 @@ void GestionPantallas::MenuReservaHotel() {
     string ciudad,fechaIngreso;
     int idHotel, noches, habitacion, tipoO, tipoC, tipoS;
 
-    ColorUI::printGradient("=== RESERVA DE HOTELES ===", TemaPrincipal, false);
-    ColorUI::printGradient("\nIngrese la ciudad destino para buscar hoteles:\nCiudad: ", Exito, false, false);
-     getline(cin, ciudad);
+    DibujarHeader("Inicio > Reservar > Hotel");
+    ColorUI::printGradient("=== RESERVA DE HOTELES ===\n", TemaPrincipal, false);
+    
+    vector<string> ciudades;
+    Lista<Hotel*>* hoteles = principal->getControladorHoteles()->getHoteles();
+    for(int i=0; i<hoteles->longitud(); i++){
+        string c = hoteles->obtenerPos(i)->getCiudad();
+        bool existe = false;
+        for(string& org : ciudades) { if(org == c) existe = true; }
+        if(!existe) ciudades.push_back(c);
+    }
+    if (ciudades.empty()) { ColorUI::Alertas::MostrarInfo("No hay hoteles disponibles."); pausarConsola(); return; }
+    ColorUI::printGradient("\n================ SELECCIONE CIUDAD ================\n", Paletas::TemaPrincipal, false);
+    for(size_t i=0; i<ciudades.size(); i++) {
+        cout << " [" << i+1 << "] " << left << setw(20) << ciudades[i];
+        if((i+1)%3==0) cout << "\n";
+    }
+    cout << "\n\n> Ingrese opcion (0 para cancelar): ";
+    int selC = LeerOpcion();
+    if (selC <= 0 || selC > ciudades.size()) return;
+    ciudad = ciudades[selC-1];
 
-    cout << "\n";
+    DibujarHeader("Inicio > Reservar > Hotel");
+    ColorUI::printGradient("Ciudad seleccionada: " + ciudad + "\n", Paletas::Exito, false);
+
     principal->FiltrarHotelesPorCiudad(ciudad);
     if (!principal->VerificarHoteles(ciudad)) {
         cout << "No hay hoteles disponibles" << endl;
@@ -145,11 +178,31 @@ void GestionPantallas::MenuReservaPaquete() {
     string ciudad;
     int idPaquete, noches, equipajeIda, equipajeRetorno, asiento, clase;
 
-    ColorUI::printGradient("=== RESERVA DE PAQUETES TURISTICOS ===", TemaPrincipal, false);
-    ColorUI::printGradient("\nIngrese la ciudad destino:\nCiudad: ", Exito, false, false);
-     getline(cin, ciudad);
+    DibujarHeader("Inicio > Reservar > Paquete Turistico");
+    ColorUI::printGradient("=== RESERVA DE PAQUETES TURISTICOS ===\n", TemaPrincipal, false);
+    
+    vector<string> destinos;
+    Lista<Paquete*>* paquetes = principal->getControladorPaquetes()->getPaquetes();
+    for(int i=0; i<paquetes->longitud(); i++){
+        string o = paquetes->obtenerPos(i)->getVueloIncluido()->getDestino();
+        bool existe = false;
+        for(string& org : destinos) { if(org == o) existe = true; }
+        if(!existe) destinos.push_back(o);
+    }
+    if (destinos.empty()) { ColorUI::Alertas::MostrarInfo("No hay paquetes disponibles."); pausarConsola(); return; }
+    ColorUI::printGradient("\n================ SELECCIONE DESTINO ================\n", Paletas::TemaPrincipal, false);
+    for(size_t i=0; i<destinos.size(); i++) {
+        cout << " [" << i+1 << "] " << left << setw(20) << destinos[i];
+        if((i+1)%3==0) cout << "\n";
+    }
+    cout << "\n\n> Ingrese opcion (0 para cancelar): ";
+    int selD = LeerOpcion();
+    if (selD <= 0 || selD > destinos.size()) return;
+    ciudad = destinos[selD-1];
 
-    cout << "\n";
+    DibujarHeader("Inicio > Reservar > Paquete Turistico");
+    ColorUI::printGradient("Destino seleccionado: " + ciudad + "\n", Paletas::Exito, false);
+
     principal->FiltrarPaquetesPorDestino(ciudad);
     if (!principal->VerificarPaquetes(ciudad)) {
         cout << "No hay paquetes disponibles" << endl;
@@ -206,35 +259,95 @@ void GestionPantallas::MenuReservaPaquete() {
     pausarConsola();
 }
 void GestionPantallas::MenuCalificacionHotel() {
+    DibujarHeader("Inicio > Calificar Hotel");
     string ciudad,nombre;
     float calificaion;
     int id;
-    ColorUI::printGradient("\n\t\t\t\t\tDIGITE LA CIUDAD DEL HOTEL", Exito, false);
-    
-     getline(cin,ciudad);
-    
+
+    vector<string> ciudades;
+    Lista<Hotel*>* hoteles = principal->getControladorHoteles()->getHoteles();
+    for(int i=0; i<hoteles->longitud(); i++){
+        string c = hoteles->obtenerPos(i)->getCiudad();
+        bool existe = false;
+        for(string& org : ciudades) { if(org == c) existe = true; }
+        if(!existe) ciudades.push_back(c);
+    }
+    if (ciudades.empty()) { ColorUI::Alertas::MostrarInfo("No hay hoteles disponibles."); pausarConsola(); return; }
+    ColorUI::printGradient("\n================ SELECCIONE CIUDAD ================\n", Paletas::TemaPrincipal, false);
+    for(size_t i=0; i<ciudades.size(); i++) {
+        cout << " [" << i+1 << "] " << left << setw(20) << ciudades[i];
+        if((i+1)%3==0) cout << "\n";
+    }
+    cout << "\n\n> Ingrese opcion (0 para cancelar): ";
+    int selC = LeerOpcion();
+    if (selC <= 0 || selC > ciudades.size()) return;
+    ciudad = ciudades[selC-1];
+
+    DibujarHeader("Inicio > Calificar Hotel");
+    ColorUI::printGradient("Ciudad seleccionada: " + ciudad + "\n", Paletas::Exito, false);
+
     principal->FiltrarHotelesPorCiudad(ciudad);
-    ColorUI::printGradient("\n\t\t\t\t\tDIGITE EL NOMBRE DEL HOTEL", Exito, false);
-     getline(cin,nombre);
     
-    ColorUI::printGradient("\n\t\t\t\t\tDIGITE LA CALIFICACION (1.0-5.0)", Exito, false);
+    ColorUI::printGradient("\nIngresa el ID del hotel que deseas calificar (o -1 para salir): ", Paletas::Exito, false, false);
+    id = LeerOpcion();
+    if (id < 0 || id >= hoteles->longitud()) return;
+    
+    nombre = hoteles->obtenerPos(id)->getNombre();
+
+    ColorUI::printGradient("\nDIGITE LA CALIFICACION (1.0 - 5.0): ", Paletas::Exito, false, false);
     cin >> calificaion; cin.ignore();
-  
+    
     principal->CalificarHotel(nombre, calificaion);
     pausarConsola();
-
 }
 void GestionPantallas::MenuReservaVuelo() {
+    DibujarHeader("Inicio > Reservar > Vuelo");
     int indiceVuelo, equipaje, cabina, asiento, clase;
     string origen, destino, nombre;
 
-    ColorUI::printGradient("=== COMPRA DE TICKETS ===", TemaPrincipal, false);
+    ColorUI::printGradient("=== COMPRA DE TICKETS ===\n", Paletas::TemaPrincipal, false);
 
-    ColorUI::printGradient("\nOrigen: ", Exito, false, false);
-     getline(cin, origen);
-    if (origen == "0") return;
-    ColorUI::printGradient("Destino: ", Alerta, false, false);
-     getline(cin, destino);
+    vector<string> origenes;
+    Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+    for(int i=0; i<vuelos->longitud(); i++){
+        string o = vuelos->obtenerPos(i)->getOrigen();
+        bool existe = false;
+        for(string& org : origenes) { if(org == o) existe = true; }
+        if(!existe) origenes.push_back(o);
+    }
+    if (origenes.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); return; }
+    ColorUI::printGradient("\n================ SELECCIONE ORIGEN ================\n", Paletas::TemaPrincipal, false);
+    for(size_t i=0; i<origenes.size(); i++) {
+        cout << " [" << i+1 << "] " << left << setw(20) << origenes[i];
+        if((i+1)%3==0) cout << "\n";
+    }
+    cout << "\n\n> Ingrese opcion (0 para cancelar): ";
+    int selO = LeerOpcion();
+    if (selO <= 0 || selO > origenes.size()) return;
+    origen = origenes[selO-1];
+
+    DibujarHeader("Inicio > Reservar > Vuelo");
+    ColorUI::printGradient("Origen seleccionado: " + origen + "\n", Paletas::Exito, false);
+
+    vector<string> destinos;
+    for(int i=0; i<vuelos->longitud(); i++){
+        if (vuelos->obtenerPos(i)->getOrigen() == origen) {
+            string d = vuelos->obtenerPos(i)->getDestino();
+            bool existe = false;
+            for(string& des : destinos) { if(des == d) existe = true; }
+            if(!existe) destinos.push_back(d);
+        }
+    }
+    if (destinos.empty()) { ColorUI::Alertas::MostrarInfo("No hay destinos desde este origen."); pausarConsola(); return; }
+    ColorUI::printGradient("\n================ SELECCIONE DESTINO ================\n", Paletas::TemaPrincipal, false);
+    for(size_t i=0; i<destinos.size(); i++) {
+        cout << " [" << i+1 << "] " << left << setw(20) << destinos[i];
+        if((i+1)%3==0) cout << "\n";
+    }
+    cout << "\n\n> Ingrese opcion (0 para cancelar): ";
+    int selD = LeerOpcion();
+    if (selD <= 0 || selD > destinos.size()) return;
+    destino = destinos[selD-1];
 
     cout << "\n";
     if (!principal->ConsultarVuelos(origen, destino)) {
@@ -242,8 +355,8 @@ void GestionPantallas::MenuReservaVuelo() {
         return;
     }
 
-    ColorUI::printGradient("================================", Tux, false);
-    ColorUI::printGradient("\nIngresa el ID del vuelo que deseas reservar (o -1 para salir): ", Exito, false, false);
+    ColorUI::printGradient("================================", Paletas::Tux, false);
+    ColorUI::printGradient("\nIngresa el ID del vuelo que deseas reservar (o -1 para salir): ", Paletas::Exito, false, false);
     indiceVuelo = LeerOpcion();
 
     if (indiceVuelo == -1) return;
@@ -335,23 +448,36 @@ void GestionPantallas::MenuReservaVuelo() {
 void GestionPantallas::MenuFiltrosReservas() {
     char opcion;
     do {
-        LimpiarConsola();
-        ColorUI::printGradient("\n================FILTROS RESERVAS==============", Exito, false);
-        ColorUI::printGradient("\n[1] RESERVAS POR TIPO USUARIO", Exito, false);
-        ColorUI::printGradient("\n[2] MOSTRAR TODAS MIS RESERVAS", Exito, false);
-        ColorUI::printGradient("\n[0] SALIR", Exito, false);
+        DibujarHeader("Inicio > Mi Historial de Reservas");
+        ColorUI::printGradient("\n================MENU HISTORIAL==============", Paletas::Exito, false);
+        ColorUI::printGradient("\n[1] FILTRAR MIS RESERVAS POR SERVICIO", Paletas::Exito, false);
+        ColorUI::printGradient("\n[2] MOSTRAR TODAS MIS RESERVAS", Paletas::Exito, false);
+        ColorUI::printGradient("\n[0] SALIR", Paletas::Exito, false);
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            LimpiarConsola();
-            string reserva;
-            ColorUI::printGradient("\nDIGITE EL TIPO DE RESERVA A BUSCAR (VUELO-HOTEL-PAQUETE)\n", Exito, false); cin >> reserva;
-            principal->FiltrarReservasPorTipoUsuario(reserva, userActual->getCodigo());
+            DibujarHeader("Inicio > Mi Historial de Reservas > Filtrar");
+            ColorUI::printGradient("\n================ SELECCIONE TIPO ================\n", Paletas::TemaPrincipal, false);
+            cout << " [1] Vuelos\n";
+            cout << " [2] Hoteles\n";
+            cout << " [3] Paquetes\n";
+            cout << "\n> Ingrese opcion (0 para cancelar): ";
+            int sel = LeerOpcion();
+            string reserva = "";
+            if (sel == 1) reserva = "VUELO";
+            else if (sel == 2) reserva = "HOTEL";
+            else if (sel == 3) reserva = "PAQUETE";
+            
+            if (reserva != "") {
+                DibujarHeader("Inicio > Mi Historial de Reservas > Filtrar");
+                ColorUI::printGradient("Mostrando tus reservas de tipo: " + reserva + "\n", Paletas::Exito, false);
+                principal->FiltrarReservasPorTipoUsuario(reserva, userActual->getCodigo());
+            }
             pausarConsola();
             break;
         }
         case '2': {
-            LimpiarConsola();
+            DibujarHeader("Inicio > Mi Historial de Reservas > Todas");
             principal->FiltrarReservasPorUsuario(userActual->getCodigo());
             pausarConsola();
             break;
@@ -366,35 +492,92 @@ void GestionPantallas::MenuFiltrosReservas() {
 void GestionPantallas::MenuFiltrosVuelos() {
     char opcion;
     do {
-        LimpiarConsola();
+        DibujarHeader("Inicio > Catalogo > Vuelos");
         ColorUI::printGradient("\n================FILTROS VUELOS==============", Exito, false);
         ColorUI::printGradient("\n[1] VUELOS POR ORIGEN", Exito, false);
         ColorUI::printGradient("\n[2] VUELOS POR DESTINO", Exito, false);
         ColorUI::printGradient("\n[3] VUELOS POR FECHA", Exito, false);
         ColorUI::printGradient("\n[4] VUELOS POR PRESUPUESTO", Exito, false);
         ColorUI::printGradient("\n[5] VUELOS DE POR PRECIO (MAYOR A MENOR)", Exito, false);
+        ColorUI::printGradient("\n[6] VER TODOS LOS VUELOS", Exito, false);
         ColorUI::printGradient("\n[0] SALIR", Exito, false);
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            string origen;
-            ColorUI::printGradient("\nDIGITE EL ORIGEN\n", Exito, false);  getline(cin,origen);
-            principal->FitrarVuelosPorOrigen(origen);
+            DibujarHeader("Inicio > Catalogo > Vuelos > Por Origen");
+            vector<string> origenes;
+            Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+            for(int i=0; i<vuelos->longitud(); i++){
+                string o = vuelos->obtenerPos(i)->getOrigen();
+                bool existe = false;
+                for(string& org : origenes) { if(org == o) existe = true; }
+                if(!existe) origenes.push_back(o);
+            }
+            if (origenes.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE ORIGEN ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<origenes.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << origenes[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= origenes.size()) {
+                principal->FitrarVuelosPorOrigen(origenes[sel-1]);
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
             pausarConsola();
             break;
         }
         case '2': {
-            string destino;
-            ColorUI::printGradient("\nDIGITE EL DESTINO\n", Exito, false);  getline(cin,destino);
-            principal->FiltrarVuelosPorDestino(destino);
+            DibujarHeader("Inicio > Catalogo > Vuelos > Por Destino");
+            vector<string> destinos;
+            Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+            for(int i=0; i<vuelos->longitud(); i++){
+                string o = vuelos->obtenerPos(i)->getDestino();
+                bool existe = false;
+                for(string& org : destinos) { if(org == o) existe = true; }
+                if(!existe) destinos.push_back(o);
+            }
+            if (destinos.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE DESTINO ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<destinos.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << destinos[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= destinos.size()) {
+                principal->FiltrarVuelosPorDestino(destinos[sel-1]);
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
             pausarConsola();
             break;
         }
         case '3': {
-            string fecha;
-            principal->MostrarUsuarios();
-            ColorUI::printGradient("\nDIGITE LA FECHA (DD-MM-AAAA)\n", Exito, false); cin >> fecha; cin.ignore();
-            principal->FiltrarVuelosPorFecha(fecha);
+            DibujarHeader("Inicio > Catalogo > Vuelos > Por Fecha");
+            vector<string> fechas;
+            Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+            for(int i=0; i<vuelos->longitud(); i++){
+                string f = vuelos->obtenerPos(i)->getFecha();
+                bool existe = false;
+                for(string& org : fechas) { if(org == f) existe = true; }
+                if(!existe) fechas.push_back(f);
+            }
+            if (fechas.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE FECHA ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<fechas.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << fechas[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= fechas.size()) {
+                principal->FiltrarVuelosPorFecha(fechas[sel-1]);
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
             pausarConsola();
             break;
         }
@@ -410,6 +593,10 @@ void GestionPantallas::MenuFiltrosVuelos() {
             pausarConsola();
             break;
         }
+        case '6': {
+            principal->MostrarVuelos();
+            break;
+        }
         case '0': {
             return;
             break;
@@ -420,28 +607,65 @@ void GestionPantallas::MenuFiltrosVuelos() {
 void GestionPantallas::MenuFiltrosPaquetes() {
     char opcion;
     do {
-        LimpiarConsola();
+        DibujarHeader("Inicio > Catalogo > Paquetes");
         ColorUI::printGradient("\n================FILTROS PAQUETES==============", Exito, false);
         ColorUI::printGradient("\n[1] PAQUETES POR ORIGEN", Exito, false);
         ColorUI::printGradient("\n[2] PAQUETES POR DESTINO", Exito, false);
         ColorUI::printGradient("\n[3] PAQUETES POR PRECIO (MAYOR A MENOR)", Exito, false);
         ColorUI::printGradient("\n[4] PAQUETES POR PRESUPUESTO", Exito, false);
+        ColorUI::printGradient("\n[5] VER TODOS LOS PAQUETES", Exito, false);
         ColorUI::printGradient("\n[0] SALIR", Exito, false);
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            LimpiarConsola();
-            string origen;
-            cout << "Diigite el origen: " << endl;  getline(cin,origen);
-            principal->FiltrarPaquetesPorOrigen(origen);
+            DibujarHeader("Inicio > Catalogo > Paquetes > Por Origen");
+            vector<string> origenes;
+            Lista<Paquete*>* paquetes = principal->getControladorPaquetes()->getPaquetes();
+            for(int i=0; i<paquetes->longitud(); i++){
+                string o = paquetes->obtenerPos(i)->getVueloIncluido()->getOrigen();
+                bool existe = false;
+                for(string& org : origenes) { if(org == o) existe = true; }
+                if(!existe) origenes.push_back(o);
+            }
+            if (origenes.empty()) { ColorUI::Alertas::MostrarInfo("No hay paquetes disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE ORIGEN ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<origenes.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << origenes[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= origenes.size()) {
+                principal->FiltrarPaquetesPorOrigen(origenes[sel-1]);
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
             pausarConsola();
             break;
         }
         case '2': {
-            LimpiarConsola();
-            string destino;
-            cout << "Diigite el origen: " << endl;  getline(cin,destino);
-            principal->FiltrarPaquetesPorDestino(destino);
+            DibujarHeader("Inicio > Catalogo > Paquetes > Por Destino");
+            vector<string> destinos;
+            Lista<Paquete*>* paquetes = principal->getControladorPaquetes()->getPaquetes();
+            for(int i=0; i<paquetes->longitud(); i++){
+                string o = paquetes->obtenerPos(i)->getVueloIncluido()->getDestino();
+                bool existe = false;
+                for(string& org : destinos) { if(org == o) existe = true; }
+                if(!existe) destinos.push_back(o);
+            }
+            if (destinos.empty()) { ColorUI::Alertas::MostrarInfo("No hay paquetes disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE DESTINO ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<destinos.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << destinos[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= destinos.size()) {
+                principal->FiltrarPaquetesPorDestino(destinos[sel-1]);
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
             pausarConsola();
             break;
         }
@@ -459,6 +683,10 @@ void GestionPantallas::MenuFiltrosPaquetes() {
             pausarConsola();
             break;
         }
+        case '5': {
+            principal->MostrarPaquetes();
+            break;
+        }
         case '0': {
             return;
             break;
@@ -469,21 +697,40 @@ void GestionPantallas::MenuFiltrosPaquetes() {
 void GestionPantallas::MenuFiltrosHoteles() {
     char opcion;
     do {
-        LimpiarConsola();
+        DibujarHeader("Inicio > Catalogo > Hoteles");
         ColorUI::printGradient("\n================FILTROS HOTELES==============", Exito, false);
         ColorUI::printGradient("\n[1] HOTELES POR CIUDAD", Exito, false);
         ColorUI::printGradient("\n[2] HOTELES POR CALIFICACION (MAYOR A MENOR)", Exito, false);
         ColorUI::printGradient("\n[3] HOTELES POR PRECIO NOCHE (MAYOR A MENOR)", Exito, false);
         ColorUI::printGradient("\n[4] HOTELES POR PRESUPEUSTO", Exito, false);
         ColorUI::printGradient("\n[5] CALIFICAR UN HOTEL", Exito, false);
+        ColorUI::printGradient("\n[6] VER TODOS LOS HOTELES", Exito, false);
         ColorUI::printGradient("\n[0] SALIR", Exito, false);
         opcion = _getch();
         switch (opcion) {
         case '1': {
-            LimpiarConsola();
-            string ciudad;
-            cout << "Diigite la ciudad: " << endl;  getline(cin,ciudad);
-            principal->FiltrarHotelesPorCiudad(ciudad);
+            DibujarHeader("Inicio > Catalogo > Hoteles > Por Ciudad");
+            vector<string> ciudades;
+            Lista<Hotel*>* hoteles = principal->getControladorHoteles()->getHoteles();
+            for(int i=0; i<hoteles->longitud(); i++){
+                string c = hoteles->obtenerPos(i)->getCiudad();
+                bool existe = false;
+                for(string& org : ciudades) { if(org == c) existe = true; }
+                if(!existe) ciudades.push_back(c);
+            }
+            if (ciudades.empty()) { ColorUI::Alertas::MostrarInfo("No hay hoteles disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE CIUDAD ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<ciudades.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << ciudades[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= ciudades.size()) {
+                principal->FiltrarHotelesPorCiudad(ciudades[sel-1]);
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
             pausarConsola();
             break;
         }
@@ -512,6 +759,15 @@ void GestionPantallas::MenuFiltrosHoteles() {
             return;
             break;
         }
+        case '5': {
+            LimpiarConsola();
+            MenuCalificacionHotel();
+            break;
+        }
+        case '6': {
+            principal->MostrarHoteles();
+            break;
+        }
         }
     } while (true);
 }
@@ -523,7 +779,7 @@ void GestionPantallas::MenuDatosUsuario(){
 void GestionPantallas::MenuCatalogos(){
     char opcion;
     do {
-        LimpiarConsola();
+        DibujarHeader("Inicio > Catalogo de Servicios");
         ColorUI::printGradient("\n================CATALOGO DE SERVICIOS==============", Exito, false);
         ColorUI::printGradient("\n[1] CATALOGO VUELOS DISPONIBLES", Exito, false);
         ColorUI::printGradient("\n[2] CATALOGO DE HOTELES DISPONIBLES", Exito, false);
@@ -575,8 +831,8 @@ void GestionPantallas::MenuCancelarReserva() {
 void GestionPantallas::MenuReservas() {
     char opcion;
     do {
-        LimpiarConsola();
-        ColorUI::printGradient("\n================FILTROS HOTELES==============", Exito, false);
+        DibujarHeader("Inicio > Reservar un Servicio");
+        ColorUI::printGradient("\n================RESERVAR UN SERVICIO==============", Exito, false);
         ColorUI::printGradient("\n[1] RESERVAR TICKET DE VUELO", Exito, false);
         ColorUI::printGradient("\n[2] RESERVAR TICKET DE HOTEL", Exito, false);
         ColorUI::printGradient("\n[3] RESERVAR TICKET DE PAQUETE", Exito, false);

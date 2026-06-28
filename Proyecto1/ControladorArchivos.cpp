@@ -142,7 +142,7 @@ void ControladorArchivos::LeerArchivoVuelos(Lista<Vuelo*>* vuelos) {
             ctrlAsientos->CargarEstadoAsientosString(estadoAsientos);
 
             
-            vuelos->agregaFinal(new Vuelo(origen, destino, escalas, fecha, distancia, ctrlAsientos));
+            vuelos->agregaFinal(new Vuelo(origen, destino, escalas, fecha, distancia, ctrlAsientos,vuelos->longitud()));
         }
     }
     archivo.close();
@@ -209,10 +209,10 @@ void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
             getline(ss, hNom, ',') && getline(ss, hCiu, ',') && getline(ss, hPuntStr, ',') &&
             getline(ss, hPrecStr)) {
 
-            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr), new ControladorAsientos());
+            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr), new ControladorAsientos(),0);
             Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr), new ControladorHabitaciones(),0);
 
-            paquetes->agregaFinal(new Paquete(vueloObj, hotelObj));
+            paquetes->agregaFinal(new Paquete(vueloObj, hotelObj,paquetes->longitud()));
         }
     }
     archivo.close();

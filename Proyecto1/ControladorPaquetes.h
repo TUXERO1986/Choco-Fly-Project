@@ -4,7 +4,7 @@
 class ControladorPaquetes {
 private:
 	Lista<Paquete*>* paquetes;
-	ArbolAVL<Paquete*>* paquetesMemorPrecio;
+	ArbolAVL<Paquete*>* paquetesMenorPrecio;
 	ControladorArchivos* controladorArchivos;
 public:
 	ControladorPaquetes();
