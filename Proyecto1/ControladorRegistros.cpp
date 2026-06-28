@@ -2,6 +2,9 @@
 
 ControladorRegistros::ControladorRegistros() {
     registros = new Lista<Registro*>();
+    ControladorArchivos* archivos= new ControladorArchivos("Registros.txt");
+    archivos->LeerArchivoRegistros(registros);
+    delete archivos;
 }
 
 ControladorRegistros::~ControladorRegistros() {
@@ -11,10 +14,12 @@ ControladorRegistros::~ControladorRegistros() {
     delete registros;
 }
 
-void ControladorRegistros::AgregarRegistro(Registro* nuevoRegistro) {
-    if (nuevoRegistro != nullptr) {
-        registros->agregaFinal(nuevoRegistro);
-    }
+void ControladorRegistros::AgregarRegistro(string nombre, string correo, string tipoUsuario, string accion, string fechaHora) {
+    Registro* nuevoRegistro = new Registro(nombre,correo,tipoUsuario,accion,fechaHora);
+    registros->agregaFinal(nuevoRegistro);
+    ControladorArchivos* archivos= new ControladorArchivos("Registros.txt");
+    archivos->GuardarDatoArchivoRegistros(nuevoRegistro);
+    delete archivos;
 }
 
 void ControladorRegistros::MostrarDatos() {

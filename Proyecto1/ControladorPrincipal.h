@@ -5,6 +5,7 @@
 #include "ControladorVuelos.h"
 #include "ControladorRutas.h"
 #include "ControladorUsuarios.h"
+#include "ControladorRegistros.h"
 #ifdef _WIN32
     #include <windows.h>
     #include <conio.h>
@@ -57,6 +58,7 @@ private:
 	ControladorReservas* controladorReservas;
 	ControladorRutas* controladorRutas;
 	ControladorUsuarios* controladorUsuarios;
+	ControladorRegistros* controladorRegistros;
 
 public:
 	ControladorPrincipal();
