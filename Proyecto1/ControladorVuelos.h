@@ -1,10 +1,12 @@
 #pragma once
 #include "ControladorArchivos.h"
+#include "ArbolAVL.h"
 #include "Color.h"
 class ControladorVuelos
 {
 private:
 Lista<Vuelo*>* vuelos;
+ArbolAVL<Vuelo*>* vuelosMenorPrecio;
 function<int(string)> ObtenerMes;
 function<int(string)> ObtenerDia;
 ControladorArchivos* controladorArchivosVuelos;
@@ -22,5 +24,6 @@ public:
 	bool GenerarVuelosConEscala(string origen,string destino, Lista<Ruta*>* rutas);
 	Vuelo* ObtenerVueloPorPosicion(int pos);
 	Lista<Vuelo*>* getVuelos();	
+	ArbolAVL<Vuelo*>* getVuelosMenorPrecio();
 };
 

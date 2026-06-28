@@ -1,26 +1,25 @@
-#include "Reserva.h"
-#include "Ticket.h" 
+#include "ReservaVuelo.h"
 #include "ReservaHotel.h"
 
 class ReservaPaquete : public Reserva
 {
 private:
-    Ticket* vueloReservado;
+    ReservaVuelo* vueloReservado;
     ReservaHotel* hotelReservado;
-	Ticket* vueloRetorno; 
+	ReservaVuelo* vueloRetorno; 
 
 public:
-    ReservaPaquete(string NombreU, string nombreUsuario, Ticket* vueloIda, Ticket* vueloRetorno, ReservaHotel* hotel);
+    ReservaPaquete(string NombreU, string nombreUsuario, ReservaVuelo* vueloIda, ReservaVuelo* vueloRetorno, ReservaHotel* hotel);
     ~ReservaPaquete();
 
     void MostrarReserva() override;
     string aTextoArchivo() override;
     float getPrecioTotal() override;
-    Ticket* getVueloReservado();
-	Ticket* getVueloRetorno();
+    ReservaVuelo* getVueloReservado();
+	ReservaVuelo* getVueloRetorno();
     ReservaHotel* getHotelReservado();
-    void setVueloReservado(Ticket* vuelo);
-	void setVueloRetorno(Ticket* vuelo);
+    void setVueloReservado(ReservaVuelo* vuelo);
+	void setVueloRetorno(ReservaVuelo* vuelo);
     void setHotelReservado(ReservaHotel* hotel);
 };
 

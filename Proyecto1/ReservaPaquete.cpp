@@ -1,5 +1,5 @@
 #include "ReservaPaquete.h"
-ReservaPaquete::ReservaPaquete(string codUser, string nomUser, Ticket* vueloida, Ticket* vueloretorno, ReservaHotel* hotel)
+ReservaPaquete::ReservaPaquete(string codUser, string nomUser, ReservaVuelo* vueloida, ReservaVuelo* vueloretorno, ReservaHotel* hotel)
     : Reserva(codUser, nomUser)
 {
     this->vueloReservado = vueloida;
@@ -33,12 +33,12 @@ void ReservaPaquete::MostrarReserva() {
 string ReservaPaquete::aTextoArchivo() {
     return "PAQUETE," + codigoUsuario + "," + nombreUsuario + "|" + vueloReservado->aTextoArchivo() +"|"+vueloRetorno->aTextoArchivo() + "|" + hotelReservado->aTextoArchivo();
 }
-Ticket* ReservaPaquete::getVueloReservado() { return vueloReservado; }
+ReservaVuelo* ReservaPaquete::getVueloReservado() { return vueloReservado; }
 ReservaHotel* ReservaPaquete::getHotelReservado() { return hotelReservado; }
-Ticket* ReservaPaquete::getVueloRetorno() { return vueloRetorno; }
-void ReservaPaquete::setVueloReservado(Ticket* vuelo) { this->vueloReservado = vuelo; }
+ReservaVuelo* ReservaPaquete::getVueloRetorno() { return vueloRetorno; }
+void ReservaPaquete::setVueloReservado(ReservaVuelo* vuelo) { this->vueloReservado = vuelo; }
 void ReservaPaquete::setHotelReservado(ReservaHotel* hotel) { this->hotelReservado = hotel; }
-void ReservaPaquete::setVueloRetorno(Ticket* vuelo) { this->vueloRetorno = vuelo; }
+void ReservaPaquete::setVueloRetorno(ReservaVuelo* vuelo) { this->vueloRetorno = vuelo; }
 float ReservaPaquete::getPrecioTotal() {
     return vueloReservado->getPrecioTotal() + hotelReservado->getPrecioTotal();
 }

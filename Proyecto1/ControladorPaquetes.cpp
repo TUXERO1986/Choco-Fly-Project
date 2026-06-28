@@ -46,5 +46,8 @@ void ControladorPaquetes::MostrarPaquetes() {
 		aux->MostrarPaquete();
 	}
 }
+	ArbolAVL<Paquete*>* ControladorPaquetes::getPaquetesMenorPrecio(){
+		return paquetesMemorPrecio;
+	}
 Lista<Paquete*>* ControladorPaquetes::getPaquetes() { return paquetes; }
 void ControladorPaquetes::setPaquetes(Lista<Paquete*>* paquetes) { this->paquetes = paquetes; }

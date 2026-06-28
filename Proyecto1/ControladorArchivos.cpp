@@ -75,6 +75,42 @@ void ControladorArchivos::LeerArchivoRutas(Lista<Lista<int>*>* conexiones, Lista
         }
     }
 }
+void ControladorArchivos::LeerArchivoRegistros(Lista<Registro*>* registros) {
+    ifstream archivo("Registros.txt");
+    
+    if (!archivo.is_open()) return;
+
+    string linea, nombre, correo, tipoUsuario, accion, fechaHora;
+
+    while (getline(archivo, linea)) {
+        if (linea.empty()) continue;
+        stringstream ss(linea);
+
+        if (getline(ss, nombre, ',') &&
+            getline(ss, correo, ',') &&
+            getline(ss, tipoUsuario, ',') &&
+            getline(ss, accion, ',') &&
+            getline(ss, fechaHora)) {
+
+            registros->agregaFinal(new Registro(nombre, correo, tipoUsuario, accion, fechaHora));
+        }
+    }
+    archivo.close();
+}
+
+void ControladorArchivos::GuardarDatoArchivoRegistros(Registro* r) {
+
+    ofstream archivo("Registros.txt", ios::app);
+
+    if (archivo.is_open()) {
+        archivo << r->getNombre() << ","
+                << r->getCorreo() << ","
+                << r->getTipoUsuario() << ","
+                << r->getAccion() << ","
+                << r->getFechaHora() << "\n";
+        archivo.close();
+    }
+}
 void ControladorArchivos::GardarDatoArchivoRutas(Ruta* r) {
     ofstream archivo("Rutas.txt", ios::app);
 
@@ -140,7 +176,7 @@ void ControladorArchivos::LeerArchivoHoteles(Lista<Hotel*>* hoteles) {
             float precio = stof(precioStr);
             ControladorHabitaciones* ctrlHabtiaciones = new ControladorHabitaciones();
             ctrlHabtiaciones->CargarEstadoHabitacionesString(estadoHabitaciones);
-            hoteles->agregaFinal(new Hotel(nombre, ciudad, puntuacion, precio,ctrlHabtiaciones));
+            hoteles->agregaFinal(new Hotel(nombre, ciudad, puntuacion, precio,ctrlHabtiaciones,hoteles->longitud()));
         }
     }
     archivo.close();
@@ -174,7 +210,7 @@ void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
             getline(ss, hPrecStr)) {
 
             Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr), new ControladorAsientos());
-            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr), new ControladorHabitaciones());
+            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr), new ControladorHabitaciones(),0);
 
             paquetes->agregaFinal(new Paquete(vueloObj, hotelObj));
         }
@@ -236,7 +272,7 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 int eqCab = stoi(eqCabStr);
                 int clase = stoi(eqClase);
                 int asiento = stoi(eqAsiento);
-                listaDestino->agregaFinal(new Ticket(codUser, nomUser, origen, destino, escalas, fecha, distancia, equipaje, eqCab, clase, asiento));
+                listaDestino->agregaFinal(new ReservaVuelo(codUser, nomUser, origen, destino, escalas, fecha, distancia, equipaje, eqCab, clase, asiento));
             }
         }
         else if (tipo == "HOTEL") {
@@ -318,8 +354,8 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino) {
                 getline(ssHot, hTc, ',');
                 getline(ssHot, hTs, ',');
 
-                Ticket* vueloIda = new Ticket(codUser, nomUser, iOri, iDes, iEsc, iFec, stof(iDist), stoi(iEq), stoi(iEqC), stoi(iEqCl), stoi(iEqA));
-                Ticket* vueloRetorno = new Ticket(codUser, nomUser, rOri, rDes, rEsc, rFec, stof(rDist), stoi(rEq), stoi(rEqC), stoi(rEqCl), stoi(rEqA));
+                ReservaVuelo* vueloIda = new ReservaVuelo(codUser, nomUser, iOri, iDes, iEsc, iFec, stof(iDist), stoi(iEq), stoi(iEqC), stoi(iEqCl), stoi(iEqA));
+                ReservaVuelo* vueloRetorno = new ReservaVuelo(codUser, nomUser, rOri, rDes, rEsc, rFec, stof(rDist), stoi(rEq), stoi(rEqC), stoi(rEqCl), stoi(rEqA));
                 ReservaHotel* hotelInterno = new ReservaHotel(codUser, nomUser, hNom, hCiu, hFi, stof(hNoc),
                     stoi(hPre), stoi(hHb), stoi(hTo), stoi(hTc), stoi(hTs));
                 listaDestino->agregaFinal(new ReservaPaquete(codUser, nomUser, vueloIda, vueloRetorno, hotelInterno));

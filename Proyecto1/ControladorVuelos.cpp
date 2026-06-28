@@ -3,6 +3,10 @@ using namespace ColorUI;
 ControladorVuelos::ControladorVuelos() {
 	controladorArchivosVuelos = new ControladorArchivos("Vuelos.txt");
 	vuelos = new Lista<Vuelo*>();
+        auto obtenerPrecio = [](Vuelo* v) -> float {
+        return v->getPrecioBase();
+    };
+    vuelosMenorPrecio = new ArbolAVL<Vuelo*>(obtenerPrecio);
 	ObtenerDia = [](string fecha) {
 		size_t pos = fecha.find("-");
 		if (pos != string::npos) {
@@ -45,6 +49,7 @@ void ControladorVuelos::MostrarVuelos() {
 void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia,ControladorAsientos* controladorAsientos) {
 	Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia,controladorAsientos);
 	vuelos->agregaFinal(nuevoVuelo);
+    vuelosMenorPrecio->Insertar(nuevoVuelo);
 	controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
 }
 void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
@@ -210,5 +215,8 @@ Vuelo* ControladorVuelos::ObtenerVueloPorPosicion(int pos) {
         return vuelos->obtenerPos(pos);
     }
     return nullptr;
+}
+ArbolAVL<Vuelo*>* ControladorVuelos::getVuelosMenorPrecio(){
+    return vuelosMenorPrecio;
 }
 Lista<Vuelo*>* ControladorVuelos::getVuelos() { return vuelos; }

@@ -19,7 +19,6 @@ template <class T>
 class ArbolAVL {
 private:
     NodoAVL<T>* raiz;
-    // Lambda para extraer el valor clave (ej. precio) por el cual ordenar
     function<float(T)> obtenerLlave; 
 
     int Altura(NodoAVL<T>* N) {
@@ -95,7 +94,6 @@ private:
         return nodo;
     }
 
-    // Le pasamos una lambda procesadora para ejecutar algo con cada elemento ordenado
     void _inOrden(NodoAVL<T>* nodo, function<void(T)> accion) {
         if (nodo != nullptr) {
             _inOrden(nodo->izq, accion);
@@ -104,6 +102,13 @@ private:
         }
     }
 
+    void _inOrdenInverso(NodoAVL<T>* nodo, function<void(T)> accion) {
+    if (nodo != nullptr) {
+        _inOrdenInverso(nodo->der, accion); // Primero los más caros
+        accion(nodo->elemento);             // Luego el medio
+        _inOrdenInverso(nodo->izq, accion); // Finalmente los más baratos
+    }
+    }
 public:
     ArbolAVL(function<float(T)> lambdaLlave) {
         raiz = nullptr;
@@ -116,5 +121,8 @@ public:
 
     void RecorrerInOrden(function<void(T)> accion) {
         _inOrden(raiz, accion);
+    }
+    void RecorrerInOrdenInverso(function<void(T)> accion) {
+    _inOrdenInverso(raiz, accion);
     }
 };

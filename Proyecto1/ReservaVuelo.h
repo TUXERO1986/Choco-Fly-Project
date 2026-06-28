@@ -1,7 +1,7 @@
 #pragma once
 #include "Reserva.h"
 #include <functional>
-class Ticket : public Reserva
+class ReservaVuelo : public Reserva
 {
 private:
 	string nombre;
@@ -16,7 +16,7 @@ private:
 	int asiento;
 	function<string(int)> obtenerClase;
 public:
-	Ticket(string codigoUsuario,string nombreUsuario,string origen, string destino, 
+	ReservaVuelo(string codigoUsuario,string nombreUsuario,string origen, string destino, 
 		string escalas, string fecha,float distancia, int equipaje, int equipajecabina,int clase,
 		int asiento);
 	void MostrarReserva() override;

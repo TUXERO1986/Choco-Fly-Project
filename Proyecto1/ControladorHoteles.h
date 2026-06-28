@@ -1,10 +1,12 @@
 #pragma once
 
 #include "ControladorArchivos.h"
+#include "ArbolAVL.h"
 class ControladorHoteles
 {
 private:
 	Lista<Hotel*>* hoteles;
+	ArbolAVL<Hotel*>* hotelesMenorPrecio;
 	ControladorArchivos* controladorArchivos;
 public:
 	ControladorHoteles();
@@ -13,5 +15,6 @@ public:
 	void AgregarNuevoHotel(string nombre, string ciudad, float puntuacion, float precioNoche);
 	void MostrarHoteles();
 	Lista<Hotel*>* getHoteles();
+	ArbolAVL<Hotel*>* getHotelesMenorPrecio();
 };
 

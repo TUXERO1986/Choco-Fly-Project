@@ -2,6 +2,12 @@
 ControladorHoteles::ControladorHoteles() {
 	controladorArchivos = new ControladorArchivos("Hoteles.txt");
 	hoteles = new Lista<Hotel*>();
+    auto obtenerPrecio = [](Hotel* h) -> float {
+        return h->getPrecioNoche();
+    };
+
+    hotelesMenorPrecio = new ArbolAVL<Hotel*>(obtenerPrecio);
+
 	controladorArchivos->LeerArchivoHoteles(hoteles);
 }
 ControladorHoteles::~ControladorHoteles() {
@@ -39,8 +45,9 @@ void ControladorHoteles::GenerarHoteles(int contador, Lista<CiudadID*>* listaCiu
     }
 }
 void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float puntuacion, float precioNoche) {
-	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche, new ControladorHabitaciones());
+	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche, new ControladorHabitaciones(),hoteles->longitud());
 	hoteles->agregaFinal(nuevoHotel);
+    hotelesMenorPrecio->Insertar(nuevoHotel);
 	controladorArchivos->GuardarDatoArchivoHoteles(nuevoHotel);
 }
 void ControladorHoteles::MostrarHoteles() {
@@ -50,5 +57,8 @@ void ControladorHoteles::MostrarHoteles() {
 		aux->MostrarHotel();
 		cout << "---------------------------------" << endl;
 	}
+}
+ArbolAVL<Hotel*>* ControladorHoteles::getHotelesMenorPrecio(){
+    return this->hotelesMenorPrecio;
 }
 Lista<Hotel*>* ControladorHoteles::getHoteles() { return hoteles; }
