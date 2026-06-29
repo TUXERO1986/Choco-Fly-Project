@@ -10,6 +10,7 @@
 #endif
 #include "Color.h"
 extern std::string chocofly, chocoadmin, admin, registro, login, quepaso,PanelControlADM,reportesADM,mantenimiento, eliminacion,datos;
+extern std::string spriteAvion, spriteHotel, spritePaquete;
 
 
 void ImprimirBordes(const std::string& arteAscii);

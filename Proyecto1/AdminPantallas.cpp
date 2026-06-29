@@ -52,10 +52,11 @@ void AdminPantallas::MenuAgregar() {
             }
             cin.ignore(1000, '\n');
 
+            ColorUI::Animaciones::mostrarSpinner("Guardando vuelo en el sistema", 800);
             principal->AgregarVuelo(origen, destino, escalas, fecha, distancia);
 
             cout << "\n";
-            ColorUI::printGradient("\tVuelo agregado exitosamente a la base de datos.\n", gege, false);
+            Alertas::MostrarExito("Vuelo agregado exitosamente a la base de datos.");
             pausarConsola();
         } break;
 
@@ -83,10 +84,11 @@ void AdminPantallas::MenuAgregar() {
             }
             cin.ignore(1000, '\n');
 
+            ColorUI::Animaciones::mostrarSpinner("Guardando hotel en el sistema", 800);
             principal->AgregarHotel(nombre, ciudad, puntuacion, precio);
 
             cout << "\n";
-            ColorUI::printGradient("\tHotel agregado exitosamente a la base de datos.\n", gege, false);
+            Alertas::MostrarExito("Hotel agregado exitosamente a la base de datos.");
             pausarConsola();
         } break;
 
@@ -101,8 +103,9 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\tDistancia (Km): ", Exito, false, false);
             distancia = LeerOpcion();
 
+            ColorUI::Animaciones::mostrarSpinner("Registrando ruta de conexion", 1000);
             principal->AgregarRuta(origen, destino, distancia);
-            ColorUI::printGradient("\n\tRuta conectada exitosamente.\n", gege, false);
+            Alertas::MostrarExito("Ruta conectada exitosamente.");
             pausarConsola();
         } break;
         case '4': {
@@ -672,6 +675,7 @@ void AdminPantallas::GenerarDatosAleatorios() {
     if (confirmacion == '1') {
         int cantidad;
         cout << "\tDigite la cantidad de datos a generar: "; cin >> cantidad; cin.ignore();
+        ColorUI::Animaciones::mostrarSpinner("Generando e inyectando datos aleatorios masivos", 2500, "\t");
         principal->GenerarDatos(cantidad, cantidad, cantidad);
         ColorUI::printGradient("\n\tDatos generados con exito!\n", gege, false);
     }

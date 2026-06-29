@@ -3,6 +3,7 @@
 #include "TablaHash.h"
 #include "ControladorArchivos.h"
 #include "Color.h"
+#include "Pila.h"
 
 using namespace ColorUI;
 
@@ -12,6 +13,7 @@ private:
     function<unsigned int(string)> miFuncionHashCorreo;
     HashTable<string, Usuario*>* tablaUsuarios; 
     Lista<Usuario*>* usuarios; 
+    Pila<string>* registroUsuarios;
     ControladorArchivos* controladorArchivos;
 
     int FuncionHashPropia(string clave); 
@@ -21,6 +23,8 @@ public:
     ~ControladorUsuarios();
     
     void AgregarUsuario(string nombre, string correo, string password);
+    void AgregarRegistro(string);
+
     Usuario* VerificarCredenciales(string nombre, string correo, string password);
     bool VerificarCuentaExistente(string nombre, string correo);
     

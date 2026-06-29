@@ -4,9 +4,7 @@
 #include <iostream>
 #include <functional>
 using namespace std;
-
-// 1. Usamos struct para tener acceso público a los nodos, y el orden estándar <K, T>
-template<class K, typename T>
+template<class K, class T>
 struct HashNode {
     K clave;
     T valor;
@@ -17,13 +15,12 @@ struct HashNode {
     }
 };
 
-template<class K, typename T>
+template<class K, class T>
 class HashTable {
 private:
     int TABLE_SIZE;
     int numElementos;
 
-    // 2. Ahora sí le pasamos AMBOS parámetros al nodo: <K, T>
     Lista<HashNode<K, T>*>** tabla; 
     function<unsigned int(K)> funcionHash;
 
@@ -52,7 +49,7 @@ public:
     }
 
     void Insertar(K clave, T valor) {
-        // 3. OBLIGATORIO: Aplicar el módulo para no salirnos del arreglo
+
         int indice = funcionHash(clave) % TABLE_SIZE;
         
         Lista<HashNode<K, T>*>* listaEnCasilla = tabla[indice];
@@ -74,7 +71,7 @@ public:
         for (int i = 0; i < listaEnCasilla->longitud(); i++) {
             HashNode<K, T>* nodoActual = listaEnCasilla->obtenerPos(i);
             if (nodoActual->clave == clave) {
-                return nodoActual->valor; // 4. Era flecha (->), no punto (.)
+                return nodoActual->valor;
             }
         }
         return nullptr;

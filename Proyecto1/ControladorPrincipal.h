@@ -5,48 +5,8 @@
 #include "ControladorVuelos.h"
 #include "ControladorRutas.h"
 #include "ControladorUsuarios.h"
-#ifdef _WIN32
-    #include <windows.h>
-    #include <conio.h>
-#else
-    #include <termios.h>
-    #include <unistd.h>
-    #include <stdio.h>
-    #include <iostream> 
-    #include <cstdlib>
-
-inline int _getch() {
-        struct termios oldt, newt;
-        int ch;
-
-        tcgetattr(STDIN_FILENO, &oldt);
-        newt = oldt;
-
-        newt.c_lflag &= ~(ICANON | ECHO);
-        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-        
-        ch = getchar();
-        
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-        return ch;
-    }
-#endif 
-
-inline void pausarConsola() {
-#ifdef _WIN32
-    system("pause>0"); 
-#else
-    _getch(); 
-#endif
-}
-
-inline void LimpiarConsola() {
-#ifdef _WIN32
-    system("cls");   
-#else
-    system("clear"); 
-#endif
-}
+#include "ControladorRegistros.h"
+#include "ConsolaUtils.h"
 using namespace ColorUI;
 class ControladorPrincipal
 {
@@ -57,6 +17,7 @@ private:
 	ControladorReservas* controladorReservas;
 	ControladorRutas* controladorRutas;
 	ControladorUsuarios* controladorUsuarios;
+	ControladorRegistros* controladorRegistros;
 
 public:
 	ControladorPrincipal();

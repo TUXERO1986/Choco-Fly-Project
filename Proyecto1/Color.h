@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <thread>
 #ifdef _WIN32
     // Todo lo que esté aquí SOLO se compilará en las PCs de tus amigos (Windows)
 #include <windows.h>
@@ -143,6 +145,48 @@ namespace ColorUI {
             }
         } while (has1 || has2 || has3);
     }
+
+    inline void printSpriteAndCard(
+        const std::string& sprite, const std::vector<std::string>& palSprite,
+        const std::string& card, const std::vector<std::string>& palCard) {
+
+        using namespace std;
+
+        istringstream stream1(sprite), stream2(card);
+        string line1, line2;
+        bool has1, has2;
+
+        auto padRight = [](string s, int width) {
+            if (s.length() < width) s.append(width - s.length(), ' ');
+            return s;
+        };
+        
+        int widthSprite = 20; // Fijamos a 20 para alinear verticalmente todas las tarjetas
+        int widthCard = 0;
+        {
+            istringstream s2(card);
+            string l;
+            while(getline(s2, l)) if(l.length() > widthCard) widthCard = l.length();
+        }
+
+        do {
+            has1 = (bool)getline(stream1, line1);
+            has2 = (bool)getline(stream2, line2);
+
+            if (has1 || has2) {
+                if (has1) printGradient(padRight(line1, widthSprite), palSprite, false, false);
+                else printGradient(string(widthSprite, ' '), palSprite, false, false); 
+                
+                cout << "  ";
+
+                if (has2) printGradient(padRight(line2, widthCard), palCard, false, false);
+                else printGradient(string(widthCard, ' '), palCard, false, false);
+
+                cout << "\n";
+            }
+        } while (has1 || has2);
+    }
+
     inline void setBackgroundColor(const std::string& hex) {
         using namespace std;
         RGB color = hexToRGB(hex);
@@ -183,6 +227,48 @@ namespace ColorUI {
         const std::string RESET = "\033[0m";
     }
 
+    namespace Alertas {
+        inline void MostrarCaja(const std::string& icono, const std::string& titulo, const std::string& mensaje, const std::vector<std::string>& paleta, const std::string& sangria = "") {
+            std::string texto = " " + icono + " " + titulo + ": " + mensaje + " ";
+            int width = texto.length() + 2;
+            std::string border = "+" + std::string(width, '-') + "+";
+            
+            ColorUI::printGradient(sangria + border, paleta, false, true);
+            ColorUI::printGradient(sangria + "| " + texto + " |", paleta, false, true);
+            ColorUI::printGradient(sangria + border, paleta, false, true);
+        }
+
+        inline void MostrarExito(const std::string& mensaje, const std::string& sangria = "") {
+            MostrarCaja("[V]", "EXITO", mensaje, Paletas::Exito, sangria);
+        }
+
+        inline void MostrarError(const std::string& mensaje, const std::string& sangria = "") {
+            MostrarCaja("[X]", "ERROR", mensaje, Paletas::Alerta, sangria);
+        }
+
+        inline void MostrarInfo(const std::string& mensaje, const std::string& sangria = "") {
+            MostrarCaja("[i]", "INFO", mensaje, Paletas::azul, sangria);
+        }
+    }
+
+    namespace Animaciones {
+        inline void mostrarSpinner(const std::string& texto, int duracion_ms = 1500, const std::string& sangria = "\t\t\t") {
+            std::vector<std::string> frames = {"|", "/", "-", "\\"};
+            int ms_per_frame = 100;
+            int frames_count = duracion_ms / ms_per_frame;
+            
+            std::cout << "\n";
+            for (int i = 0; i < frames_count; ++i) {
+                std::string frame = "\r" + sangria + "[ " + frames[i % 4] + " ] " + texto + "...";
+                std::cout << frame << std::flush;
+                std::this_thread::sleep_for(std::chrono::milliseconds(ms_per_frame));
+            }
+            std::cout << "\r" << sangria << "                                                                                \r"; // clear line
+        }
+    }
+
     using namespace Estilo;
     using namespace Paletas;
+    using namespace Alertas;
+    using namespace Animaciones;
 } 

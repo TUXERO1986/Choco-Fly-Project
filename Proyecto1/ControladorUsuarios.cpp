@@ -49,8 +49,13 @@ void ControladorUsuarios::AgregarUsuario(string nombre, string correo, string pa
     usuarios->agregaFinal(nuevoUsuario);
 
     tablaUsuarios->Insertar(correo, nuevoUsuario);
+    
+    controladorArchivos->GuardarDatoArchivoUsuarios(nuevoUsuario);
 }
 
+void ControladorUsuarios::AgregarRegistro(string registro){
+    registroUsuarios->apilar(registro);
+}
 Usuario* ControladorUsuarios::VerificarCredenciales(string nombre, string correo, string password) {
 
     Usuario* userAux = tablaUsuarios->Buscar(correo);

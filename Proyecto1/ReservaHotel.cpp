@@ -89,18 +89,20 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 	this->habitacion = habitacion;
 	this->fechaSalida = ObtenerFechaSalida(ObtenerDia(fechaIngreso), ObtenerMes(fechaIngreso), ObtenerAno(fechaIngreso),noches);
 }
+#include "Color.h"
+
 void ReservaHotel::MostrarReserva() {
-	
-	cout << "Hotel: " << nombreHotel << endl;
-	cout << "Ciudad: " << ciudad << endl;
-	cout << "Fecha de Ingreso: " << fechaIngreso << endl;
-	cout << "Fecha de Salida: " <<  fechaSalida<< endl;
-	cout << "Noches: " << noches << endl;
-	cout << "Habitacion: " << habitacion << endl;
-	cout << "Tipo de habitacion: " << ObtenerTipoO(tipoO) << endl;
-	cout << "Tipo de cama/s: " << ObtenerTipoC(tipoC) << endl;
-	cout << "Tipo de servicio: " << ObtenerTipoS(tipoS) << endl;
-	cout << "Precio Total $" << getPrecioTotal() << endl;
+    ColorUI::printGradient("================ VOUCHER DE HOTEL ================", ColorUI::Paletas::TemaPrincipal, false);
+    ColorUI::printGradient(" Hotel: " + nombreHotel + "   |   Ciudad: " + ciudad, ColorUI::Paletas::Exito, false);
+    ColorUI::printGradient(" Check-In: " + fechaIngreso + "   -->   Check-Out: " + fechaSalida, ColorUI::Paletas::azul, false);
+    ColorUI::printGradient(" Habitacion Nro: [" + to_string(habitacion) + "] | Noches: " + to_string(noches), ColorUI::Paletas::Register, false);
+    ColorUI::printGradient(" Tipo: " + ObtenerTipoO(tipoO) + " | Cama: " + ObtenerTipoC(tipoC) + " | " + ObtenerTipoS(tipoS), ColorUI::Paletas::MoradoD, false);
+    ColorUI::printGradient("--------------------------------------------------", ColorUI::Paletas::TemaPrincipal, false);
+    
+    char buffer[20];
+    snprintf(buffer, sizeof(buffer), "%.2f", getPrecioTotal());
+    ColorUI::printGradient(" Precio Total: $" + string(buffer), ColorUI::Paletas::gege, false);
+    ColorUI::printGradient("==================================================\n", ColorUI::Paletas::TemaPrincipal, false);
 }
 string ReservaHotel::aTextoArchivo() {
 	return "HOTEL,"+codigoUsuario + "," + nombreUsuario + "," + nombreHotel + ","

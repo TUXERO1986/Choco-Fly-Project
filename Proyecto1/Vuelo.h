@@ -8,9 +8,10 @@ private:
 	string destino;
 	string escalas;
 	string fecha;
+	int id;
 	float distancia;
 public:
-	Vuelo(string o, string d, string e, string f, float distancia,ControladorAsientos* controladorAsientos);
+	Vuelo(string o, string d, string e, string f, float distancia,ControladorAsientos* controladorAsientos,int id);
 
 	void MostrarVuelo();
 	void MostrarAsientos();
@@ -21,6 +22,7 @@ public:
 	string getEscalas();
 	string getFecha();
 	float getDistancia();
+	int getId();
 	ControladorAsientos* getControladorAsientos();
 
 	float getPrecioBase();

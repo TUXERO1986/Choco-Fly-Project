@@ -1,8 +1,13 @@
 #include "ControladorVuelos.h"
+#include "ConsolaUtils.h"
 using namespace ColorUI;
 ControladorVuelos::ControladorVuelos() {
 	controladorArchivosVuelos = new ControladorArchivos("Vuelos.txt");
 	vuelos = new Lista<Vuelo*>();
+        auto obtenerPrecio = [](Vuelo* v) -> float {
+        return v->getPrecioBase();
+    };
+    vuelosMenorPrecio = new ArbolAVL<Vuelo*>(obtenerPrecio);
 	ObtenerDia = [](string fecha) {
 		size_t pos = fecha.find("-");
 		if (pos != string::npos) {
@@ -18,8 +23,9 @@ ControladorVuelos::ControladorVuelos() {
 		}
 		return -1; 
 		};
-
-	controladorArchivosVuelos->LeerArchivoVuelos(vuelos);
+    
+        controladorArchivosVuelos->LeerArchivoVuelos(vuelos);
+        for(int i=0;i<vuelos->longitud();i++)vuelosMenorPrecio->Insertar(vuelos->obtenerPos(i));
 }
 ControladorVuelos::~ControladorVuelos() {
     for (int i = 0; i < vuelos->longitud(); i++) {
@@ -33,18 +39,45 @@ float ControladorVuelos::CalcularDistancia(Lista<Ruta*>* rutasnecesarias, int i)
 	return distanciaBase + CalcularDistancia(rutasnecesarias, i - 1);
 }
 void ControladorVuelos::MostrarVuelos() {
-	for (int i = 0; i < vuelos->longitud(); i++) {
-		Vuelo* aux = vuelos->obtenerPos(i);
-		ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-        cout  << "[ID DEL VUELO: " << i << "]" << endl;
-		aux->MostrarVuelo();
-		ColorUI::printGradient("-----------------------------",Tux, false);
-		cout << "-----------------------------" << endl;
+	int total = vuelos->longitud();
+	if (total == 0) {
+		ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles en el sistema.");
+		return;
 	}
+
+	int itemsPorPagina = 3;
+	int paginasTotales = (total + itemsPorPagina - 1) / itemsPorPagina;
+	int paginaActual = 1;
+
+	char opcion = ' ';
+	do {
+		LimpiarConsola();
+		ColorUI::printGradient("\t=== CATALOGO DE VUELOS (Pag " + to_string(paginaActual) + "/" + to_string(paginasTotales) + ") ===", Paletas::TemaPrincipal, false);
+		cout << "\n";
+
+		int inicio = (paginaActual - 1) * itemsPorPagina;
+		int fin = (inicio + itemsPorPagina < total) ? inicio + itemsPorPagina : total;
+
+		for (int i = inicio; i < fin; i++) {
+			Vuelo* aux = vuelos->obtenerPos(i);
+			ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+			aux->MostrarVuelo();
+			cout << "\n";
+		}
+
+		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", Paletas::azul, false);
+		cout << "\n\tElige una opcion: ";
+		opcion = _getch();
+		
+		if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
+		else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
+
+	} while (opcion != 'q' && opcion != 'Q');
 }
 void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia,ControladorAsientos* controladorAsientos) {
-	Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia,controladorAsientos);
+	Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia,controladorAsientos,vuelos->longitud());
 	vuelos->agregaFinal(nuevoVuelo);
+    vuelosMenorPrecio->Insertar(nuevoVuelo);
 	controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
 }
 void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
@@ -122,14 +155,15 @@ void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
     }
 }
 void ControladorVuelos::FiltrarVuelosPorOrigenDestino(string origen, string destino) {
-    for (int i = 0; i < vuelos->longitud(); i++) {
-        Vuelo* aux = vuelos->obtenerPos(i);
-        if (aux->getOrigen() == origen && aux->getDestino() == destino) {
-            ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            aux->MostrarVuelo();
-            cout << endl;
+    MostrarResultadosPaginados<Vuelo>(
+        vuelos, 
+        "VUELOS " + origen + " - " + destino, 
+        [origen, destino](Vuelo* v) { return v->getOrigen() == origen && v->getDestino() == destino; },
+        [](Vuelo* v, int indice) {
+            ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            v->MostrarVuelo();
         }
-    }
+    );
 }
 bool ControladorVuelos::VerificarVueloDirecto(string origen, string destino) {
     for (int i = 0; i < vuelos->longitud(); i++) {
@@ -210,5 +244,8 @@ Vuelo* ControladorVuelos::ObtenerVueloPorPosicion(int pos) {
         return vuelos->obtenerPos(pos);
     }
     return nullptr;
+}
+ArbolAVL<Vuelo*>* ControladorVuelos::getVuelosMenorPrecio(){
+    return vuelosMenorPrecio;
 }
 Lista<Vuelo*>* ControladorVuelos::getVuelos() { return vuelos; }
