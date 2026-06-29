@@ -1,4 +1,5 @@
 #include "ControladorVuelos.h"
+#include "ConsolaUtils.h"
 using namespace ColorUI;
 ControladorVuelos::ControladorVuelos() {
 	controladorArchivosVuelos = new ControladorArchivos("Vuelos.txt");
@@ -50,7 +51,7 @@ void ControladorVuelos::MostrarVuelos() {
 
 	char opcion = ' ';
 	do {
-		system("cls");
+		LimpiarConsola();
 		ColorUI::printGradient("\t=== CATALOGO DE VUELOS (Pag " + to_string(paginaActual) + "/" + to_string(paginasTotales) + ") ===", Paletas::TemaPrincipal, false);
 		cout << "\n";
 
@@ -66,7 +67,7 @@ void ControladorVuelos::MostrarVuelos() {
 
 		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", Paletas::azul, false);
 		cout << "\n\tElige una opcion: ";
-		cin >> opcion;
+		opcion = _getch();
 		
 		if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
 		else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
@@ -154,14 +155,15 @@ void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
     }
 }
 void ControladorVuelos::FiltrarVuelosPorOrigenDestino(string origen, string destino) {
-    for (int i = 0; i < vuelos->longitud(); i++) {
-        Vuelo* aux = vuelos->obtenerPos(i);
-        if (aux->getOrigen() == origen && aux->getDestino() == destino) {
-            ColorUI::printGradient("[ID DEL VUELO: " + to_string(i) + "]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            aux->MostrarVuelo();
-            cout << endl;
+    MostrarResultadosPaginados<Vuelo>(
+        vuelos, 
+        "VUELOS " + origen + " - " + destino, 
+        [origen, destino](Vuelo* v) { return v->getOrigen() == origen && v->getDestino() == destino; },
+        [](Vuelo* v, int indice) {
+            ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            v->MostrarVuelo();
         }
-    }
+    );
 }
 bool ControladorVuelos::VerificarVueloDirecto(string origen, string destino) {
     for (int i = 0; i < vuelos->longitud(); i++) {

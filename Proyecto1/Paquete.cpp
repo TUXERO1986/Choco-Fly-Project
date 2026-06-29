@@ -9,6 +9,7 @@ using namespace ColorUI;
 Paquete::Paquete(Vuelo* vueloIda, Hotel* hotel,int id) {
 	this->vueloIncluido = vueloIda;
 	this->hotelIncluido = hotel;
+	this->id = id;
 }
 void Paquete::MostrarPaquete() {
 	stringstream streamPrecio;
@@ -55,3 +56,4 @@ Vuelo* Paquete::getVueloIncluido() { return vueloIncluido; }
 void Paquete::setVueloIncluido(Vuelo* vuelo) { this->vueloIncluido	 = vuelo; }
 void Paquete::setHotelIncluido(Hotel* hotel) { this->hotelIncluido = hotel; }
 float Paquete::getPrecioBase() { return vueloIncluido->getPrecioBase() + hotelIncluido->getPrecioNoche()+id*5; }
+int Paquete::getId() { return id; }

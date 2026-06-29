@@ -6,6 +6,7 @@ ControladorPrincipal::ControladorPrincipal() {
 	controladorVuelos = new ControladorVuelos();
 	controladorPaquetes = new ControladorPaquetes();
 	controladorUsuarios = new ControladorUsuarios();
+    controladorRegistros = new ControladorRegistros();
 }
 ControladorPrincipal::~ControladorPrincipal() {
 	delete controladorRutas;
@@ -156,198 +157,184 @@ void ControladorPrincipal::FilrarVuelosPorOrigenDestino(string origen, string de
     controladorVuelos->FiltrarVuelosPorOrigenDestino(origen, destino);
 }
 void ControladorPrincipal::FiltrarUsuariosPorNombre(string nombreBusqueda) {
-    for(int i=0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
-        Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
-        if (aux->getNombre() == nombreBusqueda) {
-            cout << "Usuario #" << i << ":" << endl;
-            aux->MostrarDatosAdmin();
-            cout << endl;
+    MostrarResultadosPaginados<Usuario>(
+        controladorUsuarios->getUsuarios(), 
+        "FILTRO DE USUARIOS POR NOMBRE: " + nombreBusqueda, 
+        [nombreBusqueda](Usuario* u) { return u->getNombre() == nombreBusqueda; },
+        [](Usuario* u, int indice) {
+            ColorUI::printGradient("  [ ID DEL USUARIO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            u->MostrarDatosAdmin();
         }
-	}
+    );
 }
 void ControladorPrincipal::FiltrarRutasPorOrigen(string ciudadBusqueda) {
-    for(int i=0; i < controladorRutas->getRutas()->longitud(); i++) {
-        Ruta* aux = controladorRutas->getRutas()->obtenerPos(i);
-        if (aux->getOrigen() == ciudadBusqueda) {
-            cout << "Ruta #" << i << ":" << endl;
-            aux->MostrarDatos();
-            cout << endl;
+    MostrarResultadosPaginados<Ruta>(
+        controladorRutas->getRutas(), 
+        "RUTAS CON ORIGEN: " + ciudadBusqueda, 
+        [ciudadBusqueda](Ruta* r) { return r->getOrigen() == ciudadBusqueda; },
+        [](Ruta* r, int indice) {
+            ColorUI::printGradient("  [ ID DE RUTA: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            r->MostrarDatos();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarRutasPorDestino(string ciudadBusqueda) {
-    for(int i=0; i < controladorRutas->getRutas()->longitud(); i++) {
-        Ruta* aux = controladorRutas->getRutas()->obtenerPos(i);
-        if (aux->getDestino() == ciudadBusqueda) {
-            cout << "Ruta #" << i << ":" << endl;
-            aux->MostrarDatos();
-            cout << endl;
+    MostrarResultadosPaginados<Ruta>(
+        controladorRutas->getRutas(), 
+        "RUTAS CON DESTINO: " + ciudadBusqueda, 
+        [ciudadBusqueda](Ruta* r) { return r->getDestino() == ciudadBusqueda; },
+        [](Ruta* r, int indice) {
+            ColorUI::printGradient("  [ ID DE RUTA: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            r->MostrarDatos();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarHotelesPorCiudad(string ciudadBusqueda) {
-    for(int i=0; i < controladorHoteles->getHoteles()->longitud(); i++) {
-        Hotel* aux = controladorHoteles->getHoteles()->obtenerPos(i);
-        if (aux->getCiudad() == ciudadBusqueda) {
-            cout << "Hotel #" << i << ":" << endl;
-            aux->MostrarHotel();
-            cout << endl;
+    MostrarResultadosPaginados<Hotel>(
+        controladorHoteles->getHoteles(), 
+        "HOTELES EN: " + ciudadBusqueda, 
+        [ciudadBusqueda](Hotel* h) { return h->getCiudad() == ciudadBusqueda; },
+        [](Hotel* h, int indice) {
+            ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            h->MostrarHotel();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarPaquetesPorDestino(string ciudadBusqueda) {
-    for(int i=0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
-        Paquete* aux = controladorPaquetes->getPaquetes()->obtenerPos(i);
-        if (aux->getVueloIncluido()->getDestino() == ciudadBusqueda) {
-            cout << "Paquete #" << i << ":" << endl;
-            aux->MostrarPaquete();
-            cout << endl;
+    MostrarResultadosPaginados<Paquete>(
+        controladorPaquetes->getPaquetes(), 
+        "PAQUETES CON DESTINO: " + ciudadBusqueda, 
+        [ciudadBusqueda](Paquete* p) { return p->getVueloIncluido()->getDestino() == ciudadBusqueda; },
+        [](Paquete* p, int indice) {
+            ColorUI::printGradient("  [ ID DEL PAQUETE: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            p->MostrarPaquete();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarPaquetesPorOrigen(string ciudadBusqueda) {
-    for(int i=0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
-        Paquete* aux = controladorPaquetes->getPaquetes()->obtenerPos(i);
-        if (aux->getVueloIncluido()->getOrigen() == ciudadBusqueda) {
-            cout << "Paquete #" << i << ":" << endl;
-            aux->MostrarPaquete();
-            cout << endl;
+    MostrarResultadosPaginados<Paquete>(
+        controladorPaquetes->getPaquetes(), 
+        "PAQUETES CON ORIGEN: " + ciudadBusqueda, 
+        [ciudadBusqueda](Paquete* p) { return p->getVueloIncluido()->getOrigen() == ciudadBusqueda; },
+        [](Paquete* p, int indice) {
+            ColorUI::printGradient("  [ ID DEL PAQUETE: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            p->MostrarPaquete();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarVuelosPorFecha(string fechaBusqueda) {
-    for(int i=0; i < controladorVuelos->getVuelos()->longitud(); i++) {
-        Vuelo* aux = controladorVuelos->getVuelos()->obtenerPos(i);
-        if (aux->getFecha() == fechaBusqueda) {
-            cout << "Vuelo #" << i << ":" << endl;
-            aux->MostrarVuelo();
-            cout << endl;
+    MostrarResultadosPaginados<Vuelo>(
+        controladorVuelos->getVuelos(), 
+        "VUELOS EN LA FECHA: " + fechaBusqueda, 
+        [fechaBusqueda](Vuelo* v) { return v->getFecha() == fechaBusqueda; },
+        [](Vuelo* v, int indice) {
+            ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            v->MostrarVuelo();
         }
-    }
+    );
 }
 void ControladorPrincipal::FitrarVuelosPorOrigen(string origenBusqueda) {
-    for(int i=0; i < controladorVuelos->getVuelos()->longitud(); i++) {
-        Vuelo* aux = controladorVuelos->getVuelos()->obtenerPos(i);
-        if (aux->getOrigen() == origenBusqueda) {
-            cout << "Vuelo #" << i << ":" << endl;
-            aux->MostrarVuelo();
-            cout << endl;
+    MostrarResultadosPaginados<Vuelo>(
+        controladorVuelos->getVuelos(), 
+        "VUELOS CON ORIGEN: " + origenBusqueda, 
+        [origenBusqueda](Vuelo* v) { return v->getOrigen() == origenBusqueda; },
+        [](Vuelo* v, int indice) {
+            ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            v->MostrarVuelo();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarVuelosPorDestino(string destinoBusqueda) {
-    for(int i=0; i < controladorVuelos->getVuelos()->longitud(); i++) {
-        Vuelo* aux = controladorVuelos->getVuelos()->obtenerPos(i);
-        if (aux->getDestino() == destinoBusqueda) {
-            cout << "Vuelo #" << i << ":" << endl;
-            aux->MostrarVuelo();
-            cout << endl;
+    MostrarResultadosPaginados<Vuelo>(
+        controladorVuelos->getVuelos(), 
+        "VUELOS CON DESTINO: " + destinoBusqueda, 
+        [destinoBusqueda](Vuelo* v) { return v->getDestino() == destinoBusqueda; },
+        [](Vuelo* v, int indice) {
+            ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            v->MostrarVuelo();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarReservasPorTipo(string tipo) {
-    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
-        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
-        if (aux->getTipoReserva() == tipo) {
-            ColorUI::printGradient("\n[ID RESERVA #" + to_string(i) + "]\n", ColorUI::Paletas::MoradoD, false);
-            aux->MostrarReserva();
+    MostrarResultadosPaginados<Reserva>(
+        controladorReservas->getReservasTotales(), 
+        "RESERVAS DE TIPO: " + tipo, 
+        [tipo](Reserva* r) { return r->getTipoReserva() == tipo; },
+        [](Reserva* r, int indice) {
+            ColorUI::printGradient("\n[ID RESERVA #" + to_string(indice) + "]\n", ColorUI::Paletas::MoradoD, false);
+            r->MostrarReserva();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
-    for(int i=0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
-        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
-        if (aux->getCodigoUsuario() == codigoUsuario) {
-            ColorUI::printGradient("\n[ID RESERVA #" + to_string(i) + "]\n", ColorUI::Paletas::MoradoD, false);
-            aux->MostrarReserva();
+    MostrarResultadosPaginados<Reserva>(
+        controladorReservas->getReservasTotales(), 
+        "RESERVAS DEL USUARIO: " + codigoUsuario, 
+        [codigoUsuario](Reserva* r) { return r->getCodigoUsuario() == codigoUsuario; },
+        [](Reserva* r, int indice) {
+            ColorUI::printGradient("\n[ID RESERVA #" + to_string(indice) + "]\n", ColorUI::Paletas::MoradoD, false);
+            r->MostrarReserva();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario) {
-    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
-        Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
-        if (aux->getCodigoUsuario() == codigousuario && aux->getTipoReserva() == tipoBusqueda) {
-            ColorUI::printGradient("\n[ID RESERVA #" + to_string(i) + "]\n", ColorUI::Paletas::MoradoD, false);
-            aux->MostrarReserva();
+    MostrarResultadosPaginados<Reserva>(
+        controladorReservas->getReservasTotales(), 
+        "RESERVAS DE TIPO " + tipoBusqueda + " (USUARIO: " + codigousuario + ")", 
+        [tipoBusqueda, codigousuario](Reserva* r) { return r->getCodigoUsuario() == codigousuario && r->getTipoReserva() == tipoBusqueda; },
+        [](Reserva* r, int indice) {
+            ColorUI::printGradient("\n[ID RESERVA #" + to_string(indice) + "]\n", ColorUI::Paletas::MoradoD, false);
+            r->MostrarReserva();
         }
-    }
+    );
 }
 void ControladorPrincipal::FiltrarVuelosPorPresupuesto(float presupuestoMaximo) {
-    bool encontrados = false;
-    cout << "\n=== HOTELES CON PRECIO POR NOCHES POR DEBAJO DE $" << presupuestoMaximo << " (PRECIO POR NOCHE) ===" << endl;
-
-    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
-        Hotel* hotel = controladorHoteles->getHoteles()->obtenerPos(i);
-
-        float precioBaseEstimado = hotel->getPrecioNoche();
-
-        if (precioBaseEstimado <= presupuestoMaximo) {
-            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
-            hotel->MostrarHotel();
-            cout << "-----------------------------------" << endl;
-            encontrados = true;
+    MostrarResultadosPaginados<Vuelo>(
+        controladorVuelos->getVuelos(), 
+        "VUELOS HASTA $" + to_string(presupuestoMaximo), 
+        [presupuestoMaximo](Vuelo* v) { return v->getPrecioBase() <= presupuestoMaximo; },
+        [](Vuelo* v, int indice) {
+            cout << "Vuelo #" << indice << " | Precio Desde: $" << v->getPrecioBase() << endl;
+            v->MostrarVuelo();
         }
-    }
-
-    if (!encontrados) {
-        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
-    }
+    );
 }
 void ControladorPrincipal::FiltrarHotelesPorPresupuesto(float presupuestoMaximo) {
-    bool encontrados = false;
-    cout << "\n=== VUELOS POR DEBAJO DE $" << presupuestoMaximo << " (Precio Base) ===" << endl;
-
-    for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
-        Vuelo* vuelo = controladorVuelos->getVuelos()->obtenerPos(i);
-
-        float precioBaseEstimado = vuelo->getPrecioBase();
-
-        if (precioBaseEstimado <= presupuestoMaximo) {
-            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
-            vuelo->MostrarVuelo();
-            cout << "-----------------------------------" << endl;
-            encontrados = true;
+    MostrarResultadosPaginados<Hotel>(
+        controladorHoteles->getHoteles(), 
+        "HOTELES HASTA $" + to_string(presupuestoMaximo), 
+        [presupuestoMaximo](Hotel* h) { return h->getPrecioNoche() <= presupuestoMaximo; },
+        [](Hotel* h, int indice) {
+            cout << "Hotel #" << indice << " | Precio Desde: $" << h->getPrecioNoche() << endl;
+            h->MostrarHotel();
         }
-    }
-
-    if (!encontrados) {
-        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
-    }
+    );
 }
 void ControladorPrincipal::FiltrarPaquetesPorPresupuesto(float presupuestoMaximo) {
-    bool encontrados = false;
-    cout << "\n=== PAQUETES POR DEBAJO DE $" << presupuestoMaximo << " (Precio Base) ===" << endl;
-
-    for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
-        Paquete* paquete = controladorPaquetes->getPaquetes()->obtenerPos(i);
-
-        float precioBaseEstimado = paquete->getPrecioBase();
-
-        if (precioBaseEstimado <= presupuestoMaximo) {
-            cout << "Vuelo #" << i << " | Precio Desde: $" << precioBaseEstimado << endl;
-            paquete->MostrarPaquete();
-            cout << "-----------------------------------" << endl;
-            encontrados = true;
+    MostrarResultadosPaginados<Paquete>(
+        controladorPaquetes->getPaquetes(), 
+        "PAQUETES HASTA $" + to_string(presupuestoMaximo), 
+        [presupuestoMaximo](Paquete* p) { return p->getPrecioBase() <= presupuestoMaximo; },
+        [](Paquete* p, int indice) {
+            cout << "Paquete #" << indice << " | Precio Desde: $" << p->getPrecioBase() << endl;
+            p->MostrarPaquete();
         }
-    }
-
-    if (!encontrados) {
-        cout << "No hay vuelos disponibles para ese presupuesto." << endl;
-    }
+    );
 }
 void ControladorPrincipal::FiltrarHotelesPorMayorCalificacion() {
     Lista<Hotel*>* originales = controladorHoteles->getHoteles();
     int n = originales->longitud();
-    if (n == 0) return;
+    if (n == 0) {
+        ColorUI::Alertas::MostrarInfo("No hay hoteles.");
+        return;
+    }
 
     Lista<Hotel*>* temp = new Lista<Hotel*>();
     for (int i = 0; i < n; i++) temp->agregaFinal(originales->obtenerPos(i));
 
- 
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (temp->obtenerPos(j)->getPuntuacion() < temp->obtenerPos(j + 1)->getPuntuacion()) {
-         
                 Hotel* aux = temp->obtenerPos(j);
                 temp->modificarPos(temp->obtenerPos(j + 1), j);
                 temp->modificarPos(aux, j + 1);
@@ -355,62 +342,84 @@ void ControladorPrincipal::FiltrarHotelesPorMayorCalificacion() {
         }
     }
 
-    cout << "\n=== HOTELES: DE MAYOR A MENOR CALIFICACION ===" << endl;
-    for (int i = 0; i < n; i++) {
-        Hotel* h = temp->obtenerPos(i);
-        cout << "[ID PARA COMPRA: " << originales->getPos(h) << "]" << endl;
-        h->MostrarHotel();
-        cout << "-----------------------------------" << endl;
-    }
+    MostrarResultadosPaginados<Hotel>(
+        temp, 
+        "HOTELES: DE MAYOR A MENOR CALIFICACION", 
+        [](Hotel* h) { return true; },
+        [](Hotel* h, int indice) {
+            cout << "[ID PARA COMPRA: " << h->getId() << "]" << endl;
+            h->MostrarHotel();
+        }
+    );
     delete temp; 
 }
 
 void ControladorPrincipal::FiltrarVuelosDeMayorAMenorPrecio() {
- ArbolAVL<Vuelo*>* arbolVuelos = controladorVuelos->getVuelosMenorPrecio();
-    
-    cout << "\n=== VUELOS: DE MAYOR A MENOR PRECIO POR NOCHE ===" << endl;
-
-    arbolVuelos->RecorrerInOrden([](Vuelo* v) {
-
-        cout << "[ID PARA COMPRA: " << v->getId() << "]" << endl;
-        v->MostrarVuelo();
-        cout << "-----------------------------------" << endl;
+    ArbolAVL<Vuelo*>* arbolVuelos = controladorVuelos->getVuelosMenorPrecio();
+    Lista<Vuelo*>* temp = new Lista<Vuelo*>();
+    arbolVuelos->RecorrerInOrden([temp](Vuelo* v) {
+        temp->agregaFinal(v);
     });
+
+    MostrarResultadosPaginados<Vuelo>(
+        temp, 
+        "VUELOS: DE MAYOR A MENOR PRECIO", 
+        [](Vuelo* v) { return true; },
+        [](Vuelo* v, int indice) {
+            cout << "[ID PARA COMPRA: " << v->getId() << "]" << endl;
+            v->MostrarVuelo();
+        }
+    );
+    delete temp;
 }
 
 void ControladorPrincipal::FiltrarHotelesDeMayorAMenorPrecio() {
-ArbolAVL<Hotel*>* arbolHoteles = controladorHoteles->getHotelesMenorPrecio();
-    
-    cout << "\n=== HOTELES: DE MAYOR A MENOR PRECIO POR NOCHE ===" << endl;
-
-    arbolHoteles->RecorrerInOrden([](Hotel* h) {
-
-        cout << "[ID PARA COMPRA: " << h->getId() << "]" << endl;
-        h->MostrarHotel();
-        cout << "-----------------------------------" << endl;
+    ArbolAVL<Hotel*>* arbolHoteles = controladorHoteles->getHotelesMenorPrecio();
+    Lista<Hotel*>* temp = new Lista<Hotel*>();
+    arbolHoteles->RecorrerInOrden([temp](Hotel* h) {
+        temp->agregaFinal(h);
     });
+
+    MostrarResultadosPaginados<Hotel>(
+        temp, 
+        "HOTELES: DE MAYOR A MENOR PRECIO", 
+        [](Hotel* h) { return true; },
+        [](Hotel* h, int indice) {
+            cout << "[ID PARA COMPRA: " << h->getId() << "]" << endl;
+            h->MostrarHotel();
+        }
+    );
+    delete temp;
 }
 
 void ControladorPrincipal::FiltrarPaquetesDeMayorAMenorPrecio() {
-    ArbolAVL<Hotel*>* arbolHoteles = controladorHoteles->getHotelesMenorPrecio();
-    
-    cout << "\n=== PAQUETES: DE MAYOR A MENOR PRECIO POR NOCHE ===" << endl;
-
-    arbolHoteles->RecorrerInOrden([](Hotel* h) {
-
-        cout << "[ID PARA COMPRA: " << h->getId() << "]" << endl;
-        h->MostrarHotel();
-        cout << "-----------------------------------" << endl;
+    ArbolAVL<Paquete*>* arbolPaquetes = controladorPaquetes->getPaquetesMenorPrecio();
+    Lista<Paquete*>* temp = new Lista<Paquete*>();
+    arbolPaquetes->RecorrerInOrden([temp](Paquete* p) {
+        temp->agregaFinal(p);
     });
+
+    MostrarResultadosPaginados<Paquete>(
+        temp, 
+        "PAQUETES: DE MAYOR A MENOR PRECIO", 
+        [](Paquete* p) { return true; },
+        [](Paquete* p, int indice) {
+            cout << "[ID PARA COMPRA: " << p->getId() << "]" << endl;
+            p->MostrarPaquete();
+        }
+    );
+    delete temp;
 }
 void ControladorPrincipal::FiltrarUsuarioPorCodigo(string codigo) {
-    for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
-        Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
-        if (aux->getCodigo() == codigo) {
-            aux->MostrarDatosUsuarios();
-            break;
+    MostrarResultadosPaginados<Usuario>(
+        controladorUsuarios->getUsuarios(), 
+        "FILTRO DE USUARIOS POR CODIGO: " + codigo, 
+        [codigo](Usuario* u) { return u->getCodigo() == codigo; },
+        [](Usuario* u, int indice) {
+            ColorUI::printGradient("  [ ID DEL USUARIO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+            u->MostrarDatosAdmin();
         }
-    }
+    );
 }
 void ControladorPrincipal::ObtenerIngresosTotales() {
 	float ingresosTotales = controladorReservas->CalcularIngresosTotales();

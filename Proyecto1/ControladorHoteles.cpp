@@ -1,4 +1,5 @@
 #include "ControladorHoteles.h"
+#include "ConsolaUtils.h"
 #include "Color.h"
 using namespace ColorUI;
 ControladorHoteles::ControladorHoteles() {
@@ -66,11 +67,7 @@ void ControladorHoteles::MostrarHoteles() {
 
 	char opcion = ' ';
 	do {
-	#ifdef _WIN32
-    system("cls");   
-    #else
-    system("clear"); 
-    #endif
+		LimpiarConsola();
 		ColorUI::printGradient("\t=== CATALOGO DE HOTELES (Pag " + to_string(paginaActual) + "/" + to_string(paginasTotales) + ") ===", Paletas::TemaPrincipal, false);
 		cout << "\n";
 
@@ -86,7 +83,7 @@ void ControladorHoteles::MostrarHoteles() {
 
 		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", Paletas::azul, false);
 		cout << "\n\tElige una opcion: ";
-		cin >> opcion;
+		opcion = _getch();
 		
 		if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
 		else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
