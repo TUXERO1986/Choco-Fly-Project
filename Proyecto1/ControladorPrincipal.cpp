@@ -6,6 +6,7 @@ ControladorPrincipal::ControladorPrincipal() {
 	controladorVuelos = new ControladorVuelos();
 	controladorPaquetes = new ControladorPaquetes();
 	controladorUsuarios = new ControladorUsuarios();
+    controladorRegistros= new ControladorRegistros();
 }
 ControladorPrincipal::~ControladorPrincipal() {
 	delete controladorRutas;
