@@ -74,7 +74,7 @@ string u_nombre, u_correo, u_password;
     // Si sale del bucle, el login fue exitoso
     pausarConsola();
     GestionPantallas* userUI = new GestionPantallas(principal, userLogeado);
-    userUI->Menuprincipal(); // Se queda atrapado aquí hasta que cierre sesión
+    userUI->IniciarMotorNavegacion(); // Se queda atrapado aquí hasta que cierre sesión
     
     // Instrucción 2: Uso correcto de delete tras salir del ciclo de vida del objeto
     delete userUI;

@@ -460,7 +460,7 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, i
         controladorReservas->AgregarReserva(new ReservaVuelo(userActual->getCodigo(), userActual->getNombre(),
             vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(),
             vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
-            controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (vuelo)","");
+            controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (vuelo)");
         Lista<Asiento*>* listaAsientos = vueloSeleccionado->getControladorAsientos()->getAsientos();
         for (int i = 0; i < listaAsientos->longitud(); i++) {
             if (listaAsientos->obtenerPos(i)->getNumero() == asiento) {
@@ -478,7 +478,7 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
 
         controladorReservas->AgregarReserva(new ReservaHotel(userActual->getCodigo(), userActual->getNombre(), hotelSeleccionado->getNombre(),
             hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
-        controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)","");
+        controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)");
         Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
         for (int i = 0; i < listaHabitaciones->longitud(); i++) {
             if (listaHabitaciones->obtenerPos(i)->getNumero() == habitacion) {
@@ -674,7 +674,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     );
 
     controladorReservas->AgregarReserva(nuevaReserva);
-    controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (paquete)","");
+    controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (paquete)");
     ColorUI::Animaciones::mostrarSpinner("Procesando transaccion con el sistema central", 2000, "");
     cout << "\n"; ColorUI::Alertas::MostrarExito("Reserva de paquete completada exitosamente!");
     cout << "Tu vuelo de retorno ha sido programado automaticamente para el: " << fechaRetorno << endl;
@@ -707,14 +707,14 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
     if (usuarioEncontrado != nullptr&&existeCuenta) {
         LimpiarConsola();
         ColorUI::Animaciones::mostrarSpinner("Verificando credenciales seguras", 1200, "\t\t\t");
-                    controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","Inicio de sesion","");
+                    controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","Inicio de sesion");
 		cout << "\n\n\n"; ColorUI::Alertas::MostrarExito("Inicio de sesion exitoso! Bienvenido, " + usuarioEncontrado->getNombre() + "!", "\t\t\t");
 
         return usuarioEncontrado;
     } else {
         if (existeCuenta) {
 			LimpiarConsola();
-            controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","Contrasena incorrecta","");
+            controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","Contrasena incorrecta");
 			cout << "\n\n\n"; ColorUI::Alertas::MostrarError("Contrasena incorrecta. Por favor, intenta nuevamente.", "\t\t\t");
             pausarConsola();
             return nullptr;
@@ -724,13 +724,13 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
                 Usuario* aux = controladorUsuarios->getUsuarios()->obtenerPos(i);
                 if (aux->getCorreo() == correo) {
                     LimpiarConsola();
-                    controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","registro con correoe existente","");
+                    controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","registro con correoe existente");
 					cout << "\n\n\n"; ColorUI::Alertas::MostrarError("ESTE CORREO YA ESTA REGISTRADO PRUEBE OTRO", "\t\t\t");
                     pausarConsola();
                     return nullptr;
                 }
             }
-            controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","Nueva cuenta creada","");
+            controladorRegistros->AgregarRegistro(nombre,correo,"Usuario","Nueva cuenta creada");
             controladorUsuarios->AgregarUsuario(nombre, correo, password);
             LimpiarConsola();
             ColorUI::Animaciones::mostrarSpinner("Creando cuenta y asignando espacio en el servidor", 1500, "\t\t\t");

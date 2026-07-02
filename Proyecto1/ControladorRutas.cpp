@@ -21,11 +21,6 @@ ControladorRutas::ControladorRutas() {
 
     controladorArchivos->LeerArchivoRutas(conexiones, rutas, MapaCiudades);
 
-    // ==========================================================
-    // INYECCIÓN DE DATOS AL GRAFO (Se ejecuta al iniciar el app)
-    // ==========================================================
-    
-    // 1. Agregar los vértices (Ciudades) respetando su ID original
     for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) {
         grafoRutas->adicionarVertice(MapaCiudades->obtenerPos(i)->getNombre());
     }

@@ -14,11 +14,9 @@ private:
     Nodo<T>* _getMid(Nodo<T>* head);
     Nodo<T>* _mergeSort(Nodo<T>* head, std::function<bool(T, T)> comp);
 
-    // --- Helpers para QuickSort ---
     void _quickSort(T* arr, int low, int high, std::function<bool(T, T)> comp);
     int _partition(T* arr, int low, int high, std::function<bool(T, T)> comp);
 
-    // --- Helpers para HeapSort ---
     void _heapify(T* arr, int n, int i, std::function<bool(T, T)> comp);
 public:
 	Lista();
@@ -40,10 +38,7 @@ public:
     uint getPos(T elem);
     T obtenerFinal();
     T buscar(T elem);
-    public:
-    // ... tus otros metodos publicos ...
     
-    // Algoritmos de Ordenamiento Avanzado
     void MergeSort(std::function<bool(T, T)> comp);
     void QuickSort(std::function<bool(T, T)> comp);
     void HeapSort(std::function<bool(T, T)> comp);
@@ -229,9 +224,7 @@ uint Lista<T>::getPos(T elem) {
     }
     return lon;
 }
-// =================================================================
-// 1. MERGESORT (Ordenamiento puro por punteros)
-// =================================================================
+
 template <class T>
 Nodo<T>* Lista<T>::_merge(Nodo<T>* l1, Nodo<T>* l2, std::function<bool(T, T)> comp) {
     if (!l1) return l2;
@@ -278,9 +271,6 @@ void Lista<T>::MergeSort(std::function<bool(T, T)> comp) {
     }
 }
 
-// =================================================================
-// 2. QUICKSORT (Acelerado por Arreglo Contiguo)
-// =================================================================
 template <class T>
 int Lista<T>::_partition(T* arr, int low, int high, std::function<bool(T, T)> comp) {
     T pivot = arr[high];
@@ -325,16 +315,12 @@ void Lista<T>::QuickSort(std::function<bool(T, T)> comp) {
     delete[] arr;
 }
 
-// =================================================================
-// 3. HEAPSORT (Acelerado por Arreglo Contiguo)
-// =================================================================
 template <class T>
 void Lista<T>::_heapify(T* arr, int n, int i, std::function<bool(T, T)> comp) {
     int largest = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
     
-    // Invertimos la logica del comparador para armar un Max-Heap
     if (l < n && comp(arr[largest], arr[l])) largest = l;
     if (r < n && comp(arr[largest], arr[r])) largest = r;
     
