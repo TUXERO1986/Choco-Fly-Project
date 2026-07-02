@@ -37,7 +37,6 @@ string GeneradorDataset::GenerarEstadoAsientosOHabitaciones(int cantidad) {
     return estado;
 }
 
-// INTEGRAMOS TU LÓGICA DE IDA Y VUELTA BASADA EN RUTAS REALES
 void GeneradorDataset::GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas) {
     if (rutas->longitud() == 0) {
         cout << "Error: No hay rutas disponibles para generar vuelos." << endl;
@@ -48,7 +47,6 @@ void GeneradorDataset::GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas
     if (!archivo.is_open()) return;
 
     for (int i = 0; i < cantidad; i += 2) {
-        // Cogemos una ruta real al azar
         int indiceRuta = rand() % rutas->longitud();
         Ruta* aux = rutas->obtenerPos(indiceRuta);
 
@@ -57,12 +55,10 @@ void GeneradorDataset::GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas
         float distancia = aux->getDistancia();
         string escalas = "Directo";
 
-        // Vuelo de Ida
         string fechaIda = GenerarFechaAleatoria();
         string asientosIda = GenerarEstadoAsientosOHabitaciones(30);
         archivo << origen << "," << destino << "," << escalas << "," << fechaIda << "," << distancia << "," << asientosIda << "\n";
 
-        // Vuelo de Retorno (si el contador lo permite)
         if (i + 1 < cantidad) {
             string fechaRetorno = GenerarFechaAleatoria();
             string asientosRetorno = GenerarEstadoAsientosOHabitaciones(30);
@@ -81,7 +77,6 @@ void GeneradorDataset::GenerarHotelesAleatorios(int cantidad, Lista<Ruta*>* ruta
     for (int i = 0; i < cantidad; i++) {
         string nombreHotel = nombresHoteles[rand() % CANT_HOTELES_NOMBRES];
         
-        // El hotel debe existir en alguna ciudad destino u origen de las rutas reales
         Ruta* rutaAlAzar = rutas->obtenerPos(rand() % rutas->longitud());
         string ciudad = (rand() % 2 == 0) ? rutaAlAzar->getOrigen() : rutaAlAzar->getDestino();
         
@@ -101,7 +96,6 @@ void GeneradorDataset::GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rut
     if (!archivo.is_open()) return;
 
     for (int i = 0; i < cantidad; i++) {
-        // 1. Extraemos una ruta real para el paquete
         Ruta* rutaAux = rutas->obtenerPos(rand() % rutas->longitud());
 
         string vOri = rutaAux->getOrigen();
@@ -110,14 +104,12 @@ void GeneradorDataset::GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rut
         string vFec = GenerarFechaAleatoria();
         float vDist = rutaAux->getDistancia();
 
-        // 2. Generamos el Hotel (Obligatorio en la ciudad de destino)
         string hNom = nombresHoteles[rand() % CANT_HOTELES_NOMBRES];
         string hCiu = vDes; 
         
         float hPunt = 3.0f + static_cast<float>(rand() % 21) / 10.0f;
-        float hPrec = (40.0f + (rand() % 410)) * 0.85f; // Precio de paquete con 15% dscto
+        float hPrec = (40.0f + (rand() % 410)) * 0.85f; 
 
-        // 3. Guardado
         archivo << vOri << "," << vDes << "," << vEsc << "," << vFec << "," << vDist << ","
                 << hNom << "," << hCiu << "," << hPunt << "," << hPrec << "\n";
     }

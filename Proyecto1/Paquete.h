@@ -15,5 +15,6 @@ public:
 	void setVueloIncluido(Vuelo* vuelo);
 	void setHotelIncluido(Hotel* hotel);
 	float getPrecioBase();
+	int getId();
 };
 

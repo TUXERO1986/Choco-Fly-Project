@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Lista.h"
-#include "Ruta.h" // Necesario para leer las rutas disponibles
+#include "Ruta.h"
 
 using namespace std;
 

@@ -11,9 +11,6 @@
     <ClCompile Include="Ruta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="Ticket.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="Vuelo.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -80,6 +77,11 @@
     <ClCompile Include="Habitacion.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="ReservaVuelo.cpp" />
+    <ClCompile Include="Registro.cpp" />
+    <ClCompile Include="Proyecto1.cpp" />
+    <ClCompile Include="GeneradorDataset.cpp" />
+    <ClCompile Include="ControladorRegistros.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CiudadID.h">
@@ -89,9 +91,6 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Ruta.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Ticket.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Vuelo.h">
@@ -169,6 +168,15 @@
     <ClInclude Include="Habitacion.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="TablaHash.h" />
+    <ClInclude Include="ReservaVuelo.h" />
+    <ClInclude Include="Registro.h" />
+    <ClInclude Include="Pila.h" />
+    <ClInclude Include="MinHeap.h" />
+    <ClInclude Include="GeneradorDataset.h" />
+    <ClInclude Include="ControladorRegistros.h" />
+    <ClInclude Include="ArbolAVL.h" />
+    <ClInclude Include="ConsolaUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Vuelos.txt">
@@ -189,6 +197,8 @@
     <Text Include="Reservas.txt">
       <Filter>Recursos</Filter>
     </Text>
+    <Text Include="Registros.txt" />
+    <Text Include="ascii.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Model">
@@ -206,5 +216,9 @@
     <Filter Include="DataM">
       <UniqueIdentifier>{46be23f5-0c5d-478e-baa2-2779dbfa02f7}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TablaHash" />
+    <None Include="Makefile" />
   </ItemGroup>
 </Project>
