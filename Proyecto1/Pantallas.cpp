@@ -47,10 +47,8 @@ string u_nombre, u_correo, u_password;
     // Bucle para intentar loguearse (o salir)
     do {
         LimpiarConsola();
-        ColorUI::printGradient(login, Register, false); // Imprime el ASCII
+        ColorUI::printGradient(login, Register, false); 
         gotoxy(0, 6);
-        
-        // NO poner LimpiarConsola() aquí, o borrarás el ASCII de arriba
 
         ColorUI::printGradient("\n\n\n\t\t\t\tIngrese su Nombre de usuario", Register, false);
         cout << "\t\t\t\t"; getline(cin,u_nombre);
@@ -59,9 +57,8 @@ string u_nombre, u_correo, u_password;
         cout << "\t\t\t\t"; cin >> u_correo;
 
         ColorUI::printGradient("\n\t\t\t\tIngrese su Contrasena", Register, false);
-        cout << "\t\t\t\t"; cin >> u_password; // <-- AQUÍ DEBE IR EL CIN
+        cout << "\t\t\t\t"; cin >> u_password; 
         
-        // AHORA SÍ verificamos con los tres datos ya ingresados
         userLogeado = principal->VerificarInicioSesion(u_nombre, u_correo, u_password);
         
         if (userLogeado == nullptr) {
