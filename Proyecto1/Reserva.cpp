@@ -1,7 +1,8 @@
 #include "Reserva.h"
-Reserva::Reserva(string codigoUsuario, string nombreUsuario) {
+Reserva::Reserva(string codigoUsuario, string nombreUsuario, int id) {
 	this->codigoUsuario = codigoUsuario;
 	this->nombreUsuario = nombreUsuario;
+	this->id=id;
 }
 void Reserva::MostrarReserva() {}
 string Reserva::getCodigoUsuario() { return codigoUsuario; }

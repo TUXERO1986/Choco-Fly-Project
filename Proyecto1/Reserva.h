@@ -8,8 +8,9 @@ protected:
 	string tipoReserva;
 	string codigoUsuario;
 	string nombreUsuario;
+	int id;
 public:
-	Reserva(string codigoUsuario, string nombreUsuario);
+	Reserva(string codigoUsuario, string nombreUsuario,int id);
 	virtual void MostrarReserva();
 	virtual string aTextoArchivo() = 0;
 	string getCodigoUsuario();

@@ -1,7 +1,7 @@
 #include "ReservaHotel.h"
 ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string nombreHotel, 
-	string ciudad, string fechaIngreso,float precioNoche, int noches,int habitacion,int tipoO,int tipoC,int tipoS)
-	: Reserva(codigoUsuario, nombreUsuario) {
+	string ciudad, string fechaIngreso,float precioNoche, int noches,int habitacion,int tipoO,int tipoC,int tipoS,int id)
+	: Reserva(codigoUsuario, nombreUsuario,id) {
 	ObtenerDia = [](string fecha) {
 		size_t pos = fecha.find("-");
 		if (pos != string::npos) {
@@ -108,7 +108,7 @@ string ReservaHotel::aTextoArchivo() {
 	return "HOTEL,"+codigoUsuario + "," + nombreUsuario + "," + nombreHotel + ","
 		+ ciudad + "," + fechaIngreso+ "," +to_string(precioNoche) + "," + to_string(noches) + "," +
 		to_string(habitacion) +","+to_string(tipoO)+"," + to_string(tipoC) +"," +
-		to_string(tipoS);
+		to_string(tipoS)+","+to_string(id);
 }
 string ReservaHotel::getNombreHotel() { return nombreHotel; }
 string ReservaHotel::getCiudad() { return ciudad; }

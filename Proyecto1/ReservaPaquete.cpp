@@ -1,6 +1,6 @@
 #include "ReservaPaquete.h"
-ReservaPaquete::ReservaPaquete(string codUser, string nomUser, ReservaVuelo* vueloida, ReservaVuelo* vueloretorno, ReservaHotel* hotel)
-    : Reserva(codUser, nomUser)
+ReservaPaquete::ReservaPaquete(string codUser, string nomUser, ReservaVuelo* vueloida, ReservaVuelo* vueloretorno, ReservaHotel* hotel,int id)
+    : Reserva(codUser, nomUser,id)
 {
     this->vueloReservado = vueloida;
     this->vueloRetorno = vueloretorno;
@@ -38,7 +38,7 @@ void ReservaPaquete::MostrarReserva() {
     ColorUI::printGradient("==================================================\n", ColorUI::Paletas::TemaPrincipal, false);
 }
 string ReservaPaquete::aTextoArchivo() {
-    return "PAQUETE," + codigoUsuario + "," + nombreUsuario + "|" + vueloReservado->aTextoArchivo() +"|"+vueloRetorno->aTextoArchivo() + "|" + hotelReservado->aTextoArchivo();
+    return "PAQUETE," + codigoUsuario + "," + nombreUsuario + "|" + vueloReservado->aTextoArchivo() +"|"+vueloRetorno->aTextoArchivo() + "|" + hotelReservado->aTextoArchivo()+"|"+to_string(id);
 }
 ReservaVuelo* ReservaPaquete::getVueloReservado() { return vueloReservado; }
 ReservaHotel* ReservaPaquete::getHotelReservado() { return hotelReservado; }

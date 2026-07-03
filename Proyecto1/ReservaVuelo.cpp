@@ -1,7 +1,7 @@
 #include "ReservaVuelo.h"
 #include "Color.h"
-ReservaVuelo::ReservaVuelo(string codigoUsuario, string nombreUsuario, string origen, string destino, string escalas,string fecha, float distancia, int equipaje, int equipajecabina,int clase,int asiento)
-    : Reserva(codigoUsuario, nombreUsuario)
+ReservaVuelo::ReservaVuelo(string codigoUsuario, string nombreUsuario, string origen, string destino, string escalas,string fecha, float distancia, int equipaje, int equipajecabina,int clase,int asiento,int id)
+    : Reserva(codigoUsuario, nombreUsuario,id)
 {
 	this->nombre = nombreUsuario;
 	this->origen = origen;
@@ -39,7 +39,7 @@ void ReservaVuelo::MostrarReserva() {
 }
 string ReservaVuelo::aTextoArchivo() {
 	return "VUELO," + getCodigoUsuario() + "," + getNombre() + "," + origen + "," + destino + "," + escalas + "," + fecha+"," + to_string(getPrecioTotal())
-		+ "," + to_string(distancia) + "," + to_string(equipaje) + "," + to_string(equipajecabina)+","+to_string(clase)+","+to_string(asiento);
+		+ "," + to_string(distancia) + "," + to_string(equipaje) + "," + to_string(equipajecabina)+","+to_string(clase)+","+to_string(asiento)+","+to_string(id);
 }
 float ReservaVuelo::getPrecioTotal() {
 	float costoEquipaje = (equipaje-1) * 10.0f; 

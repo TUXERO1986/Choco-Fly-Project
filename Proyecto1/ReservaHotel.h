@@ -24,7 +24,7 @@ private:
 
 public:
 	ReservaHotel(string codigoUsuario, string nombreUsuario, string nombreHotel, string ciudad, string fechaIngreso,
-		float precioNoche, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);
+		float precioNoche, int noches,int habtiacion,int tipoO,int tipoC,int tipoS,int id);
 	void MostrarReserva() override;
 	string aTextoArchivo() override;
 	string getNombreHotel();
