@@ -34,9 +34,6 @@ void GestionPantallas::DibujarHeader(string ruta) {
     ColorUI::printGradient("================================================================================\n", Paletas::TemaPrincipal, false);
 }
 
-// ====================================================================
-// MOTOR CENTRAL DE PANTALLAS
-// ====================================================================
 void GestionPantallas::IniciarMotorNavegacion() {
     historialPantallas->apilar(PANTALLA_PRINCIPAL);
 
@@ -65,9 +62,6 @@ void GestionPantallas::IniciarMotorNavegacion() {
     }
 }
 
-// ====================================================================
-// MENUS PRINCIPALES
-// ====================================================================
 void GestionPantallas::Menuprincipal() {
     DibujarHeader("Inicio");
     cout << BLINK;
@@ -136,9 +130,6 @@ void GestionPantallas::MenuReservas() {
     }
 }
 
-// ====================================================================
-// SUBMENUS DE FILTROS
-// ====================================================================
 void GestionPantallas::MenuFiltrosReservas() {
     DibujarHeader("Inicio > Mi Historial de Reservas");
     ColorUI::printGradient("\n================MENU HISTORIAL==============", Paletas::Exito, false);
@@ -447,14 +438,10 @@ void GestionPantallas::MenuFiltrosHoteles() {
     }
 }
 
-// ====================================================================
-// PANTALLAS DE ACCIONES LINEALES (Se cierran solas al final)
-// ====================================================================
-
 void GestionPantallas::HistorialReservas() {
     ColorUI::printGradient("=== MI HISTORIAL DE RESERVAS ===", TemaPrincipal, false);
     historialPantallas->apilar(PANTALLA_FILTROS_RESERVAS);
-    // Removemos esta del historial para que al volver de filtros, vaya al principal
+
     historialPantallas->desapilar(); 
 }
 

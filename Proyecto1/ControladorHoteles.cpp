@@ -49,7 +49,7 @@ void ControladorHoteles::GenerarHoteles(int contador, Lista<CiudadID*>* listaCiu
     }
 }
 void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float puntuacion, float precioNoche) {
-	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche, new ControladorHabitaciones(),hoteles->longitud());
+	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche,hoteles->longitud());
 	hoteles->agregaFinal(nuevoHotel);
     hotelesMenorPrecio->Insertar(nuevoHotel);
 	controladorArchivos->GuardarDatoArchivoHoteles(nuevoHotel);

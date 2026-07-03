@@ -1,5 +1,6 @@
 #pragma once
-#include "ControladorHabitaciones.h"
+#include "Habitacion.h"
+#include "Lista.h"
 class Hotel
 {
 private:
@@ -8,9 +9,9 @@ private:
 	float puntuacion;;
 	float precioNoche;
 	int id;
-	ControladorHabitaciones* controladorHabitaciones;
+	Lista<Habitacion*>* habitaciones;
 public:
-	Hotel(string nombre, string ciudad, float puntuacion, float precioNoche,ControladorHabitaciones* controladorHabitaciones,int id);
+	Hotel(string nombre, string ciudad, float puntuacion, float precioNoche,int id);
 	void MostrarHotel();
 	void MostrarHabitaciones();
 	string getNombre();
@@ -18,10 +19,15 @@ public:
 	int getId();
 	float getPuntuacion();
 	float getPrecioNoche();
-	ControladorHabitaciones* getControladorHabitaciones();
 	void setNombre(string nombre);
 	void setCiudad(string ciudad);
 	void setPuntuacion(float puntuacion);
 	void setPrecioNoche(float precioNoche);
+	void GenerarHabitaciones();
+	bool verificarHabitacion(int numeroHabitacion);
+	string ObtenerEstadoHabitacionesString();
+	void CargarEstadoHabitacionesString(string estado);
+	Lista<Habitacion*>* getHabitaciones();
+	void setHabitaciones(Lista<Habitacion*>* asientos);
 };
 

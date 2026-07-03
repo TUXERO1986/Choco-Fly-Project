@@ -6,14 +6,15 @@
 
 using namespace ColorUI;
 
-Hotel::Hotel(string nombre, string ciudad, float puntuacion, float precioNoche,ControladorHabitaciones* controladorHabitaciones, int id) {
+Hotel::Hotel(string nombre, string ciudad, float puntuacion, float precioNoche, int id) {
 
+	this-> habitaciones= new Lista<Habitacion*>();
+	GenerarHabitaciones();
 	this->nombre = nombre;
 	this->ciudad = ciudad;
 	this->puntuacion = puntuacion;
 	this->precioNoche = precioNoche;
 	this->id=id;
-	this->controladorHabitaciones = controladorHabitaciones;
 }
 void Hotel::MostrarHotel() {
 	stringstream streamPrecio, streamPuntuacion;
@@ -50,14 +51,61 @@ void Hotel::MostrarHotel() {
 	printSpriteAndCard(spriteHotel, Paletas::Tux, tarjeta, Paletas::dato);
 }
 void Hotel::MostrarHabitaciones() {
-	controladorHabitaciones->MostrarHabitaciones();
+	for (int i = 0; i < habitaciones->longitud(); i++) {
+		Habitacion* aux = habitaciones->obtenerPos(i);
+		aux->MostrarHabitacion();
+		cout << " ";
+		if ((i + 1) % 6 == 0) cout << endl;
+		else if ((i + 1) % 3 == 0) cout << "\t";
+	}
+}
+void Hotel::GenerarHabitaciones() {
+	for (int i = 1; i <= 30; i++) {
+		Habitacion* habitacion = new Habitacion(i);
+		habitaciones->agregaFinal(habitacion);
+	}
+}
+string Hotel::ObtenerEstadoHabitacionesString() {
+	string estado = "";
+	for (int i = 0; i < habitaciones->longitud(); i++) {
+	
+		if (habitaciones->obtenerPos(i)->getDisponible()) {
+			estado += "1";
+		}
+		else {
+			estado += "0";
+		}
+	}
+	return estado;
+}
+bool Hotel::verificarHabitacion(int numeroHabitacion) {
+	for (int i = 0; i < habitaciones->longitud(); i++) {
+		Habitacion* aux = habitaciones->obtenerPos(i);
+		if (aux->getNumero() == numeroHabitacion) {
+			if (aux->getDisponible()) return true;
+			else return false;
+		}
+	}
+	return false;
+}
+void Hotel::CargarEstadoHabitacionesString(string estado) {
+	
+	for (int i = 0; i < estado.length() && i < habitaciones->longitud(); i++) {
+		bool estaDisponible = (estado[i] == '1');
+		habitaciones->obtenerPos(i)->setDisponible(estaDisponible);
+	}
+}
+Lista<Habitacion*>* Hotel::getHabitaciones() {
+	return habitaciones;
+}
+void Hotel::setHabitaciones(Lista<Habitacion*>* habitaciones) {
+	this->habitaciones = habitaciones;
 }
 string Hotel::getNombre() { return nombre; }
 string Hotel::getCiudad() { return ciudad; }
 float Hotel::getPuntuacion() { return puntuacion; }
 float Hotel::getPrecioNoche() { return precioNoche+id*5; }
 int Hotel::getId(){ return id;}
-ControladorHabitaciones* Hotel::getControladorHabitaciones() { return controladorHabitaciones; }
 void Hotel::setNombre(string nombre) { this->nombre = nombre; }
 void Hotel::setCiudad(string ciudad) { this->ciudad = ciudad; }
 void Hotel::setPuntuacion(float puntuacion) { this->puntuacion = puntuacion; }

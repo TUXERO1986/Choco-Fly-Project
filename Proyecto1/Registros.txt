@@ -14,3 +14,5 @@ lol,lol,Usuario,Inicio de sesion,
 0000,0000,Usuario,Reserva (vuelo),02-07-2026 09:30:18
 0000,0000,Usuario,Inicio de sesion,02-07-2026 11:47:14
 0000,0000,Usuario,Inicio de sesion,02-07-2026 11:53:30
+0000,0000,Usuario,Inicio de sesion,02-07-2026 22:57:33
+0000,0000,Usuario,Inicio de sesion,02-07-2026 22:58:17

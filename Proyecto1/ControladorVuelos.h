@@ -18,7 +18,7 @@ void BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
 	void MostrarVuelos();
 	void FiltrarVuelosPorOrigenDestino(string origen, string destino);
 	bool VerificarVueloDirecto(string origen, string destino);
-	void AgregarNuevoVuelo(string origen, string destino, string escalas, string fecha,float distancia, ControladorAsientos* controladorAsientos);
+	void AgregarNuevoVuelo(string origen, string destino, string escalas, string fecha,float distancia);
 	void GenerarVuelos(int contador, Lista<Ruta*>* rutas);
 	bool GenerarVuelosConEscala(string origen,string destino, Lista<Ruta*>* rutas);
 	Vuelo* ObtenerVueloPorPosicion(int pos);

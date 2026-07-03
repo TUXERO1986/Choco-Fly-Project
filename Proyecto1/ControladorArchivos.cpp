@@ -135,14 +135,12 @@ void ControladorArchivos::LeerArchivoVuelos(Lista<Vuelo*>* vuelos) {
 
             float distancia = stof(distanciaStr);
 
-            
-            ControladorAsientos* ctrlAsientos = new ControladorAsientos();
-
        
-            ctrlAsientos->CargarEstadoAsientosString(estadoAsientos);
+           Vuelo* aux = new Vuelo(origen, destino, escalas, fecha, distancia,vuelos->longitud());
+           aux->CargarEstadoAsientosString(estadoAsientos);
 
             
-            vuelos->agregaFinal(new Vuelo(origen, destino, escalas, fecha, distancia, ctrlAsientos,vuelos->longitud()));
+            vuelos->agregaFinal(aux);
         }
     }
     archivo.close();
@@ -154,7 +152,7 @@ void ControladorArchivos::GuardarDatoArchivoVuelos(Vuelo* v) {
         archivo << v->getOrigen() << "," << v->getDestino() << ","
             << v->getEscalas() << "," << v->getFecha() << ","
             << v->getDistancia() << ","
-            << v->getControladorAsientos()->ObtenerEstadoAsientosString() << "\n"; 
+            << v->ObtenerEstadoAsientosString() << "\n"; 
         archivo.close();
     }
 }
@@ -174,9 +172,9 @@ void ControladorArchivos::LeerArchivoHoteles(Lista<Hotel*>* hoteles) {
            
             float puntuacion = stof(puntStr);
             float precio = stof(precioStr);
-            ControladorHabitaciones* ctrlHabtiaciones = new ControladorHabitaciones();
-            ctrlHabtiaciones->CargarEstadoHabitacionesString(estadoHabitaciones);
-            hoteles->agregaFinal(new Hotel(nombre, ciudad, puntuacion, precio,ctrlHabtiaciones,hoteles->longitud()));
+            Hotel* aux = new Hotel(nombre, ciudad, puntuacion, precio,hoteles->longitud());
+            aux->CargarEstadoHabitacionesString(estadoHabitaciones);
+            hoteles->agregaFinal(aux);
         }
     }
     archivo.close();
@@ -187,7 +185,7 @@ void ControladorArchivos::GuardarDatoArchivoHoteles(Hotel* h) {
     if (archivo.is_open()) {
         archivo << h->getNombre() << "," << h->getCiudad() << ","
             << h->getPuntuacion() << "," << h->getPrecioNoche()<<","
-            <<h->getControladorHabitaciones()->ObtenerEstadoHabitacionesString() << "\n";
+            <<h->ObtenerEstadoHabitacionesString() << "\n";
         archivo.close();
     }
 }
@@ -209,8 +207,8 @@ void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
             getline(ss, hNom, ',') && getline(ss, hCiu, ',') && getline(ss, hPuntStr, ',') &&
             getline(ss, hPrecStr)) {
 
-            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr), new ControladorAsientos(),0);
-            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr), new ControladorHabitaciones(),0);
+            Vuelo* vueloObj = new Vuelo(vOri, vDes, vEsc, vFec, stof(vDistStr),0);
+            Hotel* hotelObj = new Hotel(hNom, hCiu, stof(hPuntStr), stof(hPrecStr),0);
 
             paquetes->agregaFinal(new Paquete(vueloObj, hotelObj,paquetes->longitud()));
         }

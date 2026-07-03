@@ -28,7 +28,7 @@ void ControladorPrincipal::GenerarPaquetes(int cantidadPaquetes) {
 	generadorDataset->GenerarPaquetesAleatorios(cantidadPaquetes, controladorRutas->getRutas());
 }
 void ControladorPrincipal::AgregarVuelo(string origen, string destino, string escalas, string fecha, float distancia) {
-    controladorVuelos->AgregarNuevoVuelo(origen, destino, escalas, fecha, distancia, new ControladorAsientos());
+    controladorVuelos->AgregarNuevoVuelo(origen, destino, escalas, fecha, distancia);
 }
 void ControladorPrincipal::AgregarHotel(string nombre, string ciudad, float puntuacion, float precioNoche) {
     controladorHoteles->AgregarNuevoHotel(nombre, ciudad, puntuacion, precioNoche);
@@ -74,7 +74,7 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
             if (v->getOrigen() == ResVuelo->getOrigen() && v->getDestino() ==
                 ResVuelo->getDestino() && v->getFecha() == ResVuelo->getFecha()) {
 
-                v->getControladorAsientos()->getAsientos()->obtenerPos(ResVuelo->getAsiento() - 1)->setDisponible(true);
+                v->getAsientos()->obtenerPos(ResVuelo->getAsiento() - 1)->setDisponible(true);
                 break;
             }
         }
@@ -85,7 +85,7 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
         for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
             Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
             if (h->getNombre() == resHotel->getNombreHotel()) {
-                h->getControladorHabitaciones()->getHabitaciones()->
+                h->getHabitaciones()->
                     obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
                 break;
             }
@@ -103,7 +103,7 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
                     v->getDestino() == ReservaVueloIda->getDestino() &&
                     v->getFecha() == ReservaVueloIda->getFecha()) {
 
-                    v->getControladorAsientos()->getAsientos()->obtenerPos(ReservaVueloIda->getAsiento() - 1)->setDisponible(true);
+                    v->getAsientos()->obtenerPos(ReservaVueloIda->getAsiento() - 1)->setDisponible(true);
                     break;
                 }
             }
@@ -115,7 +115,7 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
                 Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
                 if (h->getNombre() == resHotel->getNombreHotel()) {
 
-                    h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                    h->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
                     break;
                 }
             }
@@ -461,7 +461,7 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, i
             vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(),
             vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
             controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (vuelo)");
-        Lista<Asiento*>* listaAsientos = vueloSeleccionado->getControladorAsientos()->getAsientos();
+        Lista<Asiento*>* listaAsientos = vueloSeleccionado->getAsientos();
         for (int i = 0; i < listaAsientos->longitud(); i++) {
             if (listaAsientos->obtenerPos(i)->getNumero() == asiento) {
                 listaAsientos->obtenerPos(i)->setDisponible(false); 
@@ -479,7 +479,7 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
         controladorReservas->AgregarReserva(new ReservaHotel(userActual->getCodigo(), userActual->getNombre(), hotelSeleccionado->getNombre(),
             hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)");
-        Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getControladorHabitaciones()->getHabitaciones();
+        Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getHabitaciones();
         for (int i = 0; i < listaHabitaciones->longitud(); i++) {
             if (listaHabitaciones->obtenerPos(i)->getNumero() == habitacion) {
                 listaHabitaciones->obtenerPos(i)->setDisponible(false);
@@ -529,7 +529,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
             if (v->getOrigen() == ResVuelo->getOrigen() && v->getDestino() == 
                 ResVuelo->getDestino() && v->getFecha() == ResVuelo->getFecha()) {
 
-                v->getControladorAsientos()->getAsientos()->obtenerPos(ResVuelo->getAsiento() - 1)->setDisponible(true);
+                v->getAsientos()->obtenerPos(ResVuelo->getAsiento() - 1)->setDisponible(true);
                 break;
             }
         }
@@ -540,7 +540,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
         for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
             Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
             if (h->getNombre() == resHotel->getNombreHotel()) {
-                h->getControladorHabitaciones()->getHabitaciones()->
+                h->getHabitaciones()->
                     obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
                 break;
             }
@@ -558,7 +558,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
                     v->getDestino() == ReservaVueloIda->getDestino() &&
                     v->getFecha() == ReservaVueloIda->getFecha()) {
 
-                    v->getControladorAsientos()->getAsientos()->obtenerPos(ReservaVueloIda->getAsiento() - 1)->setDisponible(true);
+                    v->getAsientos()->obtenerPos(ReservaVueloIda->getAsiento() - 1)->setDisponible(true);
                     break;
                 }
             }
@@ -569,7 +569,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
             for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
                 Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
                 if (h->getNombre() == resHotel->getNombreHotel()) {
-                    h->getControladorHabitaciones()->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                    h->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
                     break;
                 }
             }
@@ -696,10 +696,10 @@ void ControladorPrincipal::MostrarHabitaciones(int indiceHabtitacion) {
     controladorHoteles->getHoteles()->obtenerPos(indiceHabtitacion)->MostrarHabitaciones();
 }
 bool ControladorPrincipal::VerificarAsiento(int numeroAsiento,int indiceVuelo) {
-    return controladorVuelos->getVuelos()->obtenerPos(indiceVuelo)->getControladorAsientos()->VerificarAsiento(numeroAsiento);
+    return controladorVuelos->getVuelos()->obtenerPos(indiceVuelo)->VerificarAsiento(numeroAsiento);
 }
 bool ControladorPrincipal::VerificarHabitacion(int numeroHabitacion,int indiceHotel) {
-    return controladorHoteles->getHoteles()->obtenerPos(indiceHotel)->getControladorHabitaciones()->verificarHabitacion(numeroHabitacion);
+    return controladorHoteles->getHoteles()->obtenerPos(indiceHotel)->verificarHabitacion(numeroHabitacion);
 }
 Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string correo, string password) {
 	bool existeCuenta = controladorUsuarios->VerificarCuentaExistente(nombre, correo);

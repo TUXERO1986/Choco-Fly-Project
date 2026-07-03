@@ -78,8 +78,8 @@ void ControladorVuelos::MostrarVuelos() {
     } while (opcion != 'q' && opcion != 'Q');
 }
 
-void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia,ControladorAsientos* controladorAsientos) {
-    Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia,controladorAsientos,vuelos->longitud());
+void ControladorVuelos::AgregarNuevoVuelo(string origen, string destino, string escalas,string fecha, float distancia) {
+    Vuelo* nuevoVuelo = new Vuelo(origen, destino, escalas, fecha,distancia,vuelos->longitud());
     vuelos->agregaFinal(nuevoVuelo);
     vuelosMenorPrecio->Insertar(nuevoVuelo);
     controladorArchivosVuelos->GuardarDatoArchivoVuelos(nuevoVuelo);
@@ -96,14 +96,12 @@ void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
         string escalas = "Directo";
 
         string fechaIda = to_string(1 + (rand() % 30)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
-        ControladorAsientos* asientosIda = new ControladorAsientos();
 
-        AgregarNuevoVuelo(origen, destino, escalas, fechaIda, distancia, asientosIda);
+        AgregarNuevoVuelo(origen, destino, escalas, fechaIda, distancia);
 
         if (i + 1 < contador) {
             string fechaRetorno = to_string(1 + (rand() % 30)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
-            ControladorAsientos* asientosRetorno = new ControladorAsientos();
-            AgregarNuevoVuelo(destino, origen, escalas, fechaRetorno, distancia, asientosRetorno);
+            AgregarNuevoVuelo(destino, origen, escalas, fechaRetorno, distancia);
         }
     }
 }
@@ -205,8 +203,7 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
     cout << "Escalas: " << (stringEscalas.empty() ? "Ninguna" : stringEscalas) << endl;
     cout << "Distancia total: " << distanciaFinal << " km" << endl;
 
-    ControladorAsientos* controladorAsientos = new ControladorAsientos();
-    AgregarNuevoVuelo(origenFinal, destinoFinal, stringEscalas, stringFechas, distanciaFinal, controladorAsientos);
+    AgregarNuevoVuelo(origenFinal, destinoFinal, stringEscalas, stringFechas, distanciaFinal);
 
     return true;
 }
