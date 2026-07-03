@@ -1,4 +1,5 @@
 #include "GestionPantallas.h"
+#include "AnimacionConsola.h"
 #include <iomanip>
 
 GestionPantallas::GestionPantallas(ControladorPrincipal* ptrPrincipal, Usuario* ptrUsuario) {
@@ -63,32 +64,19 @@ void GestionPantallas::IniciarMotorNavegacion() {
 }
 
 void GestionPantallas::Menuprincipal() {
-    DibujarHeader("Inicio");
-    cout << BLINK;
-    ColorUI::printGradient(chocofly, TemaPrincipal, false);
-    cout << RESET;
-    ColorUI::printGradient("\n\n\t\t\t\t\t[1] CATALOGOS DE SERVICIOS", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[2] RESERVAR UN SERVICIO", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[3] VERIFICAR MIS DATOS", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[4] MI HISTORIAL DE RESERVAS", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[5] CANCELAR RESERVA", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[6] CALIFICAR HOTEL", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[7] CREDITOS", Exito, false);
-    ColorUI::printGradient("\n\t\t\t\t\t[0] Cerrar Sesion", Alerta, false);
-
-    char opcion = _getch();
+    char opcion = AnimacionConsola::AnimarMenuPrincipal();
 
     switch (opcion) {
-        case '1': historialPantallas->apilar(PANTALLA_CATALOGOS); break;
-        case '2': historialPantallas->apilar(PANTALLA_RESERVAS); break;
-        case '3': historialPantallas->apilar(PANTALLA_DATOS_USUARIO); break;
-        case '4': historialPantallas->apilar(PANTALLA_HISTORIAL_RESERVAS); break;
-        case '5': historialPantallas->apilar(PANTALLA_CANCELAR_RESERVA); break;
-        case '6': historialPantallas->apilar(PANTALLA_CALIFICAR_HOTEL); break;
+        case '1': AnimacionConsola::TransicionAvion(); historialPantallas->apilar(PANTALLA_CATALOGOS); break;
+        case '2': AnimacionConsola::TransicionAvion(); historialPantallas->apilar(PANTALLA_RESERVAS); break;
+        case '3': AnimacionConsola::TransicionAvion(); historialPantallas->apilar(PANTALLA_DATOS_USUARIO); break;
+        case '4': AnimacionConsola::TransicionAvion(); historialPantallas->apilar(PANTALLA_HISTORIAL_RESERVAS); break;
+        case '5': AnimacionConsola::TransicionAvion(); historialPantallas->apilar(PANTALLA_CANCELAR_RESERVA); break;
+        case '6': AnimacionConsola::TransicionAvion(); historialPantallas->apilar(PANTALLA_CALIFICAR_HOTEL); break;
         case '7': LimpiarConsola(); creditos(); break; 
         case '0':
             LimpiarConsola();
-            ColorUI::printGradient("Cerrando sesion...", Alerta, false);
+            AnimacionConsola::AvionVolando(1500);
             LimpiarConsola();
             historialPantallas->desapilar();
             break;
@@ -439,10 +427,8 @@ void GestionPantallas::MenuFiltrosHoteles() {
 }
 
 void GestionPantallas::HistorialReservas() {
-    ColorUI::printGradient("=== MI HISTORIAL DE RESERVAS ===", TemaPrincipal, false);
+    historialPantallas->desapilar();
     historialPantallas->apilar(PANTALLA_FILTROS_RESERVAS);
-
-    historialPantallas->desapilar(); 
 }
 
 void GestionPantallas::MenuDatosUsuario(){
