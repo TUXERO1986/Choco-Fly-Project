@@ -25,7 +25,6 @@ inline int _kbhit_linux() {
 namespace ColorUI {
     namespace AnimacionesUI {
 
-        // RAII para ocultar y mostrar el cursor de forma segura ante cualquier retorno
         struct CursorGuard {
             CursorGuard() {
                 std::cout << "\033[?25l" << std::flush;
@@ -37,7 +36,6 @@ namespace ColorUI {
 
         class AnimacionConsola {
         private:
-            // Borra la región que ocupaba un sprite usando gotoxy sin parpadeo
             static void borrarSprite(int x, int y, const std::vector<std::string>& sprite) {
                 for (size_t i = 0; i < sprite.size(); ++i) {
                     if (y + (int)i >= 0) {
@@ -61,7 +59,6 @@ namespace ColorUI {
                 }
             }
 
-            // Búfer 2D: Dibuja un sprite en un lienzo de memoria aplicando LERP de color (elimina parpadeo y wrapping en consola)
             static void drawToCanvas(std::vector<std::string>& canvas, std::vector<std::vector<std::string>>& color_canvas, int x, int y, const std::vector<std::string>& sprite, const std::vector<std::string>& paleta, bool transparent_spaces = true) {
                 int height = (int)canvas.size();
                 if (height == 0) return;
@@ -101,7 +98,6 @@ namespace ColorUI {
                 }
             }
 
-            // Renderiza el búfer 2D completo de un solo golpe desde (0,0) asegurando cero deformación ni parpadeos
             static void renderCanvas(const std::vector<std::string>& canvas, const std::vector<std::vector<std::string>>& color_canvas) {
                 gotoxy(0, 0);
                 std::string frame_buffer;
@@ -126,7 +122,6 @@ namespace ColorUI {
             }
 
         public:
-            // 1. Avion Volando: Animación interactiva con Búfer 2D en memoria
             static void AvionVolando(int duracion_ms = 3000) {
                 CursorGuard cursorGuard;
                 LimpiarConsola();
@@ -156,7 +151,6 @@ namespace ColorUI {
                 LimpiarConsola();
             }
 
-            // 2. Avion Con Estela: Deja una estela visual detrás al volar usando Búfer 2D
             static void AvionConEstela(int duracion_ms = 3000) {
                 CursorGuard cursorGuard;
                 LimpiarConsola();
@@ -191,7 +185,6 @@ namespace ColorUI {
                 LimpiarConsola();
             }
 
-            // 3. Transicion Avion: Cruce rápido con barrido total (Wipe completo en Eje X y Eje Y)
             static void TransicionAvion() {
                 CursorGuard cursorGuard;
                 int frames = 22;
@@ -227,7 +220,6 @@ namespace ColorUI {
                 LimpiarConsola();
             }
 
-            // 4. Cielo Animado: Animación de bienvenida perfecta en Búfer 2D (cero deformaciones)
             static void CieloAnimado(int duracion_ms = 4000) {
                 CursorGuard cursorGuard;
                 LimpiarConsola();
@@ -272,7 +264,6 @@ namespace ColorUI {
                 LimpiarConsola();
             }
 
-            // 5. Barra Progreso Avion: Reemplazo para spinner sin parpadeo
             static void BarraProgresoAvion(const std::string& texto, int duracion_ms = 1500, const std::string& sangria = "\t\t\t") {
                 CursorGuard cursorGuard;
                 int pasos = 20;
@@ -294,7 +285,6 @@ namespace ColorUI {
                 std::cout << "\r" << sangria << "                                                                                \r";
             }
 
-            // 6. Menú Principal Interactivo: Aviones laterales y logo oscilando en Búfer 2D sin bloqueo
             static char AnimarMenuPrincipal() {
                 CursorGuard cursorGuard;
                 const int WIDTH = 100;
@@ -325,16 +315,13 @@ namespace ColorUI {
 
                     double time_sec = frame_count * 0.05;
 
-                    // Header y Titulo
                     std::string header = "=== SIMULADOR CHOCOFLY - MENU PRINCIPAL DE SERVICIOS ===";
                     drawToCanvas(canvas, color_canvas, (WIDTH - (int)header.length()) / 2, 1, {header}, ColorUI::Paletas::TemaPrincipal, true);
 
-                    // Banner Chocofly oscilando suavemente
                     int banner_x = (int)round(27.0 + 1.5 * cos(time_sec * 1.2));
                     int banner_y = (int)round(3.0 + 0.5 * sin(time_sec * 1.5));
                     drawToCanvas(canvas, color_canvas, banner_x, banner_y, BANNER_CHOCOFLY, ColorUI::Paletas::TemaPrincipal, false);
 
-                    // Aviones laterales con hélices girando
                     std::vector<std::string> active_drone = DRONE_TEMPLATE;
                     active_drone[2] = PROP_FRAMES[(frame_count / 2) % PROP_FRAMES.size()];
 
@@ -346,7 +333,6 @@ namespace ColorUI {
                     int right_y = (int)round(12.0 + 5.0 * cos(time_sec * 1.8));
                     drawToCanvas(canvas, color_canvas, right_x, right_y, active_drone, ColorUI::Paletas::gege, true);
 
-                    // Opciones del menú en el centro del lienzo
                     int menu_start_y = 10;
                     int menu_x = 34;
                     for (size_t i = 0; i < menu_options.size(); ++i) {

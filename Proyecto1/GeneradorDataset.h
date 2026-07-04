@@ -21,11 +21,9 @@ public:
     GeneradorDataset();
     ~GeneradorDataset();
 
-    // Ahora reciben la lista de rutas reales del sistema
     void GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas);
     void GenerarHotelesAleatorios(int cantidad, Lista<Ruta*>* rutas);
     void GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rutas);
     
-    // Generador masivo
     void GenerarTodo(int cantVuelos, int cantHoteles, int cantPaquetes, Lista<Ruta*>* rutas);
 };

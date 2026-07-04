@@ -1,9 +1,8 @@
 #pragma once
 #include "Color.h"
 #include "ControladorPrincipal.h"
-#include "Pila.h" // Incluimos la pila
+#include "Pila.h"
 
-// Identificadores únicos para cada pantalla
 enum PantallaID {
     PANTALLA_PRINCIPAL = 1,
     PANTALLA_CATALOGOS,
@@ -26,20 +25,17 @@ private:
     ControladorPrincipal* principal;
     Usuario* userActual; 
     
-    // NUEVO: La pila que gestionará el historial de navegación
     Pila<PantallaID>* historialPantallas;
 
 public:
     GestionPantallas(ControladorPrincipal* ptrPrincipal, Usuario* ptrUsuario);
-    ~GestionPantallas(); // Agregamos destructor para limpiar la pila
+    ~GestionPantallas();
 
     int LeerOpcion(); 
     void DibujarHeader(string ruta);
     
-    // NUEVO: El motor que reemplaza los bucles
     void IniciarMotorNavegacion();
 
-    // Las funciones de pantalla ya no tendrán do-while
     void Menuprincipal();
     void MenuFiltrosReservas();
     void MenuFiltrosVuelos();
