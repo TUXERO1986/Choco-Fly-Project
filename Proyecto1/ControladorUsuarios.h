@@ -30,5 +30,6 @@ public:
     
     void MostrarUsuarios();
     Lista<Usuario*>* getUsuarios();
+    HashTable<string,Usuario*>* gettablaUsuarios();
     void setUsuarios(Lista<Usuario*>* usuarios);
 }; 

@@ -75,10 +75,11 @@ void ControladorUsuarios::MostrarUsuarios() {
     for (int i = 0; i < usuarios->longitud(); i++) {
         Usuario* aux = usuarios->obtenerPos(i);
         cout << endl;
-        aux->MostrarDatosAdmin();
+        aux->MostrarDatos();
         cout << endl;
     }
 }
 
 Lista<Usuario*>* ControladorUsuarios::getUsuarios() { return usuarios; }
+HashTable<string,Usuario*>* ControladorUsuarios::gettablaUsuarios(){return tablaUsuarios;}
 void ControladorUsuarios::setUsuarios(Lista<Usuario*>* usuarios) { this->usuarios = usuarios; }

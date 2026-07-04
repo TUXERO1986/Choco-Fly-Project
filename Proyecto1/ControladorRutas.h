@@ -43,6 +43,7 @@ public:
 	void AgregarNuevaRuta(string origen, string destino, float distancia);
 	void MostrarRutas();
 	Lista<Ruta*>* getRutas();
+
 	Lista<Lista<int>*>* getConexiones();
 	Lista<CiudadID*>* getMapaCiudades();
 };

@@ -1,4 +1,6 @@
 #pragma once
+#include "Reserva.h"
+#include "Lista.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -9,10 +11,11 @@ private:
 	string correo;
 	string password;
 	string codigo;
+	Lista<Reserva*>* reservas;
 public:
 	Usuario(string nombre, string correo, string password, string codigo);
-	void MostrarDatosUsuarios();
-	void MostrarDatosAdmin();
+	~Usuario();
+	void MostrarDatos();
 
 	string getCodigo();
 	string getNombre();
@@ -22,5 +25,8 @@ public:
 	void setCorreo(string correo);
 	void setPassword(string password);
 	void setCodigo(string codigo);
+
+	Lista<Reserva*>* getReservas();
+	void setReservas(Lista<Reserva*>* reservas);
 };
 
