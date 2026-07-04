@@ -24,7 +24,7 @@ ReservaVuelo::ReservaVuelo(string codigoUsuario, string nombreUsuario, string or
 	};
 }
 
-void ReservaVuelo::MostrarReserva() {
+void ReservaVuelo::MostrarDatos() {
     ColorUI::printGradient("================ VOUCHER DE VUELO ================", ColorUI::Paletas::TemaPrincipal, false);
     ColorUI::printGradient(" Origen: " + origen + "   -->   Destino: " + destino, ColorUI::Paletas::Exito, false);
     ColorUI::printGradient(" Fecha: " + fecha + "   | Escalas: " + escalas, ColorUI::Paletas::azul, false);

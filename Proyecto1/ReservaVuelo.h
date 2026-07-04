@@ -19,7 +19,7 @@ public:
 	ReservaVuelo(string codigoUsuario,string nombreUsuario,string origen, string destino, 
 		string escalas, string fecha,float distancia, int equipaje, int equipajecabina,int clase,
 		int asiento,int id);
-	void MostrarReserva() override;
+	void MostrarDatos() override;
 	string aTextoArchivo() override;
 	string getNombre();
 	string getOrigen();

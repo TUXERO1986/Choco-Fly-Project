@@ -91,7 +91,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 }
 #include "Color.h"
 
-void ReservaHotel::MostrarReserva() {
+void ReservaHotel::MostrarDatos() {
     ColorUI::printGradient("================ VOUCHER DE HOTEL ================", ColorUI::Paletas::TemaPrincipal, false);
     ColorUI::printGradient(" Hotel: " + nombreHotel + "   |   Ciudad: " + ciudad, ColorUI::Paletas::Exito, false);
     ColorUI::printGradient(" Check-In: " + fechaIngreso + "   -->   Check-Out: " + fechaSalida, ColorUI::Paletas::azul, false);

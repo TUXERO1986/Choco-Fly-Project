@@ -45,6 +45,10 @@ public:
 	void MostrarPaquetes();
 	void MostrarReservas();
 	void MostrarUsuarios();
+	template <typename T>
+    void ConsultarCatalogoDinamico(Lista<T*>* lista, string titulo, std::function<bool(T*)> criterio);
+	template<typename T>
+	void ConsultarUsuarios(Lista<T*>* lista, string titulo, std::function<bool(T*)> criterio);
 	void FilrarVuelosPorOrigenDestino(string origen, string destino);
 	void FiltrarUsuariosPorNombre(string nombreBusqueda);
 	void FiltrarRutasPorOrigen(string ciudadBusqueda);

@@ -4,7 +4,7 @@ Reserva::Reserva(string codigoUsuario, string nombreUsuario, int id) {
 	this->nombreUsuario = nombreUsuario;
 	this->id=id;
 }
-void Reserva::MostrarReserva() {}
+void Reserva::MostrarDatos() {}
 string Reserva::getCodigoUsuario() { return codigoUsuario; }
 string Reserva::getNombreUsuario() { return nombreUsuario; }
 string Reserva::getTipoReserva() { return tipoReserva; }

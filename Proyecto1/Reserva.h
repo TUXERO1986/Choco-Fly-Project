@@ -11,7 +11,7 @@ protected:
 	int id;
 public:
 	Reserva(string codigoUsuario, string nombreUsuario,int id);
-	virtual void MostrarReserva();
+	virtual void MostrarDatos();
 	virtual string aTextoArchivo() = 0;
 	string getCodigoUsuario();
 	string getNombreUsuario();

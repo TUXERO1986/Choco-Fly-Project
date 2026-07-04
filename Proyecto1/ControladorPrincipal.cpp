@@ -151,6 +151,18 @@ void ControladorPrincipal::MostrarUsuarios() {
 void ControladorPrincipal::MostrarRutas() {
     controladorRutas->MostrarRutas();
 }
+template<typename T>
+void ControladorPrincipal::ConsultarCatalogoDinamico(Lista<T*>* lista, string titulo, std::function<bool(T*)> criterio) {
+    MostrarResultadosPaginados<T>(
+        lista, 
+        titulo, 
+        criterio, 
+        [](T* item, int indice) {
+            ColorUI::printGradient("  [ ID: " + to_string(indice) + " ]", { "#FFD700", "#FF4500" }, false, true);
+            item->MostrarDatos();
+        }
+    );
+}
 void ControladorPrincipal::FilrarVuelosPorOrigenDestino(string origen, string destino) {
     controladorVuelos->FiltrarVuelosPorOrigenDestino(origen, destino);
 }
@@ -260,7 +272,7 @@ void ControladorPrincipal::FiltrarReservasPorTipo(string tipo) {
         [tipo](Reserva* r) { return r->getTipoReserva() == tipo; },
         [](Reserva* r, int indice) {
             ColorUI::printGradient("\n[ID RESERVA #" + to_string(indice) + "]\n", ColorUI::Paletas::MoradoD, false);
-            r->MostrarReserva();
+            r->MostrarDatos();
         }
     );
 }
@@ -271,7 +283,7 @@ void ControladorPrincipal::FiltrarReservasPorUsuario(string codigoUsuario) {
         [codigoUsuario](Reserva* r) { return r->getCodigoUsuario() == codigoUsuario; },
         [](Reserva* r, int indice) {
             ColorUI::printGradient("\n[ID RESERVA #" + to_string(indice) + "]\n", ColorUI::Paletas::MoradoD, false);
-            r->MostrarReserva();
+            r->MostrarDatos();
         }
     );
 }
@@ -282,7 +294,7 @@ void ControladorPrincipal::FiltrarReservasPorTipoUsuario(string tipoBusqueda, st
         [tipoBusqueda, codigousuario](Reserva* r) { return r->getCodigoUsuario() == codigousuario && r->getTipoReserva() == tipoBusqueda; },
         [](Reserva* r, int indice) {
             ColorUI::printGradient("\n[ID RESERVA #" + to_string(indice) + "]\n", ColorUI::Paletas::MoradoD, false);
-            r->MostrarReserva();
+            r->MostrarDatos();
         }
     );
 }
@@ -686,7 +698,7 @@ void ControladorPrincipal::MostrarReservasUsuario(Usuario* userActual) {
         Reserva* aux = controladorReservas->getReservasTotales()->obtenerPos(i);
         if (aux->getCodigoUsuario() == userActual->getCodigo()) {
             cout << "Reserva #" << i << ":" << endl;
-            aux->MostrarReserva();
+            aux->MostrarDatos();
             cout << endl;
         }
     }

@@ -40,7 +40,7 @@ void ControladorReservas::MostrarReservas() {
     for (int i = 0; i < reservasTotales->longitud(); i++) {
         cout << "\nReserva #" << (i + 1) << ":" << endl;
         cout << endl;
-        reservasTotales->obtenerPos(i)->MostrarReserva();
+        reservasTotales->obtenerPos(i)->MostrarDatos();
         cout << endl;
     }
     cout << "===================================================" << endl;
