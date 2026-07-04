@@ -187,7 +187,7 @@ namespace ColorUI {
 
             static void TransicionAvion() {
                 CursorGuard cursorGuard;
-                int frames = 22;
+                int frames = 14;
                 int old_x = 0, y = 12;
 
                 for (int f = 0; f <= frames; ++f) {
@@ -215,7 +215,7 @@ namespace ColorUI {
                     old_x = x;
 
                     std::cout << std::flush;
-                    std::this_thread::sleep_for(std::chrono::milliseconds(25));
+                    std::this_thread::sleep_for(std::chrono::milliseconds(15));
                 }
                 LimpiarConsola();
             }

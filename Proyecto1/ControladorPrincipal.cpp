@@ -16,25 +16,31 @@ ControladorPrincipal::~ControladorPrincipal() {
 }
 void ControladorPrincipal::GenerarDatos(int cantidadVuelos, int cantidadHoteles, int cantidadPaquetes) {
 	generadorDataset->GenerarTodo(cantidadVuelos,cantidadHoteles,cantidadPaquetes,controladorRutas->getRutas());
-    
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Generacion masiva: " + to_string(cantidadVuelos) + " vuelos, " + to_string(cantidadHoteles) + " hoteles, " + to_string(cantidadPaquetes) + " paquetes");
 }
 void ControladorPrincipal::GenerarVuelos(int cantidadVuelos) {
 	generadorDataset->GenerarVuelosAleatorios(cantidadVuelos, controladorRutas->getRutas());
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Genero " + to_string(cantidadVuelos) + " vuelos aleatorios");
 }
 void ControladorPrincipal::GenerarHoteles(int cantidadHoteles) {
 	generadorDataset->GenerarHotelesAleatorios(cantidadHoteles, controladorRutas->getRutas());
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Genero " + to_string(cantidadHoteles) + " hoteles aleatorios");
 }
 void ControladorPrincipal::GenerarPaquetes(int cantidadPaquetes) {
 	generadorDataset->GenerarPaquetesAleatorios(cantidadPaquetes, controladorRutas->getRutas());
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Genero " + to_string(cantidadPaquetes) + " paquetes aleatorios");
 }
 void ControladorPrincipal::AgregarVuelo(string origen, string destino, string escalas, string fecha, float distancia) {
     controladorVuelos->AgregarNuevoVuelo(origen, destino, escalas, fecha, distancia);
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Agrego Vuelo: " + origen + " -> " + destino);
 }
 void ControladorPrincipal::AgregarHotel(string nombre, string ciudad, float puntuacion, float precioNoche) {
     controladorHoteles->AgregarNuevoHotel(nombre, ciudad, puntuacion, precioNoche);
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Agrego Hotel: " + nombre + " en " + ciudad);
 }
 void ControladorPrincipal::AgregarPaquete(Vuelo* vueloIda, Hotel* hotel) {
     controladorPaquetes->AgregarNuevoPaquete(vueloIda, hotel);
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Agrego Paquete: Vuelo " + vueloIda->getOrigen() + "->" + vueloIda->getDestino() + " + Hotel " + hotel->getNombre());
 }
 void ControladorPrincipal::AgregarReserva(Reserva* nuevaReserva) {
     controladorReservas->AgregarReserva(nuevaReserva);
@@ -44,20 +50,25 @@ void ControladorPrincipal::AgregarUsuario(string nombre, string correo, string p
 }
 void ControladorPrincipal::AgregarRuta(string origen, string destino, float distancia) {
     controladorRutas->AgregarNuevaRuta(origen, destino, distancia);
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Agrego Ruta: " + origen + " <-> " + destino);
 }
 void ControladorPrincipal::EliminarRuta(int indiceRuta) {
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Ruta ID: " + to_string(indiceRuta));
 	controladorRutas->getRutas()->eliminaPos(indiceRuta);
     GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarVuelo(int indiceVuelo) {
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Vuelo ID: " + to_string(indiceVuelo));
 	controladorVuelos->getVuelos()->eliminaPos(indiceVuelo);
     GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarHotel(int indiceHotel) {
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Hotel ID: " + to_string(indiceHotel));
 	controladorHoteles->getHoteles()->eliminaPos(indiceHotel);
     GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarPaquete(int indicePaquete) {
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Paquete ID: " + to_string(indicePaquete));
 	controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
     GuardarDatosEnArchivos();
 }
@@ -131,6 +142,7 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
     ColorUI::Alertas::MostrarExito("Reserva cancelada con exito.");
 }
 void ControladorPrincipal::EliminarUsuario(int indiceUsuario) {
+    controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Usuario ID: " + to_string(indiceUsuario));
     controladorUsuarios->getUsuarios()->eliminaPos(indiceUsuario);
 }
 
@@ -293,6 +305,7 @@ bool ControladorPrincipal::CancelarReservaUsuario(string codigoUsuario, int indi
     userTarget->getReservas()->eliminaPos(indiceReservaLocal);
 
     GuardarDatosEnArchivos();
+    controladorRegistros->AgregarRegistro(userTarget->getNombre(), "N/A", "Usuario", "Cancelo reserva: " + reservaACancelar->getTipoReserva());
     ColorUI::Animaciones::mostrarSpinner("Deshaciendo transaccion y devolviendo recursos", 1200, "");
     ColorUI::Alertas::MostrarExito("Reserva cancelada con exito.");
     return true;
@@ -315,6 +328,7 @@ void ControladorPrincipal::CalificarHotel(string nombreHotel, float nuevaPuntuac
 
             GuardarDatosEnArchivos(); 
 
+            controladorRegistros->AgregarRegistro("Usuario", "N/A", "Usuario", "Califico Hotel: " + nombreHotel + " con " + to_string(nuevaPuntuacion) + " estrellas");
             cout << "Gracias por tu calificacion! La calificacion de " << nombreHotel << " ha subido a " << puntuacionActualizada << " estrellas." << endl;
             encontrado = true;
             break;
@@ -496,3 +510,4 @@ ControladorReservas* ControladorPrincipal::getControladorReservas() { return con
 ControladorVuelos* ControladorPrincipal::getControladorVuelos() { return controladorVuelos; }
 ControladorRutas* ControladorPrincipal::getControladorRutas() { return controladorRutas; }
 ControladorUsuarios* ControladorPrincipal::getControladorUsuarios() { return controladorUsuarios; }
+ControladorRegistros* ControladorPrincipal::getControladorRegistros() { return controladorRegistros; }

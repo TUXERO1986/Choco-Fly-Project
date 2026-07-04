@@ -46,3 +46,12 @@ nuevo1,nuevo1,Usuario,Nueva cuenta creada,03-07-2026 23:20:03
 0000,0000,Usuario,Inicio de sesion,04-07-2026 11:05:16
 00000,0000,Usuario,Inicio de sesion,04-07-2026 11:05:44
 0000,0000,Usuario,Inicio de sesion,04-07-2026 11:58:15
+lol,lol,Usuario,Inicio de sesion,04-07-2026 17:58:07
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:01:49
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:11:52
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:20:47
+lol,lol,Usuario,Reserva (vuelo),04-07-2026 18:21:10
+lol,lol,Usuario,Reserva (hotel),04-07-2026 18:26:35
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,04-07-2026 18:45:00
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:45:30
+lol,lol,Usuario,Reserva (paquete),04-07-2026 18:46:16

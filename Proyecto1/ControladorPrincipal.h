@@ -41,15 +41,15 @@ public:
 	void EliminarUsuario(int indiceUsuario);
 template<typename T>
 void ConsultarCatalogoDinamico(Lista<T*>* lista, string titulo, std::function<bool(T*)> criterio) {
-    MostrarResultadosPaginados<T>(
-        lista, 
-        titulo, 
-        criterio, 
-        [](T* item, int indice) {
-            ColorUI::printGradient("  [ ID: " + to_string(indice) + " ]", { "#FFD700", "#FF4500" }, false, true);
-            item->MostrarDatos();
-        }
-    );
+	MostrarResultadosPaginados<T>(
+		lista,
+		titulo,
+		criterio,
+		[](T* item, int indice) {
+			ColorUI::printGradient("  [ ID: " + to_string(indice) + " ]", { "#FFD700", "#FF4500" }, false, true);
+			item->MostrarDatos();
+		}
+	);
 }
 	bool CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);
 	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);
@@ -73,7 +73,7 @@ void ConsultarCatalogoDinamico(Lista<T*>* lista, string titulo, std::function<bo
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 	ControladorUsuarios* getControladorUsuarios();
-
+	ControladorRegistros* getControladorRegistros();
 	void GuardarDatosEnArchivos();
 
 };
