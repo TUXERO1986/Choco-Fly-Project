@@ -459,7 +459,7 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, i
     if (vueloSeleccionado != nullptr) {
         controladorReservas->AgregarReserva(new ReservaVuelo(userActual->getCodigo(), userActual->getNombre(),
             vueloSeleccionado->getOrigen(), vueloSeleccionado->getDestino(), vueloSeleccionado->getEscalas(),
-            vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento));
+            vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento,controladorReservas->getReservasTotales()->longitud()));
             controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (vuelo)");
         Lista<Asiento*>* listaAsientos = vueloSeleccionado->getAsientos();
         for (int i = 0; i < listaAsientos->longitud(); i++) {
@@ -477,7 +477,7 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
     if (hotelSeleccionado != nullptr) {
 
         controladorReservas->AgregarReserva(new ReservaHotel(userActual->getCodigo(), userActual->getNombre(), hotelSeleccionado->getNombre(),
-            hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS));
+            hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS,controladorReservas->getReservasTotales()->longitud()));
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)");
         Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getHabitaciones();
         for (int i = 0; i < listaHabitaciones->longitud(); i++) {
@@ -646,14 +646,14 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
         userActual->getCodigo(), userActual->getNombre(),
         vueloOferta->getOrigen(), vueloOferta->getDestino(),
         vueloOferta->getEscalas(), vueloOferta->getFecha(),
-        vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento 
+        vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento ,-1
     );
 
     float precioTotalHotel = hotelOferta->getPrecioNoche() * noches;
     ReservaHotel* reservaHotel = new ReservaHotel(
         userActual->getCodigo(), userActual->getNombre(),
         hotelOferta->getNombre(), hotelOferta->getCiudad(),vueloOferta->getFecha(),
-        noches, precioTotalHotel,1,1,1,1
+        noches, precioTotalHotel,1,1,1,1,.1
     );
 
     string fechaRetorno = SumarDiasAFecha(vueloOferta->getFecha(), noches);
@@ -662,7 +662,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
         userActual->getCodigo(), userActual->getNombre(),
         vueloOferta->getDestino(), vueloOferta->getOrigen(), 
         "Directo",SumarDiasAFecha(vueloOferta->getFecha(), noches),
-        vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento
+        vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento,-1
     );
 
     ReservaPaquete* nuevaReserva = new ReservaPaquete(
@@ -670,7 +670,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
         userActual->getNombre(),
         ReservaVueloIda,
         ReservaVueloRetorno,
-        reservaHotel
+        reservaHotel,controladorReservas->getReservasTotales()->longitud()
     );
 
     controladorReservas->AgregarReserva(nuevaReserva);
