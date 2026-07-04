@@ -1,18 +1,20 @@
 #pragma once
 #ifdef _WIN32
-    // Todo lo que esté aquí SOLO se compilará en las PCs de tus amigos (Windows)
     #include <windows.h>
     #include <conio.h>
 #else
-    // Todo lo que esté aquí SOLO se compilará en tu PC (Linux/Mac)
     #include <iostream>
     #include <unistd.h> 
 #endif
 #include "Color.h"
-extern std::string chocofly, chocoadmin, admin, registro, login, quepaso,PanelControlADM,reportesADM,mantenimiento, eliminacion,datos;
+#include <vector>
+#include <string>
+extern std::string chocofly, admin, registro, login, PanelControlADM, reportesADM, mantenimiento, eliminacion, datos;
 extern std::string spriteAvion, spriteHotel, spritePaquete;
 
-
-void ImprimirBordes(const std::string& arteAscii);
+//  animacion
+extern std::vector<std::string> DRONE_TEMPLATE, PROP_FRAMES;
+extern std::vector<std::string> BANNER_CHOCOFLY, BANNER_REGISTRO, BANNER_ADMIN, BANNER_ACCESO;
+extern std::vector<std::string> SPRITE_NUBE;
 
 void gotoxy(int,int);

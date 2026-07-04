@@ -88,13 +88,18 @@ inline void MostrarResultadosPaginados(Lista<T*>* listaOriginal, const std::stri
             std::cout << "\n";
         }
         
-        ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", ColorUI::Paletas::azul, false);
-        std::cout << "\n\tElige una opcion: ";
+        ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [ENTER / Q] Continuar / Salir", ColorUI::Paletas::azul, false);
+        std::cout << "\n\t> ";
         opcion = _getch();
         
         if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
         else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
-        
+        else if (opcion != 's' && opcion != 'S' && opcion != 'a' && opcion != 'A') {
+            if (opcion >= '0' && opcion <= '9') {
+                std::cin.putback(opcion);
+            }
+            break;
+        }
     } while (opcion != 'q' && opcion != 'Q');
     
     delete[] indicesFiltrados;

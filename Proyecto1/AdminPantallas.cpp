@@ -1,4 +1,5 @@
 #include "AdminPantallas.h"
+#include "AnimacionConsola.h"
 
 using namespace std;
 using namespace ColorUI;
@@ -31,12 +32,8 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\t=== NUEVO VUELO ===", TemaPrincipal, false);
 
             ColorUI::printGradient("\n\tOrigen: ", Exito, false, false);
-            
-            
-            
-            
-            
-            getline(cin, origen);
+
+            cin >> ws; getline(cin, origen);
             ColorUI::printGradient("\tDestino: ", Exito, false, false);
             getline(cin, destino);
             ColorUI::printGradient("\tEscalas (Ej. 'Directo' o 'Lima-Bogota'): ", Exito, false, false);
@@ -52,7 +49,7 @@ void AdminPantallas::MenuAgregar() {
             }
             cin.ignore(1000, '\n');
 
-            ColorUI::Animaciones::mostrarSpinner("Guardando vuelo en el sistema", 800);
+            AnimacionConsola::BarraProgresoAvion("Guardando vuelo en el sistema", 800);
             principal->AgregarVuelo(origen, destino, escalas, fecha, distancia);
 
             cout << "\n";
@@ -67,7 +64,7 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\t=== NUEVO HOTEL ===", TemaPrincipal, false);
 
             ColorUI::printGradient("\n\tNombre del Hotel: ", Exito, false, false);
-            getline(cin, nombre);
+            cin >> ws; getline(cin, nombre);
             ColorUI::printGradient("\tCiudad: ", Exito, false, false);
             getline(cin, ciudad);
 
@@ -84,7 +81,7 @@ void AdminPantallas::MenuAgregar() {
             }
             cin.ignore(1000, '\n');
 
-            ColorUI::Animaciones::mostrarSpinner("Guardando hotel en el sistema", 800);
+            AnimacionConsola::BarraProgresoAvion("Guardando hotel en el sistema", 800);
             principal->AgregarHotel(nombre, ciudad, puntuacion, precio);
 
             cout << "\n";
@@ -97,13 +94,13 @@ void AdminPantallas::MenuAgregar() {
             float distancia;
             ColorUI::printGradient("\t=== NUEVA RUTA CONEXION ===", TemaPrincipal, false);
             ColorUI::printGradient("\n\tCiudad Origen: ", Exito, false, false);
-            getline(cin, origen);
+            cin >> ws; getline(cin, origen);
             ColorUI::printGradient("\tCiudad Destino: ", Exito, false, false);
             getline(cin, destino);
             ColorUI::printGradient("\tDistancia (Km): ", Exito, false, false);
             distancia = LeerOpcion();
 
-            ColorUI::Animaciones::mostrarSpinner("Registrando ruta de conexion", 1000);
+            AnimacionConsola::BarraProgresoAvion("Registrando ruta de conexion", 1000);
             principal->AgregarRuta(origen, destino, distancia);
             Alertas::MostrarExito("Ruta conectada exitosamente.");
             pausarConsola();
@@ -316,7 +313,7 @@ void AdminPantallas::MenuAgregar() {
             ColorUI::printGradient("\t=== AGREGAR USUARIO ===", TemaPrincipal, false);
             string nombre, correo, password;
             ColorUI::printGradient("\nNombre: ", Exito, false, false);
-            getline(cin, nombre);
+            cin >> ws; getline(cin, nombre);
             ColorUI::printGradient("\nCorreo: ", Exito, false, false);
             getline(cin, correo);
             ColorUI::printGradient("\nPassword: ", Exito, false, false);
@@ -675,7 +672,7 @@ void AdminPantallas::GenerarDatosAleatorios() {
     if (confirmacion == '1') {
         int cantidad;
         cout << "\tDigite la cantidad de datos a generar: "; cin >> cantidad; cin.ignore();
-        ColorUI::Animaciones::mostrarSpinner("Generando e inyectando datos aleatorios masivos", 2500, "\t");
+        AnimacionConsola::BarraProgresoAvion("Generando e inyectando datos aleatorios masivos", 2500, "\t");
         principal->GenerarDatos(cantidad, cantidad, cantidad);
         ColorUI::printGradient("\n\tDatos generados con exito!\n", gege, false);
     }

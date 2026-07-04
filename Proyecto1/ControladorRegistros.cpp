@@ -15,12 +15,19 @@ ControladorRegistros::~ControladorRegistros() {
 }
 std::string ControladorRegistros::ObtenerFechaHoraActual() {
     auto t = std::time(nullptr);
-    
-    auto tm = *std::localtime(&t);
-    
+    std::tm tm_snapshot;
+
+    // Condicional del preprocesador para elegir la función segura
+    #ifdef _WIN32
+        localtime_s(&tm_snapshot, &t); // Para Windows
+    #else
+        localtime_r(&t, &tm_snapshot); // Para Linux/macOS
+    #endif
+
     std::ostringstream oss;
-    oss << std::put_time(&tm, "%d-%m-%Y %H:%M:%S");
-    
+    // Usamos nuestra variable tm_snapshot que ahora es segura
+    oss << std::put_time(&tm_snapshot, "%d-%m-%Y %H:%M:%S");
+
     return oss.str();
 }
 
