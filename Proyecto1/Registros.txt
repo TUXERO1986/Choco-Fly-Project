@@ -36,3 +36,6 @@ lol,lol,Usuario,Inicio de sesion,03-07-2026 01:49:51
 0000,0000,Usuario,Inicio de sesion,03-07-2026 20:34:13
 0000,0000,Usuario,Reserva (vuelo),03-07-2026 20:35:03
 0000,0000,Usuario,Reserva (hotel),03-07-2026 20:35:26
+lol,lol,Usuario,Inicio de sesion,03-07-2026 22:54:19
+lol,lol,Usuario,Inicio de sesion,03-07-2026 23:05:59
+nuevo1,nuevo1,Usuario,Nueva cuenta creada,03-07-2026 23:20:03

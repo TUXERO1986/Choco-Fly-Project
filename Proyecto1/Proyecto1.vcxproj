@@ -53,6 +53,7 @@
     <ClInclude Include="ReservaVuelo.h" />
     <ClInclude Include="Ruta.h" />
     <ClInclude Include="CiudadID.h" />
+    <ClInclude Include="Servicio.h" />
     <ClInclude Include="TablaHash.h" />
     <ClInclude Include="Usuario.h" />
     <ClInclude Include="Vuelo.h" />
@@ -85,6 +86,7 @@
     <ClCompile Include="ReservaPaquete.cpp" />
     <ClCompile Include="ReservaVuelo.cpp" />
     <ClCompile Include="Ruta.cpp" />
+    <ClCompile Include="Servicio.cpp" />
     <ClCompile Include="Usuario.cpp" />
     <ClCompile Include="Vuelo.cpp" />
   </ItemGroup>

@@ -183,32 +183,32 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
         return false;
     }
 
-    string origenFinal = rutas->obtenerInicial()->getOrigen();
-    string destinoFinal = rutas->obtenerFinal()->getDestino();
-
     string stringEscalas = "";
     float distanciaFinal = 0.0f;
+    string ciudadActual = origen;
 
     for (int i = 0; i < rutas->longitud(); i++) {
         Ruta* tramoActual = rutas->obtenerPos(i);
-        
         distanciaFinal += tramoActual->getDistancia();
 
+        string siguienteCiudad = (tramoActual->getOrigen() == ciudadActual) ? tramoActual->getDestino() : tramoActual->getOrigen();
+
         if (i < rutas->longitud() - 1) {
-            stringEscalas += tramoActual->getDestino();
+            stringEscalas += siguienteCiudad;
             if (i < rutas->longitud() - 2) {
                 stringEscalas += ", ";
             }
         }
+        ciudadActual = siguienteCiudad;
     }
 
     string stringFechas = to_string(1 + (rand() % 28)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
 
-    cout << "\n[GRAFO] Ruta optima generada de " << origenFinal << " a " << destinoFinal << endl;
+    cout << "\n[GRAFO] Ruta optima generada de " << origen << " a " << destino << endl;
     cout << "Escalas: " << (stringEscalas.empty() ? "Ninguna" : stringEscalas) << endl;
     cout << "Distancia total: " << distanciaFinal << " km" << endl;
 
-    AgregarNuevoVuelo(origenFinal, destinoFinal, stringEscalas, stringFechas, distanciaFinal);
+    AgregarNuevoVuelo(origen, destino, stringEscalas, stringFechas, distanciaFinal);
 
     return true;
 }

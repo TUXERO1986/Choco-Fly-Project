@@ -76,6 +76,7 @@
     <ClCompile Include="Proyecto1.cpp" />
     <ClCompile Include="GeneradorDataset.cpp" />
     <ClCompile Include="ControladorRegistros.cpp" />
+    <ClCompile Include="Servicio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CiudadID.h">
@@ -167,6 +168,7 @@
     <ClInclude Include="ConsolaUtils.h" />
     <ClInclude Include="Grafo.h" />
     <ClInclude Include="AnimacionConsola.h" />
+    <ClInclude Include="Servicio.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Vuelos.txt">

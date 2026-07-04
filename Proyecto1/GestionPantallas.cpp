@@ -534,6 +534,13 @@ void GestionPantallas::MenuReservaVuelo() {
         for(string& org : origenes) { if(org == o) existe = true; }
         if(!existe) origenes.push_back(o);
     }
+    Lista<CiudadID*>* ciudades = principal->getControladorRutas()->getMapaCiudades();
+    for(int i = 0; i < ciudades->longitud(); i++) {
+        string c = ciudades->obtenerPos(i)->getNombre();
+        bool existe = false;
+        for(string& org : origenes) { if(org == c) existe = true; }
+        if(!existe) origenes.push_back(c);
+    }
     if (origenes.empty()) { 
         ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); 
         pausarConsola(); 
@@ -560,6 +567,14 @@ void GestionPantallas::MenuReservaVuelo() {
     for(int i=0; i<vuelos->longitud(); i++){
         if (vuelos->obtenerPos(i)->getOrigen() == origen) {
             string d = vuelos->obtenerPos(i)->getDestino();
+            bool existe = false;
+            for(string& des : destinos) { if(des == d) existe = true; }
+            if(!existe) destinos.push_back(d);
+        }
+    }
+    for(int i = 0; i < ciudades->longitud(); i++) {
+        string d = ciudades->obtenerPos(i)->getNombre();
+        if (d != origen) {
             bool existe = false;
             for(string& des : destinos) { if(des == d) existe = true; }
             if(!existe) destinos.push_back(d);

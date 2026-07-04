@@ -425,14 +425,16 @@ void ControladorPrincipal::ObtenerIngresosTotales() {
 }
 bool ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
     if(controladorVuelos->VerificarVueloDirecto(origen, destino)) {
-        cout << endl<<"¡Hay un vuelos directo disponible!" << endl;
+        cout << endl << "¡Vuelos encontrados para esta ruta!" << endl;
         controladorVuelos->FiltrarVuelosPorOrigenDestino(origen, destino);
-        return true ;
+        return true;
     }
     else {
         Lista<Ruta*>* rutasEncontradas = controladorRutas->BuscarRutaMasCorta(origen, destino);
-        if(controladorVuelos->GenerarVuelosConEscala(origen, destino, rutasEncontradas)) 
+        if(controladorVuelos->GenerarVuelosConEscala(origen, destino, rutasEncontradas)) {
             controladorVuelos->FiltrarVuelosPorOrigenDestino(origen, destino);
+            return true;
+        }
         return false;
     }
 }
