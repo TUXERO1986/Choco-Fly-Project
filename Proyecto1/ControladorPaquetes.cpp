@@ -23,7 +23,7 @@ void ControladorPaquetes::MostrarPaquetesCiudades(string ciudadOrigen, string ci
 		Paquete* aux = paquetes->obtenerPos(i);
 		if (aux->getVueloIncluido()->getOrigen() == ciudadOrigen && aux->getVueloIncluido()->getDestino() == ciudadDestino) {
 			cout << "Pauquete #" << i << ":" << endl;
-			aux->MostrarPaquete();
+			aux->MostrarDatos();
 			cout << endl;
 		}
 	}
@@ -59,7 +59,7 @@ void ControladorPaquetes::MostrarPaquetes() {
 		for (int i = inicio; i < fin; i++) {
 			Paquete* aux = paquetes->obtenerPos(i);
 			ColorUI::printGradient("  [ ID DEL PAQUETE: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-			aux->MostrarPaquete();
+			aux->MostrarDatos();
 			cout << "\n";
 		}
 

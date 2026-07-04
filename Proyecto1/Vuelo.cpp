@@ -6,7 +6,7 @@
 
 using namespace ColorUI;
 
-Vuelo::Vuelo(string o, string d, string e, string f, float distancia, int id) {
+Vuelo::Vuelo(string o, string d, string e, string f, float distancia, int id) : Servicio(id,"VUELO",distancia*0.7+id*5){
     this->asientos = new Lista<Asiento*>();
 	GenerarAsientos();
 	this->origen = o;
@@ -16,8 +16,7 @@ Vuelo::Vuelo(string o, string d, string e, string f, float distancia, int id) {
 	this->distancia = distancia;
 	this->id=id;
 }
-void Vuelo::MostrarVuelo() {
-	float precioBase = distancia * 0.7f;
+void Vuelo::MostrarDatos() {
 	stringstream streamPrecio, streamDistancia;
 	streamPrecio << fixed << setprecision(2) << precioBase;
 	streamDistancia << fixed << setprecision(1) << distancia;
@@ -99,6 +98,17 @@ void Vuelo::CargarEstadoAsientosString(string estado) {
 		asientos->obtenerPos(i)->setDisponible(estaDisponible);
 	}
 }
+string Vuelo::aTextoArchivo() {
+    stringstream ss;
+    ss << origen << "," 
+       << destino << "," 
+       << escalas << "," 
+       << fecha << "," 
+       << distancia << "," 
+       << ObtenerEstadoAsientosString();
+       
+    return ss.str();
+}
 Lista<Asiento*>* Vuelo::getAsientos() {
 	return asientos;
 }
@@ -110,7 +120,6 @@ string Vuelo::getOrigen() { return origen; }
 string Vuelo::getDestino() { return destino; }
 string Vuelo::getEscalas() { return escalas; }
 float Vuelo::getDistancia() { return distancia; }
-float Vuelo::getPrecioBase() { return distancia*0.7+id*5; }
 int Vuelo::getId(){return id;}
 void Vuelo::setOrigen(string o) { this->origen = o; }
 void Vuelo::setDestino(string d) { this->destino = d; }

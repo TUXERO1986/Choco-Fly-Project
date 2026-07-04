@@ -1,7 +1,8 @@
 #pragma once
+#include "Servicio.h"
 #include "Asiento.h"
 #include "Lista.h"
-class Vuelo
+class Vuelo : public Servicio
 {
 private:
 	string origen;
@@ -14,7 +15,7 @@ private:
 public:
 	Vuelo(string o, string d, string e, string f, float distancia,int id);
 
-	void MostrarVuelo();
+	void MostrarDatos();
 	void MostrarAsientos();
 	string GetFechaPorDestinoYOrigen(string origen,string destino);
 
@@ -24,8 +25,8 @@ public:
 	string getFecha();
 	float getDistancia();
 	int getId();
+	string aTextoArchivo();
 
-	float getPrecioBase();
 	void setOrigen(string o);
 	void setDestino(string d);
 	void setEscalas(string e);

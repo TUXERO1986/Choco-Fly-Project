@@ -6,7 +6,7 @@ ControladorHoteles::ControladorHoteles() {
 	controladorArchivos = new ControladorArchivos("Hoteles.txt");
 	hoteles = new Lista<Hotel*>();
     auto obtenerPrecio = [](Hotel* h) -> float {
-        return h->getPrecioNoche();
+        return h->getPrecioBase();
     };
 
     hotelesMenorPrecio = new ArbolAVL<Hotel*>(obtenerPrecio);
@@ -76,8 +76,8 @@ void ControladorHoteles::MostrarHoteles() {
 
 		for (int i = inicio; i < fin; i++) {
 			Hotel* aux = hoteles->obtenerPos(i);
-			ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-			aux->MostrarHotel();
+			ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(aux->getId()) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+			aux->MostrarDatos();
 			cout << "\n";
 		}
 

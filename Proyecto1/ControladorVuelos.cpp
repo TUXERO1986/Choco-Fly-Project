@@ -64,7 +64,7 @@ void ControladorVuelos::MostrarVuelos() {
         for (int i = inicio; i < fin; i++) {
             Vuelo* aux = vuelos->obtenerPos(i);
             ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            aux->MostrarVuelo();
+            aux->MostrarDatos();
             cout << "\n";
         }
 
@@ -161,7 +161,7 @@ void ControladorVuelos::FiltrarVuelosPorOrigenDestino(string origen, string dest
         [origen, destino](Vuelo* v) { return v->getOrigen() == origen && v->getDestino() == destino; },
         [](Vuelo* v, int indice) {
             ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            v->MostrarVuelo();
+            v->MostrarDatos();
         }
     );
 }

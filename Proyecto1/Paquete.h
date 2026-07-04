@@ -1,7 +1,7 @@
 #pragma once
 #include "Hotel.h"
 #include "Vuelo.h"
-class Paquete
+class Paquete : public Servicio
 {
 private:
 	Vuelo* vueloIncluido;
@@ -9,12 +9,12 @@ private:
 	int id;
 public:
 	Paquete(Vuelo* vuelo, Hotel* hotel,int id);
-	void MostrarPaquete();
+	void MostrarDatos();
 	Vuelo* getVueloIncluido();
 	Hotel* getHotelIncluido();
+	string aTextoArchivo();
 	void setVueloIncluido(Vuelo* vuelo);
 	void setHotelIncluido(Hotel* hotel);
-	float getPrecioBase();
 	int getId();
 };
 

@@ -194,7 +194,7 @@ void ControladorPrincipal::FiltrarHotelesPorCiudad(string ciudadBusqueda) {
         [ciudadBusqueda](Hotel* h) { return h->getCiudad() == ciudadBusqueda; },
         [](Hotel* h, int indice) {
             ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            h->MostrarHotel();
+            h->MostrarDatos();
         }
     );
 }
@@ -205,7 +205,7 @@ void ControladorPrincipal::FiltrarPaquetesPorDestino(string ciudadBusqueda) {
         [ciudadBusqueda](Paquete* p) { return p->getVueloIncluido()->getDestino() == ciudadBusqueda; },
         [](Paquete* p, int indice) {
             ColorUI::printGradient("  [ ID DEL PAQUETE: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            p->MostrarPaquete();
+            p->MostrarDatos();
         }
     );
 }
@@ -216,7 +216,7 @@ void ControladorPrincipal::FiltrarPaquetesPorOrigen(string ciudadBusqueda) {
         [ciudadBusqueda](Paquete* p) { return p->getVueloIncluido()->getOrigen() == ciudadBusqueda; },
         [](Paquete* p, int indice) {
             ColorUI::printGradient("  [ ID DEL PAQUETE: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            p->MostrarPaquete();
+            p->MostrarDatos();
         }
     );
 }
@@ -227,7 +227,7 @@ void ControladorPrincipal::FiltrarVuelosPorFecha(string fechaBusqueda) {
         [fechaBusqueda](Vuelo* v) { return v->getFecha() == fechaBusqueda; },
         [](Vuelo* v, int indice) {
             ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            v->MostrarVuelo();
+            v->MostrarDatos();
         }
     );
 }
@@ -238,7 +238,7 @@ void ControladorPrincipal::FitrarVuelosPorOrigen(string origenBusqueda) {
         [origenBusqueda](Vuelo* v) { return v->getOrigen() == origenBusqueda; },
         [](Vuelo* v, int indice) {
             ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            v->MostrarVuelo();
+            v->MostrarDatos();
         }
     );
 }
@@ -249,7 +249,7 @@ void ControladorPrincipal::FiltrarVuelosPorDestino(string destinoBusqueda) {
         [destinoBusqueda](Vuelo* v) { return v->getDestino() == destinoBusqueda; },
         [](Vuelo* v, int indice) {
             ColorUI::printGradient("  [ ID DEL VUELO: " + to_string(indice) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-            v->MostrarVuelo();
+            v->MostrarDatos();
         }
     );
 }
@@ -293,7 +293,7 @@ void ControladorPrincipal::FiltrarVuelosPorPresupuesto(float presupuestoMaximo) 
         [presupuestoMaximo](Vuelo* v) { return v->getPrecioBase() <= presupuestoMaximo; },
         [](Vuelo* v, int indice) {
             cout << "Vuelo #" << indice << " | Precio Desde: $" << v->getPrecioBase() << endl;
-            v->MostrarVuelo();
+            v->MostrarDatos();
         }
     );
 }
@@ -301,10 +301,10 @@ void ControladorPrincipal::FiltrarHotelesPorPresupuesto(float presupuestoMaximo)
     MostrarResultadosPaginados<Hotel>(
         controladorHoteles->getHoteles(), 
         "HOTELES HASTA $" + to_string(presupuestoMaximo), 
-        [presupuestoMaximo](Hotel* h) { return h->getPrecioNoche() <= presupuestoMaximo; },
+        [presupuestoMaximo](Hotel* h) { return h->getPrecioBase() <= presupuestoMaximo; },
         [](Hotel* h, int indice) {
-            cout << "Hotel #" << indice << " | Precio Desde: $" << h->getPrecioNoche() << endl;
-            h->MostrarHotel();
+            cout << "Hotel #" << indice << " | Precio Desde: $" << h->getPrecioBase() << endl;
+            h->MostrarDatos();
         }
     );
 }
@@ -315,7 +315,7 @@ void ControladorPrincipal::FiltrarPaquetesPorPresupuesto(float presupuestoMaximo
         [presupuestoMaximo](Paquete* p) { return p->getPrecioBase() <= presupuestoMaximo; },
         [](Paquete* p, int indice) {
             cout << "Paquete #" << indice << " | Precio Desde: $" << p->getPrecioBase() << endl;
-            p->MostrarPaquete();
+            p->MostrarDatos();
         }
     );
 }
@@ -346,7 +346,7 @@ void ControladorPrincipal::FiltrarHotelesPorMayorCalificacion() {
         [](Hotel* h) { return true; },
         [](Hotel* h, int indice) {
             cout << "[ID PARA COMPRA: " << h->getId() << "]" << endl;
-            h->MostrarHotel();
+            h->MostrarDatos();
         }
     );
     delete temp; 
@@ -365,7 +365,7 @@ void ControladorPrincipal::FiltrarVuelosDeMayorAMenorPrecio() {
         [](Vuelo* v) { return true; },
         [](Vuelo* v, int indice) {
             cout << "[ID PARA COMPRA: " << v->getId() << "]" << endl;
-            v->MostrarVuelo();
+            v->MostrarDatos();
         }
     );
     delete temp;
@@ -384,7 +384,7 @@ void ControladorPrincipal::FiltrarHotelesDeMayorAMenorPrecio() {
         [](Hotel* h) { return true; },
         [](Hotel* h, int indice) {
             cout << "[ID PARA COMPRA: " << h->getId() << "]" << endl;
-            h->MostrarHotel();
+            h->MostrarDatos();
         }
     );
     delete temp;
@@ -403,7 +403,7 @@ void ControladorPrincipal::FiltrarPaquetesDeMayorAMenorPrecio() {
         [](Paquete* p) { return true; },
         [](Paquete* p, int indice) {
             cout << "[ID PARA COMPRA: " << p->getId() << "]" << endl;
-            p->MostrarPaquete();
+            p->MostrarDatos();
         }
     );
     delete temp;
@@ -479,7 +479,7 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
     if (hotelSeleccionado != nullptr) {
 
         controladorReservas->AgregarReserva(new ReservaHotel(userActual->getCodigo(), userActual->getNombre(), hotelSeleccionado->getNombre(),
-            hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioNoche(), noches, habitacion, tipoO, tipoC, tipoS,controladorReservas->getReservasTotales()->longitud()));
+            hotelSeleccionado->getCiudad(), fecha,hotelSeleccionado->getPrecioBase(), noches, habitacion, tipoO, tipoC, tipoS,controladorReservas->getReservasTotales()->longitud()));
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)");
         Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getHabitaciones();
         for (int i = 0; i < listaHabitaciones->longitud(); i++) {
@@ -651,7 +651,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
         vueloOferta->getDistancia(), maletasBodegaIda, 1,maletasBodegaRetorno,asiento ,-1
     );
 
-    float precioTotalHotel = hotelOferta->getPrecioNoche() * noches;
+    float precioTotalHotel = hotelOferta->getPrecioBase() * noches;
     ReservaHotel* reservaHotel = new ReservaHotel(
         userActual->getCodigo(), userActual->getNombre(),
         hotelOferta->getNombre(), hotelOferta->getCiudad(),vueloOferta->getFecha(),

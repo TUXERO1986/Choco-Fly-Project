@@ -6,19 +6,19 @@
 
 using namespace ColorUI;
 
-Hotel::Hotel(string nombre, string ciudad, float puntuacion, float precioNoche, int id) {
+Hotel::Hotel(string nombre, string ciudad, float puntuacion, float precioNoches, int id) : Servicio(id,"HOTEL",precioNoches){
 
 	this-> habitaciones= new Lista<Habitacion*>();
 	GenerarHabitaciones();
 	this->nombre = nombre;
 	this->ciudad = ciudad;
 	this->puntuacion = puntuacion;
-	this->precioNoche = precioNoche;
+	this->precioNoche = precioNoches;
 	this->id=id;
 }
-void Hotel::MostrarHotel() {
+void Hotel::MostrarDatos() {
 	stringstream streamPrecio, streamPuntuacion;
-	streamPrecio << fixed << setprecision(2) << precioNoche;
+	streamPrecio << fixed << setprecision(2) << precioBase;
 	streamPuntuacion << fixed << setprecision(1) << puntuacion;
     
 	auto padRight = [](string str, int width) {
@@ -88,6 +88,16 @@ bool Hotel::verificarHabitacion(int numeroHabitacion) {
 	}
 	return false;
 }
+string Hotel::aTextoArchivo() {
+    stringstream ss;
+    ss << nombre << "," 
+       << ciudad << "," 
+       << puntuacion << "," 
+       << precioBase << "," 
+       << ObtenerEstadoHabitacionesString();
+    
+    return ss.str();
+}
 void Hotel::CargarEstadoHabitacionesString(string estado) {
 	
 	for (int i = 0; i < estado.length() && i < habitaciones->longitud(); i++) {
@@ -104,7 +114,6 @@ void Hotel::setHabitaciones(Lista<Habitacion*>* habitaciones) {
 string Hotel::getNombre() { return nombre; }
 string Hotel::getCiudad() { return ciudad; }
 float Hotel::getPuntuacion() { return puntuacion; }
-float Hotel::getPrecioNoche() { return precioNoche+id*5; }
 int Hotel::getId(){ return id;}
 void Hotel::setNombre(string nombre) { this->nombre = nombre; }
 void Hotel::setCiudad(string ciudad) { this->ciudad = ciudad; }

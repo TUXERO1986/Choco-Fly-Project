@@ -149,10 +149,7 @@ void ControladorArchivos::LeerArchivoVuelos(Lista<Vuelo*>* vuelos) {
 void ControladorArchivos::GuardarDatoArchivoVuelos(Vuelo* v) {
     ofstream archivo("Vuelos.txt", ios::app);
     if (archivo.is_open()) {
-        archivo << v->getOrigen() << "," << v->getDestino() << ","
-            << v->getEscalas() << "," << v->getFecha() << ","
-            << v->getDistancia() << ","
-            << v->ObtenerEstadoAsientosString() << "\n"; 
+        archivo << v->aTextoArchivo()<< "\n"; 
         archivo.close();
     }
 }
@@ -183,9 +180,7 @@ void ControladorArchivos::LeerArchivoHoteles(Lista<Hotel*>* hoteles) {
 void ControladorArchivos::GuardarDatoArchivoHoteles(Hotel* h) {
     ofstream archivo("Hoteles.txt", ios::app);
     if (archivo.is_open()) {
-        archivo << h->getNombre() << "," << h->getCiudad() << ","
-            << h->getPuntuacion() << "," << h->getPrecioNoche()<<","
-            <<h->ObtenerEstadoHabitacionesString() << "\n";
+        archivo<<h->aTextoArchivo() << "\n";
         archivo.close();
     }
 }
@@ -219,13 +214,8 @@ void ControladorArchivos::LeerArchivoPaquetes(Lista<Paquete*>* paquetes) {
 void ControladorArchivos::GuardarDatoArchivoPaquetes(Paquete* p) {
     ofstream archivo("Paquetes.txt", ios::app);
     if (archivo.is_open()) {
-        Vuelo* v = p->getVueloIncluido();
-        Hotel* h = p->getHotelIncluido();
 
-        archivo << v->getOrigen() << "," << v->getDestino() << "," << v->getEscalas() << ","
-            << v->getFecha() << "," << v->getDistancia() << ","
-            << h->getNombre() << "," << h->getCiudad() << ","
-            << h->getPuntuacion() << "," << h->getPrecioNoche() << "\n";
+        archivo <<p->aTextoArchivo()<< "\n";
 
         archivo.close();
     }

@@ -6,14 +6,14 @@
 
 using namespace ColorUI;
 
-Paquete::Paquete(Vuelo* vueloIda, Hotel* hotel,int id) {
+Paquete::Paquete(Vuelo* vueloIda, Hotel* hotel,int id) : Servicio(id,"PAQUETE",vueloIda->getPrecioBase() + hotel->getPrecioBase()+id*5){
 	this->vueloIncluido = vueloIda;
 	this->hotelIncluido = hotel;
 	this->id = id;
 }
-void Paquete::MostrarPaquete() {
+void Paquete::MostrarDatos() {
 	stringstream streamPrecio;
-	streamPrecio << fixed << setprecision(2) << getPrecioBase();
+	streamPrecio << fixed << setprecision(2) << precioBase;
 
 	auto padRight = [](string str, int width) {
 		if (str.length() < width) str.append(width - str.length(), ' ');
@@ -28,14 +28,14 @@ void Paquete::MostrarPaquete() {
 	printSpriteAndCard(spritePaquete, Paletas::Tux, cabecera, Paletas::Exito);
 
 	if (vueloIncluido != nullptr) {
-		vueloIncluido->MostrarVuelo();
+		vueloIncluido->MostrarDatos();
 	}
 	else {
 		printGradient("  [!] No se incluyo vuelo.", Alerta, false, true);
 	}
 	
 	if (hotelIncluido != nullptr) {
-		hotelIncluido->MostrarHotel();
+		hotelIncluido->MostrarDatos();
 	}
 	else {
 		printGradient("  [!] No se incluyo hotel.", Alerta, false, true);
@@ -51,9 +51,22 @@ void Paquete::MostrarPaquete() {
 
 	printSpriteAndCard("", Paletas::Tux, pie, Paletas::Exito);
 }
+string Paquete::aTextoArchivo() {
+    stringstream ss;
+    ss << vueloIncluido->getOrigen() << "," 
+       << vueloIncluido->getDestino() << "," 
+       << vueloIncluido->getEscalas() << ","
+       << vueloIncluido->getFecha() << "," 
+       << vueloIncluido->getDistancia() << ","
+       << hotelIncluido->getNombre() << "," 
+       << hotelIncluido->getCiudad() << ","
+       << hotelIncluido->getPuntuacion() << "," 
+       << hotelIncluido->getPrecioBase();
+       
+    return ss.str();
+}
 Hotel* Paquete::getHotelIncluido() { return hotelIncluido; }
 Vuelo* Paquete::getVueloIncluido() { return vueloIncluido; }
 void Paquete::setVueloIncluido(Vuelo* vuelo) { this->vueloIncluido	 = vuelo; }
 void Paquete::setHotelIncluido(Hotel* hotel) { this->hotelIncluido = hotel; }
-float Paquete::getPrecioBase() { return vueloIncluido->getPrecioBase() + hotelIncluido->getPrecioNoche()+id*5; }
 int Paquete::getId() { return id; }

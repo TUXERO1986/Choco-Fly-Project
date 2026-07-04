@@ -117,7 +117,7 @@ void AdminPantallas::MenuAgregar() {
             }
             for (int i = 0; i < listaVuelos->longitud(); i++) {
                 cout << "[" << i << "] ";
-                listaVuelos->obtenerPos(i)->MostrarVuelo();
+                listaVuelos->obtenerPos(i)->MostrarDatos();
                 cout << "------------------------\n";
             }
 
@@ -139,7 +139,7 @@ void AdminPantallas::MenuAgregar() {
             }
             for (int i = 0; i < listaHoteles->longitud(); i++) {
                 cout << "[" << i << "] ";
-                listaHoteles->obtenerPos(i)->MostrarHotel();
+                listaHoteles->obtenerPos(i)->MostrarDatos();
                 cout << "------------------------\n";
             }
 
@@ -206,7 +206,7 @@ void AdminPantallas::MenuAgregar() {
                 cout << "\nVuelos:\n";
                 for (int i = 0; i < listaVuelos->longitud(); i++) {
                     cout << "[" << i << "] ";
-                    listaVuelos->obtenerPos(i)->MostrarVuelo();
+                    listaVuelos->obtenerPos(i)->MostrarDatos();
                     cout << "------------------------\n";
                 }
                 ColorUI::printGradient("\nIndice de vuelo a reservar: ", Exito, false, false);
@@ -240,7 +240,7 @@ void AdminPantallas::MenuAgregar() {
                 cout << "\nHoteles:\n";
                 for (int i = 0; i < listaHoteles->longitud(); i++) {
                     cout << "[" << i << "] ";
-                    listaHoteles->obtenerPos(i)->MostrarHotel();
+                    listaHoteles->obtenerPos(i)->MostrarDatos();
                     cout << "------------------------\n";
                 }
                 ColorUI::printGradient("\nIndice de hotel a reservar: ", Exito, false, false);
@@ -279,7 +279,7 @@ void AdminPantallas::MenuAgregar() {
                 cout << "\nPaquetes:\n";
                 for (int i = 0; i < listaPaquetes->longitud(); i++) {
                     cout << "[" << i << "] ";
-                    listaPaquetes->obtenerPos(i)->MostrarPaquete();
+                    listaPaquetes->obtenerPos(i)->MostrarDatos();
                     cout << "------------------------\n";
                 }
                 ColorUI::printGradient("\nIndice de paquete a reservar: ", Exito, false, false);
