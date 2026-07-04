@@ -180,9 +180,85 @@ void GestionPantallas::MenuFiltrosVuelos() {
     
     char opcion = _getch();
     switch (opcion) {
-        // ... (Los casos 1, 2 y 3 ya los tenias correctos con ConsultarCatalogoDinamico) ...
-        // Te muestro cómo quedan los demás:
-
+case '1': {
+            vector<string> origenes;
+            Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+            for(int i=0; i<vuelos->longitud(); i++){
+                string o = vuelos->obtenerPos(i)->getOrigen();
+                bool existe = false;
+                for(string& org : origenes) { if(org == o) existe = true; }
+                if(!existe) origenes.push_back(o);
+            }
+            if (origenes.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE ORIGEN ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<origenes.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << origenes[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= origenes.size()) {
+                string origen = origenes[sel-1];
+                principal->ConsultarCatalogoDinamico<Vuelo>(vuelos, "VUELOS DESDE: "+origen,[origen](Vuelo* v){return v->getOrigen()==origen;});
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
+            pausarConsola();
+            break;
+        }
+        case '2': {
+            vector<string> destinos;
+            Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+            for(int i=0; i<vuelos->longitud(); i++){
+                string o = vuelos->obtenerPos(i)->getDestino();
+                bool existe = false;
+                for(string& org : destinos) { if(org == o) existe = true; }
+                if(!existe) destinos.push_back(o);
+            }
+            if (destinos.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE DESTINO ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<destinos.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << destinos[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= destinos.size()) {
+                Lista<Vuelo*>* temp = principal->getControladorVuelos()->getVuelos();
+                string destino = destinos[sel-1];
+                principal->ConsultarCatalogoDinamico<Vuelo>(temp,"VUELOS A "+destino,[destino](Vuelo* v){return v->getDestino()==destino;});
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
+            pausarConsola();
+            break;
+        }
+        case '3': {
+            vector<string> fechas;
+            Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
+            for(int i=0; i<vuelos->longitud(); i++){
+                string f = vuelos->obtenerPos(i)->getFecha();
+                bool existe = false;
+                for(string& org : fechas) { if(org == f) existe = true; }
+                if(!existe) fechas.push_back(f);
+            }
+            if (fechas.empty()) { ColorUI::Alertas::MostrarInfo("No hay vuelos disponibles."); pausarConsola(); break; }
+            ColorUI::printGradient("\n================ SELECCIONE FECHA ================\n", Paletas::TemaPrincipal, false);
+            for(size_t i=0; i<fechas.size(); i++) {
+                cout << " [" << i+1 << "] " << left << setw(20) << fechas[i];
+                if((i+1)%3==0) cout << "\n";
+            }
+            cout << "\n\n> Ingrese opcion: ";
+            int sel = LeerOpcion();
+            if (sel > 0 && sel <= fechas.size()) {
+                string fecha=fechas[sel-1];
+                principal->ConsultarCatalogoDinamico<Vuelo>(vuelos,"VUELOS EN LA FECHA: "+fecha,[fecha](Vuelo* v){return v->getFecha()==fecha;});
+            } else {
+                ColorUI::Alertas::MostrarError("Opcion invalida.");
+            }
+            pausarConsola();
+            break;
+        }
         case '4': {
             float presupuesto;
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO: ", Paletas::Exito, false, false); 

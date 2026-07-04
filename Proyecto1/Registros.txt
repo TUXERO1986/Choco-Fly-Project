@@ -46,3 +46,12 @@ nuevo1,nuevo1,Usuario,Nueva cuenta creada,03-07-2026 23:20:03
 0000,0000,Usuario,Inicio de sesion,04-07-2026 11:05:16
 00000,0000,Usuario,Inicio de sesion,04-07-2026 11:05:44
 0000,0000,Usuario,Inicio de sesion,04-07-2026 11:58:15
+0000000,0000,Usuario,Inicio de sesion,04-07-2026 18:02:31
+0000,0000,Usuario,Inicio de sesion,04-07-2026 18:10:46
+0000,0000,Usuario,Inicio de sesion,04-07-2026 18:17:42
+0000,0000,Usuario,Reserva (hotel),04-07-2026 18:18:13
+00000,0000,Usuario,Inicio de sesion,04-07-2026 18:18:39
+0000,0000,Usuario,Inicio de sesion,04-07-2026 18:18:50
+0000,0000,Usuario,Inicio de sesion,04-07-2026 18:20:42
+00000,0000,Usuario,Inicio de sesion,04-07-2026 18:22:31
+0000,0000,Usuario,Reserva (vuelo),04-07-2026 18:23:00
