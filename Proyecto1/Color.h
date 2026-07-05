@@ -43,10 +43,7 @@ void LoginScreen(ControladorPrincipal* principal);
 void Admin(ControladorPrincipal* principal);       
 
 // Variables globales de arte (Asegúrate de definirlas en Pantallas.cpp)
-extern std::string chocofly, chocoadmin, admin, registro, login;
-
-
-
+extern std::string chocofly, admin, registro, login;
 
 
 
@@ -187,17 +184,7 @@ namespace ColorUI {
         } while (has1 || has2);
     }
 
-    inline void setBackgroundColor(const std::string& hex) {
-        using namespace std;
-        RGB color = hexToRGB(hex);
-        cout << "\033[48;2;" << color.r << ";" << color.g << ";" << color.b << "m";
-        cout << "\033[2J\033[H";
-    }
 
-    inline void resetConsole() {
-        using namespace std;
-        cout << "\033[0m\033[2J\033[H";
-    }
 
     /*
     ============================================================================

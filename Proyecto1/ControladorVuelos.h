@@ -10,16 +10,15 @@ ArbolAVL<Vuelo*>* vuelosMenorPrecio;
 function<int(string)> ObtenerMes;
 function<int(string)> ObtenerDia;
 ControladorArchivos* controladorArchivosVuelos;
-float CalcularDistancia(Lista<Ruta*>* , int );
 public:
-	ControladorVuelos();
-	~ControladorVuelos();
-	void BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
+ControladorVuelos();
+~ControladorVuelos();
+void BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
 	Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas);
 	void MostrarVuelos();
 	void FiltrarVuelosPorOrigenDestino(string origen, string destino);
 	bool VerificarVueloDirecto(string origen, string destino);
-	void AgregarNuevoVuelo(string origen, string destino, string escalas, string fecha,float distancia, ControladorAsientos* controladorAsientos);
+	void AgregarNuevoVuelo(string origen, string destino, string escalas, string fecha,float distancia);
 	void GenerarVuelos(int contador, Lista<Ruta*>* rutas);
 	bool GenerarVuelosConEscala(string origen,string destino, Lista<Ruta*>* rutas);
 	Vuelo* ObtenerVueloPorPosicion(int pos);

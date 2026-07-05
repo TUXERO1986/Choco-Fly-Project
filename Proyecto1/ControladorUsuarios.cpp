@@ -19,6 +19,9 @@ ControladorUsuarios::ControladorUsuarios() {
         Usuario* aux = usuarios->obtenerPos(i);
         tablaUsuarios->Insertar(aux->getCorreo(), aux);
     }
+    indiceCorreos = new ArbolAVLClave<Usuario*, string>([](Usuario* u) {
+        return u->getCorreo();
+    });
 }
 
 ControladorUsuarios::~ControladorUsuarios() {
@@ -27,7 +30,7 @@ ControladorUsuarios::~ControladorUsuarios() {
         delete usuarios->obtenerPos(i);
     }
     delete usuarios;
-    
+    delete indiceCorreos;
     delete tablaUsuarios;
 }
 
@@ -75,10 +78,11 @@ void ControladorUsuarios::MostrarUsuarios() {
     for (int i = 0; i < usuarios->longitud(); i++) {
         Usuario* aux = usuarios->obtenerPos(i);
         cout << endl;
-        aux->MostrarDatosAdmin();
+        aux->MostrarDatos();
         cout << endl;
     }
 }
 
 Lista<Usuario*>* ControladorUsuarios::getUsuarios() { return usuarios; }
+HashTable<string,Usuario*>* ControladorUsuarios::gettablaUsuarios(){return tablaUsuarios;}
 void ControladorUsuarios::setUsuarios(Lista<Usuario*>* usuarios) { this->usuarios = usuarios; }

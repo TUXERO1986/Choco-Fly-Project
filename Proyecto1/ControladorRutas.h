@@ -1,11 +1,13 @@
 #pragma once
 #include "ControladorArchivos.h"
 #include "Cola.h"
+#include "Grafo.h"
 class ControladorRutas
 {
 private:
 	ControladorArchivos* controladorArchivos;
 	Lista<Ruta*>* rutas;
+    CGrafo<string>* grafoRutas;
 	Lista<Lista<int>*>* conexiones;
 	Lista<CiudadID*>* MapaCiudades;
     function<size_t(Lista<CiudadID*>*, string)> ObtenerIdCiudad;
@@ -41,6 +43,7 @@ public:
 	void AgregarNuevaRuta(string origen, string destino, float distancia);
 	void MostrarRutas();
 	Lista<Ruta*>* getRutas();
+
 	Lista<Lista<int>*>* getConexiones();
 	Lista<CiudadID*>* getMapaCiudades();
 };

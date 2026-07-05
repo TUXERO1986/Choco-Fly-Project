@@ -6,7 +6,7 @@ ControladorHoteles::ControladorHoteles() {
 	controladorArchivos = new ControladorArchivos("Hoteles.txt");
 	hoteles = new Lista<Hotel*>();
     auto obtenerPrecio = [](Hotel* h) -> float {
-        return h->getPrecioNoche();
+        return h->getPrecioBase();
     };
 
     hotelesMenorPrecio = new ArbolAVL<Hotel*>(obtenerPrecio);
@@ -49,7 +49,7 @@ void ControladorHoteles::GenerarHoteles(int contador, Lista<CiudadID*>* listaCiu
     }
 }
 void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float puntuacion, float precioNoche) {
-	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche, new ControladorHabitaciones(),hoteles->longitud());
+	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche,hoteles->longitud());
 	hoteles->agregaFinal(nuevoHotel);
     hotelesMenorPrecio->Insertar(nuevoHotel);
 	controladorArchivos->GuardarDatoArchivoHoteles(nuevoHotel);
@@ -76,18 +76,23 @@ void ControladorHoteles::MostrarHoteles() {
 
 		for (int i = inicio; i < fin; i++) {
 			Hotel* aux = hoteles->obtenerPos(i);
-			ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(i) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
-			aux->MostrarHotel();
+			ColorUI::printGradient("  [ ID DEL HOTEL: " + to_string(aux->getId()) + " ]", { "#FFD700", "#FF8C00", "#FF4500" }, false, true);
+			aux->MostrarDatos();
 			cout << "\n";
 		}
 
-		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [Q] Salir", Paletas::azul, false);
-		cout << "\n\tElige una opcion: ";
+		ColorUI::printGradient("\n\t[A] Anterior  |  [S] Siguiente  |  [ENTER / Q] Continuar / Salir", Paletas::azul, false);
+		cout << "\n\t> ";
 		opcion = _getch();
 		
 		if ((opcion == 's' || opcion == 'S') && paginaActual < paginasTotales) paginaActual++;
 		else if ((opcion == 'a' || opcion == 'A') && paginaActual > 1) paginaActual--;
-
+		else if (opcion != 's' && opcion != 'S' && opcion != 'a' && opcion != 'A') {
+			if (opcion >= '0' && opcion <= '9') {
+				cin.putback(opcion);
+			}
+			break;
+		}
 	} while (opcion != 'q' && opcion != 'Q');
 }
 ArbolAVL<Hotel*>* ControladorHoteles::getHotelesMenorPrecio(){

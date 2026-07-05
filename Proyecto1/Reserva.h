@@ -8,9 +8,10 @@ protected:
 	string tipoReserva;
 	string codigoUsuario;
 	string nombreUsuario;
+	int id;
 public:
-	Reserva(string codigoUsuario, string nombreUsuario);
-	virtual void MostrarReserva();
+	Reserva(string codigoUsuario, string nombreUsuario,int id);
+	virtual void MostrarDatos();
 	virtual string aTextoArchivo() = 0;
 	string getCodigoUsuario();
 	string getNombreUsuario();
@@ -19,6 +20,7 @@ public:
 	void setCodigoUsuario(string codigoUsuario);
 	void setNombreUsuario(string nombreUsuario);
 	void setTipoReserva(string tipoReserva);
+	int getId();
 
 };
 

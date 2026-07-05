@@ -2,6 +2,7 @@
 #include "Usuario.h"
 #include "TablaHash.h"
 #include "ControladorArchivos.h"
+#include "ArbolAVLClave.h"
 #include "Color.h"
 #include "Pila.h"
 
@@ -14,6 +15,7 @@ private:
     HashTable<string, Usuario*>* tablaUsuarios; 
     Lista<Usuario*>* usuarios; 
     Pila<string>* registroUsuarios;
+    ArbolAVLClave<Usuario*, string>* indiceCorreos;
     ControladorArchivos* controladorArchivos;
 
     int FuncionHashPropia(string clave); 
@@ -30,5 +32,6 @@ public:
     
     void MostrarUsuarios();
     Lista<Usuario*>* getUsuarios();
+    HashTable<string,Usuario*>* gettablaUsuarios();
     void setUsuarios(Lista<Usuario*>* usuarios);
 }; 

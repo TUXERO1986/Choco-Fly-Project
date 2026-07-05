@@ -13,8 +13,24 @@ ControladorRegistros::~ControladorRegistros() {
     }
     delete registros;
 }
+std::string ControladorRegistros::ObtenerFechaHoraActual() {
+    auto t = std::time(nullptr);
+    std::tm tm_snapshot;
 
-void ControladorRegistros::AgregarRegistro(string nombre, string correo, string tipoUsuario, string accion, string fechaHora) {
+    #ifdef _WIN32
+        localtime_s(&tm_snapshot, &t);
+    #else
+        localtime_r(&t, &tm_snapshot);
+    #endif
+
+    std::ostringstream oss;
+    oss << std::put_time(&tm_snapshot, "%d-%m-%Y %H:%M:%S");
+
+    return oss.str();
+}
+
+void ControladorRegistros::AgregarRegistro(string nombre, string correo, string tipoUsuario, string accion) {
+    string fechaHora=ObtenerFechaHoraActual();
     Registro* nuevoRegistro = new Registro(nombre,correo,tipoUsuario,accion,fechaHora);
     registros->agregaFinal(nuevoRegistro);
     ControladorArchivos* archivos= new ControladorArchivos("Registros.txt");

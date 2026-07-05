@@ -5,3 +5,53 @@ lol,lol,Usuario,Inicio de sesion,
 lol,lol,Usuario,Inicio de sesion,
 lol,lol,Usuario,Inicio de sesion,
 lol,lol,Usuario,Inicio de sesion,
+0000,0000,Usuario,Inicio de sesion,
+0000,0000,Usuario,Inicio de sesion,
+0000,0000,Usuario,Inicio de sesion,02-07-2026 09:18:32
+0000,0000,Usuario,Inicio de sesion,02-07-2026 09:27:53
+0000,0000,Usuario,Reserva (hotel),02-07-2026 09:29:07
+0000,0000,Usuario,Reserva (vuelo),02-07-2026 09:29:54
+0000,0000,Usuario,Reserva (vuelo),02-07-2026 09:30:18
+0000,0000,Usuario,Inicio de sesion,02-07-2026 11:47:14
+0000,0000,Usuario,Inicio de sesion,02-07-2026 11:53:30
+0000,0000,Usuario,Inicio de sesion,02-07-2026 22:57:33
+0000,0000,Usuario,Inicio de sesion,02-07-2026 22:58:17
+gege,gege,Usuario,Inicio de sesion,02-07-2026 23:39:43
+lol,lol,Usuario,Inicio de sesion,03-07-2026 00:32:04
+lol,lol,Usuario,Inicio de sesion,03-07-2026 00:33:36
+lol,lol,Usuario,Inicio de sesion,03-07-2026 00:46:24
+lol,lol,Usuario,Inicio de sesion,03-07-2026 00:50:45
+lol,lol,Usuario,Inicio de sesion,03-07-2026 00:53:03
+lol,lol,Usuario,Inicio de sesion,03-07-2026 00:54:33
+lol,lol,Usuario,Inicio de sesion,03-07-2026 01:09:07
+lol,lol,Usuario,Reserva (hotel),03-07-2026 01:10:06
+lol,lol,Usuario,Inicio de sesion,03-07-2026 01:19:21
+lol,lol,Usuario,Inicio de sesion,03-07-2026 01:32:56
+lol,lol,Usuario,Reserva (vuelo),03-07-2026 01:34:16
+,lol,Usuario,Inicio de sesion,03-07-2026 01:42:57
+,0,Usuario,Nueva cuenta creada,03-07-2026 01:43:06
+l,l,Usuario,Nueva cuenta creada,03-07-2026 01:43:28
+lol,lol,Usuario,Inicio de sesion,03-07-2026 01:49:41
+lol,lol,Usuario,Inicio de sesion,03-07-2026 01:49:51
+0000,0000,Usuario,Inicio de sesion,03-07-2026 20:34:13
+0000,0000,Usuario,Reserva (vuelo),03-07-2026 20:35:03
+0000,0000,Usuario,Reserva (hotel),03-07-2026 20:35:26
+lol,lol,Usuario,Inicio de sesion,03-07-2026 22:54:19
+lol,lol,Usuario,Inicio de sesion,03-07-2026 23:05:59
+nuevo1,nuevo1,Usuario,Nueva cuenta creada,03-07-2026 23:20:03
+0000,0000,Usuario,Inicio de sesion,04-07-2026 00:34:30
+0000,0000,Usuario,Inicio de sesion,04-07-2026 08:50:27
+000000,0000,Usuario,Inicio de sesion,04-07-2026 09:05:27
+0000,0000,Usuario,Inicio de sesion,04-07-2026 11:04:26
+0000,0000,Usuario,Inicio de sesion,04-07-2026 11:05:16
+00000,0000,Usuario,Inicio de sesion,04-07-2026 11:05:44
+0000,0000,Usuario,Inicio de sesion,04-07-2026 11:58:15
+lol,lol,Usuario,Inicio de sesion,04-07-2026 17:58:07
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:01:49
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:11:52
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:20:47
+lol,lol,Usuario,Reserva (vuelo),04-07-2026 18:21:10
+lol,lol,Usuario,Reserva (hotel),04-07-2026 18:26:35
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,04-07-2026 18:45:00
+lol,lol,Usuario,Inicio de sesion,04-07-2026 18:45:30
+lol,lol,Usuario,Reserva (paquete),04-07-2026 18:46:16

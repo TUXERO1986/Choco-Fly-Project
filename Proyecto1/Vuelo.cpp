@@ -6,17 +6,17 @@
 
 using namespace ColorUI;
 
-Vuelo::Vuelo(string o, string d, string e, string f, float distancia, ControladorAsientos* controladorAsientos,int id) {
-	this->controladorAsientos = controladorAsientos;
+Vuelo::Vuelo(string o, string d, string e, string f, float distancia, int id) : Servicio(id,"VUELO",distancia*0.7+id*5){
+    this->asientos = new Lista<Asiento*>();
+	GenerarAsientos();
 	this->origen = o;
 	this->destino = d;
 	this->escalas = e;
 	this->fecha = f;
-	this->id=id;
 	this->distancia = distancia;
+	this->id=id;
 }
-void Vuelo::MostrarVuelo() {
-	float precioBase = distancia * 0.7f;
+void Vuelo::MostrarDatos() {
 	stringstream streamPrecio, streamDistancia;
 	streamPrecio << fixed << setprecision(2) << precioBase;
 	streamDistancia << fixed << setprecision(1) << distancia;
@@ -47,23 +47,80 @@ void Vuelo::MostrarVuelo() {
 
 	printSpriteAndCard(spriteAvion, Paletas::Tux, tarjeta, Paletas::azul);
 }
-void Vuelo::MostrarAsientos() {
-	controladorAsientos->MostrarAsientos();
-}
 string Vuelo::GetFechaPorDestinoYOrigen(string origen,string destino) {
 	if (this->origen == origen && this->destino == destino) {
 		return fecha;
 	}
 	return "";
 }
+void Vuelo::MostrarAsientos() {
+	for (int i = 0; i < asientos->longitud(); i++) {
+		Asiento* aux = asientos->obtenerPos(i);
+		aux->MostraAsiento();
+		cout << " ";
+		if ((i+1) % 6 == 0) cout << endl;
+		else if ((i+1) % 3 == 0) cout << "\t";
+	}
+}
+void Vuelo::GenerarAsientos() {
+	for (int i = 1; i <= 30; i++) {
+		Asiento* asiento = new Asiento(i);
+		asientos->agregaFinal(asiento);
+	}
+}
+string Vuelo::ObtenerEstadoAsientosString() {
+	string estado = "";
+	for (int i = 0; i < asientos->longitud(); i++) {
+	
+		if (asientos->obtenerPos(i)->getDisponible()) {
+			estado += "1";
+		}
+		else {
+			estado += "0";
+		}
+	}
+	return estado;
+}
+bool Vuelo::VerificarAsiento(int numeroAsiento) {
+	for (int i = 0; i < asientos->longitud(); i++) {
+		Asiento* aux = asientos->obtenerPos(i);
+		if (aux->getNumero() == numeroAsiento) {
+			if (aux->getDisponible())return true;
+			else return false;
+		}
+	}
+	return false;
+}
+void Vuelo::CargarEstadoAsientosString(string estado) {
+	
+	for (int i = 0; i < estado.length() && i < asientos->longitud(); i++) {
+		bool estaDisponible = (estado[i] == '1');
+		asientos->obtenerPos(i)->setDisponible(estaDisponible);
+	}
+}
+string Vuelo::aTextoArchivo() {
+    stringstream ss;
+    ss << origen << "," 
+       << destino << "," 
+       << escalas << "," 
+       << fecha << "," 
+       << distancia << "," 
+       << ObtenerEstadoAsientosString();
+       
+    return ss.str();
+}
+Lista<Asiento*>* Vuelo::getAsientos() {
+	return asientos;
+}
+void Vuelo::setAsientos(Lista<Asiento*>* asientos) {
+	this->asientos = asientos;
+}
 string Vuelo::getFecha() { return fecha; }
 string Vuelo::getOrigen() { return origen; }
 string Vuelo::getDestino() { return destino; }
 string Vuelo::getEscalas() { return escalas; }
 float Vuelo::getDistancia() { return distancia; }
-float Vuelo::getPrecioBase() { return distancia*0.7+id*5; }
 int Vuelo::getId(){return id;}
-ControladorAsientos* Vuelo::getControladorAsientos() {return controladorAsientos;}
 void Vuelo::setOrigen(string o) { this->origen = o; }
 void Vuelo::setDestino(string d) { this->destino = d; }
 void Vuelo::setEscalas(string e) { this->escalas = e; }

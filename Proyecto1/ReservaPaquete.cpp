@@ -1,6 +1,6 @@
 #include "ReservaPaquete.h"
-ReservaPaquete::ReservaPaquete(string codUser, string nomUser, ReservaVuelo* vueloida, ReservaVuelo* vueloretorno, ReservaHotel* hotel)
-    : Reserva(codUser, nomUser)
+ReservaPaquete::ReservaPaquete(string codUser, string nomUser, ReservaVuelo* vueloida, ReservaVuelo* vueloretorno, ReservaHotel* hotel,int id)
+    : Reserva(codUser, nomUser,id)
 {
     this->vueloReservado = vueloida;
     this->vueloRetorno = vueloretorno;
@@ -16,15 +16,15 @@ ReservaPaquete::~ReservaPaquete() {
 
 #include "Color.h"
 
-void ReservaPaquete::MostrarReserva() {
+void ReservaPaquete::MostrarDatos() {
     ColorUI::printGradient("\n==================================================", ColorUI::Paletas::TemaPrincipal, false);
     ColorUI::printGradient("                PAQUETE TURISTICO                 ", ColorUI::Paletas::TemaPrincipal, false);
     ColorUI::printGradient(" Pasajero: " + nombreUsuario, ColorUI::Paletas::Exito, false);
     ColorUI::printGradient("==================================================\n", ColorUI::Paletas::TemaPrincipal, false);
 
-    if (vueloReservado != nullptr) vueloReservado->MostrarReserva();
-    if (hotelReservado != nullptr) hotelReservado->MostrarReserva();
-    if (vueloRetorno != nullptr) vueloRetorno->MostrarReserva();
+    if (vueloReservado != nullptr) vueloReservado->MostrarDatos();
+    if (hotelReservado != nullptr) hotelReservado->MostrarDatos();
+    if (vueloRetorno != nullptr) vueloRetorno->MostrarDatos();
     
     float total = 0;
     if (vueloReservado != nullptr) total += vueloReservado->getPrecioTotal();
@@ -38,7 +38,7 @@ void ReservaPaquete::MostrarReserva() {
     ColorUI::printGradient("==================================================\n", ColorUI::Paletas::TemaPrincipal, false);
 }
 string ReservaPaquete::aTextoArchivo() {
-    return "PAQUETE," + codigoUsuario + "," + nombreUsuario + "|" + vueloReservado->aTextoArchivo() +"|"+vueloRetorno->aTextoArchivo() + "|" + hotelReservado->aTextoArchivo();
+    return "PAQUETE," + codigoUsuario + "," + nombreUsuario + "|" + vueloReservado->aTextoArchivo() +"|"+vueloRetorno->aTextoArchivo() + "|" + hotelReservado->aTextoArchivo()+"|"+to_string(id);
 }
 ReservaVuelo* ReservaPaquete::getVueloReservado() { return vueloReservado; }
 ReservaHotel* ReservaPaquete::getHotelReservado() { return hotelReservado; }

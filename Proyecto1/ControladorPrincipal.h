@@ -6,6 +6,7 @@
 #include "ControladorRutas.h"
 #include "ControladorUsuarios.h"
 #include "ControladorRegistros.h"
+#include "GeneradorDataset.h"
 #include "ConsolaUtils.h"
 using namespace ColorUI;
 class ControladorPrincipal
@@ -18,7 +19,7 @@ private:
 	ControladorRutas* controladorRutas;
 	ControladorUsuarios* controladorUsuarios;
 	ControladorRegistros* controladorRegistros;
-
+	GeneradorDataset* generadorDataset;
 public:
 	ControladorPrincipal();
 	~ControladorPrincipal();
@@ -38,33 +39,18 @@ public:
 	void EliminarPaquete(int indicePaquete);
 	void EliminarReserva(int indiceReserva);
 	void EliminarUsuario(int indiceUsuario);
-	void MostrarRutas();
-	void MostrarVuelos();
-	void MostrarHoteles();
-	void MostrarPaquetes();
-	void MostrarReservas();
-	void MostrarUsuarios();
-	void FilrarVuelosPorOrigenDestino(string origen, string destino);
-	void FiltrarUsuariosPorNombre(string nombreBusqueda);
-	void FiltrarRutasPorOrigen(string ciudadBusqueda);
-	void FiltrarRutasPorDestino(string ciudadBusqueda);
-	void FiltrarHotelesPorCiudad(string ciudadBusqueda);
-	void FiltrarPaquetesPorDestino(string ciudadBusqueda);
-	void FiltrarPaquetesPorOrigen(string ciudadBusqueda);
-	void FiltrarVuelosPorFecha(string fechaBusqueda);
-	void FitrarVuelosPorOrigen(string origenBusqueda);
-	void FiltrarVuelosPorDestino(string destinoBusqueda);
-	void FiltrarReservasPorTipo(string tipoBusqueda);
-	void FiltrarReservasPorTipoUsuario(string tipoBusqueda, string codigousuario);
-	void FiltrarReservasPorUsuario(string codigoUsuario);
-	void FiltrarVuelosPorPresupuesto(float presupuestoMaximo);
-	void FiltrarHotelesPorPresupuesto(float presupuestoMaximo);
-	void FiltrarPaquetesPorPresupuesto(float presupuestoMaximo);
-	void FiltrarHotelesPorMayorCalificacion();
-	void FiltrarVuelosDeMayorAMenorPrecio();
-	void FiltrarHotelesDeMayorAMenorPrecio();
-	void FiltrarPaquetesDeMayorAMenorPrecio();
-	void FiltrarUsuarioPorCodigo(string codigo);
+template<typename T>
+void ConsultarCatalogoDinamico(Lista<T*>* lista, string titulo, std::function<bool(T*)> criterio) {
+	MostrarResultadosPaginados<T>(
+		lista,
+		titulo,
+		criterio,
+		[](T* item, int indice) {
+			ColorUI::printGradient("  [ ID: " + to_string(indice) + " ]", { "#FFD700", "#FF4500" }, false, true);
+			item->MostrarDatos();
+		}
+	);
+}
 	bool CancelarReservaUsuario(string codigoUsuario, int indiceReservaLocal);
 	void CalificarHotel(string nombreHotel, float nuevaPuntuacion);
 	void ObtenerIngresosTotales();
@@ -72,7 +58,6 @@ public:
 	bool VerificarHoteles(string ciudad);
 	bool VerificarPaquetes(string destino);
 	bool VerificarReservas(string codigo);
-	void MostrarReservasUsuario(Usuario* userActual);
 	void ReservarHotel(int indiceHotel, Usuario* userActual,string fecha, int noches,int habtiacion,int tipoO,int tipoC,int tipoS);
 	void ReservarPaquete(int indicePaquete, Usuario* userActual, int noches,
 		int maletasBodegaIda, int maletasBodegaRetorno, int clase, int asiento);
@@ -88,7 +73,7 @@ public:
 	ControladorVuelos* getControladorVuelos();
 	ControladorRutas* getControladorRutas();
 	ControladorUsuarios* getControladorUsuarios();
-
+	ControladorRegistros* getControladorRegistros();
 	void GuardarDatosEnArchivos();
 
 };

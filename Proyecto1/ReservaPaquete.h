@@ -9,10 +9,10 @@ private:
 	ReservaVuelo* vueloRetorno; 
 
 public:
-    ReservaPaquete(string NombreU, string nombreUsuario, ReservaVuelo* vueloIda, ReservaVuelo* vueloRetorno, ReservaHotel* hotel);
+    ReservaPaquete(string NombreU, string nombreUsuario, ReservaVuelo* vueloIda, ReservaVuelo* vueloRetorno, ReservaHotel* hotel,int id);
     ~ReservaPaquete();
 
-    void MostrarReserva() override;
+    void MostrarDatos() override;
     string aTextoArchivo() override;
     float getPrecioTotal() override;
     ReservaVuelo* getVueloReservado();
