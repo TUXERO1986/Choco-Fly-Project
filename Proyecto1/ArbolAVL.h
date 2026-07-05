@@ -38,8 +38,8 @@ private:
         x->der = y;
         y->izq = T2;
 
-        y->altura = max(Altura(y->izq), Altura(y->der)) + 1;
-        x->altura = max(Altura(x->izq), Altura(x->der)) + 1;
+        y->altura = (std::max)(Altura(y->izq), Altura(y->der)) + 1;
+        x->altura = (std::max)(Altura(x->izq), Altura(x->der)) + 1;
 
         return x;
     }
@@ -51,42 +51,39 @@ private:
         y->izq = x;
         x->der = T2;
 
-        x->altura = max(Altura(x->izq), Altura(x->der)) + 1;
-        y->altura = max(Altura(y->izq), Altura(y->der)) + 1;
+        x->altura = (std::max)(Altura(x->izq), Altura(x->der)) + 1;
+        y->altura = (std::max)(Altura(y->izq), Altura(y->der)) + 1;
 
         return y;
     }
 
     NodoAVL<T>* _insertar(NodoAVL<T>* nodo, T e) {
-        // Inserción normal de BST usando la Lambda
         if (nodo == nullptr) return new NodoAVL<T>(e);
 
         if (obtenerLlave(e) < obtenerLlave(nodo->elemento))
             nodo->izq = _insertar(nodo->izq, e);
-        else if (obtenerLlave(e) > obtenerLlave(nodo->elemento))
-            nodo->der = _insertar(nodo->der, e);
         else
-            return nodo; // No se permiten llaves duplicadas exactamente iguales
+            nodo->der = _insertar(nodo->der, e); 
 
-        // Actualizar altura
-        nodo->altura = 1 + max(Altura(nodo->izq), Altura(nodo->der));
+        
+        nodo->altura = 1 + (std::max)(Altura(nodo->izq), Altura(nodo->der));
 
-        // Obtener el factor de balance
+       
         int balance = ObtenerBalance(nodo);
 
-        // Casos de desbalanceo (Rotaciones AVL)
-        if (balance > 1 && obtenerLlave(e) < obtenerLlave(nodo->izq->elemento))
+      
+        if (balance > 1 && ObtenerBalance(nodo->izq) >= 0)
             return RotacionDerecha(nodo);
 
-        if (balance < -1 && obtenerLlave(e) > obtenerLlave(nodo->der->elemento))
+        if (balance < -1 && ObtenerBalance(nodo->der) <= 0)
             return RotacionIzquierda(nodo);
 
-        if (balance > 1 && obtenerLlave(e) > obtenerLlave(nodo->izq->elemento)) {
+        if (balance > 1 && ObtenerBalance(nodo->izq) < 0) {
             nodo->izq = RotacionIzquierda(nodo->izq);
             return RotacionDerecha(nodo);
         }
 
-        if (balance < -1 && obtenerLlave(e) < obtenerLlave(nodo->der->elemento)) {
+        if (balance < -1 && ObtenerBalance(nodo->der) > 0) {
             nodo->der = RotacionDerecha(nodo->der);
             return RotacionIzquierda(nodo);
         }
@@ -103,13 +100,24 @@ private:
     }
 
     void _inOrdenInverso(NodoAVL<T>* nodo, function<void(T)> accion) {
-    if (nodo != nullptr) {
-        _inOrdenInverso(nodo->der, accion); // Primero los más caros
-        accion(nodo->elemento);             // Luego el medio
-        _inOrdenInverso(nodo->izq, accion); // Finalmente los más baratos
+        if (nodo != nullptr) {
+            _inOrdenInverso(nodo->der, accion); 
+            accion(nodo->elemento);            
+            _inOrdenInverso(nodo->izq, accion); 
+        }
     }
+
+    void destruirRecursivo(NodoAVL<T>* nodo) {
+        if (!nodo) return;
+        destruirRecursivo(nodo->izq);
+        destruirRecursivo(nodo->der);
+        delete nodo;
     }
 public:
+    ~ArbolAVL() {
+        destruirRecursivo(raiz);
+    }
+
     ArbolAVL(function<float(T)> lambdaLlave) {
         raiz = nullptr;
         obtenerLlave = lambdaLlave;
@@ -123,6 +131,6 @@ public:
         _inOrden(raiz, accion);
     }
     void RecorrerInOrdenInverso(function<void(T)> accion) {
-    _inOrdenInverso(raiz, accion);
+        _inOrdenInverso(raiz, accion);
     }
 };

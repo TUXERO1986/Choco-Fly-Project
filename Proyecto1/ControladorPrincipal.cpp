@@ -7,27 +7,34 @@ ControladorPrincipal::ControladorPrincipal() {
 	controladorPaquetes = new ControladorPaquetes();
 	controladorUsuarios = new ControladorUsuarios();
     controladorRegistros= new ControladorRegistros();
+    generadorDataset = new GeneradorDataset();
 }
 ControladorPrincipal::~ControladorPrincipal() {
 	delete controladorRutas;
 	delete controladorHoteles;
-	delete controladorReservas	;
+	delete controladorReservas;
+    delete controladorVuelos;
 	delete controladorPaquetes;
+    delete controladorUsuarios;
+    delete controladorRegistros;
+    delete generadorDataset;
 }
 void ControladorPrincipal::GenerarDatos(int cantidadVuelos, int cantidadHoteles, int cantidadPaquetes) {
-	generadorDataset->GenerarTodo(cantidadVuelos,cantidadHoteles,cantidadPaquetes,controladorRutas->getRutas());
+    GenerarVuelos(cantidadVuelos);
+    GenerarHoteles(cantidadHoteles);
+    GenerarPaquetes(cantidadVuelos);
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Generacion masiva: " + to_string(cantidadVuelos) + " vuelos, " + to_string(cantidadHoteles) + " hoteles, " + to_string(cantidadPaquetes) + " paquetes");
 }
 void ControladorPrincipal::GenerarVuelos(int cantidadVuelos) {
-	generadorDataset->GenerarVuelosAleatorios(cantidadVuelos, controladorRutas->getRutas());
+	generadorDataset->GenerarVuelosAleatorios(cantidadVuelos, controladorRutas->getRutas(),controladorVuelos);
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Genero " + to_string(cantidadVuelos) + " vuelos aleatorios");
 }
 void ControladorPrincipal::GenerarHoteles(int cantidadHoteles) {
-	generadorDataset->GenerarHotelesAleatorios(cantidadHoteles, controladorRutas->getRutas());
+	generadorDataset->GenerarHotelesAleatorios(cantidadHoteles, controladorRutas->getRutas(),controladorHoteles);
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Genero " + to_string(cantidadHoteles) + " hoteles aleatorios");
 }
 void ControladorPrincipal::GenerarPaquetes(int cantidadPaquetes) {
-	generadorDataset->GenerarPaquetesAleatorios(cantidadPaquetes, controladorRutas->getRutas());
+	generadorDataset->GenerarPaquetesAleatorios(cantidadPaquetes, controladorRutas->getRutas(),controladorPaquetes,controladorVuelos->getVuelos(),controladorHoteles->getHoteles());
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Genero " + to_string(cantidadPaquetes) + " paquetes aleatorios");
 }
 void ControladorPrincipal::AgregarVuelo(string origen, string destino, string escalas, string fecha, float distancia) {
@@ -54,88 +61,91 @@ void ControladorPrincipal::AgregarRuta(string origen, string destino, float dist
 }
 void ControladorPrincipal::EliminarRuta(int indiceRuta) {
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Ruta ID: " + to_string(indiceRuta));
-	controladorRutas->getRutas()->eliminaPos(indiceRuta);
+    
+    Ruta* rutaABorrar = controladorRutas->getRutas()->obtenerPos(indiceRuta);
+    controladorRutas->getRutas()->eliminaPos(indiceRuta);
+    delete rutaABorrar;
+    
     GuardarDatosEnArchivos();
 }
+
 void ControladorPrincipal::EliminarVuelo(int indiceVuelo) {
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Vuelo ID: " + to_string(indiceVuelo));
-	controladorVuelos->getVuelos()->eliminaPos(indiceVuelo);
+    
+    Vuelo* vueloABorrar = controladorVuelos->getVuelos()->obtenerPos(indiceVuelo);
+    controladorVuelos->getVuelos()->eliminaPos(indiceVuelo);
+    delete vueloABorrar;
+    
     GuardarDatosEnArchivos();
 }
+
 void ControladorPrincipal::EliminarHotel(int indiceHotel) {
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Hotel ID: " + to_string(indiceHotel));
-	controladorHoteles->getHoteles()->eliminaPos(indiceHotel);
+    
+    
+    Hotel* hotelABorrar = controladorHoteles->getHoteles()->obtenerPos(indiceHotel);
+    controladorHoteles->getHoteles()->eliminaPos(indiceHotel);
+    delete hotelABorrar;
+    
     GuardarDatosEnArchivos();
 }
+
 void ControladorPrincipal::EliminarPaquete(int indicePaquete) {
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Paquete ID: " + to_string(indicePaquete));
-	controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
+    
+    Paquete* paqueteABorrar = controladorPaquetes->getPaquetes()->obtenerPos(indicePaquete);
+    controladorPaquetes->getPaquetes()->eliminaPos(indicePaquete);
+    delete paqueteABorrar;
+    
     GuardarDatosEnArchivos();
 }
 void ControladorPrincipal::EliminarReserva(int indiceReserva) {
 
-    Reserva* reservaACancelar = controladorReservas->
-        getReservasTotales()->obtenerPos(indiceReserva);
+Reserva* reservaACancelar = controladorReservas->getReservasTotales()->obtenerPos(indiceReserva);
+    if (reservaACancelar == nullptr) return;
 
-    if (reservaACancelar->getTipoReserva() == "VUELO") {
-        ReservaVuelo* ResVuelo= dynamic_cast<ReservaVuelo*>(reservaACancelar);
-
+    auto liberarVuelo = [&](ReservaVuelo* resVuelo) {
+        if (resVuelo == nullptr) return;
         for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
             Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
-            if (v->getOrigen() == ResVuelo->getOrigen() && v->getDestino() ==
-                ResVuelo->getDestino() && v->getFecha() == ResVuelo->getFecha()) {
-
-                v->getAsientos()->obtenerPos(ResVuelo->getAsiento() - 1)->setDisponible(true);
+            if (v->getOrigen() == resVuelo->getOrigen() && 
+                v->getDestino() == resVuelo->getDestino() && 
+                v->getFecha() == resVuelo->getFecha()) {
+                
+                v->getAsientos()->obtenerPos(resVuelo->getAsiento() - 1)->setDisponible(true);
                 break;
             }
         }
-    }
-    else if (reservaACancelar->getTipoReserva() == "HOTEL") {
-        ReservaHotel* resHotel = dynamic_cast<ReservaHotel*>(reservaACancelar);
+    };
 
+    auto liberarHotel = [&](ReservaHotel* resHotel) {
+        if (resHotel == nullptr) return;
         for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
             Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
             if (h->getNombre() == resHotel->getNombreHotel()) {
-                h->getHabitaciones()->
-                    obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
+                
+                h->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
                 break;
             }
         }
+    };
+
+    if (reservaACancelar->getTipoReserva() == "VUELO") {
+        liberarVuelo(dynamic_cast<ReservaVuelo*>(reservaACancelar));
+    }
+    else if (reservaACancelar->getTipoReserva() == "HOTEL") {
+        liberarHotel(dynamic_cast<ReservaHotel*>(reservaACancelar));
     }
     else if (reservaACancelar->getTipoReserva() == "PAQUETE") {
         ReservaPaquete* resPaq = dynamic_cast<ReservaPaquete*>(reservaACancelar);
-
-        ReservaVuelo* ReservaVueloIda = resPaq->getVueloReservado();
-        if (ReservaVueloIda != nullptr) {
-            for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
-                Vuelo* v = controladorVuelos->getVuelos()->obtenerPos(i);
-
-                if (v->getOrigen() == ReservaVueloIda->getOrigen() &&
-                    v->getDestino() == ReservaVueloIda->getDestino() &&
-                    v->getFecha() == ReservaVueloIda->getFecha()) {
-
-                    v->getAsientos()->obtenerPos(ReservaVueloIda->getAsiento() - 1)->setDisponible(true);
-                    break;
-                }
-            }
+        if (resPaq != nullptr) {
+            liberarVuelo(resPaq->getVueloReservado());
+            liberarHotel(resPaq->getHotelReservado());
         }
-
-        ReservaHotel* resHotel = resPaq->getHotelReservado();
-        if (resHotel != nullptr) {
-            for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
-                Hotel* h = controladorHoteles->getHoteles()->obtenerPos(i);
-                if (h->getNombre() == resHotel->getNombreHotel()) {
-
-                    h->getHabitaciones()->obtenerPos(resHotel->getHabitacion() - 1)->setDisponible(true);
-                    break;
-                }
-            }
-        }
-
     }
 
     controladorReservas->getReservasTotales()->eliminaPos(indiceReserva);
-
+    delete reservaACancelar;
     GuardarDatosEnArchivos();
 
     ColorUI::Animaciones::mostrarSpinner("Deshaciendo transaccion y devolviendo recursos", 1200, "");
@@ -143,7 +153,15 @@ void ControladorPrincipal::EliminarReserva(int indiceReserva) {
 }
 void ControladorPrincipal::EliminarUsuario(int indiceUsuario) {
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Usuario ID: " + to_string(indiceUsuario));
+    
+    Usuario* usuarioABorrar = controladorUsuarios->getUsuarios()->obtenerPos(indiceUsuario);
+    
     controladorUsuarios->getUsuarios()->eliminaPos(indiceUsuario);
+    
+    delete usuarioABorrar;
+    
+    GuardarDatosEnArchivos();
+
 }
 
 void ControladorPrincipal::ObtenerIngresosTotales() {
@@ -191,7 +209,7 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, i
             vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento, controladorReservas->getReservasTotales()->longitud());
             
         controladorReservas->AgregarReserva(nuevaReserva);
-        userActual->getReservas()->agregaFinal(nuevaReserva); // Agregamos a la lista del usuario
+        userActual->getReservas()->agregaFinal(nuevaReserva); 
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (vuelo)");
         
         Lista<Asiento*>* listaAsientos = vueloSeleccionado->getAsientos();
@@ -212,7 +230,7 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
             hotelSeleccionado->getCiudad(), fecha, hotelSeleccionado->getPrecioBase(), noches, habitacion, tipoO, tipoC, tipoS, controladorReservas->getReservasTotales()->longitud());
             
         controladorReservas->AgregarReserva(nuevaReserva);
-        userActual->getReservas()->agregaFinal(nuevaReserva); // Agregamos a la lista del usuario
+        userActual->getReservas()->agregaFinal(nuevaReserva); 
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)");
         
         Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getHabitaciones();
@@ -399,7 +417,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     );
 
     controladorReservas->AgregarReserva(nuevaReserva);
-    userActual->getReservas()->agregaFinal(nuevaReserva); // Agregamos a la lista del usuario
+    userActual->getReservas()->agregaFinal(nuevaReserva); 
     controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (paquete)");
     ColorUI::Animaciones::mostrarSpinner("Procesando transaccion con el sistema central", 2000, "");
     cout << "\n"; ColorUI::Alertas::MostrarExito("Reserva de paquete completada exitosamente!");
@@ -426,7 +444,7 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
         controladorRegistros->AgregarRegistro(nombre, correo, "Usuario", "Inicio de sesion");
         cout << "\n\n\n"; ColorUI::Alertas::MostrarExito("Inicio de sesion exitoso! Bienvenido, " + usuarioEncontrado->getNombre() + "!", "\t\t\t");
         
-        // Limpiar lista vieja y asignar la nueva para evitar memory leaks
+        
         Lista<Reserva*>* temp = usuarioEncontrado->getReservas();
         if (temp != nullptr) {
             delete temp; 

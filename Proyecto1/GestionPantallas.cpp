@@ -282,11 +282,20 @@ void GestionPantallas::MenuFiltrosVuelos() {
             pausarConsola();
             break;
         }
-        case '5': {
+case '5': {
             DibujarHeader("Inicio > Catalogo > Vuelos > Por Precio");
-            Lista<Vuelo*>* aux= principal->getControladorVuelos()->getVuelos();
-            aux->QuickSort([](Vuelo* v1,Vuelo* v2){return v1->getPrecioBase()<v2->getPrecioBase();});
-            principal->ConsultarCatalogoDinamico<Vuelo>(aux,"VUELOS DE MENOR A MAYOR PRECIO",[](Vuelo* v){return true;});
+            
+            
+            Lista<Vuelo*>* listaOrdenada = new Lista<Vuelo*>();
+            
+           
+            principal->getControladorVuelos()->getVuelosMenorPrecio()->RecorrerInOrden([&listaOrdenada](Vuelo* v) {
+                listaOrdenada->agregaFinal(v);
+            });
+            
+            principal->ConsultarCatalogoDinamico<Vuelo>(listaOrdenada, "VUELOS DE MENOR A MAYOR PRECIO", [](Vuelo* v){ return true; });
+            
+            delete listaOrdenada; 
             pausarConsola();
             break;
         }
@@ -358,9 +367,16 @@ void GestionPantallas::MenuFiltrosHoteles() {
         }
         case '3': {
             DibujarHeader("Inicio > Catalogo > Hoteles > Por Precio");
-            Lista<Hotel*>* aux= principal->getControladorHoteles()->getHoteles();
-            aux->QuickSort([](Hotel* h1,Hotel* h2){return h1->getPrecioBase()<h2->getPrecioBase();});
-            principal->ConsultarCatalogoDinamico<Hotel>(aux,"HOTELES DE MENOR A MAYOR PRECIO", [](Hotel* h){return true;});
+            
+            Lista<Hotel*>* listaOrdenada = new Lista<Hotel*>();
+            
+            principal->getControladorHoteles()->getHotelesMenorPrecio()->RecorrerInOrden([&listaOrdenada](Hotel* h) {
+                listaOrdenada->agregaFinal(h);
+            });
+            
+            principal->ConsultarCatalogoDinamico<Hotel>(listaOrdenada, "HOTELES DE MENOR A MAYOR PRECIO", [](Hotel* h){ return true; });
+            
+            delete listaOrdenada;
             pausarConsola();
             break;
         }
@@ -370,7 +386,7 @@ void GestionPantallas::MenuFiltrosHoteles() {
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO: ", Paletas::Exito, false, false); 
             cin >> presupuesto; cin.ignore();
             
-            // Implementación dinámica
+            
             principal->ConsultarCatalogoDinamico<Hotel>(
                 principal->getControladorHoteles()->getHoteles(),
                 "HOTELES HASTA: $" + to_string(presupuesto) + " POR NOCHE",
@@ -472,11 +488,18 @@ void GestionPantallas::MenuFiltrosPaquetes() {
             pausarConsola();
             break;
         }
-        case '3': {
+case '3': {
             DibujarHeader("Inicio > Catalogo > Paquetes > Por Precio");
-            Lista<Paquete*>* aux= principal->getControladorPaquetes()->getPaquetes();
-            aux->QuickSort([](Paquete* p1, Paquete* p2){return p1->getPrecioBase()<p2->getPrecioBase();});
-            principal->ConsultarCatalogoDinamico<Paquete>(aux,"PAQUETES DE MENOR A MAYOY PRECIO",[](Paquete* p){return true;});
+            
+            Lista<Paquete*>* listaOrdenada = new Lista<Paquete*>();
+            
+            principal->getControladorPaquetes()->getPaquetesMenorPrecio()->RecorrerInOrden([&listaOrdenada](Paquete* p) {
+                listaOrdenada->agregaFinal(p);
+            });
+            
+            principal->ConsultarCatalogoDinamico<Paquete>(listaOrdenada, "PAQUETES DE MENOR A MAYOR PRECIO", [](Paquete* p){ return true; });
+            
+            delete listaOrdenada;
             pausarConsola();
             break;
         }
@@ -486,7 +509,7 @@ void GestionPantallas::MenuFiltrosPaquetes() {
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO: ", Paletas::Exito, false, false); 
             cin >> presupuesto; cin.ignore();
             
-            // Implementación dinámica
+            
             principal->ConsultarCatalogoDinamico<Paquete>(
                 principal->getControladorPaquetes()->getPaquetes(),
                 "PAQUETES HASTA: $" + to_string(presupuesto),
@@ -954,7 +977,6 @@ void GestionPantallas::MenuReservaPaquete() {
     ColorUI::printGradient("Cantidad de equipaje para el RETORNO: ", Exito, false, false);
     equipajeRetorno = LeerOpcion();
 
-    // --- Mapa visual de asientos del vuelo incluido ---
     Vuelo* vueloInc = principal->getControladorPaquetes()->getPaquetes()->obtenerPos(idPaquete)->getVueloIncluido();
     LimpiarConsola();
     ColorUI::printGradient("=== SELECCION DE ASIENTO (Vuelo del Paquete) ===", TemaPrincipal, false);
@@ -989,7 +1011,7 @@ void GestionPantallas::MenuReservaPaquete() {
         }
     }
 
-    // --- Seleccion de clase con menú explícito ---
+   
     LimpiarConsola();
     ColorUI::printGradient("=== SELECCION DE CLASE DE VUELO ===\n", TemaPrincipal, false);
     ColorUI::printGradient("\n\t[1] ECONOMICA", Exito, false);

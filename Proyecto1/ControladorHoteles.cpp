@@ -13,12 +13,22 @@ ControladorHoteles::ControladorHoteles() {
 
 	controladorArchivos->LeerArchivoHoteles(hoteles);
     for(int i=0; i<hoteles->longitud();i++)hotelesMenorPrecio->Insertar(hoteles->obtenerPos(i));
+	indicePorCiudad = new ArbolAVLMultiClave<Hotel*, string>(
+    [](Hotel* h){ return h->getCiudad(); }
+);
+for (int i = 0; i < hoteles->longitud(); i++) {
+    hotelesMenorPrecio->Insertar(hoteles->obtenerPos(i));
+    indicePorCiudad->Insertar(hoteles->obtenerPos(i));
+}
+
 }
 ControladorHoteles::~ControladorHoteles() {
 	for (int i = 0; i < hoteles->longitud(); i++) {
 		delete hoteles->obtenerPos(i);
 	}
 	delete hoteles;
+	delete indicePorCiudad;
+	delete hotelesMenorPrecio;
 }
 void ControladorHoteles::GenerarHoteles(int contador, Lista<CiudadID*>* listaCiudades) {
     string nombresBase[] = {
@@ -52,7 +62,11 @@ void ControladorHoteles::AgregarNuevoHotel(string nombre, string ciudad, float p
 	Hotel* nuevoHotel = new Hotel(nombre, ciudad, puntuacion, precioNoche,hoteles->longitud());
 	hoteles->agregaFinal(nuevoHotel);
     hotelesMenorPrecio->Insertar(nuevoHotel);
+	indicePorCiudad->Insertar(nuevoHotel);
 	controladorArchivos->GuardarDatoArchivoHoteles(nuevoHotel);
+}
+Lista<Hotel*>* ControladorHoteles::getHotelesPorCiudad(string ciudad) {
+    return indicePorCiudad->BuscarTodos(ciudad);
 }
 void ControladorHoteles::MostrarHoteles() {
 	int total = hoteles->longitud();

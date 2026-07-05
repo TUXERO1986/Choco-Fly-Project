@@ -5,11 +5,14 @@
 typedef unsigned int uint;
 template<class T>
 class Lista
+
+   
 {
 private:
     typedef std::function<int(T, T)> Comp;
 	Nodo<T>* ini;
 	uint lon;
+    Nodo<T>* fin;
     Nodo<T>* _merge(Nodo<T>* l1, Nodo<T>* l2, std::function<bool(T, T)> comp);
     Nodo<T>* _getMid(Nodo<T>* head);
     Nodo<T>* _mergeSort(Nodo<T>* head, std::function<bool(T, T)> comp);
@@ -22,6 +25,9 @@ public:
 	Lista();
 	~Lista();
 
+    Lista(const Lista&) = delete;
+    Lista& operator=(const Lista&) = delete;
+
     uint longitud();
     bool esVacia();
     void agregaInicial(T elem);
@@ -33,6 +39,7 @@ public:
     void eliminaInicial();
     void eliminaPos(uint pos);
     void eliminaFinal();
+    void ParaCada(std::function<void(T, uint)> accion);
     T obtenerInicial();
     T obtenerPos(uint pos);
     uint getPos(T elem);
@@ -47,6 +54,7 @@ public:
 template<class T>
 Lista<T>::Lista() {
     ini = nullptr;
+    fin = nullptr;
     lon = 0;
 }
 template<class T>
@@ -58,6 +66,7 @@ Lista<T>::~Lista() {
         aux = siguiente;
     }
     ini = nullptr;
+    fin = nullptr;
     lon = 0;
 }
 
@@ -82,8 +91,8 @@ template <class T>
 T Lista<T>::buscar(T elem) {
     Nodo<T>* aux = ini;
     while (aux != nullptr) {
-        if (Comp(aux->elem, elem) == 0) {
-            return aux->elem;
+        if (aux->getElemento() == elem) {
+            return aux->getElemento();
         }
         aux = aux->getSig();
     }
@@ -112,7 +121,15 @@ void Lista<T>::agregaPos(T elem, uint pos) {
 }
 template <class T>
 void Lista<T>::agregaFinal(T elem) {
-    agregaPos(elem, lon);  
+        Nodo<T>* nuevo = new Nodo<T>(elem);
+    if (esVacia()) {
+        ini = nuevo;
+        fin = nuevo;
+    } else {
+        fin->setSig(nuevo);
+        fin = nuevo;
+    }
+    lon++;
 }
 
 template <class T>
@@ -122,51 +139,50 @@ void Lista<T>::eliminaInicial() {
         ini = ini->getSig();
         delete aux;
         lon--;
+        if (ini == nullptr) fin = nullptr; 
     }
 }
-
+template<class T>
+void Lista<T>::ParaCada(std::function<void(T, uint)> accion) {
+    Nodo<T>* aux = ini;
+    uint i = 0;
+    while (aux != nullptr) {
+        accion(aux->getElemento(), i);
+        aux = aux->getSig();
+        i++;
+    }
+}
 template <class T>
 void Lista<T>::eliminaPos(uint pos) {
     if (pos >= lon) return;
-
-    if (pos == 0) {
-        eliminaInicial();
-        return;
-    }
+    if (pos == 0) { eliminaInicial(); return; }
 
     Nodo<T>* aux = ini;
-    for (uint i = 0; i < pos - 1; i++) {
-        aux = aux->getSig();
-    }
+    for (uint i = 0; i < pos - 1; i++) aux = aux->getSig();
 
     Nodo<T>* nodoAEliminar = aux->getSig();
-
     aux->setSig(nodoAEliminar->getSig());
+    if (pos == lon - 1) fin = aux; 
     delete nodoAEliminar;
     lon--;
 }
 template <class T>
 void Lista<T>::eliminaFinal() {
     if (lon == 0) return;
-
-
     if (lon == 1) {
         delete ini;
         ini = nullptr;
+        fin = nullptr; 
         lon = 0;
         return;
     }
-
     Nodo<T>* aux = ini;
-    for (int i = 0; i < lon - 2; i++) {
-        aux = aux->getSig();
-    }
-
+    for (int i = 0; i < lon - 2; i++) aux = aux->getSig();
     Nodo<T>* nodoAEliminar = aux->getSig();
     aux->setSig(nullptr);
+    fin = aux; // NUEVO
     delete nodoAEliminar;
-
-    lon--; 
+    lon--;
 }
 
 template <class T>
@@ -287,10 +303,35 @@ int Lista<T>::_partition(T* arr, int low, int high, std::function<bool(T, T)> co
 
 template <class T>
 void Lista<T>::_quickSort(T* arr, int low, int high, std::function<bool(T, T)> comp) {
-    if (low < high) {
+    while (low < high) {
+        if (high - low < 16) {
+            for (int i = low + 1; i <= high; i++) {
+                T key = arr[i];
+                int j = i - 1;
+                while (j >= low && comp(key, arr[j])) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+                arr[j + 1] = key;
+            }
+            return;
+        }
+
+        int mid = low + (high - low) / 2;
+        if (comp(arr[mid], arr[low]))  std::swap(arr[mid], arr[low]);
+        if (comp(arr[high], arr[low])) std::swap(arr[high], arr[low]);
+        if (comp(arr[high], arr[mid])) std::swap(arr[high], arr[mid]);
+        std::swap(arr[mid], arr[high]);
+
         int pi = _partition(arr, low, high, comp);
-        _quickSort(arr, low, pi - 1, comp);
-        _quickSort(arr, pi + 1, high, comp);
+
+        if (pi - low < high - pi) {
+            _quickSort(arr, low, pi - 1, comp);
+            low = pi + 1;
+        } else {
+            _quickSort(arr, pi + 1, high, comp);
+            high = pi - 1;
+        }
     }
 }
 

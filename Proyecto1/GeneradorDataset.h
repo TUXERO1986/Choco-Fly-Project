@@ -4,7 +4,10 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "Lista.h"
+#include "ControladorArchivos.h"
+#include "ControladorHoteles.h"
+#include "ControladorPaquetes.h"
+#include "ControladorVuelos.h"
 #include "Ruta.h"
 
 using namespace std;
@@ -21,9 +24,13 @@ public:
     GeneradorDataset();
     ~GeneradorDataset();
 
-    void GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas);
-    void GenerarHotelesAleatorios(int cantidad, Lista<Ruta*>* rutas);
-    void GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rutas);
-    
-    void GenerarTodo(int cantVuelos, int cantHoteles, int cantPaquetes, Lista<Ruta*>* rutas);
+void GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas, ControladorVuelos* ctrlVuelos);
+void GenerarHotelesAleatorios(int cantidad, Lista<Ruta*>* rutas, ControladorHoteles* ctrlHoteles);
+void GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rutas, ControladorPaquetes* ctrlPaquetes, Lista<Vuelo*>* listaVuelos, Lista<Hotel*>* listaHoteles);
+
+void GenerarTodo(int cantVuelos, int cantHoteles, int cantPaquetes, 
+                 Lista<Ruta*>* rutas, 
+                 ControladorVuelos* cv, 
+                 ControladorHoteles* ch, 
+                 ControladorPaquetes* cp);
 };

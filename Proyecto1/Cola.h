@@ -12,6 +12,9 @@ public:
     Cola();
     ~Cola();
 
+    Cola(const Cola&) = delete;
+    Cola& operator=(const Cola) = delete;
+
     void encolar(T dato);     
     T desencolar();          
     bool estaVacia();        

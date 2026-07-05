@@ -6,6 +6,9 @@ ControladorReservas::ControladorReservas() {
     indiceReservasPorID = new ArbolAVLClave<Reserva*, int>([](Reserva* r) {
         return r->getId(); 
     });
+    for (int i = 0; i < reservasTotales->longitud(); i++) {
+        indiceReservasPorID->Insertar(reservasTotales->obtenerPos(i));
+    }
 }
 
 ControladorReservas::~ControladorReservas() {
@@ -28,7 +31,6 @@ void ControladorReservas::AgregarReserva(Reserva* nuevaReserva) {
     }
 }
 Reserva* ControladorReservas::BuscarReservaPorID(int id) {
-    // Búsqueda en el Árbol AVL: O(log n) en lugar de O(n)
     return indiceReservasPorID->Buscar(id);
 }
 

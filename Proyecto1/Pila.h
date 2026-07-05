@@ -12,6 +12,9 @@ public:
     Pila();
     ~Pila();
 
+    Pila(const Pila&) = delete;
+    Pila& operator=(const Pila&) = delete;
+
     void apilar(T dato);
     T desapilar();
     bool estaVacia();

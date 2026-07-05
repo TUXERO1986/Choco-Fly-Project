@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Removed the default 'vacio = -1' from the template definition
+
 template<class T>
 class CGrafo {
 private:
@@ -34,10 +34,10 @@ private:
     };
 
     vector<CVertice*>* vertices;
-    T valorVacio; // Store the empty value for the specific type
+    T valorVacio; 
 
 public:
-    // Pass the empty value in the constructor
+
     CGrafo(T vacio) {
         vertices = new vector<CVertice*>();
         valorVacio = vacio;
@@ -51,6 +51,9 @@ public:
         }
         delete vertices;
     }
+
+    CGrafo(const CGrafo&) = delete;
+    CGrafo& operator=(const CGrafo&) = delete;
 
     int adicionarVertice(T info) {
         CVertice* vert = new CVertice(valorVacio);

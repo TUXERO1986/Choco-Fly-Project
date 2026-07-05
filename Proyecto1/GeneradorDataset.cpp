@@ -3,7 +3,6 @@
 GeneradorDataset::GeneradorDataset() {
     srand(time(0));
 
-    // Nombres de hoteles corporativos y realistas, sin usar apellidos de personas
     nombresHoteles[0] = "Grand Plaza Hotel";
     nombresHoteles[1] = "Resort Las Americas";
     nombresHoteles[2] = "EcoLodge Imperial";
@@ -37,14 +36,8 @@ string GeneradorDataset::GenerarEstadoAsientosOHabitaciones(int cantidad) {
     return estado;
 }
 
-void GeneradorDataset::GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas) {
-    if (rutas->longitud() == 0) {
-        cout << "Error: No hay rutas disponibles para generar vuelos." << endl;
-        return;
-    }
-
-    ofstream archivo("Vuelos.txt", ios::app);
-    if (!archivo.is_open()) return;
+void GeneradorDataset::GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas, ControladorVuelos* ctrlVuelos) {
+    if (rutas->longitud() == 0) return;
 
     for (int i = 0; i < cantidad; i += 2) {
         int indiceRuta = rand() % rutas->longitud();
@@ -54,70 +47,53 @@ void GeneradorDataset::GenerarVuelosAleatorios(int cantidad, Lista<Ruta*>* rutas
         string destino = aux->getDestino();
         float distancia = aux->getDistancia();
         string escalas = "Directo";
+        string fecha = GenerarFechaAleatoria();
 
-        string fechaIda = GenerarFechaAleatoria();
-        string asientosIda = GenerarEstadoAsientosOHabitaciones(30);
-        archivo << origen << "," << destino << "," << escalas << "," << fechaIda << "," << distancia << "," << asientosIda << "\n";
+        ctrlVuelos->AgregarNuevoVuelo(origen, destino, escalas, fecha, distancia);
 
         if (i + 1 < cantidad) {
-            string fechaRetorno = GenerarFechaAleatoria();
-            string asientosRetorno = GenerarEstadoAsientosOHabitaciones(30);
-            archivo << destino << "," << origen << "," << escalas << "," << fechaRetorno << "," << distancia << "," << asientosRetorno << "\n";
+            string fechaR = GenerarFechaAleatoria();
+            ctrlVuelos->AgregarNuevoVuelo(destino, origen, escalas, fechaR, distancia);
         }
     }
-    archivo.close();
 }
 
-void GeneradorDataset::GenerarHotelesAleatorios(int cantidad, Lista<Ruta*>* rutas) {
+void GeneradorDataset::GenerarHotelesAleatorios(int cantidad, Lista<Ruta*>* rutas, ControladorHoteles* ctrlHoteles) {
     if (rutas->longitud() == 0) return;
 
-    ofstream archivo("Hoteles.txt", ios::app);
-    if (!archivo.is_open()) return;
-
     for (int i = 0; i < cantidad; i++) {
-        string nombreHotel = nombresHoteles[rand() % CANT_HOTELES_NOMBRES];
-        
+        string nombre = nombresHoteles[rand() % CANT_HOTELES_NOMBRES];
         Ruta* rutaAlAzar = rutas->obtenerPos(rand() % rutas->longitud());
         string ciudad = (rand() % 2 == 0) ? rutaAlAzar->getOrigen() : rutaAlAzar->getDestino();
         
-        float puntuacion = 3.0f + static_cast<float>(rand() % 21) / 10.0f; 
-        float precio = 40.0f + (rand() % 410); 
-        string habitaciones = GenerarEstadoAsientosOHabitaciones(20); 
+        float puntuacion = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 4.0f));
+        float precio = 50.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 150.0f));
 
-        archivo << nombreHotel << "," << ciudad << "," << puntuacion << "," << precio << "," << habitaciones << "\n";
+        ctrlHoteles->AgregarNuevoHotel(nombre, ciudad, puntuacion, precio);
     }
-    archivo.close();
 }
 
-void GeneradorDataset::GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rutas) {
-    if (rutas->longitud() == 0) return;
-
-    ofstream archivo("Paquetes.txt", ios::app);
-    if (!archivo.is_open()) return;
+void GeneradorDataset::GenerarPaquetesAleatorios(int cantidad, Lista<Ruta*>* rutas, 
+                                                ControladorPaquetes* ctrlPaquetes, 
+                                                Lista<Vuelo*>* listaVuelos, 
+                                                Lista<Hotel*>* listaHoteles) {
+    if (listaVuelos->longitud() == 0 || listaHoteles->longitud() == 0) return;
 
     for (int i = 0; i < cantidad; i++) {
-        Ruta* rutaAux = rutas->obtenerPos(rand() % rutas->longitud());
+        Vuelo* v = listaVuelos->obtenerPos(rand() % listaVuelos->longitud());
+        Hotel* h = listaHoteles->obtenerPos(rand() % listaHoteles->longitud());
 
-        string vOri = rutaAux->getOrigen();
-        string vDes = rutaAux->getDestino();
-        string vEsc = "Directo"; 
-        string vFec = GenerarFechaAleatoria();
-        float vDist = rutaAux->getDistancia();
-
-        string hNom = nombresHoteles[rand() % CANT_HOTELES_NOMBRES];
-        string hCiu = vDes; 
-        
-        float hPunt = 3.0f + static_cast<float>(rand() % 21) / 10.0f;
-        float hPrec = (40.0f + (rand() % 410)) * 0.85f; 
-
-        archivo << vOri << "," << vDes << "," << vEsc << "," << vFec << "," << vDist << ","
-                << hNom << "," << hCiu << "," << hPunt << "," << hPrec << "\n";
+        ctrlPaquetes->AgregarNuevoPaquete(v, h);
     }
-    archivo.close();
 }
 
-void GeneradorDataset::GenerarTodo(int cantVuelos, int cantHoteles, int cantPaquetes, Lista<Ruta*>* rutas) {
-    GenerarVuelosAleatorios(cantVuelos, rutas);
-    GenerarHotelesAleatorios(cantHoteles, rutas);
-    GenerarPaquetesAleatorios(cantPaquetes, rutas);
+void GeneradorDataset::GenerarTodo(int cantVuelos, int cantHoteles, int cantPaquetes, 
+                                   Lista<Ruta*>* rutas, 
+                                   ControladorVuelos* cv, 
+                                   ControladorHoteles* ch, 
+                                   ControladorPaquetes* cp) {
+    
+    GenerarVuelosAleatorios(cantVuelos, rutas, cv);
+    GenerarHotelesAleatorios(cantHoteles, rutas, ch);
+    GenerarPaquetesAleatorios(cantPaquetes, rutas, cp, cv->getVuelos(), ch->getHoteles());
 }

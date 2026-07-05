@@ -10,7 +10,7 @@ private:
     T* arreglo;
     int capacidad;
     int sizeActual;
-    // Lambda para comparar dos elementos (retorna true si a es "menor" que b)
+
     function<bool(T, T)> comp;
 
     int parent(int i) { return (i - 1) / 2; }
@@ -22,7 +22,7 @@ private:
         int r = right(i);
         int smallest = i;
 
-        // Usamos nuestra lambda para comparar
+       
         if (l < sizeActual && comp(arreglo[l], arreglo[smallest]))
             smallest = l;
 
@@ -36,7 +36,7 @@ private:
     }
 
 public:
-    // Constructor dinámico e inyección de dependencia
+
     MinHeap(int cap, function<bool(T, T)> comparador) {
         capacidad = cap;
         sizeActual = 0;
@@ -49,13 +49,13 @@ public:
     }
 
     void Insertar(T x) {
-        if (sizeActual == capacidad) return; // Heap lleno
+        if (sizeActual == capacidad) return; 
 
         sizeActual++;
         int i = sizeActual - 1;
         arreglo[i] = x;
 
-        // Subir el elemento si es menor que su padre
+        
         while (i != 0 && comp(arreglo[i], arreglo[parent(i)])) {
             swap(arreglo[i], arreglo[parent(i)]);
             i = parent(i);

@@ -5,43 +5,78 @@ ControladorRutas::ControladorRutas() {
     rutas = new Lista<Ruta*>();
     conexiones = new Lista<Lista<int>*>();
     MapaCiudades = new Lista<CiudadID*>();
-    
-
     grafoRutas = new CGrafo<string>("");
 
-    ObtenerIdCiudad = [](Lista<CiudadID*>* mapaciudades, string nombre) {
-        for (unsigned int i = 0; i < mapaciudades->longitud(); i++) {
-            CiudadID* aux = mapaciudades->obtenerPos(i);
-            if (aux->getNombre() == nombre) {
-                return aux->getId();
-            }
-        }
-        return -1;
-    };
+    indiceCiudadesPorNombre = new ArbolAVLClave<CiudadID*, string>(
+        [](CiudadID* c) { return c->getNombre(); }
+    );
 
     controladorArchivos->LeerArchivoRutas(conexiones, rutas, MapaCiudades);
 
     for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) {
+        indiceCiudadesPorNombre->Insertar(MapaCiudades->obtenerPos(i));
         grafoRutas->adicionarVertice(MapaCiudades->obtenerPos(i)->getNombre());
     }
 
     for (unsigned int i = 0; i < rutas->longitud(); i++) {
         Ruta* r = rutas->obtenerPos(i);
-        int idOri = ObtenerIdCiudad(MapaCiudades, r->getOrigen());
-        int idDes = ObtenerIdCiudad(MapaCiudades, r->getDestino());
-
+        int idOri = ObtenerIdCiudadPorNombre(r->getOrigen());
+        int idDes = ObtenerIdCiudadPorNombre(r->getDestino());
         if (idOri != -1 && idDes != -1) {
-
             grafoRutas->adicionarArco(idOri, idDes, r->getDistancia());
             grafoRutas->adicionarArco(idDes, idOri, r->getDistancia());
         }
     }
 }
 
+ControladorRutas::~ControladorRutas() {
+    for (unsigned int i = 0; i < rutas->longitud(); i++) delete rutas->obtenerPos(i);
+    delete rutas;
+    for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) delete MapaCiudades->obtenerPos(i);
+    delete MapaCiudades;
+    for (unsigned int i = 0; i < conexiones->longitud(); i++) delete conexiones->obtenerPos(i);
+    delete conexiones;
+    delete grafoRutas;
+    delete indiceCiudadesPorNombre;
+    delete controladorArchivos;
+}
+
+int ControladorRutas::ObtenerIdCiudadPorNombre(string nombre) {
+    CiudadID* encontrado = indiceCiudadesPorNombre->Buscar(nombre);
+    return encontrado != nullptr ? encontrado->getId() : -1;
+}
+
+void ControladorRutas::AgregarNuevaRuta(string origen, string destino, float distancia) {
+    Ruta* ruta = new Ruta(origen, destino, distancia);
+    rutas->agregaFinal(ruta);
+    controladorArchivos->GardarDatoArchivoRutas(ruta);
+
+    int idOri = ObtenerIdCiudadPorNombre(origen);
+    int idDes = ObtenerIdCiudadPorNombre(destino);
+
+    if (idOri == -1) {
+        idOri = MapaCiudades->longitud();
+        CiudadID* nueva = new CiudadID(origen, idOri);
+        MapaCiudades->agregaFinal(nueva);
+        indiceCiudadesPorNombre->Insertar(nueva);
+        grafoRutas->adicionarVertice(origen);
+    }
+    if (idDes == -1) {
+        idDes = MapaCiudades->longitud();
+        CiudadID* nueva = new CiudadID(destino, idDes);
+        MapaCiudades->agregaFinal(nueva);
+        indiceCiudadesPorNombre->Insertar(nueva);
+        grafoRutas->adicionarVertice(destino);
+    }
+
+    grafoRutas->adicionarArco(idOri, idDes, distancia);
+    grafoRutas->adicionarArco(idDes, idOri, distancia);
+}
+
 Lista<Ruta*>* ControladorRutas::BuscarRutaMasCorta(string origen, string destino) {
 
-    int idOri = ObtenerIdCiudad(MapaCiudades, origen);
-    int idDes = ObtenerIdCiudad(MapaCiudades, destino);
+    int idOri = ObtenerIdCiudadPorNombre(origen);
+    int idDes = ObtenerIdCiudadPorNombre(destino);
 
     if (idOri == -1 || idDes == -1 || idOri == idDes) return nullptr;
 
@@ -76,29 +111,6 @@ Lista<Ruta*>* ControladorRutas::BuscarRutaMasCorta(string origen, string destino
 
     delete caminoIDs;
     return rutaFinal;
-}
-
-void ControladorRutas::AgregarNuevaRuta(string origen, string destino, float distancia) {
-    Ruta* ruta = new Ruta(origen, destino, distancia);
-    rutas->agregaFinal(ruta);
-    controladorArchivos->GardarDatoArchivoRutas(ruta);
-
-    int idOri = ObtenerIdCiudad(MapaCiudades, origen);
-    int idDes = ObtenerIdCiudad(MapaCiudades, destino);
-
-    if (idOri == -1) {
-        idOri = MapaCiudades->longitud();
-        MapaCiudades->agregaFinal(new CiudadID(origen, idOri));
-        grafoRutas->adicionarVertice(origen);
-    }
-    if (idDes == -1) {
-        idDes = MapaCiudades->longitud();
-        MapaCiudades->agregaFinal(new CiudadID(destino, idDes));
-        grafoRutas->adicionarVertice(destino);
-    }
-
-    grafoRutas->adicionarArco(idOri, idDes, distancia);
-    grafoRutas->adicionarArco(idDes, idOri, distancia);
 }
 
 Lista<Ruta*>* ControladorRutas::getRutas() {
