@@ -67,3 +67,27 @@ ADMIN,admin@chocofly.com,Administrador,Genero 300 vuelos aleatorios,05-07-2026 1
 ADMIN,admin@chocofly.com,Administrador,Genero 300 hoteles aleatorios,05-07-2026 10:51:29
 ADMIN,admin@chocofly.com,Administrador,Genero 300 paquetes aleatorios,05-07-2026 10:51:29
 ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 300 vuelos, 300 hoteles, 300 paquetes,05-07-2026 10:51:29
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 12:59:22
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 vuelos aleatorios,05-07-2026 12:59:46
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 hoteles aleatorios,05-07-2026 12:59:49
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 paquetes aleatorios,05-07-2026 12:59:55
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 20000 vuelos, 20000 hoteles, 20000 paquetes,05-07-2026 12:59:55
+0000,0000,Usuario,Inicio de sesion,05-07-2026 13:00:56
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:01:17
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:02:05
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:17:27
+ADMIN,admin@chocofly.com,Administrador,Genero 10000 vuelos aleatorios,05-07-2026 13:17:47
+ADMIN,admin@chocofly.com,Administrador,Genero 10000 hoteles aleatorios,05-07-2026 13:17:47
+ADMIN,admin@chocofly.com,Administrador,Genero 10000 paquetes aleatorios,05-07-2026 13:17:49
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 10000 vuelos, 10000 hoteles, 10000 paquetes,05-07-2026 13:17:49
+0000,0000,Usuario,Inicio de sesion,05-07-2026 13:18:05
+0000,0000,Usuario,Reserva (vuelo),05-07-2026 13:19:47
+0000,0000,Usuario,Inicio de sesion,05-07-2026 13:41:11
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:41:25
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 vuelos aleatorios,05-07-2026 13:41:46
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 hoteles aleatorios,05-07-2026 13:41:49
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 paquetes aleatorios,05-07-2026 13:41:55
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 20000 vuelos, 20000 hoteles, 20000 paquetes,05-07-2026 13:41:55
+0000,0000,Usuario,Inicio de sesion,05-07-2026 13:42:10
+0000,0000,Usuario,Reserva (vuelo),05-07-2026 13:43:04
+0000,0000,Usuario,Reserva (hotel),05-07-2026 13:43:45
