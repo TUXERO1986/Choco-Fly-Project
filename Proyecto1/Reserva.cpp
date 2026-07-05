@@ -8,6 +8,7 @@ void Reserva::MostrarDatos() {}
 string Reserva::getCodigoUsuario() { return codigoUsuario; }
 string Reserva::getNombreUsuario() { return nombreUsuario; }
 string Reserva::getTipoReserva() { return tipoReserva; }
+int Reserva::getId(){return id;}
 void Reserva::setCodigoUsuario(string codigoUsuario) { this->codigoUsuario = codigoUsuario; }
 void Reserva::setNombreUsuario(string nombreUsuario) { this->nombreUsuario = nombreUsuario; }
 void Reserva::setTipoReserva(string tipoReserva) { this->tipoReserva = tipoReserva; }

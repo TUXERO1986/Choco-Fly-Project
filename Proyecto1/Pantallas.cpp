@@ -93,6 +93,7 @@ void Admin(ControladorPrincipal* principal) {
     ColorUI::printGradient("\n\t\t\t\t\tIngrese contrasena ADMIN", Tux, false);
     cout << "\t\t\t\t\t"; cin >> password;
     LimpiarConsola();
+    principal->getControladorRegistros()->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Inicio de sesion ADMIN");
     AnimacionConsola::AvionConEstela(2000);
     AdminPantallas* adminUI = new AdminPantallas(principal);
     adminUI->MenuPrincipalAdmin();

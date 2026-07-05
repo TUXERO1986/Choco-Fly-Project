@@ -3,6 +3,9 @@ ControladorReservas::ControladorReservas() {
     reservasTotales = new Lista<Reserva*>();
 	controladorArchivos = new ControladorArchivos("Reservas.txt");
     controladorArchivos->LeerArchivoReservas(reservasTotales);
+    indiceReservasPorID = new ArbolAVLClave<Reserva*, int>([](Reserva* r) {
+        return r->getId(); 
+    });
 }
 
 ControladorReservas::~ControladorReservas() {
@@ -11,6 +14,7 @@ ControladorReservas::~ControladorReservas() {
     }
     delete reservasTotales;
     delete controladorArchivos;
+    delete indiceReservasPorID;
 }
 
 void ControladorReservas::AgregarReserva(Reserva* nuevaReserva) {
@@ -19,9 +23,13 @@ void ControladorReservas::AgregarReserva(Reserva* nuevaReserva) {
         reservasTotales->agregaFinal(nuevaReserva);
 
         controladorArchivos->GuardarDatoArchivoReservas(nuevaReserva);
-
+        indiceReservasPorID->Insertar(nuevaReserva);
         cout << "Reserva registrada y guardada con exito en el sistema." << endl;
     }
+}
+Reserva* ControladorReservas::BuscarReservaPorID(int id) {
+    // Búsqueda en el Árbol AVL: O(log n) en lugar de O(n)
+    return indiceReservasPorID->Buscar(id);
 }
 
 Lista<Reserva*>* ControladorReservas::getReservasTotales() {

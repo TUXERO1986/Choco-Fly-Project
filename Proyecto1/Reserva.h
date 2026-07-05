@@ -20,6 +20,7 @@ public:
 	void setCodigoUsuario(string codigoUsuario);
 	void setNombreUsuario(string nombreUsuario);
 	void setTipoReserva(string tipoReserva);
+	int getId();
 
 };
 

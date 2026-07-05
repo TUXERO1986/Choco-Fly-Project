@@ -345,6 +345,7 @@ void AdminPantallas::MenuReportes() {
         ColorUI::printGradient("\n\t\t[5] FILTRAR RESERVAS", Exito, false);
         ColorUI::printGradient("\n\t\t[6] FILTRAR USUARIOS REGISTRADOS", Exito, false);
         ColorUI::printGradient("\n\t\t[7] VER INGRESOS TOTALES", Exito, false);
+        ColorUI::printGradient("\n\t\t[8] VER BITACORA DE SISTEMA (LOGS)", Exito, false);
         ColorUI::printGradient("\n\t\t[0] Volver", Alerta, false);
 
         opcion = _getch();
@@ -359,6 +360,14 @@ void AdminPantallas::MenuReportes() {
         case '6': MenuFiltrosUsuarios(); break;
         case '7':
             principal->ObtenerIngresosTotales();
+            cout << "\n";
+            pausarConsola();
+            break;
+        case '8':
+            ColorUI::printGradient("=========================================================", TemaPrincipal, false);
+            ColorUI::printGradient("\n       BITACORA DE AUDITORÍA DEL SISTEMA (LOGS)       ", TemaPrincipal, false);
+            ColorUI::printGradient("\n=========================================================", TemaPrincipal, false);
+            principal->getControladorRegistros()->MostrarDatos();
             cout << "\n";
             pausarConsola();
             break;
@@ -495,6 +504,7 @@ void AdminPantallas::MenuFiltrosVuelos() {
         opcion = _getch();
         switch (opcion) {
       case '1': {
+            LimpiarConsola();
             vector<string> origenes;
             Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
             for(int i=0; i<vuelos->longitud(); i++){
@@ -509,9 +519,10 @@ void AdminPantallas::MenuFiltrosVuelos() {
                 cout << " [" << i+1 << "] " << left << setw(20) << origenes[i];
                 if((i+1)%3==0) cout << "\n";
             }
-            cout << "\n\n> Ingrese opcion: ";
+            cout << "\n\n> Ingrese opcion (0 para cancelar): ";
             int sel = LeerOpcion();
-            if (sel > 0 && sel <= origenes.size()) {
+            if (sel <= 0) { break; }
+            if (sel <= (int)origenes.size()) {
                 string origen = origenes[sel-1];
                 principal->ConsultarCatalogoDinamico<Vuelo>(vuelos, "VUELOS DESDE: "+origen,[origen](Vuelo* v){return v->getOrigen()==origen;});
             } else {
@@ -521,6 +532,7 @@ void AdminPantallas::MenuFiltrosVuelos() {
             break;
         }
         case '2': {
+            LimpiarConsola();
             vector<string> destinos;
             Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
             for(int i=0; i<vuelos->longitud(); i++){
@@ -535,9 +547,10 @@ void AdminPantallas::MenuFiltrosVuelos() {
                 cout << " [" << i+1 << "] " << left << setw(20) << destinos[i];
                 if((i+1)%3==0) cout << "\n";
             }
-            cout << "\n\n> Ingrese opcion: ";
+            cout << "\n\n> Ingrese opcion (0 para cancelar): ";
             int sel = LeerOpcion();
-            if (sel > 0 && sel <= destinos.size()) {
+            if (sel <= 0) { break; }
+            if (sel <= (int)destinos.size()) {
                 Lista<Vuelo*>* temp = principal->getControladorVuelos()->getVuelos();
                 string destino = destinos[sel-1];
                 principal->ConsultarCatalogoDinamico<Vuelo>(temp,"VUELOS A "+destino,[destino](Vuelo* v){return v->getDestino()==destino;});
@@ -548,6 +561,7 @@ void AdminPantallas::MenuFiltrosVuelos() {
             break;
         }
         case '3': {
+            LimpiarConsola();
             vector<string> fechas;
             Lista<Vuelo*>* vuelos = principal->getControladorVuelos()->getVuelos();
             for(int i=0; i<vuelos->longitud(); i++){
@@ -562,9 +576,10 @@ void AdminPantallas::MenuFiltrosVuelos() {
                 cout << " [" << i+1 << "] " << left << setw(20) << fechas[i];
                 if((i+1)%3==0) cout << "\n";
             }
-            cout << "\n\n> Ingrese opcion: ";
+            cout << "\n\n> Ingrese opcion (0 para cancelar): ";
             int sel = LeerOpcion();
-            if (sel > 0 && sel <= fechas.size()) {
+            if (sel <= 0) { break; }
+            if (sel <= (int)fechas.size()) {
                 string fecha=fechas[sel-1];
                 principal->ConsultarCatalogoDinamico<Vuelo>(vuelos,"VUELOS EN LA FECHA: "+fecha,[fecha](Vuelo* v){return v->getFecha()==fecha;});
             } else {
@@ -574,6 +589,7 @@ void AdminPantallas::MenuFiltrosVuelos() {
             break;
         }
         case '4': {
+            LimpiarConsola();
             float presupuesto;
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO\n", Exito, false); cin >> presupuesto; cin.ignore();
             principal->ConsultarCatalogoDinamico<Vuelo>(principal->getControladorVuelos()->getVuelos(),
@@ -582,7 +598,7 @@ void AdminPantallas::MenuFiltrosVuelos() {
             break;
         }
         case '5': {
-
+            LimpiarConsola();
             principal->ConsultarCatalogoDinamico<Vuelo>(principal->getControladorVuelos()->getVuelos(),
             "VUELOS DISPONIBLES: ",[](Vuelo* v){return true;});
             pausarConsola();

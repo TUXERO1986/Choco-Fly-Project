@@ -19,6 +19,9 @@ ControladorUsuarios::ControladorUsuarios() {
         Usuario* aux = usuarios->obtenerPos(i);
         tablaUsuarios->Insertar(aux->getCorreo(), aux);
     }
+    indiceCorreos = new ArbolAVLClave<Usuario*, string>([](Usuario* u) {
+        return u->getCorreo();
+    });
 }
 
 ControladorUsuarios::~ControladorUsuarios() {
@@ -27,7 +30,7 @@ ControladorUsuarios::~ControladorUsuarios() {
         delete usuarios->obtenerPos(i);
     }
     delete usuarios;
-    
+    delete indiceCorreos;
     delete tablaUsuarios;
 }
 
