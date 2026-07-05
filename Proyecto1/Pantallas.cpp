@@ -84,14 +84,19 @@ string u_nombre, u_correo, u_password;
 }
 void Admin(ControladorPrincipal* principal) {
     LimpiarConsola();
-
-    ColorUI::printGradient(admin, 
-        Tux, false);
-	gotoxy(0, 6);
+    ColorUI::printGradient(admin, Tux, false);
+    gotoxy(0, 6);
     ColorUI::printGradient("\n\n\n\t\t\t\t\tIngrese Datos ADMIN", Tux, false);
     cout << "\t\t\t\t\t"; cin >> usuario;
     ColorUI::printGradient("\n\t\t\t\t\tIngrese contrasena ADMIN", Tux, false);
     cout << "\t\t\t\t\t"; cin >> password;
+
+    if (usuario != "admin" || password != "chocofly2026") {
+        ColorUI::printGradient("\n\t\t\t\t\t[!] ACCESO DENEGADO. Credenciales invalidas.", Alerta, false);
+        pausarConsola();
+        return; 
+    }
+
     LimpiarConsola();
     principal->getControladorRegistros()->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Inicio de sesion ADMIN");
     AnimacionConsola::AvionConEstela(2000);

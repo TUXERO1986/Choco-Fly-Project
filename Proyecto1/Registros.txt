@@ -55,3 +55,15 @@ lol,lol,Usuario,Reserva (hotel),04-07-2026 18:26:35
 ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,04-07-2026 18:45:00
 lol,lol,Usuario,Inicio de sesion,04-07-2026 18:45:30
 lol,lol,Usuario,Reserva (paquete),04-07-2026 18:46:16
+0000,0000,Usuario,Inicio de sesion,05-07-2026 10:18:52
+0000,0000,Usuario,Reserva (hotel),05-07-2026 10:19:30
+0000,0000,Usuario,Reserva (vuelo),05-07-2026 10:20:46
+0000,N/A,Usuario,Cancelo reserva: HOTEL,05-07-2026 10:21:07
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 10:24:44
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 10:46:35
+ADMIN,admin@chocofly.com,Administrador,Genero 300 vuelos aleatorios,05-07-2026 10:46:45
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 10:51:20
+ADMIN,admin@chocofly.com,Administrador,Genero 300 vuelos aleatorios,05-07-2026 10:51:29
+ADMIN,admin@chocofly.com,Administrador,Genero 300 hoteles aleatorios,05-07-2026 10:51:29
+ADMIN,admin@chocofly.com,Administrador,Genero 300 paquetes aleatorios,05-07-2026 10:51:29
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 300 vuelos, 300 hoteles, 300 paquetes,05-07-2026 10:51:29

@@ -14,7 +14,7 @@ private:
     };
 
     Nodo* raiz;
-    std::function<K(T)> getClave; // Lambda para extraer la clave de comparación
+    std::function<K(T)> getClave;
 
     int getAltura(Nodo* n) {
         return n ? n->altura : 0;
@@ -134,8 +134,16 @@ Nodo* minValorNodo(Nodo* nodo) {
 
         return raiz;
     }
+    void destruirRecursivo(Nodo* nodo) {
+        if (!nodo) return;
+        destruirRecursivo(nodo->izq);
+        destruirRecursivo(nodo->der);
+        delete nodo;
+    }
 public:
-    // El constructor recibe la función lambda que le enseñará cómo extraer la clave
+    ~ArbolAVLClave() {
+        destruirRecursivo(raiz);
+    }
     ArbolAVLClave(std::function<K(T)> lambdaExtractor) {
         raiz = nullptr;
         getClave = lambdaExtractor;

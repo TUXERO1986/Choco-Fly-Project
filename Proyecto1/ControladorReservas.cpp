@@ -28,7 +28,6 @@ void ControladorReservas::AgregarReserva(Reserva* nuevaReserva) {
     }
 }
 Reserva* ControladorReservas::BuscarReservaPorID(int id) {
-    // Búsqueda en el Árbol AVL: O(log n) en lugar de O(n)
     return indiceReservasPorID->Buscar(id);
 }
 

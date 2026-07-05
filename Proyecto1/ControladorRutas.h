@@ -11,6 +11,7 @@ private:
     CGrafo<string>* grafoRutas;
 	Lista<Lista<int>*>* conexiones;
 	Lista<CiudadID*>* MapaCiudades;
+    ArbolAVLClave<CiudadID*, string>* indiceCiudadesPorNombre;
     ArbolAVLClave<CiudadID*, string>* indiceCiudades;
     function<int(Lista<CiudadID*>*, string)> ObtenerIdCiudad;
  struct EstadoRuta {
@@ -41,10 +42,12 @@ private:
 
 public:
     ControladorRutas();
+    ~ControladorRutas();
 	Lista<Ruta*>* BuscarRutaMasCorta(string origen, string destino);
 	void AgregarNuevaRuta(string origen, string destino, float distancia);
 	void MostrarRutas();
 	Lista<Ruta*>* getRutas();
+    int ObtenerIdCiudadPorNombre(string nombre);
 
 	Lista<Lista<int>*>* getConexiones();
 	Lista<CiudadID*>* getMapaCiudades();
