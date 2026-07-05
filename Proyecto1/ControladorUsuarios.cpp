@@ -1,7 +1,7 @@
 #include "ControladorUsuarios.h"
 
 ControladorUsuarios::ControladorUsuarios() {
-    controladorArchivos = new ControladorArchivos(); 
+controladorArchivos = new ControladorArchivos(); 
     usuarios = new Lista<Usuario*>();
 
     miFuncionHashCorreo = [](string clave) -> unsigned int {
@@ -19,18 +19,14 @@ ControladorUsuarios::ControladorUsuarios() {
         Usuario* aux = usuarios->obtenerPos(i);
         tablaUsuarios->Insertar(aux->getCorreo(), aux);
     }
-    indiceCorreos = new ArbolAVLClave<Usuario*, string>([](Usuario* u) {
-        return u->getCorreo();
-    });
 }
 
 ControladorUsuarios::~ControladorUsuarios() {
 
-    for (unsigned int i = 0; i < usuarios->longitud(); i++) {
+for (unsigned int i = 0; i < usuarios->longitud(); i++) {
         delete usuarios->obtenerPos(i);
     }
     delete usuarios;
-    delete indiceCorreos;
     delete tablaUsuarios;
 }
 

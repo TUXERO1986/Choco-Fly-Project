@@ -196,7 +196,7 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
         if (i < rutas->longitud() - 1) {
             stringEscalas += siguienteCiudad;
             if (i < rutas->longitud() - 2) {
-                stringEscalas += ", ";
+                stringEscalas += "-";
             }
         }
         ciudadActual = siguienteCiudad;

@@ -135,7 +135,6 @@ void ControladorArchivos::LeerArchivoVuelos(Lista<Vuelo*>* vuelos) {
 
             float distancia = stof(distanciaStr);
 
-       
            Vuelo* aux = new Vuelo(origen, destino, escalas, fecha, distancia,vuelos->longitud());
            aux->CargarEstadoAsientosString(estadoAsientos);
 

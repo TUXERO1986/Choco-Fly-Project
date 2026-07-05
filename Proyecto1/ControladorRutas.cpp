@@ -5,15 +5,24 @@ ControladorRutas::ControladorRutas() {
     rutas = new Lista<Ruta*>();
     conexiones = new Lista<Lista<int>*>();
     MapaCiudades = new Lista<CiudadID*>();
-    
-
     grafoRutas = new CGrafo<string>("");
 
-    ObtenerIdCiudad = [](Lista<CiudadID*>* mapaciudades, string nombre) {
+    indiceCiudades = new ArbolAVLClave<CiudadID*, string>([](CiudadID* c) {
+        return c->getNombre();
+    });
+
+ObtenerIdCiudad = [this](Lista<CiudadID*>* mapaciudades, string nombre) -> int {
+
+        CiudadID* ciudadEncontrada = indiceCiudades->Buscar(nombre);
+        if (ciudadEncontrada != nullptr) {
+            return ciudadEncontrada->getId();
+        }
+        
+
         for (unsigned int i = 0; i < mapaciudades->longitud(); i++) {
-            CiudadID* aux = mapaciudades->obtenerPos(i);
-            if (aux->getNombre() == nombre) {
-                return aux->getId();
+            if (mapaciudades->obtenerPos(i)->getNombre() == nombre) {
+                indiceCiudades->Insertar(mapaciudades->obtenerPos(i)); // Autocorrección del árbol
+                return mapaciudades->obtenerPos(i)->getId();
             }
         }
         return -1;
@@ -21,8 +30,11 @@ ControladorRutas::ControladorRutas() {
 
     controladorArchivos->LeerArchivoRutas(conexiones, rutas, MapaCiudades);
 
+    // 3. Alimentamos el Árbol AVL y el Grafo con los datos cargados
     for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) {
-        grafoRutas->adicionarVertice(MapaCiudades->obtenerPos(i)->getNombre());
+        CiudadID* ciudadObj = MapaCiudades->obtenerPos(i);
+        indiceCiudades->Insertar(ciudadObj);
+        grafoRutas->adicionarVertice(ciudadObj->getNombre());
     }
 
     for (unsigned int i = 0; i < rutas->longitud(); i++) {
@@ -31,7 +43,6 @@ ControladorRutas::ControladorRutas() {
         int idDes = ObtenerIdCiudad(MapaCiudades, r->getDestino());
 
         if (idOri != -1 && idDes != -1) {
-
             grafoRutas->adicionarArco(idOri, idDes, r->getDistancia());
             grafoRutas->adicionarArco(idDes, idOri, r->getDistancia());
         }
@@ -88,12 +99,16 @@ void ControladorRutas::AgregarNuevaRuta(string origen, string destino, float dis
 
     if (idOri == -1) {
         idOri = MapaCiudades->longitud();
-        MapaCiudades->agregaFinal(new CiudadID(origen, idOri));
+        CiudadID* nuevaCiudad = new CiudadID(origen, idOri);
+        MapaCiudades->agregaFinal(nuevaCiudad);
+        indiceCiudades->Insertar(nuevaCiudad); // Insertamos al AVL
         grafoRutas->adicionarVertice(origen);
     }
     if (idDes == -1) {
         idDes = MapaCiudades->longitud();
-        MapaCiudades->agregaFinal(new CiudadID(destino, idDes));
+        CiudadID* nuevaCiudad = new CiudadID(destino, idDes);
+        MapaCiudades->agregaFinal(nuevaCiudad);
+        indiceCiudades->Insertar(nuevaCiudad); // Insertamos al AVL
         grafoRutas->adicionarVertice(destino);
     }
 

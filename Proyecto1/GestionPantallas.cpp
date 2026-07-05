@@ -282,11 +282,20 @@ void GestionPantallas::MenuFiltrosVuelos() {
             pausarConsola();
             break;
         }
-        case '5': {
+case '5': {
             DibujarHeader("Inicio > Catalogo > Vuelos > Por Precio");
-            Lista<Vuelo*>* aux= principal->getControladorVuelos()->getVuelos();
-            aux->QuickSort([](Vuelo* v1,Vuelo* v2){return v1->getPrecioBase()<v2->getPrecioBase();});
-            principal->ConsultarCatalogoDinamico<Vuelo>(aux,"VUELOS DE MENOR A MAYOR PRECIO",[](Vuelo* v){return true;});
+            
+            // Creamos una lista temporal para pasarla al motor dinámico
+            Lista<Vuelo*>* listaOrdenada = new Lista<Vuelo*>();
+            
+            // Llenamos la lista volcando el Árbol AVL InOrden (De menor a mayor)
+            principal->getControladorVuelos()->getVuelosMenorPrecio()->RecorrerInOrden([&listaOrdenada](Vuelo* v) {
+                listaOrdenada->agregaFinal(v);
+            });
+            
+            principal->ConsultarCatalogoDinamico<Vuelo>(listaOrdenada, "VUELOS DE MENOR A MAYOR PRECIO", [](Vuelo* v){ return true; });
+            
+            delete listaOrdenada; // Evitamos fugas de memoria
             pausarConsola();
             break;
         }
@@ -358,9 +367,16 @@ void GestionPantallas::MenuFiltrosHoteles() {
         }
         case '3': {
             DibujarHeader("Inicio > Catalogo > Hoteles > Por Precio");
-            Lista<Hotel*>* aux= principal->getControladorHoteles()->getHoteles();
-            aux->QuickSort([](Hotel* h1,Hotel* h2){return h1->getPrecioBase()<h2->getPrecioBase();});
-            principal->ConsultarCatalogoDinamico<Hotel>(aux,"HOTELES DE MENOR A MAYOR PRECIO", [](Hotel* h){return true;});
+            
+            Lista<Hotel*>* listaOrdenada = new Lista<Hotel*>();
+            
+            principal->getControladorHoteles()->getHotelesMenorPrecio()->RecorrerInOrden([&listaOrdenada](Hotel* h) {
+                listaOrdenada->agregaFinal(h);
+            });
+            
+            principal->ConsultarCatalogoDinamico<Hotel>(listaOrdenada, "HOTELES DE MENOR A MAYOR PRECIO", [](Hotel* h){ return true; });
+            
+            delete listaOrdenada;
             pausarConsola();
             break;
         }
@@ -472,11 +488,18 @@ void GestionPantallas::MenuFiltrosPaquetes() {
             pausarConsola();
             break;
         }
-        case '3': {
+case '3': {
             DibujarHeader("Inicio > Catalogo > Paquetes > Por Precio");
-            Lista<Paquete*>* aux= principal->getControladorPaquetes()->getPaquetes();
-            aux->QuickSort([](Paquete* p1, Paquete* p2){return p1->getPrecioBase()<p2->getPrecioBase();});
-            principal->ConsultarCatalogoDinamico<Paquete>(aux,"PAQUETES DE MENOR A MAYOY PRECIO",[](Paquete* p){return true;});
+            
+            Lista<Paquete*>* listaOrdenada = new Lista<Paquete*>();
+            
+            principal->getControladorPaquetes()->getPaquetesMenorPrecio()->RecorrerInOrden([&listaOrdenada](Paquete* p) {
+                listaOrdenada->agregaFinal(p);
+            });
+            
+            principal->ConsultarCatalogoDinamico<Paquete>(listaOrdenada, "PAQUETES DE MENOR A MAYOR PRECIO", [](Paquete* p){ return true; });
+            
+            delete listaOrdenada;
             pausarConsola();
             break;
         }

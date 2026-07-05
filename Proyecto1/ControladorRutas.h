@@ -2,6 +2,7 @@
 #include "ControladorArchivos.h"
 #include "Cola.h"
 #include "Grafo.h"
+#include "ArbolAVLClave.h"
 class ControladorRutas
 {
 private:
@@ -10,7 +11,8 @@ private:
     CGrafo<string>* grafoRutas;
 	Lista<Lista<int>*>* conexiones;
 	Lista<CiudadID*>* MapaCiudades;
-    function<size_t(Lista<CiudadID*>*, string)> ObtenerIdCiudad;
+    ArbolAVLClave<CiudadID*, string>* indiceCiudades;
+    function<int(Lista<CiudadID*>*, string)> ObtenerIdCiudad;
  struct EstadoRuta {
    int idCiudadActual;
    int cantidadSaltos;
