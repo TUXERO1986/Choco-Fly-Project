@@ -64,6 +64,7 @@ void GestionPantallas::IniciarMotorNavegacion() {
 }
 
 void GestionPantallas::Menuprincipal() {
+    LimpiarConsola();
     char opcion = AnimacionConsola::AnimarMenuPrincipal();
 
     switch (opcion) {
@@ -290,10 +291,10 @@ case '5': {
             
            
             principal->getControladorVuelos()->getVuelosMenorPrecio()->RecorrerInOrden([&listaOrdenada](Vuelo* v) {
-                listaOrdenada->agregaFinal(v);
+                listaOrdenada->agregaInicial(v);
             });
             
-            principal->ConsultarCatalogoDinamico<Vuelo>(listaOrdenada, "VUELOS DE MENOR A MAYOR PRECIO", [](Vuelo* v){ return true; });
+            principal->ConsultarCatalogoDinamico<Vuelo>(listaOrdenada, "VUELOS DE MAYOR A MENOR PRECIO", [](Vuelo* v){ return true; });
             
             delete listaOrdenada; 
             pausarConsola();
@@ -319,8 +320,7 @@ void GestionPantallas::MenuFiltrosHoteles() {
     ColorUI::printGradient("\n[2] HOTELES POR CALIFICACION (MAYOR A MENOR)", Paletas::Exito, false);
     ColorUI::printGradient("\n[3] HOTELES POR PRECIO NOCHE (MAYOR A MENOR)", Paletas::Exito, false);
     ColorUI::printGradient("\n[4] HOTELES POR PRESUPUESTO", Paletas::Exito, false);
-    ColorUI::printGradient("\n[5] CALIFICAR UN HOTEL", Paletas::Exito, false);
-    ColorUI::printGradient("\n[6] VER TODOS LOS HOTELES", Paletas::Exito, false);
+    ColorUI::printGradient("\n[5] VER TODOS LOS HOTELES", Paletas::Exito, false);
     ColorUI::printGradient("\n[0] SALIR", Paletas::Exito, false);
     
     char opcion = _getch();
@@ -371,10 +371,10 @@ void GestionPantallas::MenuFiltrosHoteles() {
             Lista<Hotel*>* listaOrdenada = new Lista<Hotel*>();
             
             principal->getControladorHoteles()->getHotelesMenorPrecio()->RecorrerInOrden([&listaOrdenada](Hotel* h) {
-                listaOrdenada->agregaFinal(h);
+                listaOrdenada->agregaInicial(h);
             });
             
-            principal->ConsultarCatalogoDinamico<Hotel>(listaOrdenada, "HOTELES DE MENOR A MAYOR PRECIO", [](Hotel* h){ return true; });
+            principal->ConsultarCatalogoDinamico<Hotel>(listaOrdenada, "HOTELES DE MAYOR A MENOR PRECIO", [](Hotel* h){ return true; });
             
             delete listaOrdenada;
             pausarConsola();
@@ -396,10 +396,6 @@ void GestionPantallas::MenuFiltrosHoteles() {
             break;
         }
         case '5': {
-            historialPantallas->apilar(PANTALLA_CALIFICAR_HOTEL);
-            break;
-        }
-        case '6': {
             DibujarHeader("Inicio > Catalogo > Hoteles > Todos");
             principal->ConsultarCatalogoDinamico<Hotel>(
                 principal->getControladorHoteles()->getHoteles(),
@@ -494,10 +490,10 @@ case '3': {
             Lista<Paquete*>* listaOrdenada = new Lista<Paquete*>();
             
             principal->getControladorPaquetes()->getPaquetesMenorPrecio()->RecorrerInOrden([&listaOrdenada](Paquete* p) {
-                listaOrdenada->agregaFinal(p);
+                listaOrdenada->agregaInicial(p);
             });
             
-            principal->ConsultarCatalogoDinamico<Paquete>(listaOrdenada, "PAQUETES DE MENOR A MAYOR PRECIO", [](Paquete* p){ return true; });
+            principal->ConsultarCatalogoDinamico<Paquete>(listaOrdenada, "PAQUETES DE MAYOR A MENOR PRECIO", [](Paquete* p){ return true; });
             
             delete listaOrdenada;
             pausarConsola();
@@ -621,8 +617,16 @@ void GestionPantallas::MenuCalificacionHotel() {
     
     nombre = hoteles->obtenerPos(id)->getNombre();
 
-    ColorUI::printGradient("\nDIGITE LA CALIFICACION (1.0 - 5.0): ", Paletas::Exito, false, false);
-    cin >> calificaion; cin.ignore();
+    while (true) {
+        ColorUI::printGradient("\nDIGITE LA CALIFICACION (1.0 - 5.0): ", Paletas::Exito, false, false);
+        if (cin >> calificaion && calificaion >= 1.0f && calificaion <= 5.0f) {
+            cin.ignore(1000, '\n');
+            break;
+        }
+        cin.clear();
+        cin.ignore(1000, '\n');
+        ColorUI::Alertas::MostrarError("Por favor ingrese una calificacion valida entre 1.0 y 5.0.");
+    }
     
     principal->CalificarHotel(nombre, calificaion);
     pausarConsola();
@@ -795,7 +799,6 @@ void GestionPantallas::MenuReservaVuelo() {
 
     LimpiarConsola();
     ColorUI::printGradient("TICKET COMPRADO CON EXITO", gege, false);
-    pausarConsola();
     ColorUI::printGradient("El asiento [" + to_string(asiento) + "] ha sido reservado para " + userActual->getNombre(), Exito, false);
     cout << "\n";
     pausarConsola();

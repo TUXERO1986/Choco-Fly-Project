@@ -28,11 +28,8 @@
 #endif 
 
 inline void pausarConsola() {
-#ifdef _WIN32
-    system("pause>0"); 
-#else
+    std::cout << "\n\tPresione cualquier tecla para continuar...";
     _getch(); 
-#endif
 }
 
 inline void LimpiarConsola() {

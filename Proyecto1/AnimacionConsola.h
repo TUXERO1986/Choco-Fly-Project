@@ -187,6 +187,7 @@ namespace ColorUI {
 
             static void TransicionAvion() {
                 CursorGuard cursorGuard;
+                LimpiarConsola();
                 int frames = 14;
                 int old_x = 0, y = 12;
 
@@ -220,7 +221,7 @@ namespace ColorUI {
                 LimpiarConsola();
             }
 
-            static void CieloAnimado(int duracion_ms = 4000) {
+            static void CieloAnimado(int duracion_ms = 1000) {
                 CursorGuard cursorGuard;
                 LimpiarConsola();
                 const int WIDTH = 100;
@@ -287,6 +288,7 @@ namespace ColorUI {
 
             static char AnimarMenuPrincipal() {
                 CursorGuard cursorGuard;
+                LimpiarConsola();
                 const int WIDTH = 100;
                 const int HEIGHT = 26;
                 int frame_count = 0;
