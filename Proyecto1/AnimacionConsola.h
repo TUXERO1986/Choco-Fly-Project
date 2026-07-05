@@ -45,7 +45,7 @@ namespace ColorUI {
                 }
             }
 
-            // Dibuja un sprite línea por línea aplicando un degradado
+            
             static void dibujarSprite(int x, int y, const std::vector<std::string>& sprite, const std::vector<std::string>& paleta, bool transparent_spaces = true) {
                 for (size_t i = 0; i < sprite.size(); ++i) {
                     if (y + (int)i >= 0) {

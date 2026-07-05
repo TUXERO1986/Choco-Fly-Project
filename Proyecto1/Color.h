@@ -42,19 +42,19 @@ void RegisterScreen(ControladorPrincipal* principal);
 void LoginScreen(ControladorPrincipal* principal);  
 void Admin(ControladorPrincipal* principal);       
 
-// Variables globales de arte (Asegúrate de definirlas en Pantallas.cpp)
+
 extern std::string chocofly, admin, registro, login;
 
 
 
-// Espacio de nombres para encapsular toda la funcionalidad relacionada con la UI de colores
+
 namespace ColorUI {
 
     struct RGB {
         int r, g, b;
     };
 
-    // Función auxiliar para convertir Hexadecimal a RGB
+    
     inline RGB hexToRGB(const std::string& hex) {
         using namespace std;
 
@@ -158,7 +158,7 @@ namespace ColorUI {
             return s;
         };
         
-        int widthSprite = 20; // Fijamos a 20 para alinear verticalmente todas las tarjetas
+        int widthSprite = 20; 
         int widthCard = 0;
         {
             istringstream s2(card);
@@ -250,7 +250,7 @@ namespace ColorUI {
                 std::cout << frame << std::flush;
                 std::this_thread::sleep_for(std::chrono::milliseconds(ms_per_frame));
             }
-            std::cout << "\r" << sangria << "                                                                                \r"; // clear line
+            std::cout << "\r" << sangria << "                                                                                \r"; 
         }
     }
 

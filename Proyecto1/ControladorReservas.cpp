@@ -6,6 +6,9 @@ ControladorReservas::ControladorReservas() {
     indiceReservasPorID = new ArbolAVLClave<Reserva*, int>([](Reserva* r) {
         return r->getId(); 
     });
+    for (int i = 0; i < reservasTotales->longitud(); i++) {
+        indiceReservasPorID->Insertar(reservasTotales->obtenerPos(i));
+    }
 }
 
 ControladorReservas::~ControladorReservas() {

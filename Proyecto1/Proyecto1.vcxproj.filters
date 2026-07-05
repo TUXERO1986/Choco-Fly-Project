@@ -73,7 +73,6 @@
     </ClCompile>
     <ClCompile Include="ReservaVuelo.cpp" />
     <ClCompile Include="Registro.cpp" />
-    <ClCompile Include="Proyecto1.cpp" />
     <ClCompile Include="GeneradorDataset.cpp" />
     <ClCompile Include="ControladorRegistros.cpp" />
     <ClCompile Include="Servicio.cpp" />
@@ -169,6 +168,8 @@
     <ClInclude Include="Grafo.h" />
     <ClInclude Include="AnimacionConsola.h" />
     <ClInclude Include="Servicio.h" />
+    <ClInclude Include="ArbolAVLClave.h" />
+    <ClInclude Include="ArbolAVLMiltiClave.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Vuelos.txt">

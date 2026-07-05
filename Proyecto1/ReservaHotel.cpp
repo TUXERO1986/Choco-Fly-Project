@@ -61,6 +61,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 		case 1:return "INDIVIDUAL"; break;
 		case 2:return "SUITE"; break;
 		case 3:return "PRESIDENCIAL"; break;
+		default:return "DESCONOCIDA"; break;
 		}
 	};
 	ObtenerTipoC = [](int tipoC){
@@ -68,6 +69,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 		case 1:return "INDIVIDUAL"; break;
 		case 2:return "MATRIMONIAL"; break;
 		case 3:return "QUEEN"; break;
+		default:return "DESCONOCIDA"; break;
 		}
 	};
 	ObtenerTipoS = [](int tipoS){
@@ -75,6 +77,7 @@ ReservaHotel::ReservaHotel(string codigoUsuario, string nombreUsuario, string no
 		case 1:return "BASICO"; break;
 		case 2:return "PREMIUM"; break;
 		case 3:return "VIP"; break;
+		default:return "DESCONOCIDA"; break;
 		}
 	};
 	this->nombreHotel = nombreHotel;

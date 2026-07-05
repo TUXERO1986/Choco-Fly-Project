@@ -92,7 +92,7 @@ void Admin(ControladorPrincipal* principal) {
     cout << "\t\t\t\t\t"; cin >> password;
 
     if (usuario != "admin" || password != "chocofly2026") {
-        ColorUI::printGradient("\n\t\t\t\t\t[!] ACCESO DENEGADO. Credenciales invalidas.", Alerta, false);
+        ColorUI::printGradient("\n\n\t\t\t\t\t[!] ACCESO DENEGADO. Credenciales invalidas.", Alerta, false);
         pausarConsola();
         return; 
     }

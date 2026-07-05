@@ -1,10 +1,8 @@
 #pragma once
 #include "GestionPantallas.h"
 #ifdef _WIN32
-    // Todo lo que esté aquí SOLO se compilará en las PCs de tus amigos (Windows)
     #include <conio.h>
 #else
-    // Todo lo que esté aquí SOLO se compilará en tu PC (Linux/Mac)
     #include <iostream>
     #include <unistd.h> 
 #endif

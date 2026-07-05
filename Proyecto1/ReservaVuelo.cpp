@@ -20,6 +20,7 @@ ReservaVuelo::ReservaVuelo(string codigoUsuario, string nombreUsuario, string or
 		case 2:return "PREMIUM"; break;
 		case 3:return "EJECUTIVA"; break;
 		case 4:return "PRIMERA CLASE"; break;
+		default:return "DESCONOCIDA"; break;
 		}
 	};
 }

@@ -1,6 +1,4 @@
 #include "Servicio.h"
-
-// Implementación del Constructor
 Servicio::Servicio(int id, string tipoServicio, float precioBase) {
     this->id = id;
     this->tipoServicio = tipoServicio;

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Removed the default 'vacio = -1' from the template definition
+
 template<class T>
 class CGrafo {
 private:

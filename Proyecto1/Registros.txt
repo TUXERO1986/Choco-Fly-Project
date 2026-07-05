@@ -91,3 +91,10 @@ ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 20000 vuelos, 20000 ho
 0000,0000,Usuario,Inicio de sesion,05-07-2026 13:42:10
 0000,0000,Usuario,Reserva (vuelo),05-07-2026 13:43:04
 0000,0000,Usuario,Reserva (hotel),05-07-2026 13:43:45
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:58:26
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:58:37
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 vuelos aleatorios,05-07-2026 13:58:49
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 hoteles aleatorios,05-07-2026 13:58:50
+ADMIN,admin@chocofly.com,Administrador,Genero 20000 paquetes aleatorios,05-07-2026 13:58:53
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 20000 vuelos, 20000 hoteles, 20000 paquetes,05-07-2026 13:58:53
+ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 117677,05-07-2026 13:59:20
