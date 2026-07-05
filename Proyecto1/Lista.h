@@ -17,6 +17,8 @@ private:
     Nodo<T>* _getMid(Nodo<T>* head);
     Nodo<T>* _mergeSort(Nodo<T>* head, std::function<bool(T, T)> comp);
 
+    Nodo<T>* cacheNodo;
+    int cacheIndice;
     void _quickSort(T* arr, int low, int high, std::function<bool(T, T)> comp);
     int _partition(T* arr, int low, int high, std::function<bool(T, T)> comp);
 
@@ -56,6 +58,8 @@ Lista<T>::Lista() {
     ini = nullptr;
     fin = nullptr;
     lon = 0;
+    cacheNodo = nullptr; 
+    cacheIndice = -1;
 }
 template<class T>
 Lista<T>::~Lista() {
@@ -86,6 +90,8 @@ void Lista<T>::agregaInicial(T elem) {
         ini = nuevo;
         lon++;
     }
+    cacheIndice = -1; 
+    cacheNodo = nullptr;
 }
 template <class T>
 T Lista<T>::buscar(T elem) {
@@ -118,6 +124,8 @@ void Lista<T>::agregaPos(T elem, uint pos) {
             lon++;
         }
     }
+    cacheIndice = -1; 
+    cacheNodo = nullptr;
 }
 template <class T>
 void Lista<T>::agregaFinal(T elem) {
@@ -130,6 +138,8 @@ void Lista<T>::agregaFinal(T elem) {
         fin = nuevo;
     }
     lon++;
+    cacheIndice = -1; 
+    cacheNodo = nullptr;
 }
 
 template <class T>
@@ -141,6 +151,8 @@ void Lista<T>::eliminaInicial() {
         lon--;
         if (ini == nullptr) fin = nullptr; 
     }
+    cacheIndice = -1; 
+    cacheNodo = nullptr;
 }
 template<class T>
 void Lista<T>::ParaCada(std::function<void(T, uint)> accion) {
@@ -165,6 +177,8 @@ void Lista<T>::eliminaPos(uint pos) {
     if (pos == lon - 1) fin = aux; 
     delete nodoAEliminar;
     lon--;
+    cacheIndice = -1; 
+    cacheNodo = nullptr;
 }
 template <class T>
 void Lista<T>::eliminaFinal() {
@@ -183,6 +197,8 @@ void Lista<T>::eliminaFinal() {
     fin = aux; // NUEVO
     delete nodoAEliminar;
     lon--;
+    cacheIndice = -1; 
+    cacheNodo = nullptr;
 }
 
 template <class T>
@@ -215,16 +231,26 @@ T Lista<T>::obtenerInicial() {
 
 template <class T>
 T Lista<T>::obtenerPos(uint pos) {
-    if (pos >= 0 && pos < lon) {
-        Nodo<T>* aux = ini;
-        for (int i = 0; i < pos; i++) {
+if (pos >= lon) return T{};
+
+    Nodo<T>* aux;
+    
+    if (cacheIndice != -1 && (int)pos >= cacheIndice) {
+        aux = cacheNodo;
+        for (int i = cacheIndice; i < (int)pos; i++) {
             aux = aux->getSig();
         }
-        return aux->getElemento();
+    } else {
+        aux = ini;
+        for (uint i = 0; i < pos; i++) {
+            aux = aux->getSig();
+        }
     }
-    else {
-        return T{};
-    }
+
+    cacheIndice = pos;
+    cacheNodo = aux;
+    
+    return aux->getElemento();
 }
 template <class T>
 T Lista<T>::obtenerFinal() {

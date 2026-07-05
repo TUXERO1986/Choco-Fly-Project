@@ -184,13 +184,8 @@ bool ControladorPrincipal::ConsultarVuelos(string origen, string destino) {
     }
 }
 bool ControladorPrincipal::VerificarHoteles(string ciudad) {
-    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
-        Hotel* aux = controladorHoteles->getHoteles()->obtenerPos(i);
-        if (aux->getCiudad() == ciudad) {
-            return true;
-        }
-    }
-    return false;
+    Lista<Hotel*>* encontrados = controladorHoteles->getHotelesPorCiudad(ciudad);
+    return encontrados != nullptr && encontrados->longitud() > 0;
 }
 bool ControladorPrincipal::VerificarPaquetes(string destino) {
     for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
@@ -220,7 +215,6 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, i
             }
         }
 
-        GuardarDatosEnArchivos();
     }
 }
 void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, string fecha, int noches, int habitacion, int tipoO, int tipoC, int tipoS) {
@@ -241,7 +235,6 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
             }
         }
 
-        GuardarDatosEnArchivos();
     }
 }
 bool ControladorPrincipal::VerificarReservas(string codigo) {
