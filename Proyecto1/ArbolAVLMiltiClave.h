@@ -28,15 +28,15 @@ private:
     Nodo* rotacionDerecha(Nodo* y) {
         Nodo* x = y->izq; Nodo* T2 = x->der;
         x->der = y; y->izq = T2;
-        y->altura = std::max(getAltura(y->izq), getAltura(y->der)) + 1;
-        x->altura = std::max(getAltura(x->izq), getAltura(x->der)) + 1;
+        y->altura = (std::max)(getAltura(y->izq), getAltura(y->der)) + 1;
+        x->altura = (std::max)(getAltura(x->izq), getAltura(x->der)) + 1;
         return x;
     }
     Nodo* rotacionIzquierda(Nodo* x) {
         Nodo* y = x->der; Nodo* T2 = y->izq;
         y->izq = x; x->der = T2;
-        x->altura = std::max(getAltura(x->izq), getAltura(x->der)) + 1;
-        y->altura = std::max(getAltura(y->izq), getAltura(y->der)) + 1;
+        x->altura = (std::max)(getAltura(x->izq), getAltura(x->der)) + 1;
+        y->altura = (std::max)(getAltura(y->izq), getAltura(y->der)) + 1;
         return y;
     }
 
@@ -48,20 +48,20 @@ private:
         else if (clave > nodo->clave)
             nodo->der = insertarRecursivo(nodo->der, dato, clave);
         else {
-            nodo->bucket->agregaFinal(dato); // clave repetida: se agrega, no se pierde
+            nodo->bucket->agregaFinal(dato); 
             return nodo;
         }
 
-        nodo->altura = 1 + std::max(getAltura(nodo->izq), getAltura(nodo->der));
+        nodo->altura = 1 + (std::max)(getAltura(nodo->izq), getAltura(nodo->der));
         int balance = getBalance(nodo);
 
-        if (balance > 1 && clave < nodo->izq->clave) return rotacionDerecha(nodo);
-        if (balance < -1 && clave > nodo->der->clave) return rotacionIzquierda(nodo);
-        if (balance > 1 && clave > nodo->izq->clave) {
+        if (balance > 1 && getBalance(nodo->izq) >= 0) return rotacionDerecha(nodo);
+        if (balance < -1 && getBalance(nodo->der) <= 0) return rotacionIzquierda(nodo);
+        if (balance > 1 && getBalance(nodo->izq) < 0) {
             nodo->izq = rotacionIzquierda(nodo->izq);
             return rotacionDerecha(nodo);
         }
-        if (balance < -1 && clave < nodo->der->clave) {
+        if (balance < -1 && getBalance(nodo->der) > 0) {
             nodo->der = rotacionDerecha(nodo->der);
             return rotacionIzquierda(nodo);
         }
@@ -93,7 +93,7 @@ public:
         raiz = insertarRecursivo(raiz, dato, getClave(dato));
     }
 
-    // Devuelve TODOS los elementos con esa clave, o nullptr si la clave no existe
+  
     Lista<T>* BuscarTodos(K clave) {
         return buscarRecursivo(raiz, clave);
     }

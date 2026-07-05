@@ -364,9 +364,6 @@ void AdminPantallas::MenuReportes() {
             pausarConsola();
             break;
         case '8':
-            ColorUI::printGradient("=========================================================", TemaPrincipal, false);
-            ColorUI::printGradient("\n       BITACORA DE AUDITORÍA DEL SISTEMA (LOGS)       ", TemaPrincipal, false);
-            ColorUI::printGradient("\n=========================================================", TemaPrincipal, false);
             principal->getControladorRegistros()->MostrarDatos();
             cout << "\n";
             pausarConsola();

@@ -5,11 +5,14 @@
 typedef unsigned int uint;
 template<class T>
 class Lista
+
+   
 {
 private:
     typedef std::function<int(T, T)> Comp;
 	Nodo<T>* ini;
 	uint lon;
+    Nodo<T>* fin;
     Nodo<T>* _merge(Nodo<T>* l1, Nodo<T>* l2, std::function<bool(T, T)> comp);
     Nodo<T>* _getMid(Nodo<T>* head);
     Nodo<T>* _mergeSort(Nodo<T>* head, std::function<bool(T, T)> comp);
@@ -63,6 +66,7 @@ Lista<T>::~Lista() {
         aux = siguiente;
     }
     ini = nullptr;
+    fin = nullptr;
     lon = 0;
 }
 
@@ -87,8 +91,8 @@ template <class T>
 T Lista<T>::buscar(T elem) {
     Nodo<T>* aux = ini;
     while (aux != nullptr) {
-        if (Comp(aux->elem, elem) == 0) {
-            return aux->elem;
+        if (aux->getElemento() == elem) {
+            return aux->getElemento();
         }
         aux = aux->getSig();
     }

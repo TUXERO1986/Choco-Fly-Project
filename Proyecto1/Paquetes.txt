@@ -1,4 +1,3 @@
-
 Cusco,Lima,Directo,22-01-2026,300,Andina Royal Resort,Bogota,3.52412,66.4965
 Bogota,Lima,Directo,21-03-2026,350,Resort Las Americas,Lima,4.85686,96.741
 Arequipa,Lima,Directo,09-09-2026,150,Central Boutique,Buenos Aires,2.83447,52.0661
@@ -299,3 +298,103 @@ Cusco,Arequipa,Directo,26-09-2026,80,Resort Las Americas,Lima,3.14801,84.0748
 Arequipa,Lima,Directo,14-01-2026,150,Central Boutique,Piura,4.28483,185.219
 Lima,Arequipa,Directo,02-01-2026,150,Valle Verde Inn,Arequipa,2.27114,105.045
 Buenos Aires,Santiago,Directo,22-01-2026,150,Vista Hermosa Hotel,Arequipa,1.38667,178.998
+Lima,Bogota,Directo,18-07-2026,350,Hostal El Viajero,Buenos Aires,3.61507,108.847
+Buenos Aires,Sao Paulo,Directo,14-03-2026,200,Central Boutique,Buenos Aires,2.61113,154.749
+Lima,Santiago,Directo,12-06-2026,250,Hotel Sol Dorado,Cusco,3.98251,179.775
+Arequipa,Lima,Directo,18-04-2026,150,Valle Verde Inn,Santiago,1.55605,198.846
+Cusco,Arequipa,Directo,11-11-2026,80,Mirador Suites,Bogota,2.22477,53.74
+Buenos Aires,Santiago,Directo,24-05-2026,150,Andina Royal Resort,Sao Paulo,1.71328,195.734
+Arequipa,Lima,Directo,17-08-2026,150,Valle Verde Inn,Cusco,4.78307,137.069
+Arequipa,Lima,Directo,17-08-2026,150,Mirador Suites,Santiago,4.74133,168.299
+Lima,Santiago,Directo,26-08-2026,250,Valle Verde Inn,Sao Paulo,4.8872,64.5527
+Santiago,Buenos Aires,Directo,22-08-2026,150,Grand Plaza Hotel,Lima,4.60143,59.7186
+Santiago,Buenos Aires,Directo,20-04-2026,150,Andina Royal Resort,Lima,1.61525,57.6083
+Santiago,Buenos Aires,Directo,28-06-2026,150,Grand Plaza Hotel,Sao Paulo,4.75964,92.3536
+Arequipa,Lima,Directo,20-10-2026,150,Grand Plaza Hotel,Buenos Aires,2.91693,163.309
+Arequipa,Cusco,Directo,13-09-2026,80,Valle Verde Inn,Santiago,1.55605,198.846
+Lima,Bogota,Directo,13-01-2026,350,Hotel Sol Dorado,Bogota,4.74267,141.949
+Lima,Bogota,Directo,03-05-2026,350,Hostal El Viajero,Buenos Aires,1.80764,136.497
+Lima,Bogota,Directo,03-05-2026,350,Vista Hermosa Hotel,Lima,3.88949,72.5318
+Lima,Piura,Directo,07-12-2026,100,Vista Hermosa Hotel,Santiago,4.81237,199.107
+Lima,Arequipa,Directo,24-06-2026,150,Grand Plaza Hotel,Buenos Aires,3.6722,85.2351
+Bogota,Lima,Directo,21-10-2026,350,Hostal El Viajero,Lima,2.65911,125.492
+Piura,Lima,Directo,08-05-2026,100,Valle Verde Inn,Lima,2.14066,55.2004
+Arequipa,Cusco,Directo,02-04-2026,80,Valle Verde Inn,Bogota,4.91601,118.941
+Santiago,Buenos Aires,Directo,28-01-2026,150,Hostal El Viajero,Lima,2.54546,83.7153
+Buenos Aires,Santiago,Directo,22-08-2026,150,Mirador Suites,Lima,2.52959,109.218
+Santiago,Buenos Aires,Directo,28-01-2026,150,Grand Plaza Hotel,Sao Paulo,3.9006,122.178
+Santiago,Buenos Aires,Directo,28-01-2026,150,Mirador Suites,Santiago,4.82153,184.779
+Arequipa,Cusco,Directo,10-12-2026,80,Hotel Sol Dorado,Cusco,3.98251,179.775
+Sao Paulo,Buenos Aires,Directo,09-06-2026,200,Central Boutique,Cusco,4.90405,52.298
+Lima,Piura,Directo,12-09-2026,100,Mirador Suites,Lima,4.93591,197.725
+Arequipa,Lima,Directo,20-10-2026,150,Hotel Sol Dorado,Santiago,1.71682,150.18
+Piura,Lima,Directo,19-02-2026,100,Grand Plaza Hotel,Cusco,3.11151,53.9048
+Lima,Cusco,Directo,07-09-2026,300,Resort Las Americas,Lima,3.13739,59.151
+Santiago,Buenos Aires,Directo,20-04-2026,150,Hostal El Viajero,Buenos Aires,1.80764,136.497
+Lima,Bogota,Directo,13-01-2026,350,Central Boutique,Arequipa,2.65227,179.409
+Lima,Piura,Directo,20-01-2026,100,Grand Plaza Hotel,Sao Paulo,2.42399,195.592
+Cusco,Arequipa,Directo,27-06-2026,80,Hotel Sol Dorado,Cusco,3.98251,179.775
+Cusco,Lima,Directo,21-12-2026,300,Vista Hermosa Hotel,Cusco,2.97601,191.137
+Lima,Arequipa,Directo,14-06-2026,150,Andina Royal Resort,Santiago,1.85891,91.2229
+Lima,Santiago,Directo,14-03-2026,250,Valle Verde Inn,Sao Paulo,4.8872,64.5527
+Lima,Arequipa,Directo,22-10-2026,150,Central Boutique,Cusco,4.90405,52.298
+Cusco,Arequipa,Directo,12-11-2026,80,Grand Plaza Hotel,Lima,1.0553,67.2536
+Lima,Bogota,Directo,13-01-2026,350,Mirador Suites,Lima,4.93591,197.725
+Santiago,Lima,Directo,27-08-2026,250,Valle Verde Inn,Arequipa,1.68874,120.727
+Arequipa,Lima,Directo,21-11-2026,150,Grand Plaza Hotel,Cusco,4.11789,170.139
+Arequipa,Lima,Directo,22-07-2026,150,Grand Plaza Hotel,Lima,2.88092,132.56
+Bogota,Lima,Directo,28-08-2026,350,Valle Verde Inn,Lima,3.15033,98.8998
+Bogota,Lima,Directo,28-04-2026,350,Hostal El Viajero,Arequipa,3.62093,124.522
+Buenos Aires,Santiago,Directo,24-05-2026,150,Valle Verde Inn,Lima,3.15033,98.8998
+Cusco,Arequipa,Directo,11-11-2026,80,Valle Verde Inn,Cusco,1.35792,163.35
+Cusco,Arequipa,Directo,11-11-2026,80,Andina Royal Resort,Lima,2.3173,154.318
+Buenos Aires,Sao Paulo,Directo,21-04-2026,200,Grand Plaza Hotel,Sao Paulo,4.75964,92.3536
+Arequipa,Lima,Directo,18-04-2026,150,Grand Plaza Hotel,Sao Paulo,4.75964,92.3536
+Lima,Arequipa,Directo,22-11-2026,150,Grand Plaza Hotel,Lima,2.88092,132.56
+Lima,Arequipa,Directo,24-05-2026,150,Grand Plaza Hotel,Sao Paulo,4.08615,137.454
+Arequipa,Cusco,Directo,20-03-2026,80,Valle Verde Inn,Buenos Aires,1.50221,166.724
+Piura,Lima,Directo,19-02-2026,100,Grand Plaza Hotel,Lima,2.82623,71.955
+Arequipa,Cusco,Directo,18-09-2026,80,Valle Verde Inn,Lima,2.14066,55.2004
+Arequipa,Cusco,Directo,18-09-2026,80,Valle Verde Inn,Cusco,1.35792,163.35
+Cusco,Lima,Directo,20-07-2026,300,Resort Las Americas,Lima,1.32398,75.9468
+Lima,Bogota,Directo,02-06-2026,350,Resort Las Americas,Bogota,4.43284,96.437
+Bogota,Lima,Directo,28-08-2026,350,EcoLodge Imperial,Piura,4.6433,113.013
+Arequipa,Cusco,Directo,20-02-2026,80,Hotel Sol Dorado,Lima,4.68419,157.711
+Lima,Santiago,Directo,26-08-2026,250,Central Boutique,Buenos Aires,2.61113,154.749
+Santiago,Buenos Aires,Directo,22-08-2026,150,Central Boutique,Santiago,2.34245,128.816
+Bogota,Lima,Directo,11-08-2026,350,Vista Hermosa Hotel,Arequipa,2.8128,198.27
+Buenos Aires,Santiago,Directo,01-05-2026,150,Grand Plaza Hotel,Santiago,1.84317,179.958
+Lima,Bogota,Directo,18-06-2026,350,Vista Hermosa Hotel,Lima,4.95117,199.707
+Lima,Piura,Directo,12-09-2026,100,EcoLodge Imperial,Buenos Aires,2.11087,180.064
+Lima,Santiago,Directo,12-06-2026,250,Valle Verde Inn,Sao Paulo,4.8872,64.5527
+Bogota,Lima,Directo,28-08-2026,350,Mirador Suites,Lima,2.52959,109.218
+Lima,Santiago,Directo,14-03-2026,250,Hotel Sol Dorado,Cusco,1.85159,91.7493
+Cusco,Arequipa,Directo,12-11-2026,80,Mirador Suites,Santiago,4.82153,184.779
+Bogota,Lima,Directo,28-08-2026,350,Grand Plaza Hotel,Arequipa,2.77032,50.911
+Cusco,Arequipa,Directo,27-06-2026,80,Andina Royal Resort,Cusco,3.1164,76.4046
+Arequipa,Lima,Directo,23-05-2026,150,Hotel Sol Dorado,Lima,2.54839,132.991
+Lima,Bogota,Directo,24-02-2026,350,Mirador Suites,Cusco,4.86792,118.662
+Cusco,Arequipa,Directo,28-08-2026,80,Grand Plaza Hotel,Sao Paulo,2.42399,195.592
+Lima,Bogota,Directo,07-12-2026,350,Grand Plaza Hotel,Lima,3.64327,105.67
+Lima,Arequipa,Directo,24-04-2026,150,Grand Plaza Hotel,Arequipa,2.77032,50.911
+Lima,Piura,Directo,27-10-2026,100,Valle Verde Inn,Cusco,4.89563,105.51
+Cusco,Lima,Directo,21-12-2026,300,Grand Plaza Hotel,Arequipa,2.77032,50.911
+Bogota,Lima,Directo,23-11-2026,350,Grand Plaza Hotel,Lima,2.88092,132.56
+Lima,Arequipa,Directo,24-05-2026,150,Vista Hermosa Hotel,Arequipa,2.8128,198.27
+Piura,Lima,Directo,19-02-2026,100,Hotel Sol Dorado,Lima,3.65438,110.166
+Arequipa,Lima,Directo,02-07-2026,150,Hotel Sol Dorado,Cusco,3.98251,179.775
+Cusco,Arequipa,Directo,18-07-2026,80,Hostal El Viajero,Buenos Aires,3.61507,108.847
+Arequipa,Cusco,Directo,17-02-2026,80,Hostal El Viajero,Arequipa,3.62093,124.522
+Buenos Aires,Sao Paulo,Directo,14-03-2026,200,Valle Verde Inn,Arequipa,2.16959,93.141
+Lima,Bogota,Directo,13-09-2026,350,Valle Verde Inn,Cusco,4.78307,137.069
+Bogota,Lima,Directo,28-07-2026,350,EcoLodge Imperial,Lima,3.12543,73.5847
+Lima,Piura,Directo,20-01-2026,100,Andina Royal Resort,Cusco,3.1164,76.4046
+Santiago,Buenos Aires,Directo,17-05-2026,150,Grand Plaza Hotel,Cusco,3.11151,53.9048
+Lima,Arequipa,Directo,24-05-2026,150,Mirador Suites,Lima,4.51097,150.633
+Bogota,Lima,Directo,28-08-2026,350,Resort Las Americas,Lima,1.10523,120.649
+Buenos Aires,Sao Paulo,Directo,10-02-2026,200,EcoLodge Imperial,Piura,4.6433,113.013
+Lima,Bogota,Directo,18-06-2026,350,Grand Plaza Hotel,Buenos Aires,3.6722,85.2351
+test,test,test,test,1,Hotel Sol Dorado,Lima,2.1232,117.962
+Bogota,Lima,Directo,09-12-2026,350,Mirador Suites,Bogota,2.22477,53.74
+Santiago,Lima,Directo,20-01-2026,250,EcoLodge Imperial,Buenos Aires,1.36134,105.185
+Lima,Bogota,Directo,22-01-2026,350,Hostal El Viajero,Lima,2.65911,125.492

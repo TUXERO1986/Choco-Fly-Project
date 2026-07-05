@@ -67,3 +67,23 @@ ADMIN,admin@chocofly.com,Administrador,Genero 300 vuelos aleatorios,05-07-2026 1
 ADMIN,admin@chocofly.com,Administrador,Genero 300 hoteles aleatorios,05-07-2026 10:51:29
 ADMIN,admin@chocofly.com,Administrador,Genero 300 paquetes aleatorios,05-07-2026 10:51:29
 ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 300 vuelos, 300 hoteles, 300 paquetes,05-07-2026 10:51:29
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:29:44
+admin,admin,Usuario,Nueva cuenta creada,05-07-2026 13:29:51
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:30:38
+ADMIN,admin@chocofly.com,Administrador,Genero 10000 vuelos aleatorios,05-07-2026 13:31:59
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:32:54
+ADMIN,admin@chocofly.com,Administrador,Agrego Vuelo: Tetas -> pene,05-07-2026 13:33:50
+lol,lol,Usuario,Inicio de sesion,05-07-2026 13:33:59
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:34:53
+ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 1,05-07-2026 13:35:09
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:36:03
+ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 1,05-07-2026 13:36:10
+ADMIN,admin@chocofly.com,Administrador,Agrego Vuelo: test -> test,05-07-2026 13:36:24
+ADMIN,admin@chocofly.com,Administrador,Genero 100 vuelos aleatorios,05-07-2026 13:36:37
+ADMIN,admin@chocofly.com,Administrador,Genero 100 hoteles aleatorios,05-07-2026 13:36:37
+ADMIN,admin@chocofly.com,Administrador,Genero 100 paquetes aleatorios,05-07-2026 13:36:38
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 100 vuelos, 100 hoteles, 100 paquetes,05-07-2026 13:36:38
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:37:28
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:37:59
+ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 50,05-07-2026 13:38:17
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 13:51:20

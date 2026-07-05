@@ -285,17 +285,17 @@ void GestionPantallas::MenuFiltrosVuelos() {
 case '5': {
             DibujarHeader("Inicio > Catalogo > Vuelos > Por Precio");
             
-            // Creamos una lista temporal para pasarla al motor dinámico
+            
             Lista<Vuelo*>* listaOrdenada = new Lista<Vuelo*>();
             
-            // Llenamos la lista volcando el Árbol AVL InOrden (De menor a mayor)
+           
             principal->getControladorVuelos()->getVuelosMenorPrecio()->RecorrerInOrden([&listaOrdenada](Vuelo* v) {
                 listaOrdenada->agregaFinal(v);
             });
             
             principal->ConsultarCatalogoDinamico<Vuelo>(listaOrdenada, "VUELOS DE MENOR A MAYOR PRECIO", [](Vuelo* v){ return true; });
             
-            delete listaOrdenada; // Evitamos fugas de memoria
+            delete listaOrdenada; 
             pausarConsola();
             break;
         }
@@ -386,7 +386,7 @@ void GestionPantallas::MenuFiltrosHoteles() {
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO: ", Paletas::Exito, false, false); 
             cin >> presupuesto; cin.ignore();
             
-            // Implementación dinámica
+            
             principal->ConsultarCatalogoDinamico<Hotel>(
                 principal->getControladorHoteles()->getHoteles(),
                 "HOTELES HASTA: $" + to_string(presupuesto) + " POR NOCHE",
@@ -509,7 +509,7 @@ case '3': {
             ColorUI::printGradient("\nDIGITE EL PRESUPUESTO: ", Paletas::Exito, false, false); 
             cin >> presupuesto; cin.ignore();
             
-            // Implementación dinámica
+            
             principal->ConsultarCatalogoDinamico<Paquete>(
                 principal->getControladorPaquetes()->getPaquetes(),
                 "PAQUETES HASTA: $" + to_string(presupuesto),
@@ -977,7 +977,6 @@ void GestionPantallas::MenuReservaPaquete() {
     ColorUI::printGradient("Cantidad de equipaje para el RETORNO: ", Exito, false, false);
     equipajeRetorno = LeerOpcion();
 
-    // --- Mapa visual de asientos del vuelo incluido ---
     Vuelo* vueloInc = principal->getControladorPaquetes()->getPaquetes()->obtenerPos(idPaquete)->getVueloIncluido();
     LimpiarConsola();
     ColorUI::printGradient("=== SELECCION DE ASIENTO (Vuelo del Paquete) ===", TemaPrincipal, false);
@@ -1012,7 +1011,7 @@ void GestionPantallas::MenuReservaPaquete() {
         }
     }
 
-    // --- Seleccion de clase con menú explícito ---
+   
     LimpiarConsola();
     ColorUI::printGradient("=== SELECCION DE CLASE DE VUELO ===\n", TemaPrincipal, false);
     ColorUI::printGradient("\n\t[1] ECONOMICA", Exito, false);

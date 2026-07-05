@@ -22,6 +22,8 @@
     <ClInclude Include="AdminPantallas.h" />
     <ClInclude Include="AnimacionConsola.h" />
     <ClInclude Include="ArbolAVL.h" />
+    <ClInclude Include="ArbolAVLClave.h" />
+    <ClInclude Include="ArbolAVLMiltiClave.h" />
     <ClInclude Include="AsciiArt.h" />
     <ClInclude Include="Asiento.h" />
     <ClInclude Include="Cola.h" />
@@ -79,7 +81,6 @@
     <ClCompile Include="Paquete.cpp" />
     <ClCompile Include="Pirncipal.cpp" />
     <ClCompile Include="Pantallas.cpp" />
-    <ClCompile Include="Proyecto1.cpp" />
     <ClCompile Include="Registro.cpp" />
     <ClCompile Include="Reserva.cpp" />
     <ClCompile Include="ReservaHotel.cpp" />

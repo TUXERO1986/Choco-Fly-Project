@@ -82,7 +82,7 @@ void ControladorPrincipal::EliminarVuelo(int indiceVuelo) {
 void ControladorPrincipal::EliminarHotel(int indiceHotel) {
     controladorRegistros->AgregarRegistro("ADMIN", "admin@chocofly.com", "Administrador", "Elimino Hotel ID: " + to_string(indiceHotel));
     
-    // Corregido: Ahora apunta a controladorHoteles y usa Hotel*
+    
     Hotel* hotelABorrar = controladorHoteles->getHoteles()->obtenerPos(indiceHotel);
     controladorHoteles->getHoteles()->eliminaPos(indiceHotel);
     delete hotelABorrar;
@@ -209,7 +209,7 @@ void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, i
             vueloSeleccionado->getFecha(), vueloSeleccionado->getDistancia(), equipajeBoveda, 1 + equipajeCabina, clase, asiento, controladorReservas->getReservasTotales()->longitud());
             
         controladorReservas->AgregarReserva(nuevaReserva);
-        userActual->getReservas()->agregaFinal(nuevaReserva); // Agregamos a la lista del usuario
+        userActual->getReservas()->agregaFinal(nuevaReserva); 
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (vuelo)");
         
         Lista<Asiento*>* listaAsientos = vueloSeleccionado->getAsientos();
@@ -230,7 +230,7 @@ void ControladorPrincipal::ReservarHotel(int indiceHotel, Usuario* userActual, s
             hotelSeleccionado->getCiudad(), fecha, hotelSeleccionado->getPrecioBase(), noches, habitacion, tipoO, tipoC, tipoS, controladorReservas->getReservasTotales()->longitud());
             
         controladorReservas->AgregarReserva(nuevaReserva);
-        userActual->getReservas()->agregaFinal(nuevaReserva); // Agregamos a la lista del usuario
+        userActual->getReservas()->agregaFinal(nuevaReserva); 
         controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (hotel)");
         
         Lista<Habitacion*>* listaHabitaciones = hotelSeleccionado->getHabitaciones();
@@ -417,7 +417,7 @@ void ControladorPrincipal::ReservarPaquete(int indicePaquete, Usuario* userActua
     );
 
     controladorReservas->AgregarReserva(nuevaReserva);
-    userActual->getReservas()->agregaFinal(nuevaReserva); // Agregamos a la lista del usuario
+    userActual->getReservas()->agregaFinal(nuevaReserva); 
     controladorRegistros->AgregarRegistro(userActual->getNombre(),userActual->getCorreo(),"Usuario","Reserva (paquete)");
     ColorUI::Animaciones::mostrarSpinner("Procesando transaccion con el sistema central", 2000, "");
     cout << "\n"; ColorUI::Alertas::MostrarExito("Reserva de paquete completada exitosamente!");
@@ -444,7 +444,7 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
         controladorRegistros->AgregarRegistro(nombre, correo, "Usuario", "Inicio de sesion");
         cout << "\n\n\n"; ColorUI::Alertas::MostrarExito("Inicio de sesion exitoso! Bienvenido, " + usuarioEncontrado->getNombre() + "!", "\t\t\t");
         
-        // Limpiar lista vieja y asignar la nueva para evitar memory leaks
+        
         Lista<Reserva*>* temp = usuarioEncontrado->getReservas();
         if (temp != nullptr) {
             delete temp; 

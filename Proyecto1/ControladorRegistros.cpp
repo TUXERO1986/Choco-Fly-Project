@@ -1,4 +1,5 @@
 #include "ControladorRegistros.h"
+#include "Color.h"
 
 ControladorRegistros::ControladorRegistros() {
     registros = new Lista<Registro*>();
@@ -40,20 +41,20 @@ void ControladorRegistros::AgregarRegistro(string nombre, string correo, string 
 
 void ControladorRegistros::MostrarDatos() {
     if (registros->longitud() == 0) {
-        cout << "\n[!] El historial de acciones se encuentra vacio." << endl;
+        ColorUI::printGradient("\n[!] El historial de acciones se encuentra vacio.", ColorUI::Paletas::Alerta);
         return;
     }
 
-    cout << "\n=========================================================" << endl;
-    cout << "           HISTORIAL DE ACCIONES (MÁS RECIENTES)         " << endl;
-    cout << "=========================================================" << endl;
+    ColorUI::printGradient("\n==============================================================================", ColorUI::Paletas::TemaPrincipal);
+    ColorUI::printGradient("                    HISTORIAL DE ACCIONES (MAS RECIENTES)                     ", ColorUI::Paletas::Exito);
+    ColorUI::printGradient("==============================================================================", ColorUI::Paletas::TemaPrincipal);
 
     int ultimoIndice = static_cast<int>(registros->longitud()) - 1;
 
     for (int i = ultimoIndice; i >= 0; i--) {
         registros->obtenerPos(i)->MostrarRegistro();
     }
-    cout << "=========================================================" << endl;
+    ColorUI::printGradient("==============================================================================", ColorUI::Paletas::TemaPrincipal);
 }
 
 Lista<Registro*>* ControladorRegistros::getRegistros() {

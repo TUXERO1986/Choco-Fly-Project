@@ -39,6 +39,8 @@ ControladorVuelos::~ControladorVuelos() {
         delete vuelos->obtenerPos(i);
     }
     delete vuelos;
+    delete vuelosMenorPrecio;
+    delete controladorArchivosVuelos;
 }
 
 void ControladorVuelos::MostrarVuelos() {

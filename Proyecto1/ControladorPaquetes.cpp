@@ -17,6 +17,8 @@ ControladorPaquetes::~ControladorPaquetes() {
 		delete paquetes->obtenerPos(i);
 	}
 	delete paquetes;
+	delete paquetesMenorPrecio;
+	delete controladorArchivos;
 }
 void ControladorPaquetes::MostrarPaquetesCiudades(string ciudadOrigen, string ciudadDestino) {
 	for (int i = 0; i < paquetes->longitud(); i++) {
