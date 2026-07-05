@@ -6,3 +6,4 @@ Lima,Arequipa,150
 Cusco,Arequipa,80
 Lima,Bogota,350
 Buenos Aires,Sao Paulo,200
+

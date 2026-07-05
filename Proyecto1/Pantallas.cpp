@@ -17,7 +17,7 @@ string usuario, correo, password;
 void RegisterScreen(ControladorPrincipal* principal) {
     static bool bienvenida_mostrada = false;
     if (!bienvenida_mostrada) {
-        AnimacionConsola::CieloAnimado(3500);
+        AnimacionConsola::CieloAnimado(1000);
         bienvenida_mostrada = true;
     }
     char modo;

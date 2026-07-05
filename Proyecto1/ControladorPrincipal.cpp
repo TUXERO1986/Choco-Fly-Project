@@ -484,32 +484,61 @@ Usuario* ControladorPrincipal::VerificarInicioSesion(string nombre, string corre
 
 
 void ControladorPrincipal::GuardarDatosEnArchivos() {
-    ControladorArchivos arc;
-
-    ofstream f1("Vuelos.txt", ios::trunc); f1.close();
-    for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
-        arc.GuardarDatoArchivoVuelos(controladorVuelos->getVuelos()->obtenerPos(i));
+    {
+        ofstream f1("Vuelos.txt", ios::trunc);
+        if (f1.is_open()) {
+            for (int i = 0; i < controladorVuelos->getVuelos()->longitud(); i++) {
+                f1 << controladorVuelos->getVuelos()->obtenerPos(i)->aTextoArchivo() << "\n";
+            }
+            f1.close();
+        }
     }
-    ofstream f2("Hoteles.txt", ios::trunc); f2.close();
-    for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
-        arc.GuardarDatoArchivoHoteles(controladorHoteles->getHoteles()->obtenerPos(i));
+    {
+        ofstream f2("Hoteles.txt", ios::trunc);
+        if (f2.is_open()) {
+            for (int i = 0; i < controladorHoteles->getHoteles()->longitud(); i++) {
+                f2 << controladorHoteles->getHoteles()->obtenerPos(i)->aTextoArchivo() << "\n";
+            }
+            f2.close();
+        }
     }
-    ofstream f3("Paquetes.txt", ios::trunc); f3.close();
-    for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
-        arc.GuardarDatoArchivoPaquetes(controladorPaquetes->getPaquetes()->obtenerPos(i));
+    {
+        ofstream f3("Paquetes.txt", ios::trunc);
+        if (f3.is_open()) {
+            for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
+                f3 << controladorPaquetes->getPaquetes()->obtenerPos(i)->aTextoArchivo() << "\n";
+            }
+            f3.close();
+        }
     }
-
-    ofstream f4("Usuarios.txt", ios::trunc); f4.close();
-    for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
-        arc.GuardarDatoArchivoUsuarios(controladorUsuarios->getUsuarios()->obtenerPos(i));
+    {
+        ofstream f4("Usuarios.txt", ios::trunc);
+        if (f4.is_open()) {
+            for (int i = 0; i < controladorUsuarios->getUsuarios()->longitud(); i++) {
+                Usuario* u = controladorUsuarios->getUsuarios()->obtenerPos(i);
+                f4 << u->getNombre() << "," << u->getCorreo() << "," << u->getPassword() << "," << u->getCodigo() << "\n";
+            }
+            f4.close();
+        }
     }
-    ofstream f5("Reservas.txt", ios::trunc); f5.close();
-    for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
-        arc.GuardarDatoArchivoReservas(controladorReservas->getReservasTotales()->obtenerPos(i));
+    {
+        ofstream f5("Reservas.txt", ios::trunc);
+        if (f5.is_open()) {
+            for (int i = 0; i < controladorReservas->getReservasTotales()->longitud(); i++) {
+                f5 << controladorReservas->getReservasTotales()->obtenerPos(i)->aTextoArchivo() << "\n";
+            }
+            f5.close();
+        }
     }
-    ofstream f6("Rutas.txt", ios::trunc); f6.close();
-    for (int i = 0; i < controladorRutas->getRutas()->longitud(); i++) {
-        arc.GardarDatoArchivoRutas(controladorRutas->getRutas()->obtenerPos(i));
+    {
+        ofstream f6("Rutas.txt", ios::trunc);
+        if (f6.is_open()) {
+            for (int i = 0; i < controladorRutas->getRutas()->longitud(); i++) {
+                Ruta* r = controladorRutas->getRutas()->obtenerPos(i);
+                f6 << r->getOrigen() << "," << r->getDestino() << "," << r->getDistancia() << "\n";
+            }
+            f6.close();
+        }
     }
 }
 

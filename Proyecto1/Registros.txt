@@ -99,3 +99,35 @@ ADMIN,admin@chocofly.com,Administrador,Genero 20000 paquetes aleatorios,05-07-20
 ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 20000 vuelos, 20000 hoteles, 20000 paquetes,05-07-2026 13:58:53
 ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 117677,05-07-2026 13:59:20
 0000,0000,Usuario,Inicio de sesion,05-07-2026 14:24:39
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 14:35:12
+ADMIN,admin@chocofly.com,Administrador,Agrego Vuelo: TestVuelo -> TestDestino,05-07-2026 14:39:10
+ADMIN,admin@chocofly.com,Administrador,Agrego Vuelo: 1 -> 1,05-07-2026 14:39:17
+ADMIN,admin@chocofly.com,Administrador,Agrego Hotel: Chocofly en Chocofly,05-07-2026 14:39:35
+ADMIN,admin@chocofly.com,Administrador,Agrego Ruta: Choco <-> Fly,05-07-2026 14:39:44
+ADMIN,admin@chocofly.com,Administrador,Agrego Ruta: 1 <-> 1,05-07-2026 14:39:49
+ADMIN,admin@chocofly.com,Administrador,Agrego Paquete: Vuelo Lima->Bogota + Hotel EcoLodge Imperial,05-07-2026 14:40:02
+example123,example@gmail.com,Usuario,Reserva (vuelo),05-07-2026 14:40:50
+ADMIN,admin@chocofly.com,Administrador,Elimino Ruta ID: -1,05-07-2026 14:41:05
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 14:41:44
+ADMIN,admin@chocofly.com,Administrador,Elimino Ruta ID: 9,05-07-2026 14:41:57
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 14:42:32
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 14:43:13
+1,1,Usuario,Inicio de sesion,05-07-2026 14:43:55
+lol,lol,Usuario,Inicio de sesion,05-07-2026 14:47:04
+lol,lol,Usuario,Inicio de sesion,05-07-2026 14:48:58
+lol,lol,Usuario,Reserva (vuelo),05-07-2026 14:50:14
+lol,lol,Usuario,Reserva (hotel),05-07-2026 14:50:33
+lol,lol,Usuario,Reserva (paquete),05-07-2026 14:50:52
+lol,lol,Usuario,Inicio de sesion,05-07-2026 15:04:36
+Usuario,N/A,Usuario,Califico Hotel: Vista Hermosa Hotel con 4.000000 estrellas,05-07-2026 15:04:58
+lol,lol,Usuario,Inicio de sesion,05-07-2026 15:05:11
+lol,lol,Usuario,Reserva (hotel),05-07-2026 15:05:40
+Usuario,N/A,Usuario,Califico Hotel: Mirador Suites con 4.000000 estrellas,05-07-2026 15:05:59
+lol,lol,Usuario,Inicio de sesion,05-07-2026 15:23:12
+Usuario,N/A,Usuario,Califico Hotel: Vista Hermosa Hotel con 3.000000 estrellas,05-07-2026 15:23:23
+1,1,Usuario,Inicio de sesion,05-07-2026 15:30:47
+Usuario,N/A,Usuario,Califico Hotel: Resort Las Americas con 1.000000 estrellas,05-07-2026 15:31:59
+1\,1,Usuario,Reserva (vuelo),05-07-2026 15:33:32
+1\,1,Usuario,Reserva (vuelo),05-07-2026 15:34:08
+1,1,Usuario,Inicio de sesion,05-07-2026 15:35:13
+1\,1,Usuario,Reserva (vuelo),05-07-2026 15:35:24
