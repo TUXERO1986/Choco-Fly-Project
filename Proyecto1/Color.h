@@ -34,9 +34,9 @@
  * https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit
  * ============================================================================
  */
-class ControladorPrincipal; // Le avisamos que existe esta clase
+class ControladorPrincipal;
 
-// Definicion de funciones de ruteo:
+
 void creditos();
 void RegisterScreen(ControladorPrincipal* principal);
 void LoginScreen(ControladorPrincipal* principal);  

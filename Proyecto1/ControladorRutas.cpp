@@ -1,7 +1,7 @@
 #include "ControladorRutas.h"
 
 ControladorRutas::ControladorRutas() {
-    controladorArchivos = new ControladorArchivos("Rutas.txt");
+controladorArchivos = new ControladorArchivos("Rutas.txt");
     rutas = new Lista<Ruta*>();
     conexiones = new Lista<Lista<int>*>();
     MapaCiudades = new Lista<CiudadID*>();
@@ -11,10 +11,9 @@ ControladorRutas::ControladorRutas() {
         [](CiudadID* c) { return c->getNombre(); }
     );
 
-    controladorArchivos->LeerArchivoRutas(conexiones, rutas, MapaCiudades);
+    controladorArchivos->LeerArchivoRutas(conexiones, rutas, MapaCiudades, indiceCiudadesPorNombre);
 
     for (unsigned int i = 0; i < MapaCiudades->longitud(); i++) {
-        indiceCiudadesPorNombre->Insertar(MapaCiudades->obtenerPos(i));
         grafoRutas->adicionarVertice(MapaCiudades->obtenerPos(i)->getNombre());
     }
 

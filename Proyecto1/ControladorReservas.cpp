@@ -1,14 +1,13 @@
 #include "ControladorReservas.h"
 ControladorReservas::ControladorReservas() {
-    reservasTotales = new Lista<Reserva*>();
-	controladorArchivos = new ControladorArchivos("Reservas.txt");
-    controladorArchivos->LeerArchivoReservas(reservasTotales);
+reservasTotales = new Lista<Reserva*>();
+    controladorArchivos = new ControladorArchivos("Reservas.txt");
+    
     indiceReservasPorID = new ArbolAVLClave<Reserva*, int>([](Reserva* r) {
         return r->getId(); 
     });
-    for (int i = 0; i < reservasTotales->longitud(); i++) {
-        indiceReservasPorID->Insertar(reservasTotales->obtenerPos(i));
-    }
+
+    controladorArchivos->LeerArchivoReservas(reservasTotales, indiceReservasPorID);
 }
 
 ControladorReservas::~ControladorReservas() {

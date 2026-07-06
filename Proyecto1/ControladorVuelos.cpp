@@ -27,11 +27,10 @@ ControladorVuelos::ControladorVuelos() {
         }
         return -1; 
     };
-    
-    controladorArchivosVuelos->LeerArchivoVuelos(vuelos);
-    for(int i=0; i < vuelos->longitud(); i++) {
-        vuelosMenorPrecio->Insertar(vuelos->obtenerPos(i));
-    }
+    indiceVuelosPorOrigen = new ArbolAVLMultiClave<Vuelo*, string>(
+        [](Vuelo* v) { return v->getOrigen(); }
+    );
+    controladorArchivosVuelos->LeerArchivoVuelos(vuelos,indiceVuelosPorOrigen,vuelosMenorPrecio);
 }
 
 ControladorVuelos::~ControladorVuelos() {
@@ -114,7 +113,7 @@ void ControladorVuelos::GenerarVuelos(int contador, Lista<Ruta*>* rutas) {
 }
 
 void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
-    Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas) {
+Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas) {
 
     if (indiceRuta == rutas->longitud()) {
         Lista<Vuelo*>* nuevaCombinacion = new Lista<Vuelo*>();
@@ -126,13 +125,16 @@ void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
     }
 
     Ruta* rutaRequerida = rutas->obtenerPos(indiceRuta);
+    
 
-    for (int i = 0; i < vuelos->longitud(); i++) {
-        Vuelo* vueloActual = vuelos->obtenerPos(i);
+    Lista<Vuelo*>* vuelosValidos = indiceVuelosPorOrigen->BuscarTodos(rutaRequerida->getOrigen());
+    
+    if (vuelosValidos == nullptr) return; 
 
-        if (vueloActual->getOrigen() == rutaRequerida->getOrigen() &&
-            vueloActual->getDestino() == rutaRequerida->getDestino()) {
+    for (int i = 0; i < vuelosValidos->longitud(); i++) {
+        Vuelo* vueloActual = vuelosValidos->obtenerPos(i);
 
+        if (vueloActual->getDestino() == rutaRequerida->getDestino()) {
             bool fechaValida = true;
 
             if (indiceRuta > 0) {
@@ -142,6 +144,7 @@ void ControladorVuelos::BuscarCadenaVuelos(int indiceRuta, Lista<Ruta*>* rutas,
                 int mesActual = ObtenerMes(vueloActual->getFecha());
                 int diaActual = ObtenerDia(vueloActual->getFecha());
 
+               
                 if (mesActual != mesAnterior || (diaActual < diaAnterior || diaActual > diaAnterior + 1)) {
                     fechaValida = false;
                 }
@@ -169,9 +172,13 @@ void ControladorVuelos::FiltrarVuelosPorOrigenDestino(string origen, string dest
 }
 
 bool ControladorVuelos::VerificarVueloDirecto(string origen, string destino) {
-    for (int i = 0; i < vuelos->longitud(); i++) {
-        Vuelo* aux = vuelos->obtenerPos(i);
-        if (aux->getOrigen() == origen && aux->getDestino() == destino) {
+    Lista<Vuelo*>* vuelosDesdeOrigen = indiceVuelosPorOrigen->BuscarTodos(origen);
+    
+    if (vuelosDesdeOrigen == nullptr) return false;
+
+    for (int i = 0; i < vuelosDesdeOrigen->longitud(); i++) {
+        Vuelo* aux = vuelosDesdeOrigen->obtenerPos(i);
+        if (aux->getDestino() == destino) {
             return true;
         }
     }
@@ -180,38 +187,82 @@ bool ControladorVuelos::VerificarVueloDirecto(string origen, string destino) {
 
 bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Lista<Ruta*>* rutas) {
 
-    if (rutas == nullptr || rutas->longitud() == 0) {
+   if (rutas == nullptr || rutas->longitud() == 0) {
         cout << "No hay conexion posible entre " << origen << " y " << destino << endl;
         return false;
     }
 
-    string stringEscalas = "";
-    float distanciaFinal = 0.0f;
-    string ciudadActual = origen;
+    Lista<Vuelo*>* cadenaActual = new Lista<Vuelo*>();
+    Lista<Lista<Vuelo*>*>* todasLasCadenas = new Lista<Lista<Vuelo*>*>();
 
-    for (int i = 0; i < rutas->longitud(); i++) {
-        Ruta* tramoActual = rutas->obtenerPos(i);
-        distanciaFinal += tramoActual->getDistancia();
+    
+    BuscarCadenaVuelos(0, rutas, cadenaActual, todasLasCadenas);
 
-        string siguienteCiudad = (tramoActual->getOrigen() == ciudadActual) ? tramoActual->getDestino() : tramoActual->getOrigen();
-
-        if (i < rutas->longitud() - 1) {
-            stringEscalas += siguienteCiudad;
-            if (i < rutas->longitud() - 2) {
-                stringEscalas += "-";
-            }
-        }
-        ciudadActual = siguienteCiudad;
+    
+    if (todasLasCadenas->longitud() == 0) {
+        cout << "\n[!] Lo sentimos, no hay vuelos programados que coincidan para realizar esta conexion." << endl;
+        delete cadenaActual;
+        delete todasLasCadenas;
+        return false;
     }
 
-    string stringFechas = to_string(1 + (rand() % 28)) + "-" + to_string(1 + (rand() % 12)) + "-2026";
+    int agregados = 0;
 
-    cout << "\n[GRAFO] Ruta optima generada de " << origen << " a " << destino << endl;
-    cout << "Escalas: " << (stringEscalas.empty() ? "Ninguna" : stringEscalas) << endl;
-    cout << "Distancia total: " << distanciaFinal << " km" << endl;
+   
+    for (int i = 0; i < todasLasCadenas->longitud(); i++) {
+        Lista<Vuelo*>* cadena = todasLasCadenas->obtenerPos(i);
+        
+        string stringEscalas = "";
+        float distanciaFinal = 0.0f;
+        
+       
+        string fechaSalida = cadena->obtenerPos(0)->getFecha();
 
-    AgregarNuevoVuelo(origen, destino, stringEscalas, stringFechas, distanciaFinal);
+       
+        for (int j = 0; j < cadena->longitud(); j++) {
+            Vuelo* v = cadena->obtenerPos(j);
+            distanciaFinal += v->getDistancia();
+            
+            if (j < cadena->longitud() - 1) {
+                stringEscalas += v->getDestino();
+                if (j < cadena->longitud() - 2) {
+                    stringEscalas += "-";
+                }
+            }
+        }
 
+        
+        bool existe = false;
+        Lista<Vuelo*>* vuelosDesdeOrigen = indiceVuelosPorOrigen->BuscarTodos(origen);
+        
+        if (vuelosDesdeOrigen != nullptr) {
+            for (int k = 0; k < vuelosDesdeOrigen->longitud(); k++) {
+                Vuelo* existV = vuelosDesdeOrigen->obtenerPos(k);
+                if (existV->getDestino() == destino && 
+                    existV->getFecha() == fechaSalida && 
+                    existV->getEscalas() == stringEscalas) {
+                    existe = true;
+                    break;
+                }
+            }
+        }
+
+        if (!existe) {
+            AgregarNuevoVuelo(origen, destino, stringEscalas, fechaSalida, distanciaFinal);
+            agregados++;
+        }
+    }
+
+    delete cadenaActual;
+    for (int i = 0; i < todasLasCadenas->longitud(); i++) {
+        delete todasLasCadenas->obtenerPos(i);
+    }
+    delete todasLasCadenas;
+
+    if (agregados > 0) {
+        cout << "\n[EXITO] Se han empaquetado " << agregados << " opciones de vuelo con escala usando los trayectos reales registrados." << endl;
+    }
+    
     return true;
 }
 

@@ -11,14 +11,10 @@ ControladorHoteles::ControladorHoteles() {
 
     hotelesMenorPrecio = new ArbolAVL<Hotel*>(obtenerPrecio);
 
-	controladorArchivos->LeerArchivoHoteles(hoteles);
 	indicePorCiudad = new ArbolAVLMultiClave<Hotel*, string>(
-    [](Hotel* h){ return h->getCiudad(); }
-);
-for (int i = 0; i < hoteles->longitud(); i++) {
-    hotelesMenorPrecio->Insertar(hoteles->obtenerPos(i));
-    indicePorCiudad->Insertar(hoteles->obtenerPos(i));
-}
+		[](Hotel* h){ return h->getCiudad(); }
+	);
+	controladorArchivos->LeerArchivoHoteles(hoteles,indicePorCiudad,hotelesMenorPrecio);
 
 }
 ControladorHoteles::~ControladorHoteles() {

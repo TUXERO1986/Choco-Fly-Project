@@ -194,7 +194,7 @@ void Lista<T>::eliminaFinal() {
     for (int i = 0; i < lon - 2; i++) aux = aux->getSig();
     Nodo<T>* nodoAEliminar = aux->getSig();
     aux->setSig(nullptr);
-    fin = aux; // NUEVO
+    fin = aux; 
     delete nodoAEliminar;
     lon--;
     cacheIndice = -1; 

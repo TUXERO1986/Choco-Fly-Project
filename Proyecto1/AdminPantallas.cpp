@@ -276,7 +276,7 @@ void AdminPantallas::MenuAgregar() {
                 pausarConsola();
             }
         }break;
-        case '6': {//agregar usuario
+        case '6': {
             ColorUI::printGradient("\t=== AGREGAR USUARIO ===", TemaPrincipal, false);
             string nombre, correo, password;
             ColorUI::printGradient("\nNombre: ", Exito, false, false);

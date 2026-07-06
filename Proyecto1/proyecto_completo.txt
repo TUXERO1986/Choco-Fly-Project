@@ -1039,6 +1039,7 @@ namespace ColorUI {
 
             static void TransicionAvion() {
                 CursorGuard cursorGuard;
+                LimpiarConsola();
                 int frames = 14;
                 int old_x = 0, y = 12;
 
@@ -1139,6 +1140,7 @@ namespace ColorUI {
 
             static char AnimarMenuPrincipal() {
                 CursorGuard cursorGuard;
+                LimpiarConsola();
                 const int WIDTH = 100;
                 const int HEIGHT = 26;
                 int frame_count = 0;
@@ -1852,7 +1854,7 @@ string spritePaquete = R"(
  /  .-.  \
 |   | |   |
 |   `-'   |
- `-----'
+ `-------'
 )";
 
 // ============================================================================
@@ -4868,6 +4870,7 @@ void GestionPantallas::IniciarMotorNavegacion() {
 }
 
 void GestionPantallas::Menuprincipal() {
+    LimpiarConsola();
     char opcion = AnimacionConsola::AnimarMenuPrincipal();
 
     switch (opcion) {
@@ -5602,7 +5605,6 @@ void GestionPantallas::MenuReservaVuelo() {
 
     LimpiarConsola();
     ColorUI::printGradient("TICKET COMPRADO CON EXITO", gege, false);
-    pausarConsola();
     ColorUI::printGradient("El asiento [" + to_string(asiento) + "] ha sido reservado para " + userActual->getNombre(), Exito, false);
     cout << "\n";
     pausarConsola();
