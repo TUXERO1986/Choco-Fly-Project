@@ -143,3 +143,10 @@ ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 1000 vuelos, 1000 hote
 0000,0000,Usuario,Inicio de sesion,05-07-2026 19:37:04
 0000,0000,Usuario,Inicio de sesion,05-07-2026 19:38:25
 0000,0000,Usuario,Inicio de sesion,05-07-2026 19:39:12
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 19:44:55
+admin,admin,Usuario,Inicio de sesion,05-07-2026 19:47:05
+admin,admin,Usuario,Reserva (vuelo),05-07-2026 19:48:56
+Usuario,N/A,Usuario,Califico Hotel: Andina Royal Resort con 1.000000 estrellas,05-07-2026 19:49:21
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 19:57:49
+ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 0,05-07-2026 19:57:55
+ADMIN,admin@chocofly.com,Administrador,Elimino Vuelo ID: 0,05-07-2026 19:58:02

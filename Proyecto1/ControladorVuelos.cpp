@@ -126,10 +126,10 @@ Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas) {
 
     Ruta* rutaRequerida = rutas->obtenerPos(indiceRuta);
     
-    // MAGIA: En vez de recorrer 20,000 vuelos, extraemos SOLO los que salen del origen requerido O(log N)
+
     Lista<Vuelo*>* vuelosValidos = indiceVuelosPorOrigen->BuscarTodos(rutaRequerida->getOrigen());
     
-    if (vuelosValidos == nullptr) return; // Si no hay vuelos desde ahí, se corta la rama (Poda)
+    if (vuelosValidos == nullptr) return; 
 
     for (int i = 0; i < vuelosValidos->longitud(); i++) {
         Vuelo* vueloActual = vuelosValidos->obtenerPos(i);
@@ -144,7 +144,7 @@ Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas) {
                 int mesActual = ObtenerMes(vueloActual->getFecha());
                 int diaActual = ObtenerDia(vueloActual->getFecha());
 
-                // Validamos que el vuelo de escala sea el mismo día o al día siguiente
+               
                 if (mesActual != mesAnterior || (diaActual < diaAnterior || diaActual > diaAnterior + 1)) {
                     fechaValida = false;
                 }
@@ -153,7 +153,7 @@ Lista<Vuelo*>* cadenaActual, Lista<Lista<Vuelo*>*>* todasLasCadenas) {
             if (fechaValida) {
                 cadenaActual->agregaFinal(vueloActual);
                 BuscarCadenaVuelos(indiceRuta + 1, rutas, cadenaActual, todasLasCadenas);
-                cadenaActual->eliminaFinal(); // Backtracking
+                cadenaActual->eliminaFinal();
             }
         }
     }
@@ -195,10 +195,10 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
     Lista<Vuelo*>* cadenaActual = new Lista<Vuelo*>();
     Lista<Lista<Vuelo*>*>* todasLasCadenas = new Lista<Lista<Vuelo*>*>();
 
-    // 1. Ejecutamos nuestra Búsqueda en Profundidad (DFS) sobre los vuelos reales
+    
     BuscarCadenaVuelos(0, rutas, cadenaActual, todasLasCadenas);
 
-    // Si la recursividad no encontró ninguna cadena válida en fechas conectadas
+    
     if (todasLasCadenas->longitud() == 0) {
         cout << "\n[!] Lo sentimos, no hay vuelos programados que coincidan para realizar esta conexion." << endl;
         delete cadenaActual;
@@ -208,17 +208,17 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
 
     int agregados = 0;
 
-    // 2. Empaquetamos cada cadena real encontrada como un "Vuelo con Escala"
+   
     for (int i = 0; i < todasLasCadenas->longitud(); i++) {
         Lista<Vuelo*>* cadena = todasLasCadenas->obtenerPos(i);
         
         string stringEscalas = "";
         float distanciaFinal = 0.0f;
         
-        // La fecha de salida del vuelo principal es la fecha del primer tramo
+       
         string fechaSalida = cadena->obtenerPos(0)->getFecha();
 
-        // Extraemos las distancias y los nombres de las ciudades intermedias
+       
         for (int j = 0; j < cadena->longitud(); j++) {
             Vuelo* v = cadena->obtenerPos(j);
             distanciaFinal += v->getDistancia();
@@ -231,7 +231,7 @@ bool ControladorVuelos::GenerarVuelosConEscala(string origen, string destino, Li
             }
         }
 
-        // 3. Verificamos en el Árbol si este vuelo combinado ya existe (para no duplicar en búsquedas repetidas)
+        
         bool existe = false;
         Lista<Vuelo*>* vuelosDesdeOrigen = indiceVuelosPorOrigen->BuscarTodos(origen);
         

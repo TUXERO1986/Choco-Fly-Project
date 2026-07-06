@@ -31,7 +31,7 @@ void ControladorArchivos::LeerArchivoRutas(Lista<Lista<int>*>* conexiones, Lista
             Ruta* aux = new Ruta(origen, destino, dbdistancia);
             rutas->agregaFinal(aux);
 
-            // Búsqueda ultra rápida usando el Árbol AVL
+            
             CiudadID* cOrigen = indiceCiudadesPorNombre->Buscar(origen);
             if (cOrigen == nullptr) {
                 cOrigen = new CiudadID(origen, contadorId++);
@@ -300,7 +300,7 @@ void ControladorArchivos::LeerArchivoReservas(Lista<Reserva*>* listaDestino, Arb
 
         if (nuevaReserva != nullptr) {
             listaDestino->agregaFinal(nuevaReserva);
-            indiceReservasPorID->Insertar(nuevaReserva); // Inserción simultánea
+            indiceReservasPorID->Insertar(nuevaReserva); 
         }
     }
     archivo.close();
