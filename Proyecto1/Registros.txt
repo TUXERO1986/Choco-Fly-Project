@@ -131,3 +131,15 @@ Usuario,N/A,Usuario,Califico Hotel: Resort Las Americas con 1.000000 estrellas,0
 1\,1,Usuario,Reserva (vuelo),05-07-2026 15:34:08
 1,1,Usuario,Inicio de sesion,05-07-2026 15:35:13
 1\,1,Usuario,Reserva (vuelo),05-07-2026 15:35:24
+0000,0000,Usuario,Inicio de sesion,05-07-2026 18:32:27
+Usuario,N/A,Usuario,Califico Hotel: Mirador Suites con 4.000000 estrellas,05-07-2026 18:32:39
+ADMIN,admin@chocofly.com,Administrador,Inicio de sesion ADMIN,05-07-2026 18:33:29
+ADMIN,admin@chocofly.com,Administrador,Genero 1000 vuelos aleatorios,05-07-2026 18:33:46
+ADMIN,admin@chocofly.com,Administrador,Genero 1000 hoteles aleatorios,05-07-2026 18:33:46
+ADMIN,admin@chocofly.com,Administrador,Genero 1000 paquetes aleatorios,05-07-2026 18:33:46
+ADMIN,admin@chocofly.com,Administrador,Generacion masiva: 1000 vuelos, 1000 hoteles, 1000 paquetes,05-07-2026 18:33:46
+0000,0000,Usuario,Inicio de sesion,05-07-2026 18:38:12
+0000,0000,Usuario,Inicio de sesion,05-07-2026 19:30:48
+0000,0000,Usuario,Inicio de sesion,05-07-2026 19:37:04
+0000,0000,Usuario,Inicio de sesion,05-07-2026 19:38:25
+0000,0000,Usuario,Inicio de sesion,05-07-2026 19:39:12

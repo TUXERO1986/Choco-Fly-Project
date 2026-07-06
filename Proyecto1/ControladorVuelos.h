@@ -1,12 +1,14 @@
 #pragma once
 #include "ControladorArchivos.h"
 #include "ArbolAVL.h"
+#include "ArbolAVLMiltiClave.h"
 #include "Color.h"
 class ControladorVuelos
 {
 private:
 Lista<Vuelo*>* vuelos;
 ArbolAVL<Vuelo*>* vuelosMenorPrecio;
+ArbolAVLMultiClave<Vuelo*, string>* indiceVuelosPorOrigen;
 function<int(string)> ObtenerMes;
 function<int(string)> ObtenerDia;
 ControladorArchivos* controladorArchivosVuelos;

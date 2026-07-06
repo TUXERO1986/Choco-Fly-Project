@@ -1,5 +1,8 @@
 #pragma once
 #include "Lista.h"
+#include "ArbolAVLMiltiClave.h"
+#include "ArbolAVL.h"
+#include "ArbolAVLClave.h"
 #include "Ruta.h"
 #include "CiudadID.h"
 #include "Vuelo.h"
@@ -23,19 +26,19 @@ public:
 	ControladorArchivos();
 	ControladorArchivos(string);
 
-	void LeerArchivoRutas(Lista<Lista<int>*>*,Lista<Ruta*>*, Lista<CiudadID*>*);
+	void LeerArchivoRutas(Lista<Lista<int>*>* conexiones, Lista<Ruta*>* rutas, Lista<CiudadID*>* MapaCiudades, ArbolAVLClave<CiudadID*, string>* indiceCiudadesPorNombre);
 	void GardarDatoArchivoRutas(Ruta*);
-	void LeerArchivoVuelos(Lista<Vuelo*>*);
+	void LeerArchivoVuelos(Lista<Vuelo*>*,ArbolAVLMultiClave<Vuelo*, string>*,ArbolAVL<Vuelo*>*);
 	void GuardarDatoArchivoVuelos(Vuelo*);
 	void GuardarDatoArchivoPaquetes(Paquete*);
-	void LeerArchivoPaquetes(Lista<Paquete*>*);
+	void LeerArchivoPaquetes(Lista<Paquete*>*,ArbolAVLMultiClave<Paquete*, string>* ,ArbolAVL<Paquete*>*);
 	void GuardarDatoArchivoHoteles(Hotel*);
-	void LeerArchivoHoteles(Lista<Hotel*>*);
+	void LeerArchivoHoteles(Lista<Hotel*>*,ArbolAVLMultiClave<Hotel*, string>*,ArbolAVL<Hotel*>*);
 	void LeerArchivoRegistros(Lista<Registro*>* registros);
     void GuardarDatoArchivoRegistros(Registro* r);
 	void LeerArchivoUsuarios(Lista<Usuario*>* usuarios);
 	void GuardarDatoArchivoUsuarios(Usuario* usuario);
-	void LeerArchivoReservas(Lista<Reserva*>* listaDestino);
+	void LeerArchivoReservas(Lista<Reserva*>* listaDestino, ArbolAVLClave<Reserva*, int>* indiceReservasPorID);
 	void GuardarDatoArchivoReservas(Reserva* reserva);
 	void VaciarArchivo();
 };

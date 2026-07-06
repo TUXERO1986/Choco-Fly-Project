@@ -1,10 +1,12 @@
 #pragma once
 #include "ControladorArchivos.h"
+#include "ArbolAVLMiltiClave.h"
 #include "ArbolAVL.h"
 class ControladorPaquetes {
 private:
 	Lista<Paquete*>* paquetes;
 	ArbolAVL<Paquete*>* paquetesMenorPrecio;
+	ArbolAVLMultiClave<Paquete*, string>* indicePorDestino;
 	ControladorArchivos* controladorArchivos;
 public:
 	ControladorPaquetes();
@@ -15,6 +17,7 @@ public:
 	void MostrarPaquetes();
 	Lista<Paquete*>* getPaquetes();
 	ArbolAVL<Paquete*>* getPaquetesMenorPrecio();
+	ArbolAVLMultiClave<Paquete*, string>* getIndicePorDestino();
 	void setPaquetes(Lista<Paquete*>* paquetes);
 };
 

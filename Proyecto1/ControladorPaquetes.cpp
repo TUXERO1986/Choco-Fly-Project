@@ -7,10 +7,12 @@ ControladorPaquetes::ControladorPaquetes() {
 	    auto obtenerPrecio = [](Paquete* p) -> float {
         return p->getPrecioBase();
     };
+	indicePorDestino = new ArbolAVLMultiClave<Paquete*, string>(
+    [](Paquete* p) { return p->getVueloIncluido()->getDestino(); }
+	);
 	paquetesMenorPrecio = new ArbolAVL<Paquete*>(obtenerPrecio);
 	controladorArchivos = new ControladorArchivos("Paquetes.txt");
-	controladorArchivos->LeerArchivoPaquetes(paquetes);
-	        for(int i=0;i<paquetes->longitud();i++)paquetesMenorPrecio->Insertar(paquetes->obtenerPos(i));
+	controladorArchivos->LeerArchivoPaquetes(paquetes,indicePorDestino,paquetesMenorPrecio);
 }
 ControladorPaquetes::~ControladorPaquetes() {
 	for (int i = 0; i < paquetes->longitud(); i++) {
@@ -83,4 +85,5 @@ void ControladorPaquetes::MostrarPaquetes() {
 		return paquetesMenorPrecio;
 	}
 Lista<Paquete*>* ControladorPaquetes::getPaquetes() { return paquetes; }
+ArbolAVLMultiClave<Paquete*, string>* ControladorPaquetes::getIndicePorDestino(){return indicePorDestino;}
 void ControladorPaquetes::setPaquetes(Lista<Paquete*>* paquetes) { this->paquetes = paquetes; }

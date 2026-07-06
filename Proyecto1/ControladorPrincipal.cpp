@@ -188,13 +188,8 @@ bool ControladorPrincipal::VerificarHoteles(string ciudad) {
     return encontrados != nullptr && encontrados->longitud() > 0;
 }
 bool ControladorPrincipal::VerificarPaquetes(string destino) {
-    for (int i = 0; i < controladorPaquetes->getPaquetes()->longitud(); i++) {
-        Paquete* aux = controladorPaquetes->getPaquetes()->obtenerPos(i);
-        if (aux->getVueloIncluido()->getDestino() == destino) {
-            return true;
-        }
-    }
-    return false;
+Lista<Paquete*>* encontrados = controladorPaquetes->getIndicePorDestino()->BuscarTodos(destino);
+    return encontrados != nullptr && encontrados->longitud() > 0;
 }
 void ControladorPrincipal::ComprarTicket(int indiceVuelo, Usuario* userActual, int equipajeBoveda, int equipajeCabina, int asiento, int clase) {
     Vuelo* vueloSeleccionado = controladorVuelos->ObtenerVueloPorPosicion(indiceVuelo);
